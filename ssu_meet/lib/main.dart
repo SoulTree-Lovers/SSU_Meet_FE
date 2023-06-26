@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/screens/initial_screen.dart';
+import 'package:ssu_meet/pages/responsive_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
       //   fontFamily: "Ongeul",
       //   primaryColor: const Color.fromARGB(255, 182, 222, 255),
       // ),
-      home: InitialScreen(),
+      // home: InitialPage(),
+      home: ResponsiveWebLayout(),
     );
   }
 }
