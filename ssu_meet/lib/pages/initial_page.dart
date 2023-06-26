@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages/home_page.dart';
+import 'package:ssu_meet/pages/responsive_page.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -15,8 +15,8 @@ class _InitialPageState extends State<InitialPage> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ResponsiveWebLayout()));
     });
   }
 
@@ -32,12 +32,12 @@ class _InitialPageState extends State<InitialPage> {
           extendBodyBehindAppBar: true,
           body: Container(
             width: screenWidth,
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(33, 139, 225, 1),
+            decoration: BoxDecoration(
+              color: Colors.blue[100],
             ),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 SizedBox(
                   width: 120,
                   height: 100,

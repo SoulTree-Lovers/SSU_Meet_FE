@@ -12,10 +12,22 @@ class DesktopLayout extends StatefulWidget {
 class _DesktopLayoutState extends State<DesktopLayout> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'This is the desktop layout',
-        style: TextStyle(fontSize: 30),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        color: Colors.blue[100],
+        child: const Center(
+          child: Text(
+            '>>>>>>>>>> 창 크기를 줄여줘 <<<<<<<<<<',
+            style: TextStyle(
+              fontSize: 50,
+              fontFamily: "Nanum_2",
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
     );
   }

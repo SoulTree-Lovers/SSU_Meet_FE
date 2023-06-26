@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages/responsive_page.dart';
+import 'package:ssu_meet/pages/initial_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       //   primaryColor: const Color.fromARGB(255, 182, 222, 255),
       // ),
       // home: InitialPage(),
-      home: ResponsiveWebLayout(),
+      home: InitialPage(),
     );
   }
 }

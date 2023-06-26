@@ -12,10 +12,23 @@ class MobileLayout extends StatefulWidget {
 class _MobileLayoutState extends State<MobileLayout> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'This is the mobile layout',
-        style: TextStyle(fontSize: 20),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text(
+            "나만의 슝슝이를 찾아보자 !",
+            style: TextStyle(
+              fontFamily: "Ongeul",
+              fontSize: 30,
+            ),
+          ),
+          backgroundColor: Colors.blue[100],
+          foregroundColor: Colors.white,
+        ),
       ),
     );
   }
