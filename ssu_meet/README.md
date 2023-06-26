@@ -1,6 +1,8 @@
 # ssu_meet
 
-A new Flutter project.
+"포스트잇으로 정해지는 나의 인연"
+
+
 
 ## Getting Started
 
