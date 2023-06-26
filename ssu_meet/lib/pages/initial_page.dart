@@ -1,22 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/screens/home_screen.dart';
+import 'package:ssu_meet/pages/home_page.dart';
 
-class InitialScreen extends StatefulWidget {
-  const InitialScreen({super.key});
+class InitialPage extends StatefulWidget {
+  const InitialPage({super.key});
 
   @override
-  State<InitialScreen> createState() => _InitialScreenState();
+  State<InitialPage> createState() => _InitialPageState();
 }
 
-class _InitialScreenState extends State<InitialScreen> {
+class _InitialPageState extends State<InitialPage> {
   @override
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     });
   }
 
