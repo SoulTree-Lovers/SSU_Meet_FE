@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class MobileLayout extends StatefulWidget {
-  const MobileLayout({
+class PostItPage extends StatefulWidget {
+  const PostItPage({
     super.key,
   });
 
   @override
-  State<MobileLayout> createState() => _MobileLayoutState();
+  State<PostItPage> createState() => _PostItPageState();
 }
 
-class _MobileLayoutState extends State<MobileLayout> {
+class _PostItPageState extends State<PostItPage> {
   @override
   Widget build(BuildContext context) {
     int coinNumber = 3; // 테스트용
@@ -83,6 +83,9 @@ class _MobileLayoutState extends State<MobileLayout> {
                         print("등록버튼터치");
                       },
                       child: Container(
+                        alignment: Alignment.center,
+                        width: 70,
+                        height: 50,
                         margin: const EdgeInsets.all(10),
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -95,6 +98,8 @@ class _MobileLayoutState extends State<MobileLayout> {
                           "+ 등록",
                           style: TextStyle(
                             color: Colors.blue,
+                            fontFamily: "Ongeul",
+                            fontSize: 20,
                           ),
                         ),
                       ),
@@ -102,14 +107,7 @@ class _MobileLayoutState extends State<MobileLayout> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Container(
-                  width: screenWidth * 0.95,
-                  height: 1,
-                  color: Colors.black,
-                ),
-              ),
+              line(screenWidth),
               SizedBox(
                 height: screenHeight * 0.7,
                 child: GridView.builder(
@@ -137,9 +135,21 @@ class _MobileLayoutState extends State<MobileLayout> {
                   },
                 ),
               ),
+              line(screenWidth),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Padding line(double screenWidth) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Container(
+        width: screenWidth * 0.95,
+        height: 1,
+        color: Colors.black,
       ),
     );
   }
