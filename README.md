@@ -7,7 +7,7 @@
 
 <br> Running flutter doctor...
 <br> Doctor summary (to see all details, run flutter doctor -v):
-<br> [✓] Flutter (Channel stable, 3.10.5, on macOS 13.1 22C65 darwin-arm64, locale ko-KR)
+<br> [✓] Flutter (Channel stable, 3.10.6, on macOS 13.1 22C65 darwin-arm64, locale ko-KR)
 <br> [✓] Android toolchain - develop for Android devices (Android SDK version 33.0.1)
 <br> [✓] Xcode - develop for iOS and macOS (Xcode 14.3.1)
 <br> [✓] Chrome - develop for the web
