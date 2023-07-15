@@ -10,6 +10,9 @@ class TestMainPage extends StatefulWidget {
 class _TestMainPageState extends State<TestMainPage> {
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -50,6 +53,53 @@ class _TestMainPageState extends State<TestMainPage> {
                     ),
                   )
                 ],
+              ),
+            ),
+            SizedBox(
+              height: screenHeight * 0.7,
+              child: GridView.builder(
+                shrinkWrap: true,
+                itemCount: 100,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, //1 개의 행에 보여줄 item 개수
+                  childAspectRatio: 1 / 1, //item 의 가로 1, 세로 1 의 비율
+                  mainAxisSpacing: 10, //수평 Padding
+                  crossAxisSpacing: 10, //수직 Padding
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  // return Text(index.toString());
+                  return Center(
+                    child: SizedBox(
+                      height: screenWidth * 0.4,
+                      width: screenWidth * 0.4,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          // First image
+                          Positioned(
+                            // top: 0,
+                            // left: 0,
+                            child: Image.asset(
+                              'assets/images/yellow_post_it.png',
+                              width: screenWidth * 0.4,
+                              height: screenHeight * 0.4,
+                            ),
+                          ),
+                          // Second image overlapped on top of the first image
+                          Positioned(
+                            top: screenHeight * 0.035,
+                            // left: 0,
+                            child: Image.asset(
+                              'assets/images/tape.png',
+                              width: 50,
+                              height: 50,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
