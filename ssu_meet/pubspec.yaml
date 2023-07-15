@@ -2,7 +2,7 @@ name: ssu_meet
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.4 <3.0.0'
+  sdk: ">=2.19.4 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,7 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -52,7 +51,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -60,9 +58,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/post-it.png
-  
-
+    - assets/images/paper.png
+    - assets/images/blue.png
+    - assets/images/yellow.png
+    - assets/images/green.png
+    - assets/images/pink.png
+    - assets/images/tape1.png
+    - assets/images/tape2.png
+    - assets/images/rectangle.png
 
   fonts:
     - family: Nanum_1
@@ -76,27 +79,27 @@ flutter:
     - family: Nanum_3
       fonts:
         - asset: assets/fonts/Nanum_3.ttf
-    
+
     - family: Nanum_4
       fonts:
         - asset: assets/fonts/Nanum_4.ttf
-    
+
     - family: Nanum_5
       fonts:
         - asset: assets/fonts/Nanum_5.ttf
-    
+
     - family: Nanum_6
       fonts:
         - asset: assets/fonts/Nanum_6.ttf
-    
+
     - family: Nanum_7
       fonts:
         - asset: assets/fonts/Nanum_7.ttf
-    
+
     - family: Ongeul
       fonts:
         - asset: assets/fonts/Ongeul.ttf
-        
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
