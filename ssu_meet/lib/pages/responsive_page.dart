@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/info_page.dart';
 import 'package:ssu_meet/pages/my_page.dart';
 import 'package:ssu_meet/pages/test_main_page.dart';
+import 'login_page.dart';
 
 class ResponsiveWebLayout extends StatefulWidget {
   const ResponsiveWebLayout({super.key});
@@ -17,6 +18,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
     const InfoPage(),
     const TestMainPage(),
     const MyPage(),
+    const LoginPage(),
   ];
 
   @override
