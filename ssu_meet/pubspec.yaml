@@ -83,7 +83,8 @@ flutter:
     - assets/images/images2/submit3x.png
     - assets/images/images2/tape10.png
     - assets/images/images2/telephone.png
-    - assets/images/images2/yellow3.png
+    - assets/images/images2/yellowpostit.png
+
 
 
   fonts:
