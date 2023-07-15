@@ -15,7 +15,8 @@ class LoginPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover, image: AssetImage('assets/images/paper.png'))),
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images2/paper.png'))),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -37,7 +38,8 @@ class LoginPage extends StatelessWidget {
                           child: Transform.rotate(
                             angle: radians,
                             child: Image(
-                                image: AssetImage('assets/images/green.png')),
+                                image: AssetImage(
+                                    'assets/images/green_post_it.png')),
                           )),
                       Positioned(
                           width: 50,
@@ -53,7 +55,8 @@ class LoginPage extends StatelessWidget {
                           right: screenWidth / 4,
                           bottom: screenHeight / 100 - 60,
                           child: Image(
-                              image: AssetImage('assets/images/yellow.png'))),
+                              image: AssetImage(
+                                  'assets/images/yellow_post_it.png'))),
                       Positioned(
                           width: 50,
                           height: 50,

@@ -45,6 +45,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -59,13 +60,32 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/paper.png
-    - assets/images/blue.png
-    - assets/images/yellow.png
-    - assets/images/green.png
-    - assets/images/pink.png
     - assets/images/tape1.png
     - assets/images/tape2.png
     - assets/images/rectangle.png
+
+    - assets/images/post-it.png
+    - assets/images/info_page_icon.png
+    - assets/images/home_page_icon.png
+    - assets/images/my_page_icon.png
+    - assets/images/paper_background.png
+    - assets/images/yellow_post_it.png
+    - assets/images/pink_post_it.png
+    - assets/images/blue_post_it.png
+    - assets/images/green_post_it.png
+
+    - assets/images/images2/_예비.png
+    - assets/images/images2/appbar.png
+    - assets/images/images2/document-text.png
+    - assets/images/images2/home.png
+    - assets/images/images2/instagram.png
+    - assets/images/images2/kakao-talk.png
+    - assets/images/images2/paper.png
+    - assets/images/images2/Rectangle10.png
+    - assets/images/images2/submit3x.png
+    - assets/images/images2/tape10.png
+    - assets/images/images2/telephone.png
+    - assets/images/images2/yellowpostit.png
 
   fonts:
     - family: Nanum_1
@@ -99,6 +119,10 @@ flutter:
     - family: Ongeul
       fonts:
         - asset: assets/fonts/Ongeul.ttf
+
+    - family: Nanum_Ogbice
+      fonts:
+        - asset: assets/fonts/Nanum_Ogbice.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
