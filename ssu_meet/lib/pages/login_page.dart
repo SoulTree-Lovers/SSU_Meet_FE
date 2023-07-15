@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class LoginPage extends StatelessWidget {
       decoration: const BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('assets/images2/paper.png'))),
+              image: AssetImage('assets/images/paper_background.png'))),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
