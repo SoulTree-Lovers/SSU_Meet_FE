@@ -72,27 +72,24 @@ class _TestMainPageState extends State<TestMainPage> {
                     child: SizedBox(
                       height: screenWidth * 0.4,
                       width: screenWidth * 0.4,
-                      child: Stack(
+                      child: const Stack(
                         alignment: Alignment.center,
                         children: <Widget>[
                           // First image
-                          Positioned(
-                            // top: 0,
-                            // left: 0,
-                            child: Image.asset(
-                              'assets/images/yellow_post_it.png',
-                              width: screenWidth * 0.4,
-                              height: screenHeight * 0.4,
-                            ),
-                          ),
+
+                          Image(
+                              image: AssetImage(
+                                  "assets/images/images2/yellowpostit.png"),
+                              width: 250,
+                              height: 250),
+
                           // Second image overlapped on top of the first image
                           Positioned(
-                            top: screenHeight * 0.035,
-                            // left: 0,
-                            child: Image.asset(
-                              'assets/images/tape.png',
-                              width: 50,
-                              height: 50,
+                            left: 60,
+                            top: 0,
+                            child: Image(
+                              image: AssetImage(
+                                  "assets/images/images2/tape10.png"),
                             ),
                           ),
                         ],
