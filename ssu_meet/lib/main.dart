@@ -29,9 +29,9 @@ class MyApp extends StatelessWidget {
       //   primaryColor: const Color.fromARGB(255, 182, 222, 255),
       // ),
       // home: InitialPage(),
-      //home: ResponsiveWebLayout(),
+      home: ResponsiveWebLayout(),
       // home: LoginPage(),
-      home:InputProfile(),
+      //home:InputProfile(),
     );
   }
 }
