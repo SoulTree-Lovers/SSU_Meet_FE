@@ -11,6 +11,9 @@ class LoginPage extends StatelessWidget {
 
     double radians = 350 * math.pi / 180;
 
+    final TextEditingController _studentIdController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
@@ -123,7 +126,8 @@ class LoginPage extends StatelessWidget {
                                 blurRadius: 5,
                               )
                             ]),
-                        child: const TextField(
+                        child: TextField(
+                          controller: _studentIdController,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 20),
                             enabledBorder: InputBorder.none,
@@ -153,6 +157,7 @@ class LoginPage extends StatelessWidget {
                               )
                             ]),
                         child: TextField(
+                          controller: _passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.only(top: 20),
@@ -184,7 +189,11 @@ class LoginPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(40)),
                                 elevation: 0),
-                            onPressed: () {},
+                            onPressed: () {
+                              print(_studentIdController.text);
+                              print("\n");
+                              print(_passwordController.text);
+                            },
                             child: const Text(
                               "Login",
                               style: TextStyle(
