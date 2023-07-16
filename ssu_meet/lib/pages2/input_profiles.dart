@@ -28,31 +28,26 @@ class InputProfile extends StatefulWidget {
 }
 
 class _InputProfile extends State<InputProfile> {
-  List<String> Gender = ['선택하기', '남', '여'];
-  List<int> Age = [];
-  List<DropdownMenuItem<Item>> _Colleges = List.empty(growable: true);
-  List<DropdownMenuItem<Item>> _Majors = List.empty(growable: true);
-  List<DropdownMenuItem<ListTile>> Contacts = List.empty(growable: true);
+  List<String> gender = ['선택하기', '남', '여'];
+  List<DropdownMenuItem<Item>> colleges = List.empty(growable: true);
+  List<DropdownMenuItem<Item>> majors = List.empty(growable: true);
+  //List<DropdownMenuItem<ListTile>> contacts = List.empty(growable: true);
 
   String _gender = '';
   Item? _college;
   Item? _major;
   int? _height;
-  int? _age; /////////
+  int? _age;
   String? _contact;
 
   @override
   void initState() {
     super.initState();
-    _gender = Gender[0];
-    for (int i = 1990; i <= 2023; i++) {
-      Age.add(i);
-    }
-    _Colleges = Colleges().colleges;
-    _college = _Colleges[0].value;
-    _Majors = Majors(0).majors;
-    _major = _Majors[0].value;
-    //////////////
+    _gender = gender[0];
+    colleges = Colleges().colleges;
+    _college = colleges[0].value;
+    majors = Majors(0).majors;
+    _major = majors[0].value;
   }
 
   @override
@@ -137,7 +132,7 @@ class _InputProfile extends State<InputProfile> {
                                 height: 1,
                                 color: Colors.black,
                               ),
-                              items: Gender.map<DropdownMenuItem<String>>(
+                              items: gender.map<DropdownMenuItem<String>>(
                                   (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -166,16 +161,18 @@ class _InputProfile extends State<InputProfile> {
                             SizedBox(
                               width: 85,
                               height: 30,
-                              child: myFormField(
-                                key: const ValueKey(1),
-                                onSaved: (value) {
-                                  setState(
-                                    () {
-                                      _age = value;
-                                    },
-                                  );
+                              child: TextField(
+                                decoration: myInputDecoration("나이 입력"),
+                                cursorWidth: 1.5,
+                                cursorHeight: 12,
+                                cursorColor: Colors.black,
+                                style: const TextStyle(
+                                    fontSize: 22, fontFamily: "Nanum_Ogbice", color: Colors.black),
+                                onChanged: (val){
+                                  setState(() {
+                                    _age=int.parse(val);
+                                  });
                                 },
-                                hintText: (" MMMM 년생"),
                               ),
                             ),
                           ],
@@ -198,12 +195,12 @@ class _InputProfile extends State<InputProfile> {
                               underline:
                                   Container(height: 1, color: Colors.black),
                               style: myInputTextStyle(),
-                              items: _Colleges,
+                              items: colleges,
                               onChanged: (Item? newVal) {
                                 setState(() {
                                   _college = newVal;
-                                  _Majors = Majors(newVal!.ind).majors;
-                                  _major = _Majors[0].value;
+                                  majors = Majors(newVal!.ind).majors;
+                                  _major = majors[0].value;
                                 });
                               },
                             ),
@@ -219,7 +216,7 @@ class _InputProfile extends State<InputProfile> {
                             underline:
                                 Container(height: 1, color: Colors.black),
                             style: myInputTextStyle(),
-                            items: _Majors,
+                            items: majors,
                             onChanged: (newVal) {
                               setState(
                                 () {
@@ -246,16 +243,18 @@ class _InputProfile extends State<InputProfile> {
                             SizedBox(
                               width: 70,
                               height: 23,
-                              child: myFormField(
-                                key: const ValueKey(2),
-                                onSaved: (value) {
-                                  setState(
-                                    () {
-                                      _height = value;
-                                    },
-                                  );
+                              child: TextField(
+                                decoration: myInputDecoration("입력하기"),
+                                cursorWidth: 1.5,
+                                cursorHeight: 12,
+                                cursorColor: Colors.black,
+                                style: const TextStyle(
+                                    fontSize: 22, fontFamily: "Nanum_Ogbice", color: Colors.black),
+                                onChanged: (val){
+                                  setState(() {
+                                    _height=int.parse(val);
+                                  });
                                 },
-                                hintText: ("입력하기"),
                               ),
                             ),
                             const Text(
@@ -289,16 +288,18 @@ class _InputProfile extends State<InputProfile> {
                               SizedBox(
                                 width: 185,
                                 height: 24, //입력 칸 높이 조절
-                                child: myFormField(
-                                  key: const ValueKey(3),
-                                  onSaved: (value) {
-                                    setState(
-                                      () {
-                                        _contact = value;
-                                      },
-                                    );
+                                child: TextField(
+                                  decoration: myInputDecoration("입력하기"),
+                                  cursorWidth: 1.5,
+                                  cursorHeight: 12,
+                                  cursorColor: Colors.black,
+                                  style: const TextStyle(
+                                      fontSize: 22, fontFamily: "Nanum_Ogbice", color: Colors.black),
+                                  onChanged: (val){
+                                    setState(() {
+                                      _contact=val;
+                                    });
                                   },
-                                  hintText: ("입력하기"),
                                 ),
                               ),
                             ],
@@ -316,7 +317,7 @@ class _InputProfile extends State<InputProfile> {
                   borderRadius: BorderRadius.circular(50),
                   onTap: () {
                     print(
-                        "\n성별: $_gender\n 나이: $_age\n 학과: $_college $_major\n 키: $_height\n SNS: $_contact\n");
+                        "\n성별: $_gender\n나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\nSNS: $_contact\n");
                   },
                   child: Container(
                     width: 96,
@@ -349,33 +350,18 @@ TextStyle myInputTextStyle() {
   return const TextStyle(
       fontFamily: "Nanum_Ogbice", fontSize: 20, color: Colors.black);
 }
-
-class myFormField extends StatelessWidget {
-  final String hintText;
-  final FormFieldSetter? onSaved;
-  final FormFieldValidator? validator;
-
-  const myFormField(
-      {Key? key, required this.hintText, this.validator, this.onSaved})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      autovalidateMode: AutovalidateMode.always,
-      cursorColor: Colors.black,
-      style: const TextStyle(
-          fontSize: 22, fontFamily: "Nanum_Ogbice", color: Colors.black),
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: const TextStyle(fontSize: 19),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-        ),
+InputDecoration myInputDecoration(String hint){
+  return InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(fontSize: 19),
+      enabledBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
+      ),
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
       ),
     );
-  }
+
 }
+
+
