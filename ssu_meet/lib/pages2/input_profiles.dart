@@ -2,6 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/Majors.dart';
 
+/*class PersonProfile{
+  String _gender = '';
+  Item? _college;
+  Item? _major;
+  int? _height;
+  int? _age; /////////
+  String? _contact;
+
+  PersonProfile(String gender, int age,Item college,Item major, int height, String contact){
+    _gender=gender;
+    _age=age;
+    _college=college;
+    _major=major;
+    _height=height;
+    _contact=contact;
+  }
+}*/
+
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
 
@@ -81,13 +99,11 @@ class _InputProfile extends State<InputProfile> {
               //padding
               Stack(
                 children: [
-                  Container(
-                    child: const Image(
-                        image: AssetImage(
-                            "assets/images/images2/yellowpostit.png"),
-                        width: 350,
-                        height: 350),
-                  ),
+                  const Image(
+                      image:
+                          AssetImage("assets/images/images2/yellowpostit.png"),
+                      width: 350,
+                      height: 350),
                   const Positioned(
                     left: 135,
                     top: 10,
@@ -97,7 +113,7 @@ class _InputProfile extends State<InputProfile> {
                   ),
                   Positioned(
                     top: 60,
-                    left: 50,
+                    left: 47,
                     child: Wrap(
                       direction: Axis.vertical,
                       children: <Widget>[
@@ -137,7 +153,7 @@ class _InputProfile extends State<InputProfile> {
                               },
                             ),
                             const Padding(
-                              padding: EdgeInsets.only(left: 18),
+                              padding: EdgeInsets.only(left: 10),
                             ),
                             const Text(
                               "나이:",
@@ -145,40 +161,26 @@ class _InputProfile extends State<InputProfile> {
                                   fontFamily: "Nanum_Ogbice", fontSize: 23),
                             ),
                             const Padding(
-                              padding: EdgeInsets.only(left: 18),
+                              padding: EdgeInsets.only(left: 5),
                             ),
-                            DropdownButton<int>(
-                              value: _age,
-                              icon: const Icon(Icons.arrow_drop_down),
-                              iconSize: 20,
-                              style: myInputTextStyle(),
-                              alignment: Alignment.center,
-                              underline: Container(
-                                height: 1,
-                                color: Colors.black,
+                            SizedBox(
+                              width: 85,
+                              height: 30,
+                              child: myFormField(
+                                key: const ValueKey(1),
+                                onSaved: (value) {
+                                  setState(
+                                    () {
+                                      _age = value;
+                                    },
+                                  );
+                                },
+                                hintText: (" MMMM 년생"),
                               ),
-                              items:
-                                  Age.map<DropdownMenuItem<int>>((int value) {
-                                return DropdownMenuItem<int>(
-                                  value: value,
-                                  child: Text(
-                                    value.toString(),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (int? newVal) {
-                                setState(
-                                  () {
-                                    _age = newVal!;
-                                  },
-                                );
-                              },
                             ),
                           ],
                         ),
-                        // ignore: avoid_unnecessary_containers
-                        Container(
-                            child: Row(children: [
+                        Row(children: [
                           const Text(
                             "학과:",
                             style: TextStyle(
@@ -206,7 +208,7 @@ class _InputProfile extends State<InputProfile> {
                               },
                             ),
                           )
-                        ])),
+                        ]),
                         Container(
                           width: 230,
                           padding: const EdgeInsets.only(left: 47),
@@ -243,9 +245,9 @@ class _InputProfile extends State<InputProfile> {
                             ),
                             SizedBox(
                               width: 70,
-                              height: 21,
+                              height: 23,
                               child: myFormField(
-                                key: const ValueKey(1),
+                                key: const ValueKey(2),
                                 onSaved: (value) {
                                   setState(
                                     () {
@@ -286,9 +288,9 @@ class _InputProfile extends State<InputProfile> {
                               }),*/
                               SizedBox(
                                 width: 185,
-                                height: 18,
+                                height: 24, //입력 칸 높이 조절
                                 child: myFormField(
-                                  key: const ValueKey(1),
+                                  key: const ValueKey(3),
                                   onSaved: (value) {
                                     setState(
                                       () {
@@ -307,9 +309,11 @@ class _InputProfile extends State<InputProfile> {
                   ),
                 ],
               ),
-              Positioned(
-                // top: 500,
+              const Padding(padding: EdgeInsets.only(top: 30)),
+              Material(
+                color: Colors.transparent,
                 child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
                   onTap: () {
                     print(
                         "\n성별: $_gender\n 나이: $_age\n 학과: $_college $_major\n 키: $_height\n SNS: $_contact\n");
@@ -318,10 +322,11 @@ class _InputProfile extends State<InputProfile> {
                     width: 96,
                     height: 41,
                     decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/images2/submit3x.png"),
-                            fit: BoxFit.fill)),
+                      image: DecorationImage(
+                          image:
+                              AssetImage("assets/images/images2/submit3x.png"),
+                          fit: BoxFit.fill),
+                    ),
                     child: const Center(
                       child: Text(
                         "완료",
@@ -360,12 +365,14 @@ class myFormField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.always,
       cursorColor: Colors.black,
       style: const TextStyle(
-          fontSize: 19, fontFamily: "Nanum_Ogbice", color: Colors.black),
-      decoration: const InputDecoration(
-        enabledBorder: UnderlineInputBorder(
+          fontSize: 22, fontFamily: "Nanum_Ogbice", color: Colors.black),
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: const TextStyle(fontSize: 19),
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
       ),
