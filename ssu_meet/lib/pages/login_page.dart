@@ -29,105 +29,68 @@ class LoginPage extends StatelessWidget {
                   width: screenWidth,
                   height: screenHeight * 0.33,
                   child: Stack(
-                    alignment: Alignment.center,
+                    //alignment: Alignment.center,
                     children: [
                       Positioned(
-                        left: 130,
-                        top: -30,
-                        child: Transform.rotate(
-                          angle: radians,
-                          child: const Image(
-                              image: AssetImage(
-                                  'assets/images/green_post_it.png')),
-                        ),
-                      ),
-                      Positioned(
-                        left: 200,
-                        top: 25,
-                        child: Transform.rotate(
-                          angle: radians,
-                          child: const Image(
-                            width: 60,
-                            height: 60,
-                            image: AssetImage('assets/images/tape1.png'),
+                        left: 110,
+                        right: 150,
+                        top: -35,
+                        // bottom: 0,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Transform.rotate(
+                            angle: radians,
+                            child: const Image(
+                                image: AssetImage(
+                                    'assets/images/green_post_it.png')),
                           ),
                         ),
                       ),
                       Positioned(
-                        left: 160,
-                        top: 0,
-                        child: const Image(
-                            image:
-                                AssetImage('assets/images/yellow_post_it.png')),
+                        left: 195,
+                        right: 250,
+                        top: 20,
+                        //bottom: 140,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Transform.rotate(
+                            angle: radians,
+                            child: const Image(
+                              width: 60,
+                              height: 60,
+                              image: AssetImage('assets/images/tape1.png'),
+                            ),
+                          ),
+                        ),
                       ),
-                      Positioned(
-                        left: 240,
-                        top: 60,
-                        child: const Image(
-                            width: 60,
-                            height: 60,
-                            image: AssetImage('assets/images/tape2.png')),
+                      const Positioned(
+                        left: 160,
+                        right: 100,
+                        top: -20,
+                        //bottom: -45,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Image(
+                              image: AssetImage(
+                                  'assets/images/yellow_post_it.png')),
+                        ),
+                      ),
+                      const Positioned(
+                        left: 250,
+                        right: 190,
+                        top: 40,
+                        //bottom: 140,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: const Image(
+                              width: 60,
+                              height: 60,
+                              image: AssetImage('assets/images/tape2.png')),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                // Container(
-                //   width: screenWidth,
-                //   height: screenHeight * 0.33,
-                //   child: Stack(
-                //     alignment: Alignment.center,
-                //     children: [
-                //       Positioned.fill(
-                //           right: 40,
-                //           //bottom: 30,
-                //           child: Align(
-                //             alignment: Alignment.topCenter,
-                //             child: Transform.rotate(
-                //               angle: radians,
-                //               child: const Image(
-                //                   image: AssetImage(
-                //                       'assets/images/green_post_it.png')),
-                //             ),
-                //           )),
-                //       Positioned.fill(
-                //           right: 60,
-                //           top: 40,
-                //           child: Align(
-                //             alignment: Alignment.topCenter,
-                //             child: Container(
-                //               width: 45,
-                //               height: 40,
-                //               child: Transform.rotate(
-                //                 angle: radians,
-                //                 child: const Image(
-                //                     image:
-                //                         AssetImage('assets/images/tape1.png')),
-                //               ),
-                //             ),
-                //           )),
-                //       Positioned.fill(
-                //           left: 40,
-                //           child: Align(
-                //             alignment: Alignment.topCenter,
-                //             child: const Image(
-                //                 image: AssetImage(
-                //                     'assets/images/yellow_post_it.png')),
-                //           )),
-                //       Positioned.fill(
-                //           left: 40,
-                //           top: 50,
-                //           child: Align(
-                //             alignment: Alignment.topCenter,
-                //             child: Container(
-                //               width: 50,
-                //               height: 40,
-                //               child: const Image(
-                //                   image: AssetImage('assets/images/tape2.png')),
-                //             ),
-                //           ))
-                //     ],
-                //   ),
-                // ),
                 const SizedBox(height: 1),
                 Stack(children: [
                   Container(
