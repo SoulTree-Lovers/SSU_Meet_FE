@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 import 'package:ssu_meet/pages2/input_profiles.dart';
 
@@ -29,9 +30,9 @@ class MyApp extends StatelessWidget {
       //   primaryColor: const Color.fromARGB(255, 182, 222, 255),
       // ),
       // home: InitialPage(),
-      home: ResponsiveWebLayout(),
-      // home: LoginPage(),
-      //home:InputProfile(),
+      //home: ResponsiveWebLayout(),
+      home: LoginPage(),
+      //home: InputProfile(),
     );
   }
 }
