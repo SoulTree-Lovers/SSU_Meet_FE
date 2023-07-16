@@ -124,10 +124,11 @@ class _TestMainPageState extends State<TestMainPage> {
                                     ),
                                   ),
                                   Positioned(
-                                    top: 70,
+                                    top: 60,
+                                    left: 70,
                                     child: SizedBox(
-                                      height: 100,
-                                      width: 100,
+                                      height: 120,
+                                      width: 120,
                                       child: SingleChildScrollView(
                                         child: Column(
                                           crossAxisAlignment:
