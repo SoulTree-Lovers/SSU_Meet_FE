@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ssu_meet/dept_data/Majors.dart';
+import 'package:ssu_meet/dept_data/temp_majors.dart';
 
 /*class PersonProfile{
   String _gender = '';
