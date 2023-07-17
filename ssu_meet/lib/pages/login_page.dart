@@ -1,5 +1,10 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+final TextEditingController studentIdController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -10,9 +15,6 @@ class LoginPage extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     double radians = 350 * math.pi / 180;
-
-    final TextEditingController _studentIdController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
 
     return Container(
       decoration: const BoxDecoration(
@@ -28,7 +30,7 @@ class LoginPage extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: screenWidth,
                   height: screenHeight * 0.33,
                   child: Stack(
@@ -85,7 +87,7 @@ class LoginPage extends StatelessWidget {
                         //bottom: 140,
                         child: Align(
                           alignment: Alignment.center,
-                          child: const Image(
+                          child: Image(
                               width: 60,
                               height: 60,
                               image: AssetImage('assets/images/tape2.png')),
@@ -127,8 +129,8 @@ class LoginPage extends StatelessWidget {
                               )
                             ]),
                         child: TextField(
-                          controller: _studentIdController,
-                          decoration: InputDecoration(
+                          controller: studentIdController,
+                          decoration: const InputDecoration(
                             contentPadding: EdgeInsets.only(top: 20),
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -157,7 +159,7 @@ class LoginPage extends StatelessWidget {
                               )
                             ]),
                         child: TextField(
-                          controller: _passwordController,
+                          controller: passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.only(top: 20),
@@ -190,9 +192,10 @@ class LoginPage extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(40)),
                                 elevation: 0),
                             onPressed: () {
-                              print(_studentIdController.text);
+                              sendData();
+                              print(studentIdController.text);
                               print("\n");
-                              print(_passwordController.text);
+                              print(passwordController.text);
                             },
                             child: const Text(
                               "Login",
@@ -207,5 +210,38 @@ class LoginPage extends StatelessWidget {
             ),
           )),
     );
+  }
+}
+
+class MyData {
+  final String studentId;
+  final String pw;
+
+  MyData(this.studentId, this.pw);
+
+  Map<String, dynamic> toJson() => {
+        'studentId': studentId,
+        'pw': pw,
+      };
+}
+
+Future<void> sendData() async {
+  print("함수가 실행은 됐습니다.");
+  const url = 'http://localhost:8010/data';
+  final data = MyData(studentIdController.text, passwordController.text);
+  print('Sending JSON payload: ${json.encode(data.toJson())}');
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode(data.toJson()),
+  );
+
+  if (response.statusCode == 200) {
+    final responseData = json.decode(response.body);
+    final result = responseData;
+
+    print('Received response: $result');
+  } else {
+    print('Failed to send data. Error: ${response.statusCode}');
   }
 }
