@@ -109,27 +109,29 @@ class _TestMainPageState extends State<TestMainPage> {
                                   children: <Widget>[
                                     // First image
 
-                                    const Image(
-                                        image: AssetImage(
+                                    Image(
+                                        image: const AssetImage(
                                             "assets/images/images2/yellowpostit.png"),
-                                        width: 250,
-                                        height: 250),
+                                        width: screenWidth * 0.4,
+                                        height: screenWidth * 0.4),
 
                                     // Second image overlapped on top of the first image
-                                    const Positioned(
-                                      left: 80,
-                                      top: 0,
+                                    Positioned(
+                                      left: screenWidth * 0.1,
+                                      top: screenWidth * -0.07,
                                       child: Image(
-                                        image: AssetImage(
+                                        width: screenWidth * 0.2,
+                                        height: screenWidth * 0.2,
+                                        image: const AssetImage(
                                             "assets/images/images2/tape10.png"),
                                       ),
                                     ),
                                     Positioned(
-                                      top: 60,
-                                      left: 70,
+                                      top: screenWidth * 0.1,
+                                      left: screenWidth * 0.1,
                                       child: SizedBox(
-                                        height: 120,
-                                        width: 120,
+                                        height: screenWidth * 0.2,
+                                        width: screenWidth * 0.2,
                                         child: SingleChildScrollView(
                                           child: Column(
                                             crossAxisAlignment:
@@ -137,30 +139,30 @@ class _TestMainPageState extends State<TestMainPage> {
                                             children: [
                                               Text(
                                                 "닉네임: $nickname",
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontFamily: "Nanum_Ogbice",
-                                                  fontSize: 20,
+                                                  fontSize: screenWidth * 0.04,
                                                 ),
                                               ),
                                               Text(
                                                 "나이: $age",
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontFamily: "Nanum_Ogbice",
-                                                  fontSize: 20,
+                                                  fontSize: screenWidth * 0.04,
                                                 ),
                                               ),
                                               Text(
                                                 "MBTI: $mbti",
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontFamily: "Nanum_Ogbice",
-                                                  fontSize: 20,
+                                                  fontSize: screenWidth * 0.04,
                                                 ),
                                               ),
                                               Text(
                                                 "취미: $hobby",
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontFamily: "Nanum_Ogbice",
-                                                  fontSize: 20,
+                                                  fontSize: screenWidth * 0.04,
                                                 ),
                                               ),
                                             ],
