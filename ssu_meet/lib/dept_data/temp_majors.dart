@@ -41,8 +41,8 @@ class Majors {
         majors.add(DropdownMenuItem(value: Item('일어일문학과',7),child:const Text('일어일문학과'),));
         majors.add(DropdownMenuItem(value: Item('철학과',8),child:const Text('철학과'),));
         majors.add(DropdownMenuItem(value: Item('사학과',9),child:const Text('사학과'),));
-        majors.add(DropdownMenuItem(value: Item('예술창작부 문예창작전공',10),child:const Text('예술창작부 문예창작전공'),));
-        majors.add(DropdownMenuItem(value: Item('예술창작부 영화예술전공',11),child:const Text('예술창작부 영화예술전공'),));
+        majors.add(DropdownMenuItem(value: Item('예술창작부(문예창작)',10),child:const Text('예술창작부(문예창작)'),));
+        majors.add(DropdownMenuItem(value: Item('예술창작부(영화예술)',11),child:const Text('예술창작부(영화예술)'),));
         majors.add(DropdownMenuItem(value: Item('스포츠학부',12),child:const Text('스포츠학부'),));
         break;
       case 2:
