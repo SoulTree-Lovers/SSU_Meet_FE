@@ -227,7 +227,7 @@ class MyData {
 
 Future<void> sendData() async {
   print("함수가 실행은 됐습니다.");
-  const url = 'http://localhost:8010/data';
+  const url = 'http://localhost:8010/jsoup';
   final data = MyData(studentIdController.text, passwordController.text);
   print('Sending JSON payload: ${json.encode(data.toJson())}');
   final response = await http.post(
@@ -238,9 +238,16 @@ Future<void> sendData() async {
 
   if (response.statusCode == 200) {
     final responseData = json.decode(response.body);
-    final result = responseData;
-
-    print('Received response: $result');
+    final result =
+        responseData; // result 값은 유세인트 인증 여부에 따라 true or false 값으로 bool형태로 받음
+    if (result) {
+      //유세인트 인증에 성공한 경우
+      print("유세인트 인증 성공");
+    } else {
+      //유세인트 인증에 실패한 경우
+      print("로그인 정보가 잘못되었습니다.");
+    }
+    // print('Received response: $result');
   } else {
     print('Failed to send data. Error: ${response.statusCode}');
   }
