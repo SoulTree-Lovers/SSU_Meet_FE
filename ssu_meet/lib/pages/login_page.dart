@@ -18,116 +18,126 @@ class LoginPage extends StatelessWidget {
 
     return Container(
       decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/images/paper_background.png'))),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('assets/images/paper_background.png'),
+        ),
+      ),
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: const Color(0xffEFEFEF),
-            elevation: 0,
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: screenWidth,
-                  height: screenHeight * 0.33,
-                  child: Stack(
-                    //alignment: Alignment.center,
-                    children: [
-                      Positioned(
-                        left: 110,
-                        right: 150,
-                        top: -35,
-                        // bottom: 0,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Transform.rotate(
-                            angle: radians,
-                            child: const Image(
-                                image: AssetImage(
-                                    'assets/images/green_post_it.png')),
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: const Color(0xffEFEFEF),
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                width: screenWidth,
+                height: screenHeight * 0.33,
+                child: Stack(
+                  //alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      left: 110,
+                      right: 150,
+                      top: -35,
+                      // bottom: 0,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Transform.rotate(
+                          angle: radians,
+                          child: const Image(
+                            image:
+                                AssetImage('assets/images/green_post_it.png'),
                           ),
                         ),
                       ),
-                      Positioned(
-                        left: 195,
-                        right: 250,
-                        top: 20,
-                        //bottom: 140,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Transform.rotate(
-                            angle: radians,
-                            child: const Image(
-                              width: 60,
-                              height: 60,
-                              image: AssetImage('assets/images/tape1.png'),
-                            ),
+                    ),
+                    Positioned(
+                      left: 195,
+                      right: 250,
+                      top: 20,
+                      //bottom: 140,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Transform.rotate(
+                          angle: radians,
+                          child: const Image(
+                            width: 60,
+                            height: 60,
+                            image: AssetImage('assets/images/tape1.png'),
                           ),
                         ),
                       ),
-                      const Positioned(
-                        left: 160,
-                        right: 100,
-                        top: -20,
-                        //bottom: -45,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Image(
-                              image: AssetImage(
-                                  'assets/images/yellow_post_it.png')),
+                    ),
+                    const Positioned(
+                      left: 160,
+                      right: 100,
+                      top: -20,
+                      //bottom: -45,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Image(
+                          image: AssetImage('assets/images/yellow_post_it.png'),
                         ),
                       ),
-                      const Positioned(
-                        left: 250,
-                        right: 190,
-                        top: 40,
-                        //bottom: 140,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Image(
-                              width: 60,
-                              height: 60,
-                              image: AssetImage('assets/images/tape2.png')),
+                    ),
+                    const Positioned(
+                      left: 250,
+                      right: 190,
+                      top: 40,
+                      //bottom: 140,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Image(
+                          width: 60,
+                          height: 60,
+                          image: AssetImage('assets/images/tape2.png'),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 1),
-                Stack(children: [
+              ),
+              const SizedBox(height: 1),
+              Stack(
+                children: [
                   Container(
                     width: screenWidth,
                     height: screenHeight * 0.66,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/rectangle.png'))),
+                      borderRadius: BorderRadius.circular(50),
+                      image: const DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('assets/images/rectangle.png'),
+                      ),
+                    ),
                   ),
                   Column(
                     children: [
                       const SizedBox(height: 55),
                       const Text(
                         "Login",
-                        style:
-                            TextStyle(fontSize: 22, color: Color(0xffA9A8A8)),
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Color(0xffA9A8A8),
+                        ),
                       ),
                       const SizedBox(height: 40),
                       Container(
                         margin: const EdgeInsets.only(left: 60, right: 60),
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 5,
-                                blurRadius: 5,
-                              )
-                            ]),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 5,
+                              blurRadius: 5,
+                            )
+                          ],
+                        ),
                         child: TextField(
                           controller: studentIdController,
                           decoration: const InputDecoration(
@@ -149,15 +159,16 @@ class LoginPage extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(left: 60, right: 60),
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 5,
-                                blurRadius: 5,
-                              )
-                            ]),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 5,
+                              blurRadius: 5,
+                            )
+                          ],
+                        ),
                         child: TextField(
                           controller: passwordController,
                           obscureText: true,
@@ -184,31 +195,38 @@ class LoginPage extends StatelessWidget {
                         width: screenWidth / 6 + 10,
                         height: 35,
                         child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                side:
-                                    const BorderSide(color: Color(0xff8E8E8E)),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)),
-                                elevation: 0),
-                            onPressed: () {
-                              sendData();
-                              print(studentIdController.text);
-                              print("\n");
-                              print(passwordController.text);
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                  fontSize: 12, color: Color(0xff8E8E8E)),
-                            )),
+                          style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              side: const BorderSide(
+                                color: Color(0xff8E8E8E),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              elevation: 0),
+                          onPressed: () {
+                            sendData();
+                            print(studentIdController.text);
+                            print("\n");
+                            print(passwordController.text);
+                          },
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xff8E8E8E),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   )
-                ])
-              ],
-            ),
-          )),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

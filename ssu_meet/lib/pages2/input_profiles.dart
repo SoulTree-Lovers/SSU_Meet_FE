@@ -71,8 +71,9 @@ class _InputProfile extends State<InputProfile> {
             flexibleSpace: Container(
               decoration: BoxDecoration(
                 border: Border(
-                    bottom: BorderSide(
-                        color: Colors.black12, width: screenHeight * 0.002)),
+                  bottom: BorderSide(
+                      color: Colors.black12, width: screenHeight * 0.002),
+                ),
                 image: const DecorationImage(
                     image: AssetImage("assets/images/images2/appbar.png"),
                     fit: BoxFit.fill),
@@ -85,25 +86,32 @@ class _InputProfile extends State<InputProfile> {
         width: screenWidth,
         height: screenHeight,
         decoration: const BoxDecoration(
-            //배경이미지
-            image: DecorationImage(
-                image: AssetImage("assets/images/images2/paper.png"),
-                fit: BoxFit.fill)),
+          //배경이미지
+          image: DecorationImage(
+              image: AssetImage("assets/images/images2/paper.png"),
+              fit: BoxFit.fill),
+        ),
         child: SingleChildScrollView(
           child: Form(
             key: formKey,
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: screenHeight * 0.08)),
-                Text("기본 정보를 등록해주세요!",
-                    style: TextStyle(
-                        fontFamily: "Nanum_Ogbice",
-                        fontSize: screenWidth * 0.1)),
-                Padding(padding: EdgeInsets.only(top: screenHeight * 0.02)),
-                Text("*구매할 경우 보이는 정보입니다.",
-                    style: TextStyle(
-                        fontFamily: "Nanum_Ogbice",
-                        fontSize: screenWidth * 0.05)),
+                Padding(
+                  padding: EdgeInsets.only(top: screenHeight * 0.08),
+                ),
+                Text(
+                  "기본 정보를 등록해주세요!",
+                  style: TextStyle(
+                      fontFamily: "Nanum_Ogbice", fontSize: screenWidth * 0.1),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: screenHeight * 0.02),
+                ),
+                Text(
+                  "*구매할 경우 보이는 정보입니다.",
+                  style: TextStyle(
+                      fontFamily: "Nanum_Ogbice", fontSize: screenWidth * 0.05),
+                ),
                 Stack(
                   alignment: Alignment.center,
                   children: [
@@ -157,14 +165,15 @@ class _InputProfile extends State<InputProfile> {
                                         height: screenWidth * 0.001, //밑줄두께
                                         color: Colors.black,
                                       ),
-                                      items: gender
-                                          .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
+                                      items:
+                                          gender.map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        },
+                                      ).toList(),
                                       onChanged: (String? newVal) {
                                         setState(
                                           () {
@@ -199,11 +208,13 @@ class _InputProfile extends State<InputProfile> {
                                       style: DropdownTextStyle(screenWidth),
                                       items: colleges,
                                       onChanged: (Item? newVal) {
-                                        setState(() {
-                                          _college = newVal;
-                                          majors = Majors(newVal!.ind).majors;
-                                          _major = majors[0].value;
-                                        });
+                                        setState(
+                                          () {
+                                            _college = newVal;
+                                            majors = Majors(newVal!.ind).majors;
+                                            _major = majors[0].value;
+                                          },
+                                        );
                                       },
                                     ),
                                   ],
@@ -255,8 +266,9 @@ class _InputProfile extends State<InputProfile> {
                                           fontSize: screenWidth * 0.05),
                                     ),
                                     Padding(
-                                        padding: EdgeInsets.only(
-                                            left: screenWidth * 0.024)),
+                                      padding: EdgeInsets.only(
+                                          left: screenWidth * 0.024),
+                                    ),
                                     SizedBox(
                                       width: screenWidth * 0.16, //입력 밑줄 길이 조절
                                       child: MyFormField(
@@ -268,23 +280,27 @@ class _InputProfile extends State<InputProfile> {
                                           return null;
                                         },
                                         onSaved: (val) {
-                                          setState(() {
-                                            _height = int.parse(val);
-                                          });
+                                          setState(
+                                            () {
+                                              _height = int.parse(val);
+                                            },
+                                          );
                                         },
                                       ),
                                     ),
                                     Text(
                                       " 세",
                                       style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.04),
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.04,
+                                      ),
                                     ),
                                     Text(
                                       "  키: ",
                                       style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.05),
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.05,
+                                      ),
                                     ),
                                     // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
                                     SizedBox(
@@ -298,17 +314,20 @@ class _InputProfile extends State<InputProfile> {
                                           return null;
                                         },
                                         onSaved: (val) {
-                                          setState(() {
-                                            _height = int.parse(val);
-                                          });
+                                          setState(
+                                            () {
+                                              _height = int.parse(val);
+                                            },
+                                          );
                                         },
                                       ),
                                     ),
                                     Text(
                                       " cm",
                                       style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.04),
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.04,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -323,8 +342,9 @@ class _InputProfile extends State<InputProfile> {
                                     Text(
                                       "SNS: ",
                                       style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.05),
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.05,
+                                      ),
                                     ),
                                     Flexible(
                                       child: MyFormField(
@@ -336,9 +356,11 @@ class _InputProfile extends State<InputProfile> {
                                           return null;
                                         },
                                         onSaved: (val) {
-                                          setState(() {
-                                            contacts[0] = val;
-                                          });
+                                          setState(
+                                            () {
+                                              contacts[0] = val;
+                                            },
+                                          );
                                         },
                                       ),
                                     ),
@@ -351,8 +373,9 @@ class _InputProfile extends State<InputProfile> {
                                 width: screenWidth * 0.5,
                                 height: screenWidth * 0.07,
                                 child: Container(
-                                  padding:
-                                      EdgeInsets.only(left: screenWidth * 0.09),
+                                  padding: EdgeInsets.only(
+                                    left: screenWidth * 0.09,
+                                  ),
                                   child: MyFormField(
                                     key: const ValueKey(3),
                                     hintText: "2.카카오(임시)",
@@ -362,9 +385,11 @@ class _InputProfile extends State<InputProfile> {
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      setState(() {
-                                        contacts[1] = val;
-                                      });
+                                      setState(
+                                        () {
+                                          contacts[1] = val;
+                                        },
+                                      );
                                     },
                                   ),
                                 ),
@@ -375,8 +400,9 @@ class _InputProfile extends State<InputProfile> {
                                 width: screenWidth * 0.5,
                                 height: screenWidth * 0.07,
                                 child: Container(
-                                  padding:
-                                      EdgeInsets.only(left: screenWidth * 0.09),
+                                  padding: EdgeInsets.only(
+                                    left: screenWidth * 0.09,
+                                  ),
                                   child: MyFormField(
                                     key: const ValueKey(3),
                                     hintText: "3.번호(임시)",
@@ -386,22 +412,27 @@ class _InputProfile extends State<InputProfile> {
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      setState(() {
-                                        contacts[2] = val;
-                                      });
+                                      setState(
+                                        () {
+                                          contacts[2] = val;
+                                        },
+                                      );
                                     },
                                   ),
                                 ),
                               ),
                             ),
                             Padding(
-                                padding:
-                                    EdgeInsets.only(top: screenWidth * 0.01)),
+                              padding: EdgeInsets.only(
+                                top: screenWidth * 0.01,
+                              ),
+                            ),
                             Text(
                               "셋 중 하나 이상 필수로 입력해주세요.",
                               style: TextStyle(
-                                  fontSize: 0.02 * screenWidth,
-                                  color: Colors.teal),
+                                fontSize: 0.02 * screenWidth,
+                                color: Colors.teal,
+                              ),
                             )
                           ],
                         ),
@@ -409,7 +440,11 @@ class _InputProfile extends State<InputProfile> {
                     ),
                   ],
                 ),
-                Padding(padding: EdgeInsets.only(top: screenWidth * 0.1)),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: screenWidth * 0.1,
+                  ),
+                ),
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -423,16 +458,19 @@ class _InputProfile extends State<InputProfile> {
                       height: screenWidth * 0.1,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/images2/submit3x.png"),
-                            fit: BoxFit.contain),
+                          image: AssetImage(
+                            "assets/images/images2/submit3x.png",
+                          ),
+                          fit: BoxFit.contain,
+                        ),
                       ),
                       child: Center(
                         child: Text(
                           "완료",
                           style: TextStyle(
-                              fontSize: screenWidth * 0.06,
-                              fontFamily: "Nanum_Ogbice"),
+                            fontSize: screenWidth * 0.06,
+                            fontFamily: "Nanum_Ogbice",
+                          ),
                         ),
                       ),
                     ),
@@ -469,23 +507,32 @@ class MyFormField extends StatelessWidget {
       cursorHeight: screenWidth * 0.03,
       cursorColor: Colors.black,
       style: TextStyle(
-          fontSize: screenWidth * 0.05,
-          fontFamily: "Nanum_Ogbice",
-          color: Colors.black),
+        fontSize: screenWidth * 0.05,
+        fontFamily: "Nanum_Ogbice",
+        color: Colors.black,
+      ),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(fontSize: screenWidth * 0.04),
+        hintStyle: TextStyle(
+          fontSize: screenWidth * 0.04,
+        ),
         disabledBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: screenWidth * 0.0015,
+          ),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: screenWidth * 0.0015,
+          ),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: screenWidth * 0.0015,
+          ),
         ),
       ),
       validator: validator,
@@ -497,7 +544,8 @@ class MyFormField extends StatelessWidget {
 
 TextStyle DropdownTextStyle(double screenWidth) {
   return TextStyle(
-      fontFamily: "Nanum_Ogbice",
-      fontSize: screenWidth * 0.04,
-      color: Colors.black);
+    fontFamily: "Nanum_Ogbice",
+    fontSize: screenWidth * 0.04,
+    color: Colors.black,
+  );
 }
