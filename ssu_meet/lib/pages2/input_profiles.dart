@@ -2,24 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 
-/*class PersonProfile{
-  String _gender = '';
-  Item? _college;
-  Item? _major;
-  int? _height;
-  int? _age; /////////
-  String? _contact;
-
-  PersonProfile(String gender, int age,Item college,Item major, int height, String contact){
-    _gender=gender;
-    _age=age;
-    _college=college;
-    _major=major;
-    _height=height;
-    _contact=contact;
-  }
-}*/
-
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
 
@@ -31,18 +13,15 @@ class _InputProfile extends State<InputProfile> {
   List<String> gender = ["선택하기", '남', '여'];
   List<DropdownMenuItem<Item>> colleges = List.empty(growable: true);
   List<DropdownMenuItem<Item>> majors = List.empty(growable: true);
-  List<String> contacts = [];
+  List<String> contacts = ['', '', '']; //연락처(인스타, 카카오, 전화번호)
 
-  final formKey = GlobalKey();
+  final formKey = GlobalKey<FormState>();
 
-  //List<DropdownMenuItem<ListTile>> contacts = List.empty(growable: true);
-
-  String _gender = '';
-  Item? _college;
-  Item? _major;
-  int? _height;
-  int? _age;
-  String? _contact;
+  String? _gender; //성별
+  Item? _college; //단과대
+  Item? _major; //전공
+  int? _height; //키
+  int? _age; //나이
 
   @override
   void initState() {
@@ -134,7 +113,7 @@ class _InputProfile extends State<InputProfile> {
                     ),
                     Positioned(
                       //텍스트 위치 조정
-                      top: screenWidth * 0.1,
+                      top: screenWidth * 0.11,
                       left: screenWidth * 0.15,
                       child: SizedBox(
                         width: screenWidth * 0.8,
@@ -146,7 +125,7 @@ class _InputProfile extends State<InputProfile> {
                             Flexible(
                               child: SizedBox(
                                 width: screenWidth * 0.8,
-                                height: screenWidth * 0.1,
+                                height: screenWidth * 0.08,
                                 child: Row(
                                   children: [
                                     Text(
@@ -162,7 +141,7 @@ class _InputProfile extends State<InputProfile> {
                                       style: DropdownTextStyle(screenWidth),
                                       alignment: Alignment.center,
                                       underline: Container(
-                                        height: screenWidth * 0.001, //밑줄두께
+                                        height: screenWidth * 0.0015, //밑줄두께
                                         color: Colors.black,
                                       ),
                                       items:
@@ -189,7 +168,7 @@ class _InputProfile extends State<InputProfile> {
                             Flexible(
                               child: SizedBox(
                                 width: screenWidth * 0.8,
-                                height: screenWidth * 0.1,
+                                height: screenWidth * 0.08,
                                 child: Row(
                                   children: [
                                     Text(
@@ -224,7 +203,7 @@ class _InputProfile extends State<InputProfile> {
                             Flexible(
                               child: SizedBox(
                                 width: screenWidth * 0.8,
-                                height: screenWidth * 0.1,
+                                height: screenWidth * 0.08,
                                 child: Row(
                                   children: [
                                     Padding(
@@ -255,7 +234,7 @@ class _InputProfile extends State<InputProfile> {
                             Flexible(
                               child: SizedBox(
                                 width: screenWidth * 0.8,
-                                height: screenWidth * 0.06,
+                                height: screenWidth * 0.1,
                                 child: Row(
                                   textBaseline: TextBaseline.alphabetic,
                                   children: [
@@ -270,21 +249,20 @@ class _InputProfile extends State<InputProfile> {
                                           left: screenWidth * 0.024),
                                     ),
                                     SizedBox(
-                                      width: screenWidth * 0.16, //입력 밑줄 길이 조절
+                                      width: screenWidth * 0.16, //입력칸 너비 조절
                                       child: MyFormField(
-                                        key: const ValueKey(2),
+                                        key: const ValueKey(1),
                                         hintText: "만 나이 입력",
                                         screenWidth: screenWidth,
                                         validator: (val) {
-                                          if (val == null) return ("필수 입력");
+                                          if (val == '' || val!.isEmpty)
+                                            return "필수입력";
                                           return null;
                                         },
                                         onSaved: (val) {
-                                          setState(
-                                            () {
-                                              _height = int.parse(val);
-                                            },
-                                          );
+                                          setState(() {
+                                            _age = int.parse(val);
+                                          });
                                         },
                                       ),
                                     ),
@@ -304,13 +282,14 @@ class _InputProfile extends State<InputProfile> {
                                     ),
                                     // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
                                     SizedBox(
-                                      width: screenWidth * 0.13, //입력 밑줄 길이 조절
+                                      width: screenWidth * 0.13, //입력 칸 너비 조절
                                       child: MyFormField(
                                         key: const ValueKey(2),
                                         hintText: "입력하기",
                                         screenWidth: screenWidth,
                                         validator: (val) {
-                                          if (val == null) return ("필수 입력");
+                                          if (val == '' || val!.isEmpty)
+                                            return "필수입력";
                                           return null;
                                         },
                                         onSaved: (val) {
@@ -349,12 +328,14 @@ class _InputProfile extends State<InputProfile> {
                                     Flexible(
                                       child: MyFormField(
                                         key: const ValueKey(3),
-                                        hintText: "1.인스타(임시)",
-                                        screenWidth: screenWidth,
+                                        hintText: "1.인스타",
                                         validator: (val) {
-                                          if (val == null) return ("필수 입력");
-                                          return null;
+                                          if (val != '') {
+                                            //유효한 경우
+                                            contacts[0] = val;
+                                          }
                                         },
+                                        screenWidth: screenWidth,
                                         onSaved: (val) {
                                           setState(
                                             () {
@@ -377,12 +358,13 @@ class _InputProfile extends State<InputProfile> {
                                     left: screenWidth * 0.09,
                                   ),
                                   child: MyFormField(
-                                    key: const ValueKey(3),
-                                    hintText: "2.카카오(임시)",
+                                    key: const ValueKey(4),
+                                    hintText: "2.카카오",
                                     screenWidth: screenWidth,
                                     validator: (val) {
-                                      if (val == null) return ("필수 입력");
-                                      return null;
+                                      if (val != '') {
+                                        contacts[1] = val;
+                                      }
                                     },
                                     onSaved: (val) {
                                       setState(
@@ -404,12 +386,16 @@ class _InputProfile extends State<InputProfile> {
                                     left: screenWidth * 0.09,
                                   ),
                                   child: MyFormField(
-                                    key: const ValueKey(3),
-                                    hintText: "3.번호(임시)",
+                                    key: const ValueKey(5),
+                                    hintText: "3.전화번호",
                                     screenWidth: screenWidth,
                                     validator: (val) {
-                                      if (val == null) return ("필수 입력");
-                                      return null;
+                                      if (contacts[0] != '' ||
+                                          contacts[1] != '' ||
+                                          val != '') {
+                                        contacts[2] = val;
+                                        return null;
+                                      }
                                     },
                                     onSaved: (val) {
                                       setState(
@@ -423,16 +409,13 @@ class _InputProfile extends State<InputProfile> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(
-                                top: screenWidth * 0.01,
-                              ),
-                            ),
+                                padding:
+                                    EdgeInsets.only(top: screenWidth * 0.015)),
                             Text(
-                              "셋 중 하나 이상 필수로 입력해주세요.",
+                              "*SNS는 셋 중 하나 이상 필수로 입력해주세요.",
                               style: TextStyle(
-                                fontSize: 0.02 * screenWidth,
-                                color: Colors.teal,
-                              ),
+                                  fontSize: 0.02 * screenWidth,
+                                  color: Colors.red),
                             )
                           ],
                         ),
@@ -450,8 +433,21 @@ class _InputProfile extends State<InputProfile> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
+                        /*다음 단계로 넘어가기 전, sns 한번 더 if문으로 검사 필요
+                        if(contacts[0]!=''||contacts[1]!=''||contacts[2]!='')
+                        ---->>넘어갈 수 있음
+                        */
+                      } else {
+                        print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
+                        _height = null;
+                        _age = null;
+                        contacts = ['', '', ''];
+                      }
                       print(
-                          "\n성별: $_gender\n나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\nSNS: $_contact\n");
+                          "성별: $_gender\n나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\n"
+                          "SNS: (인스타: ${contacts[0]} 카카오: ${contacts[1]} 전화번호: ${contacts[2]})\n");
                     },
                     child: Container(
                       width: screenWidth * 0.2,
@@ -512,9 +508,22 @@ class MyFormField extends StatelessWidget {
         color: Colors.black,
       ),
       decoration: InputDecoration(
+        errorStyle: TextStyle(fontSize: screenWidth * 0.02),
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: screenWidth * 0.04,
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+                  color: Colors.black,
+                  width: screenWidth * 0.0015
+              ),
+        ),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+                  color: Colors.black,
+                  width: screenWidth * 0.0015
+              ),
         ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -537,7 +546,7 @@ class MyFormField extends StatelessWidget {
       ),
       validator: validator,
       onSaved: onSaved,
-      autovalidateMode: AutovalidateMode.always,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
 }
