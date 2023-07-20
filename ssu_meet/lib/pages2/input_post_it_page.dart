@@ -9,20 +9,31 @@ class InputPostIt extends StatefulWidget {
 }
 
 class _InputPostIt extends State<InputPostIt> {
-  List<String> mbti_list=[
-    'ENFP','ENFJ','ENTP','ENTJ',
-    'ESFP','ESFJ','ESTP','ESTJ',
-    'INFP','INFJ','INTP','INTJ',
-    'ISFP','ISFJ','ISTP','ISTJ'
+  List<String> mbti_list = [
+    'ENFP',
+    'ENFJ',
+    'ENTP',
+    'ENTJ',
+    'ESFP',
+    'ESFJ',
+    'ESTP',
+    'ESTJ',
+    'INFP',
+    'INFJ',
+    'INTP',
+    'INTJ',
+    'ISFP',
+    'ISFJ',
+    'ISTP',
+    'ISTJ'
   ];
-  List<String> ideal_list=[];
+  List<String> ideal_list = [];
 
   final formKey = GlobalKey<FormState>();
   String? _nikname;
   String? _mbti;
   String? _hobby;
   String? _myself;
-
 
   @override
   void initState() {
@@ -47,11 +58,16 @@ class _InputPostIt extends State<InputPostIt> {
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                      color: Colors.black12, width: screenHeight * 0.002),
+                    color: Colors.black12,
+                    width: screenHeight * 0.002,
+                  ),
                 ),
                 image: const DecorationImage(
-                    image: AssetImage("assets/images/images2/appbar.png"),
-                    fit: BoxFit.fill),
+                  image: AssetImage(
+                    "assets/images/images2/appbar.png",
+                  ),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),
@@ -60,47 +76,64 @@ class _InputPostIt extends State<InputPostIt> {
       body: SingleChildScrollView(
         child: Container(
           width: screenWidth,
-          height: screenWidth*2,
+          height: screenWidth * 2,
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/images/images2/paper.png"),
-                fit: BoxFit.fill),
+              image: AssetImage(
+                "assets/images/images2/paper.png",
+              ),
+              fit: BoxFit.fill,
+            ),
           ),
           child: Form(
             key: formKey,
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: screenHeight * 0.07),
+                  padding: EdgeInsets.only(
+                    top: screenHeight * 0.07,
+                  ),
                 ),
                 Text(
                   "자신을 소개할 내용을 등록해주세요!",
                   style: TextStyle(
-                      fontFamily: "Nanum_Ogbice", fontSize: screenWidth * 0.08),
+                    fontFamily: "Nanum_Ogbice",
+                    fontSize: screenWidth * 0.08,
+                  ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: screenHeight * 0.02),
+                  padding: EdgeInsets.only(
+                    top: screenHeight * 0.02,
+                  ),
                 ),
                 Text(
                   "*추후 수정이 불가하니 신중히 입력 바랍니다.",
                   style: TextStyle(
-                      fontFamily: "Nanum_Ogbice", fontSize: screenWidth * 0.048),
+                    fontFamily: "Nanum_Ogbice",
+                    fontSize: screenWidth * 0.048,
+                  ),
                 ),
-                Padding(padding: EdgeInsets.only(top:screenWidth*0.07)),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: screenWidth * 0.07,
+                  ),
+                ),
                 Stack(
                   children: [
                     Image(
-                        width: screenWidth*0.9,
-                        height: screenWidth,
-                        image: const AssetImage(
-                            "assets/images/images2/yellowpostit2.png"
+                      width: screenWidth * 0.9,
+                      height: screenWidth,
+                      image: const AssetImage(
+                        "assets/images/images2/yellowpostit2.png",
+                      ),
                     ),
-                    ),
-
-
-        ],
-            ),
-                Padding(padding: EdgeInsets.only(top:screenWidth*0.07)),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: screenWidth * 0.07,
+                  ),
+                ),
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -133,10 +166,10 @@ class _InputPostIt extends State<InputPostIt> {
                     onTap: () {},
                   ),
                 ),
-          ],
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }

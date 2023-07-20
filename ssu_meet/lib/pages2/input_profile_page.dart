@@ -352,6 +352,7 @@ class _InputProfile extends State<InputProfile> {
                                                   //유효한 경우
                                                   contacts[0] = val;
                                                 }
+                                                return null;
                                               },
                                               screenWidth: screenWidth,
                                               onSaved: (val) {
@@ -383,6 +384,7 @@ class _InputProfile extends State<InputProfile> {
                                             if (val != '') {
                                               contacts[1] = val;
                                             }
+                                            return null;
                                           },
                                           onSaved: (val) {
                                             setState(
@@ -414,6 +416,7 @@ class _InputProfile extends State<InputProfile> {
                                               contacts[2] = val;
                                               return null;
                                             }
+                                            return null;
                                           },
                                           onSaved: (val) {
                                             setState(
