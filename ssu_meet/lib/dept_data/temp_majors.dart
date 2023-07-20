@@ -20,6 +20,7 @@ class Colleges{
     colleges.add(DropdownMenuItem(value: Item('공과대학',7), child: const Text('공과대학')));
     colleges.add(DropdownMenuItem(value: Item('IT대학',8), child: const Text('IT대학')));
     colleges.add(DropdownMenuItem(value: Item('융합특성화자유전공학부',9), child: const Text('융합특성화자유전공학부')));
+    colleges.add(DropdownMenuItem(value: Item('차세대반도체학과',10), child: const Text('차세대반도체학과')));
   }
 }
 class Majors {
@@ -27,9 +28,6 @@ class Majors {
   Majors(int i) {
 
     switch(i){
-      case 0:
-        majors.add(DropdownMenuItem(value: Item('학과(부)',0),child:const Text('학과(부)'),));
-        break;
       case 1:
         majors.add(DropdownMenuItem(value: Item('선택하기',0),child:const Text('선택하기'),));
         majors.add(DropdownMenuItem(value: Item('기독교학과',1),child:const Text('기독교학과'),));
@@ -64,7 +62,10 @@ class Majors {
         majors.add(DropdownMenuItem(value: Item('경영학부',1),child:const Text('경영학부'),));
         majors.add(DropdownMenuItem(value: Item('회계학과',2),child:const Text('회계학과'),));
         majors.add(DropdownMenuItem(value: Item('벤처중소기업학과',3),child:const Text('벤처중소기업학과'),));
-        majors.add(DropdownMenuItem(value: Item('금융학부',4),child:const Text('금융학부'),));
+        majors.add(DropdownMenuItem(value: Item('혁신경영학과',4),child:const Text('혁신경영학과'),));
+        majors.add(DropdownMenuItem(value: Item('벤처경영학과',5),child:const Text('벤처경영학과'),));
+        majors.add(DropdownMenuItem(value: Item('복지경영학과',6),child:const Text('복지경영학과'),));
+        majors.add(DropdownMenuItem(value: Item('회계세무학과',7),child:const Text('회계세무학과'),));
         break;
       case 5:
         majors.add(DropdownMenuItem(value: Item('선택하기',0),child:const Text('선택하기'),));
@@ -73,6 +74,7 @@ class Majors {
         majors.add(DropdownMenuItem(value: Item('금융경제학과',3),child:const Text('금융경제학과'),));
         majors.add(DropdownMenuItem(value: Item('국제무역학과',4),child:const Text('국제무역학과'),));
         majors.add(DropdownMenuItem(value: Item('국제무역학과',5),child:const Text('국제무역학과'),));
+        majors.add(DropdownMenuItem(value: Item('통상산업학과',6),child:const Text('통상산업학과'),));
         break;
       case 6:
         majors.add(DropdownMenuItem(value: Item('선택하기',0),child:const Text('선택하기'),));
@@ -104,6 +106,13 @@ class Majors {
       case 9:
         //majors.add(DropdownMenuItem(child:Text('선택하기'),value: Item('선택하기',0),));
         majors.add(DropdownMenuItem(value: Item('융합특성화자유전공학부',0),child:const Text('융합특성화자유전공학부'),));
+        break;
+      case 10:
+      //majors.add(DropdownMenuItem(child:Text('선택하기'),value: Item('선택하기',0),));
+        majors.add(DropdownMenuItem(value: Item('차세대반도체학과',0),child:const Text('차세대반도체학과'),));
+        break;
+      default:
+        majors.add(DropdownMenuItem(value: Item('학과(부)',0),child:const Text('학과(부)'),));
         break;
 
     }
