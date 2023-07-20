@@ -67,7 +67,7 @@ class _InputProfile extends State<InputProfile> {
             child: SingleChildScrollView(
               child: Container(
                 width: screenWidth,
-                height: screenWidth * 1.5,
+                height: screenWidth * 2,
                 decoration: const BoxDecoration(
                   //배경이미지
                   image: DecorationImage(
