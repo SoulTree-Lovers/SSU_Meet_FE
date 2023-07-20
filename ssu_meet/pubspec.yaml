@@ -38,6 +38,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  http: ^1.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -91,6 +92,9 @@ flutter:
     - assets/images/images2/tape10.png
     - assets/images/images2/telephone.png
     - assets/images/images2/yellowpostit.png
+    - assets/images/images2/submit2.png
+    - assets/images/images2/yellowpostit2.png
+
 
     - assets/images/post_it_with_tape/pink_tape.png
     - assets/images/post_it_with_tape/yellow_tape.png
