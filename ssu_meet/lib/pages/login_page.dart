@@ -32,65 +32,45 @@ class LoginPage extends StatelessWidget {
                   width: screenWidth,
                   height: screenHeight * 0.33,
                   child: Stack(
-                    //alignment: Alignment.center,
+                    alignment: Alignment.center,
                     children: [
-                      Positioned(
-                        left: 110,
-                        right: 150,
-                        top: -35,
-                        // bottom: 0,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Transform.rotate(
-                            angle: radians,
-                            child: const Image(
-                                image: AssetImage(
-                                    'assets/images/green_post_it.png')),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 195,
-                        right: 250,
-                        top: 20,
-                        //bottom: 140,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Transform.rotate(
-                            angle: radians,
-                            child: const Image(
-                              width: 60,
-                              height: 60,
-                              image: AssetImage('assets/images/tape1.png'),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Positioned(
-                        left: 160,
-                        right: 100,
-                        top: -20,
-                        //bottom: -45,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Image(
-                              image: AssetImage(
-                                  'assets/images/yellow_post_it.png')),
-                        ),
-                      ),
-                      const Positioned(
-                        left: 250,
-                        right: 190,
-                        top: 40,
-                        //bottom: 140,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: const Image(
-                              width: 60,
-                              height: 60,
-                              image: AssetImage('assets/images/tape2.png')),
-                        ),
-                      ),
+                      Container(
+                        width: screenWidth * 0.5,
+                        child: Image(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/pink_yellow.png')),
+                      )
+                      // Positioned(
+                      //   //left: screenWidth * 0.2,
+                      //   right: screenWidth * 0.15,
+                      //   top: screenHeight * -0.02,
+                      //   bottom: screenHeight * -0.05,
+                      //   child: Transform.rotate(
+                      //     angle: radians,
+                      //     child: Container(
+                      //       width: screenWidth * 0.8,
+                      //       height: screenWidth * 0.8,
+                      //       child: Image(
+                      //           fit: BoxFit.contain,
+                      //           image: AssetImage(
+                      //               'assets/images/post_it_with_tape/pink_tape.png')),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Positioned(
+                      //   //left: screenWidth * 0.2,
+                      //   right: screenWidth * 0.04,
+                      //   top: screenHeight * 0.01,
+                      //   bottom: screenHeight * -0.1,
+                      //   child: Container(
+                      //     width: screenWidth * 0.8,
+                      //     height: screenWidth * 0.8,
+                      //     child: Image(
+                      //         fit: BoxFit.contain,
+                      //         image: AssetImage(
+                      //             'assets/images/post_it_with_tape/yellow_tape.png')),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -163,7 +143,7 @@ class LoginPage extends StatelessWidget {
                             contentPadding: const EdgeInsets.only(top: 20),
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
-                            hintText: '비밀번호',
+                            hintText: '유세인트 비밀번호',
                             hintStyle: const TextStyle(
                                 color: Color(0xffA9A8A8), fontSize: 14),
                             border: OutlineInputBorder(
@@ -179,11 +159,11 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
                       SizedBox(
-                        width: screenWidth / 6 + 10,
-                        height: 35,
+                        width: screenWidth / 6 + 15,
+                        height: 40,
                         child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
+                                backgroundColor: Colors.black,
                                 side:
                                     const BorderSide(color: Color(0xff8E8E8E)),
                                 shape: RoundedRectangleBorder(
@@ -191,13 +171,12 @@ class LoginPage extends StatelessWidget {
                                 elevation: 0),
                             onPressed: () {
                               print(_studentIdController.text);
-                              print("\n");
                               print(_passwordController.text);
                             },
                             child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                  fontSize: 12, color: Color(0xff8E8E8E)),
+                              "로그인",
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.white),
                             )),
                       ),
                     ],
