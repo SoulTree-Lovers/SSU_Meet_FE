@@ -24,7 +24,6 @@ class _InputProfile extends State<InputProfile> {
   int? _height; //키
   int? _age; //나이
 
-
   @override
   void initState() {
     super.initState();
@@ -48,8 +47,8 @@ class _InputProfile extends State<InputProfile> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(
-                  color: Colors.black12, width: screenWidth * 0.003),
+              bottom:
+                  BorderSide(color: Colors.black12, width: screenWidth * 0.003),
             ),
           ),
         ),
@@ -255,9 +254,9 @@ class _InputProfile extends State<InputProfile> {
                                             padding: EdgeInsets.only(
                                                 left: screenWidth * 0.02),
                                           ),
-                                      SizedBox(
+                                          SizedBox(
                                             width: screenWidth * 0.16,
-                                            height:screenWidth*0.1,
+                                            height: screenWidth * 0.1,
                                             //입력칸 너비,높이 조절
                                             child: MyFormField(
                                               key: const ValueKey(1),
@@ -271,7 +270,7 @@ class _InputProfile extends State<InputProfile> {
                                               },
                                               onSaved: (val) {
                                                 setState(() {
-                                                  _birth =val;
+                                                  _birth = val;
                                                 });
                                               },
                                             ),
@@ -285,9 +284,9 @@ class _InputProfile extends State<InputProfile> {
                                             ),
                                           ),
                                           // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
-                                      SizedBox(
+                                          SizedBox(
                                             width: screenWidth * 0.09,
-                                              height:screenWidth*0.1,
+                                            height: screenWidth * 0.1,
                                             //입력 칸 너비,높이 조절
                                             child: MyFormField(
                                               key: const ValueKey(2),
@@ -446,54 +445,41 @@ class _InputProfile extends State<InputProfile> {
                           ),
                         ),
                       ),
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Stack(
-                            children: [
-                              SizedBox(
-                                width: screenWidth * 0.2,
-                                height: screenWidth * 0.08,
-                                child: FittedBox(
-                                  fit: BoxFit.fill,
-                                  child: Image.asset(
-                                    "assets/images/images2/submit2.png",
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: screenWidth * 0.033,
-                                top: screenWidth * 0.01,
-                                child: Text(
-                                  "작성 완료",
-                                  style: TextStyle(
-                                    fontSize: screenWidth * 0.045,
-                                    fontFamily: "Nanum_Ogbice",
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
-                               _age=AgeCalculation(_birth!);
-                              /*다음 단계로 넘어가기 전, sns 한번 더 if문으로 검사 필요
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 5,
+                          fixedSize: const Size(95, 36),
+                          side:
+                              const BorderSide(color: Colors.black, width: 0.5),
+                          backgroundColor:
+                              const Color.fromRGBO(255, 255, 255, 1),
+                          shadowColor: const Color.fromRGBO(0, 0, 0, 0.5),
+                        ),
+                        child: Text(
+                          "작성 완료",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.043,
+                              fontFamily: "Nanum_Ogbice"),
+                        ),
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+                            _age = AgeCalculation(_birth!);
+                            /*다음 단계로 넘어가기 전, sns 한번 더 if문으로 검사 필요
                         if(contacts[0]!=''||contacts[1]!=''||contacts[2]!='')
                         ---->>넘어갈 수 있음
                         */
-                            } else {
-                              print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
-                              _height = null;
-                              _birth ='';
-                              contacts = ['', '', ''];
-                            }
-                            print(
-                                "성별: $_gender\n생년월일: $_birth 만나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\n"
-                                "SNS: (인스타: ${contacts[0]} 카카오: ${contacts[1]} 전화번호: ${contacts[2]})\n");
-                          },
-                        ),
+                          } else {
+                            print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
+                            _height = null;
+                            _birth = '';
+                            contacts = ['', '', ''];
+                          }
+                          print(
+                              "성별: $_gender\n생년월일: $_birth 만나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\n"
+                              "SNS: (인스타: ${contacts[0]} 카카오: ${contacts[1]} 전화번호: ${contacts[2]})\n");
+                        },
                       ),
                     ],
                   ),
@@ -581,7 +567,7 @@ TextStyle DropdownTextStyle(double screenWidth) {
   );
 }
 
-int AgeCalculation(String val){
+int AgeCalculation(String val) {
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
   int currentDay = DateTime.now().day;
@@ -591,13 +577,14 @@ int AgeCalculation(String val){
   int birthMonth = int.parse(val.substring(2, 4));
   int birthDay = int.parse(val.substring(4, 6));
 
-  if(birthYear>=0 && birthYear<=23) {
-    age=currentYear - (2000 + birthYear);
+  if (birthYear >= 0 && birthYear <= 23) {
+    age = currentYear - (2000 + birthYear);
   } else {
     age = currentYear - (1900 + birthYear);
   }
-  if (birthMonth > currentMonth || (birthMonth == currentMonth && birthDay > currentDay)) {
-  age--; //아직 생일이 안 지난 경우, 한 살 더 빼줌
+  if (birthMonth > currentMonth ||
+      (birthMonth == currentMonth && birthDay > currentDay)) {
+    age--; //아직 생일이 안 지난 경우, 한 살 더 빼줌
   }
   return age;
-  }
+}
