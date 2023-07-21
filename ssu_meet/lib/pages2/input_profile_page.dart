@@ -20,8 +20,10 @@ class _InputProfile extends State<InputProfile> {
   String? _gender; //성별
   Item? _college; //단과대
   Item? _major; //전공
+  String? _birth; //생년월일
   int? _height; //키
   int? _age; //나이
+
 
   @override
   void initState() {
@@ -39,24 +41,15 @@ class _InputProfile extends State<InputProfile> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * 0.17),
-        child: SizedBox(
-          width: screenWidth,
-          height: screenHeight * 0.17,
-          child: AppBar(
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-            elevation: 0.0,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      color: Colors.black12, width: screenHeight * 0.002),
-                ),
-                image: const DecorationImage(
-                    image: AssetImage("assets/images/images2/appbar.png"),
-                    fit: BoxFit.fill),
-              ),
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                  color: Colors.black12, width: screenWidth * 0.003),
             ),
           ),
         ),
@@ -253,21 +246,22 @@ class _InputProfile extends State<InputProfile> {
                                         textBaseline: TextBaseline.alphabetic,
                                         children: [
                                           Text(
-                                            "나이:",
+                                            "생년월일: ",
                                             style: TextStyle(
                                                 fontFamily: "Nanum_Ogbice",
                                                 fontSize: screenWidth * 0.05),
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
-                                                left: screenWidth * 0.024),
+                                                left: screenWidth * 0.02),
                                           ),
-                                          SizedBox(
+                                      SizedBox(
                                             width: screenWidth * 0.16,
-                                            //입력칸 너비 조절
+                                            height:screenWidth*0.1,
+                                            //입력칸 너비,높이 조절
                                             child: MyFormField(
                                               key: const ValueKey(1),
-                                              hintText: "만 나이 입력",
+                                              hintText: "MMYYDD",
                                               screenWidth: screenWidth,
                                               validator: (val) {
                                                 if (val == '' || val!.isEmpty) {
@@ -277,18 +271,12 @@ class _InputProfile extends State<InputProfile> {
                                               },
                                               onSaved: (val) {
                                                 setState(() {
-                                                  _age = int.parse(val);
+                                                  _birth =val;
                                                 });
                                               },
                                             ),
                                           ),
-                                          Text(
-                                            " 세",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                            ),
-                                          ),
+
                                           Text(
                                             "  키: ",
                                             style: TextStyle(
@@ -297,12 +285,13 @@ class _InputProfile extends State<InputProfile> {
                                             ),
                                           ),
                                           // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
-                                          SizedBox(
-                                            width: screenWidth * 0.13,
-                                            //입력 칸 너비 조절
+                                      SizedBox(
+                                            width: screenWidth * 0.09,
+                                              height:screenWidth*0.1,
+                                            //입력 칸 너비,높이 조절
                                             child: MyFormField(
                                               key: const ValueKey(2),
-                                              hintText: "입력하기",
+                                              hintText: "입력",
                                               screenWidth: screenWidth,
                                               validator: (val) {
                                                 if (val == '' || val!.isEmpty) {
@@ -319,11 +308,12 @@ class _InputProfile extends State<InputProfile> {
                                               },
                                             ),
                                           ),
+
                                           Text(
-                                            " cm",
+                                            "cm",
                                             style: TextStyle(
                                               fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
+                                              fontSize: screenWidth * 0.035,
                                             ),
                                           ),
                                         ],
@@ -488,6 +478,7 @@ class _InputProfile extends State<InputProfile> {
                           onTap: () {
                             if (formKey.currentState!.validate()) {
                               formKey.currentState!.save();
+                               _age=AgeCalculation(_birth!);
                               /*다음 단계로 넘어가기 전, sns 한번 더 if문으로 검사 필요
                         if(contacts[0]!=''||contacts[1]!=''||contacts[2]!='')
                         ---->>넘어갈 수 있음
@@ -495,11 +486,11 @@ class _InputProfile extends State<InputProfile> {
                             } else {
                               print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
                               _height = null;
-                              _age = null;
+                              _birth ='';
                               contacts = ['', '', ''];
                             }
                             print(
-                                "성별: $_gender\n나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\n"
+                                "성별: $_gender\n생년월일: $_birth 만나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\n"
                                 "SNS: (인스타: ${contacts[0]} 카카오: ${contacts[1]} 전화번호: ${contacts[2]})\n");
                           },
                         ),
@@ -589,3 +580,24 @@ TextStyle DropdownTextStyle(double screenWidth) {
     color: Colors.black,
   );
 }
+
+int AgeCalculation(String val){
+  int currentYear = DateTime.now().year;
+  int currentMonth = DateTime.now().month;
+  int currentDay = DateTime.now().day;
+  int age;
+
+  int birthYear = int.parse(val.substring(0, 2));
+  int birthMonth = int.parse(val.substring(2, 4));
+  int birthDay = int.parse(val.substring(4, 6));
+
+  if(birthYear>=0 && birthYear<=23) {
+    age=currentYear - (2000 + birthYear);
+  } else {
+    age = currentYear - (1900 + birthYear);
+  }
+  if (birthMonth > currentMonth || (birthMonth == currentMonth && birthDay > currentDay)) {
+  age--; //아직 생일이 안 지난 경우, 한 살 더 빼줌
+  }
+  return age;
+  }
