@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
-
-import 'package:ssu_meet/pages2/input_profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +31,7 @@ class MyApp extends StatelessWidget {
       home: ResponsiveWebLayout(),
       //home: LoginPage(),
       // home: InputProfile(),
+      // home: InputPostIt(),
     );
   }
 }

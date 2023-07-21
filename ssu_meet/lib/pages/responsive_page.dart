@@ -13,6 +13,7 @@ class ResponsiveWebLayout extends StatefulWidget {
 
 class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
   int _selectedIndexScreen = 1; // Main Page
+  int coins = getCoin();
 
   final List _children = [
     const InfoPage(),
@@ -28,6 +29,39 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
         shadowColor: const Color.fromRGBO(158, 156, 156, 1),
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                width: 100,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD7D7D7),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 8,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Text(
+                  "보유 코인: $coins",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xFF1A1A1A),
+                    fontFamily: "Nanum_Ogbice",
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: _children[_selectedIndexScreen],
       // body: LayoutBuilder(
@@ -81,4 +115,9 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
       ),
     );
   }
+}
+
+// 서버에서 코인 개수 가져오기 (임시)
+int getCoin() {
+  return 3;
 }
