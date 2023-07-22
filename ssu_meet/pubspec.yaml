@@ -80,6 +80,8 @@ flutter:
     - assets/images/tape.png
     - assets/images/pink_yellow.png
     - assets/images/currency_dollar.png
+    - assets/images/document_duplicate.png
+    - assets/images/vertical_line.png
 
     - assets/images/images2/_예비.png
     - assets/images/images2/appbar.png

@@ -16,6 +16,9 @@ class _TestMainPageState extends State<TestMainPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    int myPostIt = getMyPostIt();
+    int totalPostIt = getTotalPostIt();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -61,6 +64,53 @@ class _TestMainPageState extends State<TestMainPage> {
                         ),
                       ),
                     )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 20,
+                      height: 20,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/document_duplicate.png",
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "나의 포스트잇: $myPostIt 개",
+                    ),
+                    Container(
+                      width: 20,
+                      height: 20,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/vertical_line.png",
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 20,
+                      height: 20,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/document_duplicate.png",
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "현재 등록된 포스트잇: $totalPostIt 장",
+                    ),
                   ],
                 ),
               ),
@@ -195,4 +245,14 @@ Future<List> getPostItFrontData() async {
   final jsonResponse = json.decode(jsonString);
 
   return jsonResponse;
+}
+
+// 내가 등록한 포스트잇 개수 가져오기 (임시)
+int getMyPostIt() {
+  return 3;
+}
+
+// 전체 사용자가 등록한 포스트잇 개수 가져오기 (임시)
+int getTotalPostIt() {
+  return 50;
 }
