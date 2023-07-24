@@ -463,14 +463,16 @@ class _InputProfile extends State<InputProfile> {
                               fontFamily: "Nanum_Ogbice"),
                         ),
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
+                          if (formKey.currentState!.validate() &&
+                              contacts[0] != '' ||
+                              contacts[1] != '' ||
+                              contacts[2] != '' )
+                          {
                             formKey.currentState!.save();
                             _age = AgeCalculation(_birth!);
-                            /*다음 단계로 넘어가기 전, sns 한번 더 if문으로 검사 필요
-                        if(contacts[0]!=''||contacts[1]!=''||contacts[2]!='')
-                        ---->>넘어갈 수 있음
-                        */
-                          } else {
+                            print("필수 입력 요건이 충족됨");
+                          }
+                           else {
                             print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
                             _height = null;
                             _birth = '';
@@ -588,3 +590,21 @@ int AgeCalculation(String val) {
   }
   return age;
 }
+
+/*class MyData {
+  String gender; //성별
+  String college; //단과대
+  String major; //전공
+  int height; //키
+  int age; //나이
+
+  MyData(this.gender, this.college, this.major, this.height, this.age);
+
+  Map<String, dynamic> toJson() => {
+        'gender': gender,
+        'college': college,
+        'major': major,
+        'height': height,
+        'age': age,
+      };
+}*/
