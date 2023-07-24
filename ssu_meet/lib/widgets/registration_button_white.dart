@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Positioned RegistrationButton(double screenHeight, double screenWidth) {
+Positioned RegistrationButtonWhite(double screenHeight, double screenWidth) {
   return Positioned(
     top: screenHeight * 0.7,
     left: screenWidth * 0.7,
