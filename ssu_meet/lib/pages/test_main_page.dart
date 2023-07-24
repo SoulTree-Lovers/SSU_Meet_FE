@@ -79,14 +79,22 @@ class _TestMainPageState extends State<TestMainPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        DocumentDuplicateImage(),
+                        DocumentDuplicateImage(screenWidth),
                         Text(
                           "나의 포스트잇: $myPostIt 개",
+                          style: TextStyle(
+                            fontFamily: "NanumSquareRoundBold",
+                            fontSize: screenWidth * 0.03,
+                          ),
                         ),
                         VerticalLineImage(),
-                        DocumentDuplicateImage(),
+                        DocumentDuplicateImage(screenWidth),
                         Text(
                           "현재 등록된 포스트잇: $totalPostIt 장",
+                          style: TextStyle(
+                            fontFamily: "NanumSquareRoundBold",
+                            fontSize: screenWidth * 0.03,
+                          ),
                         ),
                       ],
                     ),

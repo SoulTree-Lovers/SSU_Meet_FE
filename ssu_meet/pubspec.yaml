@@ -139,6 +139,10 @@ flutter:
       fonts:
         - asset: assets/fonts/Nanum_Ogbice.ttf
 
+    - family: NanumSquareRoundBold
+      fonts:
+        - asset: assets/fonts/NanumSquare/NanumSquareRoundB.ttf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

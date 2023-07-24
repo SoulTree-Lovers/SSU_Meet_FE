@@ -24,6 +24,9 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -35,8 +38,8 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                width: 110,
-                height: 30,
+                width: screenWidth * 0.2,
+                height: screenWidth * 0.05,
                 decoration: BoxDecoration(
                   color: const Color(0xFFD7D7D7),
                   borderRadius: BorderRadius.circular(10),
@@ -54,20 +57,24 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      width: 25,
-                      height: 25,
+                      width: screenWidth * 0.03,
+                      height: screenWidth * 0.03,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("images/currency_dollar.png"),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    Text(
-                      "보유 코인: $coins",
-                      style: const TextStyle(
-                        color: Color(0xFF1A1A1A),
-                        fontFamily: "Nanum_Ogbice",
-                        fontSize: 20,
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        "보유 코인: $coins",
+                        style: TextStyle(
+                          color: const Color(0xFF1A1A1A),
+                          fontFamily: "NanumSquareRoundBold",
+                          fontSize: screenWidth * 0.025,
+                        ),
                       ),
                     ),
                   ],
