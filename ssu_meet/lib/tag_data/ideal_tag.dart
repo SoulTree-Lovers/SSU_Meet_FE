@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 var personality=[
   '다정한','섬세한','활발한','리드하는','츤데레',
   '단호한','쿨한','유머러스한','지적인','헌신적인',
-
-
 ];
 
 var appearance=[

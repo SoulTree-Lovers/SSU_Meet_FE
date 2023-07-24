@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/widgets/document_duplicate_image.dart';
 import 'package:ssu_meet/widgets/main_page_post_it.dart';
 import 'package:ssu_meet/widgets/registration_button_black.dart';
 import 'package:ssu_meet/widgets/vertical_line_image.dart';
+
 
 class TestMainPage extends StatefulWidget {
   const TestMainPage({super.key});
@@ -124,7 +124,7 @@ class _TestMainPageState extends State<TestMainPage> {
             ),
           ),
           // RegistrationButtonWhite(screenHeight, screenWidth),
-          RegistrationButtonBlack(screenHeight, screenWidth),
+          RegistrationButtonBlack(screenHeight, screenWidth, context),
         ],
       ),
     );
