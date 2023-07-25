@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages2/select_idealtype_modal.dart';
 
-
 String? _nikname;
 String? _mbti;
 String? _hobby;
@@ -80,34 +79,148 @@ class _InputPostIt extends State<InputPostIt> {
                   ),
                   //텍스트
                   Positioned(
-                      top: screenWidth * 0.17,
-                      left: screenWidth * 0.12,
-                      child: SizedBox(
-                        width: screenWidth * 0.6,
-                        height: screenWidth * 0.8,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "닉네임:   ",
-                                    style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
+                    top: screenWidth * 0.17,
+                    left: screenWidth * 0.12,
+                    child: SizedBox(
+                      width: screenWidth * 0.6,
+                      height: screenWidth * 0.8,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "닉네임:   ",
+                                  style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045),
+                                ),
+                                SizedBox(
+                                  width: screenWidth * 0.45,
+                                  height: screenWidth * 0.1,
+                                  child: MyFormField(
+                                    key: const ValueKey(1),
+                                    hintText: "10자 이내",
+                                    screenWidth: screenWidth,
+                                    maxLength: 10,
+                                    maxLine: 1,
+                                    validator: (val) {
+                                      if (val.length <= 10 && val != '') {
+                                        return null;
+                                      } else {
+                                        return " ";
+                                      }
+                                    },
+                                    onSaved: (val) {
+                                      setState(() {
+                                        _nikname = val;
+                                      });
+                                    },
                                   ),
-                                  SizedBox(
-                                    width: screenWidth * 0.45,
-                                    height: screenWidth * 0.1,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "MBTI:   ",
+                                  style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045),
+                                ),
+                                SizedBox(
+                                  width: screenWidth * 0.2,
+                                  height: screenWidth * 0.08,
+                                  child: DropdownButton(
+                                    alignment: Alignment.center,
+                                    value: _mbti,
+                                    underline: Container(
+                                        height: screenWidth * 0.001,
+                                        color: Colors.black),
+                                    style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045,
+                                      color: Colors.black,
+                                    ),
+                                    hint: Text("선택하기",
+                                        style: TextStyle(
+                                          fontFamily: "Nanum_Ogbice",
+                                          fontSize: screenWidth * 0.04,
+                                        )),
+                                    items:
+                                        mbti_list.map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      },
+                                    ).toList(),
+                                    onChanged: (newVal) {
+                                      setState(() {
+                                        _mbti = newVal;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "취미:     ",
+                                  style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045),
+                                ),
+                                SizedBox(
+                                  width: screenWidth * 0.45,
+                                  height: screenWidth * 0.15,
+                                  child: MyFormField(
+                                    key: const ValueKey(2),
+                                    hintText: "50자 이내",
+                                    screenWidth: screenWidth,
+                                    maxLine: null,
+                                    maxLength: 50,
+                                    validator: (val) {
+                                      if (val.length <= 50 && val != '') {
+                                        return null;
+                                      } else {
+                                        return " ";
+                                      }
+                                    },
+                                    onSaved: (val) {
+                                      setState(() {
+                                        _hobby = val;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "자기소개: ",
+                                  style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045),
+                                ),
+                                SizedBox(
+                                    width: screenWidth * 0.44,
+                                    height: screenWidth * 0.15,
                                     child: MyFormField(
-                                      key: const ValueKey(1),
-                                      hintText: "10자 이내",
+                                      key: const ValueKey(3),
+                                      hintText: "200자 이내",
                                       screenWidth: screenWidth,
-                                      maxLength: 10,
-                                      maxLine: 1,
+                                      maxLine: null,
+                                      maxLength: 200,
                                       validator: (val) {
-                                        if (val.length <= 10 && val != '') {
+                                        if (val.length <= 200 && val != '') {
                                           return null;
                                         } else {
                                           return " ";
@@ -115,163 +228,49 @@ class _InputPostIt extends State<InputPostIt> {
                                       },
                                       onSaved: (val) {
                                         setState(() {
-                                          _nikname = val;
+                                          _myself = val;
                                         });
                                       },
-                                    ),
+                                      //maxLength: 200,
+                                    )),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "이상형:  ",
+                                  style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color.fromRGBO(
+                                        217, 239, 195, 1.0),
                                   ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "MBTI:   ",
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const SelectIdealType();
+                                        });
+                                  },
+                                  child: Text(
+                                    "이상형 선택하기!",
                                     style: TextStyle(
                                         fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
+                                        fontSize: screenWidth * 0.04,
+                                        color: Colors.black),
                                   ),
-                                  SizedBox(
-                                    width: screenWidth * 0.2,
-                                    height: screenWidth * 0.08,
-                                    child: DropdownButton(
-                                        alignment: Alignment.center,
-                                        value: _mbti,
-                                        underline: Container(
-                                            height: screenWidth * 0.001,
-                                            color: Colors.black),
-                                        style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.045,
-                                          color: Colors.black,
-                                        ),
-                                        hint: Text("선택하기",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                            )),
-                                        items: mbti_list
-                                            .map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          },
-                                        ).toList(),
-                                        onChanged: (newVal) {
-                                          setState(() {
-                                            _mbti = newVal;
-                                          });
-                                        },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "취미:     ",
-                                    style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
-                                  ),
-                                  SizedBox(
-                                      width: screenWidth * 0.45,
-                                      height: screenWidth * 0.15,
-                                      child: MyFormField(
-                                        key: const ValueKey(2),
-                                        hintText: "50자 이내",
-                                        screenWidth: screenWidth,
-                                        maxLine: null,
-                                        maxLength: 50,
-                                        validator: (val) {
-                                          if (val.length <= 50 && val != '') {
-                                            return null;
-                                          } else {
-                                            return " ";
-                                          }
-                                        },
-                                        onSaved: (val) {
-                                          setState(() {
-                                            _hobby = val;
-                                          });
-                                        },
-                                      ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "자기소개: ",
-                                    style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
-                                  ),
-                                  SizedBox(
-                                      width: screenWidth * 0.44,
-                                      height: screenWidth * 0.15,
-                                      child: MyFormField(
-                                        key: const ValueKey(3),
-                                        hintText: "200자 이내",
-                                        screenWidth: screenWidth,
-                                        maxLine: null,
-                                        maxLength: 200,
-                                        validator: (val) {
-                                          if (val.length <= 200 && val != '') {
-                                            return null;
-                                          } else {
-                                            return " ";
-                                          }
-                                        },
-                                        onSaved: (val) {
-                                          setState(() {
-                                            _myself = val;
-                                          });
-                                        },
-                                        //maxLength: 200,
-                                      )),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "이상형:  ",
-                                    style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromRGBO(
-                                          217, 239, 195, 1.0),
-                                    ),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                          backgroundColor: Colors.transparent,
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return const SelectIdealType();
-                                          });
-                                    },
-                                    child: Text(
-                                      "이상형 선택하기!",
-                                      style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.04,
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ),
+                    ),
                   ),
                 ],
               ),
@@ -290,7 +289,7 @@ class _InputPostIt extends State<InputPostIt> {
                       "작성 완료",
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: screenWidth * 0.042,
+                          fontSize: screenWidth * 0.035,
                           fontFamily: "Nanum_Ogbice"),
                     ),
                     onPressed: () {
@@ -300,7 +299,8 @@ class _InputPostIt extends State<InputPostIt> {
                       } else {
                         print("값이 유효하지 않음"); //필수 입력 값을 다시 초기화
                       }
-                      print("닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n");
+                      print(
+                          "닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n");
 
                       //Post New posiit
                     },
@@ -317,7 +317,7 @@ class _InputPostIt extends State<InputPostIt> {
                       "작성 취소",
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: screenWidth * 0.042,
+                          fontSize: screenWidth * 0.035,
                           fontFamily: "Nanum_Ogbice"),
                     ),
                     onPressed: () {
@@ -386,12 +386,12 @@ class _MyFormFieldState extends State<MyFormField> {
           fontSize: widget.screenWidth * 0.04,
         ),
         focusedErrorBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black, width: widget.screenWidth * 0.0015),
+          borderSide: BorderSide(
+              color: Colors.black, width: widget.screenWidth * 0.0015),
         ),
         errorBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black, width: widget.screenWidth * 0.0015),
+          borderSide: BorderSide(
+              color: Colors.black, width: widget.screenWidth * 0.0015),
         ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
