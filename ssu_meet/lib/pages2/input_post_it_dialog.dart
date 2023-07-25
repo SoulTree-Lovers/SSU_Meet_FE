@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages2/select_idealtype_modal.dart';
 
-class InputPostIt extends StatefulWidget {
-  InputPostIt({Key? key}) : super(key: key);
 
+String? _nikname;
+String? _mbti;
+String? _hobby;
+String? _myself;
+
+class InputPostIt extends StatefulWidget {
+  const InputPostIt({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _InputPostIt();
 }
@@ -30,24 +35,11 @@ class _InputPostIt extends State<InputPostIt> {
 
   final formKey = GlobalKey<FormState>();
 
-  String? _nikname;
-  String? _mbti;
-  String? _hobby;
-  String? _myself;
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
-      /* title: Container(
-      width: screenWidth,
-      height: screenWidth * 0.15,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Color.fromRGBO(239, 239, 239, 1)
-      ),
-    ),*/
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -171,7 +163,8 @@ class _InputPostIt extends State<InputPostIt> {
                                           setState(() {
                                             _mbti = newVal;
                                           });
-                                        }),
+                                        },
+                                    ),
                                   ),
                                 ],
                               ),
@@ -205,7 +198,8 @@ class _InputPostIt extends State<InputPostIt> {
                                             _hobby = val;
                                           });
                                         },
-                                      )),
+                                      ),
+                                  ),
                                 ],
                               ),
                               Row(
@@ -261,9 +255,8 @@ class _InputPostIt extends State<InputPostIt> {
                                           backgroundColor: Colors.transparent,
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return SelectIdealType();
+                                            return const SelectIdealType();
                                           });
-
                                     },
                                     child: Text(
                                       "이상형 선택하기!",
@@ -278,7 +271,8 @@ class _InputPostIt extends State<InputPostIt> {
                             ],
                           ),
                         ),
-                      )),
+                      ),
+                  ),
                 ],
               ),
               Padding(padding: EdgeInsets.only(top: screenWidth * 0.04)),
@@ -306,6 +300,7 @@ class _InputPostIt extends State<InputPostIt> {
                       } else {
                         print("값이 유효하지 않음"); //필수 입력 값을 다시 초기화
                       }
+                      print("닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n");
 
                       //Post New posiit
                     },
@@ -339,7 +334,7 @@ class _InputPostIt extends State<InputPostIt> {
   }
 }
 
-class MyFormField extends StatelessWidget {
+class MyFormField extends StatefulWidget {
   final String hintText;
   final double screenWidth;
   final FormFieldValidator? validator;
@@ -358,56 +353,78 @@ class MyFormField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<MyFormField> createState() => _MyFormFieldState();
+}
+
+class _MyFormFieldState extends State<MyFormField> {
+  final TextEditingController _textController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: TextInputType.text,
-      maxLines: maxLine,
-      maxLength: maxLength,
+      maxLines: widget.maxLine,
+      maxLength: widget.maxLength,
       cursorWidth: 1.5,
-      cursorHeight: screenWidth * 0.03,
+      cursorHeight: widget.screenWidth * 0.03,
       cursorColor: Colors.transparent,
       style: TextStyle(
-        fontSize: screenWidth * 0.04,
+        fontSize: widget.screenWidth * 0.04,
         fontFamily: "Nanum_Ogbice",
         color: Colors.black,
       ),
       decoration: InputDecoration(
-        errorStyle: TextStyle(fontSize: screenWidth * 0.02),
-        hintText: hintText,
+        errorStyle: TextStyle(fontSize: widget.screenWidth * 0.02),
+        hintText: widget.hintText,
         hintStyle: TextStyle(
-          fontSize: screenWidth * 0.04,
+          fontSize: widget.screenWidth * 0.04,
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+              BorderSide(color: Colors.black, width: widget.screenWidth * 0.0015),
         ),
         errorBorder: UnderlineInputBorder(
           borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+              BorderSide(color: Colors.black, width: widget.screenWidth * 0.0015),
         ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.transparent,
-            width: screenWidth * 0.0015,
+            width: widget.screenWidth * 0.0015,
           ),
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.black,
-            width: screenWidth * 0.0015,
+            width: widget.screenWidth * 0.0015,
           ),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.black,
-            width: screenWidth * 0.0015,
+            width: widget.screenWidth * 0.0015,
           ),
         ),
       ),
-      validator: validator,
-      onSaved: onSaved,
+      validator: widget.validator,
+      onSaved: widget.onSaved,
+      controller: _textController,
+      onChanged: (text) {
+        if (text.length > widget.maxLength) {
+          // 최대 글자 수를 넘으면 입력을 막습니다.
+          _textController.text = text.substring(0, widget.maxLength);
+          _textController.selection = TextSelection.fromPosition(
+            TextPosition(offset: _textController.text.length),
+          );
+        }
+      },
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      // inputFormatters: [Utf8LengthLimitingTextInputFormatter(maxLength)],
     );
   }
 }
