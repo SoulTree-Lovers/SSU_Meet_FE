@@ -106,11 +106,10 @@ class _InputPostIt extends State<InputPostIt> {
                                     maxLength: 10,
                                     maxLine: 1,
                                     validator: (val) {
-                                      if (val.length <= 10 && val != '') {
-                                        return null;
-                                      } else {
-                                        return " ";
+                                      if (val == '' || val!.isEmpty) {
+                                        return "필수입력";
                                       }
+                                      return null;
                                     },
                                     onSaved: (val) {
                                       setState(() {
@@ -150,8 +149,8 @@ class _InputPostIt extends State<InputPostIt> {
                                           fontSize: screenWidth * 0.04,
                                         )),
                                     items:
-                                        mbti_list.map<DropdownMenuItem<String>>(
-                                      (String value) {
+                                    mbti_list.map<DropdownMenuItem<String>>(
+                                          (String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -186,11 +185,10 @@ class _InputPostIt extends State<InputPostIt> {
                                     maxLine: null,
                                     maxLength: 50,
                                     validator: (val) {
-                                      if (val.length <= 50 && val != '') {
-                                        return null;
-                                      } else {
-                                        return " ";
+                                      if (val == '' || val!.isEmpty) {
+                                        return "필수입력";
                                       }
+                                      return null;
                                     },
                                     onSaved: (val) {
                                       setState(() {
@@ -220,11 +218,10 @@ class _InputPostIt extends State<InputPostIt> {
                                       maxLine: null,
                                       maxLength: 200,
                                       validator: (val) {
-                                        if (val.length <= 200 && val != '') {
-                                          return null;
-                                        } else {
-                                          return " ";
+                                        if (val == '' || val!.isEmpty) {
+                                          return "필수입력";
                                         }
+                                        return null;
                                       },
                                       onSaved: (val) {
                                         setState(() {
@@ -293,14 +290,16 @@ class _InputPostIt extends State<InputPostIt> {
                           fontFamily: "Nanum_Ogbice"),
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
-                      if (formKey.currentState!.validate()) {
+                      if (formKey.currentState!.validate() && _mbti!=null)
+                      {
                         formKey.currentState!.save();
-                      } else {
-                        print("값이 유효하지 않음"); //필수 입력 값을 다시 초기화
+                        print("닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n");
+                        Navigator.pop(context);
                       }
-                      print(
-                          "닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n");
+                      else {
+                        print("값이 유효하지 않음");
+                      }
+
 
                       //Post New posiit
                     },
