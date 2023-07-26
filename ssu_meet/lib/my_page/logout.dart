@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages/responsive_page.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 
 class LogoutPage extends StatelessWidget {
   const LogoutPage({super.key});
@@ -13,10 +13,8 @@ class LogoutPage extends StatelessWidget {
         shadowColor: const Color.fromRGBO(158, 156, 156, 1),
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ResponsiveWebLayout()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
             },
             icon: Icon(Icons.keyboard_arrow_left,
                 color: Color(0xff717171), size: 30)),

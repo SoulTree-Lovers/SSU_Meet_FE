@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
+import 'dart:convert';
+
+String? gender; //성별
+Item? college; //단과대
+Item? major; //전공
+String? birth; //생년월일->나이 계산시 사용
+int? birthYear; //서버에 보낼 생년
+int? height; //키
+int? age; //나이
+String? instaId;
+String? kakaoId;
+String? phoneNum;
 
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
@@ -10,27 +22,20 @@ class InputProfile extends StatefulWidget {
 }
 
 class _InputProfile extends State<InputProfile> {
-  List<String> gender = ["선택하기", '남', '여'];
-  List<DropdownMenuItem<Item>> colleges = List.empty(growable: true);
-  List<DropdownMenuItem<Item>> majors = List.empty(growable: true);
-  List<String> contacts = ['', '', '']; //연락처(인스타, 카카오, 전화번호)
+  List<String> genderList = ["선택하기", '남', '여'];
+  List<DropdownMenuItem<Item>> collegeList = List.empty(growable: true);
+  List<DropdownMenuItem<Item>> majorList = List.empty(growable: true);
 
   final formKey = GlobalKey<FormState>();
-
-  String? _gender; //성별
-  Item? _college; //단과대
-  Item? _major; //전공
-  int? _height; //키
-  int? _age; //나이
 
   @override
   void initState() {
     super.initState();
-    _gender = gender[0];
-    colleges = Colleges().colleges;
-    _college = colleges[0].value;
-    majors = Majors(0).majors;
-    _major = majors[0].value;
+    gender = genderList[0];
+    collegeList = Colleges().colleges;
+    college = collegeList[0].value;
+    majorList = Majors(0).majors;
+    major = majorList[0].value;
   }
 
   @override
@@ -39,24 +44,15 @@ class _InputProfile extends State<InputProfile> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * 0.17),
-        child: SizedBox(
-          width: screenWidth,
-          height: screenHeight * 0.17,
-          child: AppBar(
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-            elevation: 0.0,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      color: Colors.black12, width: screenHeight * 0.002),
-                ),
-                image: const DecorationImage(
-                    image: AssetImage("assets/images/images2/appbar.png"),
-                    fit: BoxFit.fill),
-              ),
+      appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom:
+                  BorderSide(color: Colors.black12, width: screenWidth * 0.003),
             ),
           ),
         ),
@@ -141,7 +137,7 @@ class _InputProfile extends State<InputProfile> {
                                                 fontSize: screenWidth * 0.05),
                                           ),
                                           DropdownButton<String>(
-                                            value: _gender,
+                                            value: gender,
                                             icon: const Icon(
                                                 Icons.arrow_drop_down),
                                             iconSize: screenWidth * 0.04,
@@ -153,7 +149,7 @@ class _InputProfile extends State<InputProfile> {
                                               //밑줄두께
                                               color: Colors.black,
                                             ),
-                                            items: gender
+                                            items: genderList
                                                 .map<DropdownMenuItem<String>>(
                                               (String value) {
                                                 return DropdownMenuItem<String>(
@@ -165,7 +161,7 @@ class _InputProfile extends State<InputProfile> {
                                             onChanged: (String? newVal) {
                                               setState(
                                                 () {
-                                                  _gender = newVal!;
+                                                  gender = newVal!;
                                                 },
                                               );
                                             },
@@ -187,7 +183,7 @@ class _InputProfile extends State<InputProfile> {
                                                 fontSize: screenWidth * 0.048),
                                           ),
                                           DropdownButton<Item>(
-                                            value: _college,
+                                            value: college,
                                             icon: const Icon(
                                                 Icons.arrow_drop_down),
                                             iconSize: screenWidth * 0.04,
@@ -196,14 +192,15 @@ class _InputProfile extends State<InputProfile> {
                                                 color: Colors.black),
                                             style:
                                                 DropdownTextStyle(screenWidth),
-                                            items: colleges,
+                                            items: collegeList,
                                             onChanged: (Item? newVal) {
                                               setState(
                                                 () {
-                                                  _college = newVal;
-                                                  majors = Majors(newVal!.ind)
-                                                      .majors;
-                                                  _major = majors[0].value;
+                                                  college = newVal;
+                                                  majorList =
+                                                      Majors(newVal!.ind)
+                                                          .majors;
+                                                  major = majorList[0].value;
                                                 },
                                               );
                                             },
@@ -223,7 +220,7 @@ class _InputProfile extends State<InputProfile> {
                                                 left: screenWidth * 0.095),
                                           ),
                                           DropdownButton<Item>(
-                                            value: _major,
+                                            value: major,
                                             icon: const Icon(
                                                 Icons.arrow_drop_down),
                                             iconSize: screenWidth * 0.04,
@@ -232,11 +229,11 @@ class _InputProfile extends State<InputProfile> {
                                                 color: Colors.black),
                                             style:
                                                 DropdownTextStyle(screenWidth),
-                                            items: majors,
+                                            items: majorList,
                                             onChanged: (newVal) {
                                               setState(
                                                 () {
-                                                  _major = newVal;
+                                                  major = newVal;
                                                 },
                                               );
                                             },
@@ -253,21 +250,22 @@ class _InputProfile extends State<InputProfile> {
                                         textBaseline: TextBaseline.alphabetic,
                                         children: [
                                           Text(
-                                            "나이:",
+                                            "생년월일: ",
                                             style: TextStyle(
                                                 fontFamily: "Nanum_Ogbice",
                                                 fontSize: screenWidth * 0.05),
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
-                                                left: screenWidth * 0.024),
+                                                left: screenWidth * 0.02),
                                           ),
                                           SizedBox(
                                             width: screenWidth * 0.16,
-                                            //입력칸 너비 조절
+                                            height: screenWidth * 0.1,
+                                            //입력칸 너비,높이 조절
                                             child: MyFormField(
                                               key: const ValueKey(1),
-                                              hintText: "만 나이 입력",
+                                              hintText: "MMYYDD",
                                               screenWidth: screenWidth,
                                               validator: (val) {
                                                 if (val == '' || val!.isEmpty) {
@@ -277,18 +275,12 @@ class _InputProfile extends State<InputProfile> {
                                               },
                                               onSaved: (val) {
                                                 setState(() {
-                                                  _age = int.parse(val);
+                                                  birth = val;
                                                 });
                                               },
                                             ),
                                           ),
-                                          Text(
-                                            " 세",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                            ),
-                                          ),
+
                                           Text(
                                             "  키: ",
                                             style: TextStyle(
@@ -298,11 +290,12 @@ class _InputProfile extends State<InputProfile> {
                                           ),
                                           // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
                                           SizedBox(
-                                            width: screenWidth * 0.13,
-                                            //입력 칸 너비 조절
+                                            width: screenWidth * 0.09,
+                                            height: screenWidth * 0.1,
+                                            //입력 칸 너비,높이 조절
                                             child: MyFormField(
                                               key: const ValueKey(2),
-                                              hintText: "입력하기",
+                                              hintText: "입력",
                                               screenWidth: screenWidth,
                                               validator: (val) {
                                                 if (val == '' || val!.isEmpty) {
@@ -313,17 +306,18 @@ class _InputProfile extends State<InputProfile> {
                                               onSaved: (val) {
                                                 setState(
                                                   () {
-                                                    _height = int.parse(val);
+                                                    height = int.parse(val);
                                                   },
                                                 );
                                               },
                                             ),
                                           ),
+
                                           Text(
-                                            " cm",
+                                            "cm",
                                             style: TextStyle(
                                               fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
+                                              fontSize: screenWidth * 0.035,
                                             ),
                                           ),
                                         ],
@@ -347,18 +341,17 @@ class _InputProfile extends State<InputProfile> {
                                             child: MyFormField(
                                               key: const ValueKey(3),
                                               hintText: "1.인스타",
-                                              validator: (val) {
-                                                if (val != '') {
-                                                  //유효한 경우
-                                                  contacts[0] = val;
-                                                }
-                                                return null;
-                                              },
                                               screenWidth: screenWidth,
+                                              validator: (val) {
+                                                if (val != '' || !val.isEmpty) {
+                                                  instaId = val;
+                                                  return null;
+                                                }
+                                              },
                                               onSaved: (val) {
                                                 setState(
                                                   () {
-                                                    contacts[0] = val;
+                                                    instaId = val;
                                                   },
                                                 );
                                               },
@@ -381,15 +374,15 @@ class _InputProfile extends State<InputProfile> {
                                           hintText: "2.카카오",
                                           screenWidth: screenWidth,
                                           validator: (val) {
-                                            if (val != '') {
-                                              contacts[1] = val;
+                                            if (val != '' || !val.isEmpty) {
+                                              kakaoId = val;
+                                              return null;
                                             }
-                                            return null;
                                           },
                                           onSaved: (val) {
                                             setState(
                                               () {
-                                                contacts[1] = val;
+                                                kakaoId = val;
                                               },
                                             );
                                           },
@@ -410,18 +403,15 @@ class _InputProfile extends State<InputProfile> {
                                           hintText: "3.전화번호",
                                           screenWidth: screenWidth,
                                           validator: (val) {
-                                            if (contacts[0] != '' ||
-                                                contacts[1] != '' ||
-                                                val != '') {
-                                              contacts[2] = val;
+                                            if (val != '' || !val.isEmpty) {
+                                              phoneNum = val;
                                               return null;
                                             }
-                                            return null;
                                           },
                                           onSaved: (val) {
                                             setState(
                                               () {
-                                                contacts[2] = val;
+                                                phoneNum = val;
                                               },
                                             );
                                           },
@@ -456,53 +446,39 @@ class _InputProfile extends State<InputProfile> {
                           ),
                         ),
                       ),
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Stack(
-                            children: [
-                              SizedBox(
-                                width: screenWidth * 0.2,
-                                height: screenWidth * 0.08,
-                                child: FittedBox(
-                                  fit: BoxFit.fill,
-                                  child: Image.asset(
-                                    "assets/images/images2/submit2.png",
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: screenWidth * 0.033,
-                                top: screenWidth * 0.01,
-                                child: Text(
-                                  "작성 완료",
-                                  style: TextStyle(
-                                    fontSize: screenWidth * 0.045,
-                                    fontFamily: "Nanum_Ogbice",
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
-                              /*다음 단계로 넘어가기 전, sns 한번 더 if문으로 검사 필요
-                        if(contacts[0]!=''||contacts[1]!=''||contacts[2]!='')
-                        ---->>넘어갈 수 있음
-                        */
-                            } else {
-                              print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
-                              _height = null;
-                              _age = null;
-                              contacts = ['', '', ''];
-                            }
-                            print(
-                                "성별: $_gender\n나이: $_age\n학과: ${_college!.title} ${_major!.title}\n키: $_height\n"
-                                "SNS: (인스타: ${contacts[0]} 카카오: ${contacts[1]} 전화번호: ${contacts[2]})\n");
-                          },
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 5,
+                          fixedSize: const Size(95, 36),
+                          side:
+                              const BorderSide(color: Colors.black, width: 0.5),
+                          backgroundColor:
+                              const Color.fromRGBO(255, 255, 255, 1),
+                          shadowColor: const Color.fromRGBO(0, 0, 0, 0.5),
                         ),
+                        child: Text(
+                          "작성 완료",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.043,
+                              fontFamily: "Nanum_Ogbice"),
+                        ),
+                        onPressed: () {
+                          if (formKey.currentState!.validate() &&
+                              gender != genderList[0] &&
+                              college != collegeList[0].value &&
+                              major != majorList[0].value &&
+                              instaId != null ||
+                              kakaoId != null ||
+                              phoneNum != null) {
+                            formKey.currentState!.save();
+                            age = AgeCalculation(birth!);
+                            print("필수 입력 요건이 충족됨");
+                            printData();
+                          } else {
+                            print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -588,4 +564,73 @@ TextStyle DropdownTextStyle(double screenWidth) {
     fontSize: screenWidth * 0.04,
     color: Colors.black,
   );
+}
+
+int AgeCalculation(String val) {
+  int _currentYear = DateTime.now().year;
+  int _currentMonth = DateTime.now().month;
+  int _currentDay = DateTime.now().day;
+  int _age;
+
+  if(val.length!=6) print("error:생년월일 6자리를 입력하세요");
+
+  int _birthYear = int.parse(val.substring(0, 2));
+  int _birthMonth = int.parse(val.substring(2, 4));
+  int _birthDay = int.parse(val.substring(4, 6));
+
+  if (_birthYear >= 0 && _birthYear <= 23) {
+    birthYear = 2000 + _birthYear;
+    _age = _currentYear - (2000 + _birthYear);
+  } else {
+    birthYear = 1900 + _birthYear;
+    _age = _currentYear - (1900 + _birthYear);
+  }
+  if (_birthMonth > _currentMonth ||
+      (_birthMonth == _currentMonth && _birthDay > _currentDay)) {
+    _age--; //아직 생일이 안 지난 경우, 한 살 더 빼줌
+  }
+  return _age;
+}
+
+class MyData {
+  final String sex; //성별
+  final int birthYear;
+  final int age; //나이
+  final String college; //단과대
+  final String major; //전공
+  final int height; //키
+  final String? instaId;
+  final String? kakaoId;
+  final String? phoneNum;
+
+  MyData(
+    this.sex,
+    this.birthYear,
+    this.age,
+    this.college,
+    this.major,
+    this.height,
+    this.instaId,
+    this.kakaoId,
+    this.phoneNum,
+  );
+
+  Map<String, dynamic> toJson() => {
+        "sex": (sex == "남") ? "MALE" : "FEMALE",
+        "birthYear": birthYear,
+        "age": age,
+        "college": college,
+        "major": major,
+        "height": height,
+        "instaID": (instaId != '') ? instaId : null, // SNS는 3개 중 1개 이상 입력
+        "kakaoId": (kakaoId != '') ? kakaoId : null,
+        "phoneNumber": (phoneNum != '') ? phoneNum : null,
+      };
+}
+
+void printData() {
+  print("함수가 실행은 됐습니다.");
+  final data = MyData(gender!, birthYear!, age!, college!.title, major!.title,
+      height!, instaId, kakaoId, phoneNum);
+  print(json.encode(data.toJson()));
 }
