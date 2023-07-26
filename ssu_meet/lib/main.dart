@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ssu_meet/pages/login_page.dart';
+import 'package:ssu_meet/pages/my_page.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 
 import 'package:ssu_meet/pages2/input_profile_page.dart';

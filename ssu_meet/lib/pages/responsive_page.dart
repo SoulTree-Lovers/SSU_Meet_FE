@@ -12,13 +12,12 @@ class ResponsiveWebLayout extends StatefulWidget {
 }
 
 class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
-  int _selectedIndexScreen = 1; // Main Page
+  int _selectedIndexScreen = 2; // Main Page
 
   final List _children = [
     const InfoPage(),
     const TestMainPage(),
     const MyPage(),
-    const LoginPage(),
   ];
 
   @override
