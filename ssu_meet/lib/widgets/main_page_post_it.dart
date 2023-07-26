@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 SizedBox MainPagePostIt(double screenHeight,
     AsyncSnapshot<List<dynamic>> snapshot, double screenWidth) {
+  ScrollController scrollController = ScrollController();
+
   return SizedBox(
     height: screenHeight * 0.7,
     child: GridView.builder(
@@ -108,4 +110,11 @@ SizedBox MainPagePostIt(double screenHeight,
       },
     ),
   );
+}
+
+// 서버에 데이터 추가 요청
+Future<void> _fetchMoreData() async {
+  // Make an API request to fetch the next batch of data from the server
+  // Append the new data to your existing data list
+  // Update the state of your widget with the new data
 }
