@@ -6,14 +6,14 @@ import 'package:ssu_meet/widgets/main_page_post_it.dart';
 import 'package:ssu_meet/widgets/registration_button_black.dart';
 import 'package:ssu_meet/widgets/vertical_line_image.dart';
 
-class TestMainPage extends StatefulWidget {
-  const TestMainPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<TestMainPage> createState() => _TestMainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _TestMainPageState extends State<TestMainPage> {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
