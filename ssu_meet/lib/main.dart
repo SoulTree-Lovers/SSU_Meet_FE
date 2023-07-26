@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 
-
-
 void main() {
   runApp(const MyApp());
 }
@@ -32,10 +30,11 @@ class MyApp extends StatelessWidget {
       // home: InitialPage(),
 
       home: ResponsiveWebLayout(),
+
       //home: LoginPage(),
       // home: InputProfile(),
       // home: InputPostIt(),
-
+      // home: PurchasedPostItPage(),
     );
   }
 }

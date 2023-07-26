@@ -82,6 +82,7 @@ flutter:
     - assets/images/currency_dollar.png
     - assets/images/document_duplicate.png
     - assets/images/vertical_line.png
+    - assets/images/chevron_down.png
 
     - assets/images/images2/_예비.png
     - assets/images/images2/appbar.png
@@ -139,9 +140,19 @@ flutter:
       fonts:
         - asset: assets/fonts/Nanum_Ogbice.ttf
 
+    - family: NanumSquareRoundR
+      fonts:
+        - asset: assets/fonts/NanumSquare/NanumSquareRoundR.ttf
+    
     - family: NanumSquareRoundBold
       fonts:
         - asset: assets/fonts/NanumSquare/NanumSquareRoundB.ttf
+
+    - family: NanumSquareAc
+      fonts:
+        - asset: assets/fonts/NanumSquare/NanumSquare_acR.ttf
+        - asset: assets/fonts/NanumSquare/NanumSquare_acB.ttf
+          weight: 700
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

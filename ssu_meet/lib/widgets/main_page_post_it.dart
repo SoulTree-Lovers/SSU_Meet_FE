@@ -36,10 +36,11 @@ SizedBox MainPagePostIt(double screenHeight,
                   // First image
 
                   Image(
-                      image: const AssetImage(
-                          "assets/images/images2/yellowpostit.png"),
-                      width: screenWidth * 0.4,
-                      height: screenWidth * 0.4),
+                    image: const AssetImage(
+                        "assets/images/images2/yellowpostit.png"),
+                    width: screenWidth * 0.4,
+                    height: screenWidth * 0.4,
+                  ),
 
                   // Second image overlapped on top of the first image
                   Positioned(
@@ -67,6 +68,7 @@ SizedBox MainPagePostIt(double screenHeight,
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,
+                                color: Colors.black,
                               ),
                             ),
                             Text(
@@ -74,6 +76,7 @@ SizedBox MainPagePostIt(double screenHeight,
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,
+                                color: Colors.black,
                               ),
                             ),
                             Text(
@@ -81,6 +84,7 @@ SizedBox MainPagePostIt(double screenHeight,
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,
+                                color: Colors.black,
                               ),
                             ),
                             Text(
@@ -88,6 +92,7 @@ SizedBox MainPagePostIt(double screenHeight,
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,
+                                color: Colors.black,
                               ),
                             ),
                           ],

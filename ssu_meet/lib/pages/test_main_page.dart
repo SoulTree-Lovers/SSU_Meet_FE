@@ -6,7 +6,6 @@ import 'package:ssu_meet/widgets/main_page_post_it.dart';
 import 'package:ssu_meet/widgets/registration_button_black.dart';
 import 'package:ssu_meet/widgets/vertical_line_image.dart';
 
-
 class TestMainPage extends StatefulWidget {
   const TestMainPage({super.key});
 
@@ -80,19 +79,25 @@ class _TestMainPageState extends State<TestMainPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         DocumentDuplicateImage(screenWidth),
+                        const SizedBox(
+                          width: 3,
+                        ),
                         Text(
                           "나의 포스트잇: $myPostIt 개",
                           style: TextStyle(
-                            fontFamily: "NanumSquareRoundBold",
+                            fontFamily: "NanumSquareRoundR",
                             fontSize: screenWidth * 0.03,
                           ),
                         ),
                         VerticalLineImage(),
                         DocumentDuplicateImage(screenWidth),
+                        const SizedBox(
+                          width: 3,
+                        ),
                         Text(
                           "현재 등록된 포스트잇: $totalPostIt 장",
                           style: TextStyle(
-                            fontFamily: "NanumSquareRoundBold",
+                            fontFamily: "NanumSquareRoundR",
                             fontSize: screenWidth * 0.03,
                           ),
                         ),
