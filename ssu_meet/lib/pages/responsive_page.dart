@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/info_page.dart';
 import 'package:ssu_meet/pages/my_page.dart';
 import 'package:ssu_meet/pages/main_page.dart';
-import 'package:ssu_meet/pages/login_page.dart';
 
 class ResponsiveWebLayout extends StatefulWidget {
   const ResponsiveWebLayout({super.key});

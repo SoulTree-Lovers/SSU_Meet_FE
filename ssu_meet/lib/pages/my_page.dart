@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/my_page/logout.dart';
 import 'package:ssu_meet/my_page/modify_information.dart';
-import 'package:ssu_meet/my_page/view_purchased.dart';
 import 'package:ssu_meet/my_page/view_registered.dart';
+import 'package:ssu_meet/pages/purchased_post_it_page.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -27,7 +27,7 @@ class _MyPageState extends State<MyPage> {
 
   final List _mypageMenu = [
     const ViewRegistered(),
-    const ViewPurchased(),
+    const PurchasedPostItPage(),
     const ModifyPage(),
     const LogoutPage()
   ];
