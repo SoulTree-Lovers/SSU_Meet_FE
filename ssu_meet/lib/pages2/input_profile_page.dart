@@ -6,8 +6,7 @@ import 'dart:convert';
 String? gender; //성별
 Item? college; //단과대
 Item? major; //전공
-String? birth; //생년월일->나이 계산시 사용
-int? birthYear; //서버에 보낼 생년
+String? birth; //생년월일
 int? height; //키
 int? age; //나이
 String? instaId;
@@ -579,10 +578,8 @@ int AgeCalculation(String val) {
   int _birthDay = int.parse(val.substring(4, 6));
 
   if (_birthYear >= 0 && _birthYear <= 23) {
-    birthYear = 2000 + _birthYear;
     _age = _currentYear - (2000 + _birthYear);
   } else {
-    birthYear = 1900 + _birthYear;
     _age = _currentYear - (1900 + _birthYear);
   }
   if (_birthMonth > _currentMonth ||
@@ -594,18 +591,18 @@ int AgeCalculation(String val) {
 
 class MyData {
   final String sex; //성별
-  final int birthYear;
+  final String birth; //생년월일
   final int age; //나이
   final String college; //단과대
   final String major; //전공
   final int height; //키
-  final String? instaId;
-  final String? kakaoId;
-  final String? phoneNum;
+  final String? instaId; //인스타
+  final String? kakaoId; //카카오
+  final String? phoneNum; //전화번호
 
   MyData(
     this.sex,
-    this.birthYear,
+    this.birth,
     this.age,
     this.college,
     this.major,
@@ -617,7 +614,7 @@ class MyData {
 
   Map<String, dynamic> toJson() => {
         "sex": (sex == "남") ? "MALE" : "FEMALE",
-        "birthYear": birthYear,
+        "birth": birth,
         "age": age,
         "college": college,
         "major": major,
@@ -630,7 +627,7 @@ class MyData {
 
 void printData() {
   print("함수가 실행은 됐습니다.");
-  final data = MyData(gender!, birthYear!, age!, college!.title, major!.title,
+  final data = MyData(gender!, birth!, age!, college!.title, major!.title,
       height!, instaId, kakaoId, phoneNum);
   print(json.encode(data.toJson()));
 }
