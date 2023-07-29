@@ -341,12 +341,6 @@ class _InputProfile extends State<InputProfile> {
                                               key: const ValueKey(3),
                                               hintText: "1.인스타",
                                               screenWidth: screenWidth,
-                                              validator: (val) {
-                                                if (val != '' || !val.isEmpty) {
-                                                  instaId = val;
-                                                  return null;
-                                                }
-                                              },
                                               onSaved: (val) {
                                                 setState(
                                                   () {
@@ -372,12 +366,6 @@ class _InputProfile extends State<InputProfile> {
                                           key: const ValueKey(4),
                                           hintText: "2.카카오",
                                           screenWidth: screenWidth,
-                                          validator: (val) {
-                                            if (val != '' || !val.isEmpty) {
-                                              kakaoId = val;
-                                              return null;
-                                            }
-                                          },
                                           onSaved: (val) {
                                             setState(
                                               () {
@@ -401,12 +389,6 @@ class _InputProfile extends State<InputProfile> {
                                           key: const ValueKey(5),
                                           hintText: "3.전화번호",
                                           screenWidth: screenWidth,
-                                          validator: (val) {
-                                            if (val != '' || !val.isEmpty) {
-                                              phoneNum = val;
-                                              return null;
-                                            }
-                                          },
                                           onSaved: (val) {
                                             setState(
                                               () {
@@ -463,14 +445,14 @@ class _InputProfile extends State<InputProfile> {
                               fontFamily: "Nanum_Ogbice"),
                         ),
                         onPressed: () {
+                          formKey.currentState!.save();
                           if (formKey.currentState!.validate() &&
                               gender != genderList[0] &&
                               college != collegeList[0].value &&
                               major != majorList[0].value &&
-                              instaId != null ||
-                              kakaoId != null ||
-                              phoneNum != null) {
-                            formKey.currentState!.save();
+                              instaId != '' ||
+                              kakaoId != '' ||
+                              phoneNum != '') {
                             age = AgeCalculation(birth!);
                             print("필수 입력 요건이 충족됨");
                             printData();
