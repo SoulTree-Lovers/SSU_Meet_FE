@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import 'dart:convert';
+import 'package:ssu_meet/profile_data/profile.dart';
 
-String? gender; //성별
+String? sex; //성별
 Item? college; //단과대
 Item? major; //전공
 String? birth; //생년월일
@@ -11,7 +12,7 @@ int? height; //키
 int? age; //나이
 String? instaId;
 String? kakaoId;
-String? phoneNum;
+String? phoneNumber;
 
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
@@ -30,7 +31,7 @@ class _InputProfile extends State<InputProfile> {
   @override
   void initState() {
     super.initState();
-    gender = genderList[0];
+    sex = genderList[0];
     collegeList = Colleges().colleges;
     college = collegeList[0].value;
     majorList = Majors(0).majors;
@@ -51,7 +52,7 @@ class _InputProfile extends State<InputProfile> {
           decoration: BoxDecoration(
             border: Border(
               bottom:
-                  BorderSide(color: Colors.black12, width: screenWidth * 0.003),
+              BorderSide(color: Colors.black12, width: screenWidth * 0.003),
             ),
           ),
         ),
@@ -136,12 +137,12 @@ class _InputProfile extends State<InputProfile> {
                                                 fontSize: screenWidth * 0.05),
                                           ),
                                           DropdownButton<String>(
-                                            value: gender,
+                                            value: sex,
                                             icon: const Icon(
                                                 Icons.arrow_drop_down),
                                             iconSize: screenWidth * 0.04,
                                             style:
-                                                DropdownTextStyle(screenWidth),
+                                            DropdownTextStyle(screenWidth),
                                             alignment: Alignment.center,
                                             underline: Container(
                                               height: screenWidth * 0.0015,
@@ -150,7 +151,7 @@ class _InputProfile extends State<InputProfile> {
                                             ),
                                             items: genderList
                                                 .map<DropdownMenuItem<String>>(
-                                              (String value) {
+                                                  (String value) {
                                                 return DropdownMenuItem<String>(
                                                   value: value,
                                                   child: Text(value),
@@ -159,8 +160,8 @@ class _InputProfile extends State<InputProfile> {
                                             ).toList(),
                                             onChanged: (String? newVal) {
                                               setState(
-                                                () {
-                                                  gender = newVal!;
+                                                    () {
+                                                  sex = newVal!;
                                                 },
                                               );
                                             },
@@ -190,11 +191,11 @@ class _InputProfile extends State<InputProfile> {
                                                 height: screenHeight * 0.001,
                                                 color: Colors.black),
                                             style:
-                                                DropdownTextStyle(screenWidth),
+                                            DropdownTextStyle(screenWidth),
                                             items: collegeList,
                                             onChanged: (Item? newVal) {
                                               setState(
-                                                () {
+                                                    () {
                                                   college = newVal;
                                                   majorList =
                                                       Majors(newVal!.ind)
@@ -227,11 +228,11 @@ class _InputProfile extends State<InputProfile> {
                                                 height: screenHeight * 0.001,
                                                 color: Colors.black),
                                             style:
-                                                DropdownTextStyle(screenWidth),
+                                            DropdownTextStyle(screenWidth),
                                             items: majorList,
                                             onChanged: (newVal) {
                                               setState(
-                                                () {
+                                                    () {
                                                   major = newVal;
                                                 },
                                               );
@@ -304,7 +305,7 @@ class _InputProfile extends State<InputProfile> {
                                               },
                                               onSaved: (val) {
                                                 setState(
-                                                  () {
+                                                      () {
                                                     height = int.parse(val);
                                                   },
                                                 );
@@ -343,7 +344,7 @@ class _InputProfile extends State<InputProfile> {
                                               screenWidth: screenWidth,
                                               onSaved: (val) {
                                                 setState(
-                                                  () {
+                                                      () {
                                                     instaId = val;
                                                   },
                                                 );
@@ -368,7 +369,7 @@ class _InputProfile extends State<InputProfile> {
                                           screenWidth: screenWidth,
                                           onSaved: (val) {
                                             setState(
-                                              () {
+                                                  () {
                                                 kakaoId = val;
                                               },
                                             );
@@ -391,8 +392,8 @@ class _InputProfile extends State<InputProfile> {
                                           screenWidth: screenWidth,
                                           onSaved: (val) {
                                             setState(
-                                              () {
-                                                phoneNum = val;
+                                                  () {
+                                                phoneNumber = val;
                                               },
                                             );
                                           },
@@ -432,9 +433,9 @@ class _InputProfile extends State<InputProfile> {
                           elevation: 5,
                           fixedSize: const Size(95, 36),
                           side:
-                              const BorderSide(color: Colors.black, width: 0.5),
+                          const BorderSide(color: Colors.black, width: 0.5),
                           backgroundColor:
-                              const Color.fromRGBO(255, 255, 255, 1),
+                          const Color.fromRGBO(255, 255, 255, 1),
                           shadowColor: const Color.fromRGBO(0, 0, 0, 0.5),
                         ),
                         child: Text(
@@ -447,12 +448,12 @@ class _InputProfile extends State<InputProfile> {
                         onPressed: () {
                           formKey.currentState!.save();
                           if (formKey.currentState!.validate() &&
-                              gender != genderList[0] &&
+                              sex != genderList[0] &&
                               college != collegeList[0].value &&
                               major != majorList[0].value &&
                               instaId != '' ||
                               kakaoId != '' ||
-                              phoneNum != '') {
+                              phoneNumber != '') {
                             age = AgeCalculation(birth!);
                             print("필수 입력 요건이 충족됨");
                             printData();
@@ -507,11 +508,11 @@ class MyFormField extends StatelessWidget {
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+          BorderSide(color: Colors.black, width: screenWidth * 0.0015),
         ),
         errorBorder: UnderlineInputBorder(
           borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+          BorderSide(color: Colors.black, width: screenWidth * 0.0015),
         ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -571,45 +572,18 @@ int AgeCalculation(String val) {
   return _age;
 }
 
-class MyData {
-  final String sex; //성별
-  final String birth; //생년월일
-  final int age; //나이
-  final String college; //단과대
-  final String major; //전공
-  final int height; //키
-  final String? instaId; //인스타
-  final String? kakaoId; //카카오
-  final String? phoneNum; //전화번호
-
-  MyData(
-    this.sex,
-    this.birth,
-    this.age,
-    this.college,
-    this.major,
-    this.height,
-    this.instaId,
-    this.kakaoId,
-    this.phoneNum,
-  );
-
-  Map<String, dynamic> toJson() => {
-        "sex": (sex == "남") ? "MALE" : "FEMALE",
-        "birth": birth,
-        "age": age,
-        "college": college,
-        "major": major,
-        "height": height,
-        "instaID": (instaId != '') ? instaId : null, // SNS는 3개 중 1개 이상 입력
-        "kakaoId": (kakaoId != '') ? kakaoId : null,
-        "phoneNumber": (phoneNum != '') ? phoneNum : null,
-      };
-}
 
 void printData() {
   print("함수가 실행은 됐습니다.");
-  final data = MyData(gender!, birth!, age!, college!.title, major!.title,
-      height!, instaId, kakaoId, phoneNum);
+  final data = MyData(
+      sex:sex!,
+      birth:birth!,
+      age:age!,
+      college:college!.title,
+      major:major!.title,
+      height:height!,
+      instaId:instaId,
+      kakaoId:kakaoId,
+      phoneNumber:phoneNumber);
   print(json.encode(data.toJson()));
 }
