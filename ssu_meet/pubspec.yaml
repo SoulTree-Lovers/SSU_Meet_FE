@@ -84,6 +84,20 @@ flutter:
     - assets/images/vertical_line.png
     - assets/images/chevron_down.png
 
+
+    # 사용 설명서 페이지에 들어가는 이미지
+    - assets/images/info_images/구매하기.png
+    - assets/images/info_images/구입한포스트잇.png
+    - assets/images/info_images/메인.png
+    - assets/images/info_images/유의사항.png
+    - assets/images/info_images/코인지급.png
+    - assets/images/info_images/포스트잇.png
+    - assets/images/info_images/arrow_right.png
+    - assets/images/info_images/blush.png
+    - assets/images/info_images/lovestruck.png
+    - assets/images/info_images/phone_in_hand.png
+    - assets/images/info_images/smartphone_man.png
+
     - assets/images/images2/_예비.png
     - assets/images/images2/appbar.png
     - assets/images/images2/document-text.png
