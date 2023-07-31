@@ -465,6 +465,7 @@ class _ModifyPageState extends State<ModifyPage> {
                               data.age = AgeCalculation(data.birth);
                               print("필수 입력 요건이 충족됨");
                               // 변경된 값 보내기
+                              print("수정 후 데이터");
                               print(json.encode(data.toJson()));
                               Navigator.pop(context);
                             } else
