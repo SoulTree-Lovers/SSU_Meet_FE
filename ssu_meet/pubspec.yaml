@@ -62,6 +62,7 @@ flutter:
   assets:
     # Json file
     - assets/json/post_it_json.json
+    - assets/json/old_profile.json
 
     # - assets/images/paper.png
     - assets/images/tape1.png
@@ -100,20 +101,21 @@ flutter:
     - assets/images/info_images/phone_in_hand.png
     - assets/images/info_images/smartphone_man.png
 
-    - assets/images/images2/_예비.png
+
     - assets/images/images2/appbar.png
     - assets/images/images2/document-text.png
     - assets/images/images2/home.png
-    - assets/images/images2/instagram.png
-    - assets/images/images2/kakao-talk.png
     - assets/images/images2/paper.png
     - assets/images/images2/Rectangle10.png
     - assets/images/images2/submit3x.png
     - assets/images/images2/tape10.png
-    - assets/images/images2/telephone.png
     - assets/images/images2/yellowpostit.png
     - assets/images/images2/submit2.png
     - assets/images/images2/yellowpostit2.png
+    - assets/images/images2/whiteheart2.png
+    - assets/images/images2/short_tape.png
+    - assets/images/images2/box1.png
+    - assets/images/images2/sparkle.png
 
     - assets/images/post_it_with_tape/pink_tape.png
     - assets/images/post_it_with_tape/yellow_tape.png

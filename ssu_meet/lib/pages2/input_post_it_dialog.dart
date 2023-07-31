@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages2/select_idealtype_modal.dart';
 
-String? _nikname;
-String? _mbti;
-String? _hobby;
-String? _myself;
-
 class InputPostIt extends StatefulWidget {
   const InputPostIt({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _InputPostIt();
 }
 
 class _InputPostIt extends State<InputPostIt> {
+  final formKey = GlobalKey<FormState>();
+  String? _nikname;
+  String? _mbti;
+  String? _hobby;
+  String? _myself;
+  List ideal_list = [];
+  int flag = 0;
+
   List<String> mbti_list = [
     'ENFP',
     'ENFJ',
@@ -31,8 +35,6 @@ class _InputPostIt extends State<InputPostIt> {
     'ISTP',
     'ISTJ'
   ];
-
-  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +138,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     alignment: Alignment.center,
                                     value: _mbti,
                                     underline: Container(
-                                        height: screenWidth * 0.001,
+                                        height: screenWidth * 0.0015,
                                         color: Colors.black),
                                     style: TextStyle(
                                       fontFamily: "Nanum_Ogbice",
@@ -149,8 +151,8 @@ class _InputPostIt extends State<InputPostIt> {
                                           fontSize: screenWidth * 0.04,
                                         )),
                                     items:
-                                    mbti_list.map<DropdownMenuItem<String>>(
-                                          (String value) {
+                                        mbti_list.map<DropdownMenuItem<String>>(
+                                      (String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -233,7 +235,6 @@ class _InputPostIt extends State<InputPostIt> {
                               ],
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
                                   "이상형:  ",
@@ -241,25 +242,55 @@ class _InputPostIt extends State<InputPostIt> {
                                       fontFamily: "Nanum_Ogbice",
                                       fontSize: screenWidth * 0.045),
                                 ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color.fromRGBO(
-                                        217, 239, 195, 1.0),
-                                  ),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                        backgroundColor: Colors.transparent,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return const SelectIdealType();
-                                        });
-                                  },
-                                  child: Text(
-                                    "이상형 선택하기!",
-                                    style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.04,
-                                        color: Colors.black),
+                                Offstage(
+                                  offstage: (flag == 0) ? false : true,
+                                  child: SizedBox(
+                                    width: screenWidth * 0.25,
+                                    height: screenWidth * 0.08,
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                          top: 10,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.black,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50))),
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return SelectIdealType();
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "   이상형 선택하기!",
+                                              style: TextStyle(
+                                                  fontFamily: "Nanum_Ogbice",
+                                                  fontSize: screenWidth * 0.03,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: -4,
+                                          top: 4,
+                                          child: SizedBox(
+                                              width: screenWidth * 0.08,
+                                              height: screenWidth * 0.08,
+                                              child: Image.asset(
+                                                  "assets/images/images2/whiteheart2.png")),
+                                        ),
+                                      ],
+                                    ),
+                                    //이상형 리스트...
                                   ),
                                 ),
                               ],
@@ -290,16 +321,14 @@ class _InputPostIt extends State<InputPostIt> {
                           fontFamily: "Nanum_Ogbice"),
                     ),
                     onPressed: () {
-                      if (formKey.currentState!.validate() && _mbti!=null)
-                      {
+                      if (formKey.currentState!.validate() && _mbti != null) {
                         formKey.currentState!.save();
-                        print("닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n");
+                        print(
+                            "닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n이상형: ");
                         Navigator.pop(context);
-                      }
-                      else {
+                      } else {
                         print("값이 유효하지 않음");
                       }
-
 
                       //Post New posiit
                     },
