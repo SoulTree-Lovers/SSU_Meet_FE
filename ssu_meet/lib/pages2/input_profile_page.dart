@@ -440,19 +440,21 @@ class _InputProfile extends State<InputProfile> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
-                          fixedSize: const Size(95, 36),
+                          fixedSize: Size(screenWidth * 0.2, screenWidth * 0.06),
                           side:
                           const BorderSide(color: Colors.black, width: 0.5),
                           backgroundColor:
                           const Color.fromRGBO(255, 255, 255, 1),
                           shadowColor: const Color.fromRGBO(0, 0, 0, 0.5),
                         ),
-                        child: Text(
+                        child: Center(
+                          child:Text(
                           "작성 완료",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: screenWidth * 0.043,
+                              fontSize: screenWidth * 0.038,
                               fontFamily: "Nanum_Ogbice"),
+                        ),
                         ),
                         onPressed: () {
                           formKey.currentState!.save();
