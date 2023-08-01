@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import '../profile_data/profile.dart';
+import 'package:ssu_meet/functions/age_calculation.dart';
+import 'package:ssu_meet/widgets/dropdown_text_style.dart';
+import 'package:ssu_meet/widgets/custom_textformfield.dart';
 
 class ModifyPage extends StatefulWidget {
   const ModifyPage({super.key});
@@ -493,108 +496,7 @@ class _ModifyPageState extends State<ModifyPage> {
   }
 }
 
-class MyFormField extends StatefulWidget {
-  final String hintText;
-  final FormFieldValidator? validator;
-  final FormFieldSetter? onSaved;
-  final double screenWidth;
-  final String initText;
 
-  const MyFormField({
-    Key? key,
-    required this.hintText,
-    required this.screenWidth,
-    required this.initText,
-    this.validator,
-    this.onSaved,
-  }) : super(key: key);
 
-  @override
-  State<MyFormField> createState() => _MyFormFieldState();
-}
 
-class _MyFormFieldState extends State<MyFormField> {
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      textAlign: TextAlign.center,
-      cursorWidth: 1.5,
-      cursorHeight: widget.screenWidth * 0.03,
-      cursorColor: Colors.black,
-      style: TextStyle(
-        fontSize: widget.screenWidth * 0.05,
-        fontFamily: "Nanum_Ogbice",
-        color: Colors.black,
-      ),
-      decoration: InputDecoration(
-        errorStyle: TextStyle(fontSize: widget.screenWidth * 0.02),
-        hintText: widget.hintText,
-        hintStyle: TextStyle(
-          fontSize: widget.screenWidth * 0.04,
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.black, width: widget.screenWidth * 0.0015),
-        ),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.black, width: widget.screenWidth * 0.0015),
-        ),
-        disabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-            width: widget.screenWidth * 0.0015,
-          ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-            width: widget.screenWidth * 0.0015,
-          ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-            width: widget.screenWidth * 0.0015,
-          ),
-        ),
-      ),
-      validator: widget.validator,
-      onSaved: widget.onSaved,
-      initialValue: widget.initText,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-    );
-  }
-}
 
-TextStyle DropdownTextStyle(double screenWidth) {
-  return TextStyle(
-    fontFamily: "Nanum_Ogbice",
-    fontSize: screenWidth * 0.04,
-    color: Colors.black,
-  );
-}
-
-int AgeCalculation(String val) {
-  int currentYear = DateTime.now().year;
-  int currentMonth = DateTime.now().month;
-  int currentDay = DateTime.now().day;
-  int _age;
-
-  if (val.length != 6) print("error:생년월일 6자리를 입력하세요");
-
-  int birthYear = int.parse(val.substring(0, 2));
-  int birthMonth = int.parse(val.substring(2, 4));
-  int birthDay = int.parse(val.substring(4, 6));
-
-  if (birthYear >= 0 && birthYear <= 23) {
-    _age = currentYear - (2000 + birthYear);
-  } else {
-    _age = currentYear - (1900 + birthYear);
-  }
-  if (birthMonth > currentMonth ||
-      (birthMonth == currentMonth && birthDay > currentDay)) {
-    _age--; //아직 생일이 안 지난 경우, 한 살 더 빼줌
-  }
-  return _age;
-}
