@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import '../profile_data/profile.dart';
 
-
-
 class ModifyPage extends StatefulWidget {
   const ModifyPage({super.key});
 
@@ -14,31 +12,32 @@ class ModifyPage extends StatefulWidget {
 }
 
 class _ModifyPageState extends State<ModifyPage> {
-  List<String> genderList = ["선택하기", '남', '여'];
+  List<String> genderList = [];
   List<DropdownMenuItem<Item>> collegeList = List.empty(growable: true);
   List<DropdownMenuItem<Item>> majorList = List.empty(growable: true);
   final formKey = GlobalKey<FormState>();
   Item? tmpCollege;
   Item? tmpMajor;
   var data;
-  bool isLoading=false;
+  bool isLoading = false;
 
   Item? searchInItemList(String name, List<DropdownMenuItem<Item>> list) {
     for (int i = 0; i < list.length; i++) {
       if (list[i].value!.title == name) return list[i].value;
     }
   }
-  void getOldProfile() async{
+
+  void getOldProfile() async {
     var jsonString = await rootBundle.loadString('json/old_profile.json');
-    setState(()  {
+    setState(() {
       data = MyData.fromJson(jsonDecode(jsonString) as Map<String, dynamic>);
+      genderList.add(data.sex);
       collegeList = Colleges().colleges;
       tmpCollege = searchInItemList(data.college, collegeList);
       majorList = Majors(tmpCollege!.ind).majors;
       tmpMajor = searchInItemList(data.major, majorList);
-      isLoading=true;
+      isLoading = true;
     });
-
   }
 
   @override
@@ -51,8 +50,8 @@ class _ModifyPageState extends State<ModifyPage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-     if(!isLoading) return const Center(child:CircularProgressIndicator(color: Colors.transparent,));
-     return Scaffold(
+    if (!isLoading) return const Center(child: CircularProgressIndicator());
+    return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
@@ -70,7 +69,7 @@ class _ModifyPageState extends State<ModifyPage> {
             child: SingleChildScrollView(
               child: Container(
                 width: screenWidth,
-                height: screenWidth * 2,
+                height: screenWidth * 2.2,
                 decoration: const BoxDecoration(
                   //배경이미지
                   image: DecorationImage(
@@ -98,6 +97,14 @@ class _ModifyPageState extends State<ModifyPage> {
                         style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
                             fontSize: screenWidth * 0.05),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.01),
+                      ),
+                      Text(
+                        "*성별, 생년월일은 수정 불가합니다.",
+                        style: TextStyle(
+                            fontSize: 0.025 * screenWidth, color: Colors.red),
                       ),
                       Stack(
                         alignment: Alignment.center,
@@ -141,37 +148,28 @@ class _ModifyPageState extends State<ModifyPage> {
                                             "성별:  ",
                                             style: TextStyle(
                                                 fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.05),
+                                                fontSize: screenWidth * 0.05,
+                                                color: Colors.black54),
                                           ),
-                                          DropdownButton<String>(
-                                            value: data.sex,
-                                            icon: const Icon(
-                                                Icons.arrow_drop_down),
-                                            iconSize: screenWidth * 0.04,
-                                            style:
-                                                DropdownTextStyle(screenWidth),
-                                            alignment: Alignment.center,
-                                            underline: Container(
-                                              height: screenWidth * 0.0015,
-                                              //밑줄두께
-                                              color: Colors.black,
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                                top: screenWidth * 0.01),
+                                            width: screenWidth * 0.06,
+                                            height: screenWidth * 0.07,
+                                            decoration: const BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.black54)),
                                             ),
-                                            items: genderList
-                                                .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value),
-                                                );
-                                              },
-                                            ).toList(),
-                                            onChanged: (String? newVal) {
-                                              setState(
-                                                () {
-                                                  data.sex = newVal!;
-                                                },
-                                              );
-                                            },
+                                            child: Text(
+                                              "${data.sex}",
+                                              style: TextStyle(
+                                                fontSize: screenWidth * 0.05,
+                                                fontFamily: "Nanum_Ogbice",
+                                                color: Colors.black54,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -195,7 +193,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                 Icons.arrow_drop_down),
                                             iconSize: screenWidth * 0.04,
                                             underline: Container(
-                                                height: screenHeight * 0.001,
+                                                height: screenWidth * 0.0015,
                                                 color: Colors.black),
                                             style:
                                                 DropdownTextStyle(screenWidth),
@@ -232,7 +230,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                 Icons.arrow_drop_down),
                                             iconSize: screenWidth * 0.04,
                                             underline: Container(
-                                                height: screenHeight * 0.001,
+                                                height: screenWidth * 0.0015,
                                                 color: Colors.black),
                                             style:
                                                 DropdownTextStyle(screenWidth),
@@ -263,35 +261,31 @@ class _ModifyPageState extends State<ModifyPage> {
                                             "생년월일: ",
                                             style: TextStyle(
                                                 fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.05),
+                                                fontSize: screenWidth * 0.05,
+                                                color: Colors.black54),
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 left: screenWidth * 0.02),
                                           ),
-                                          SizedBox(
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                                top: screenWidth * 0.02),
                                             width: screenWidth * 0.16,
                                             height: screenWidth * 0.1,
-                                            //입력칸 너비,높이 조절
-                                            child: MyFormField(
-                                              key: const ValueKey(1),
-                                              initText: data.birth,
-                                              hintText: "MMYYDD",
-                                              screenWidth: screenWidth,
-                                              validator: (val) {
-                                                if (val == '' || val!.isEmpty) {
-                                                  return "필수입력";
-                                                }
-                                                return null;
-                                              },
-                                              onSaved: (val) {
-                                                setState(() {
-                                                  data.birth = val;
-                                                });
-                                              },
+                                            decoration: const BoxDecoration(
+                                              border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.black54)),
+                                            ),
+                                            child: Text(
+                                              "${data.birth}",
+                                              style: TextStyle(
+                                                  fontSize: screenWidth * 0.05,
+                                                  fontFamily: "Nanum_Ogbice",
+                                                  color: Colors.black54),
                                             ),
                                           ),
-
                                           Text(
                                             "  키: ",
                                             style: TextStyle(
@@ -300,32 +294,35 @@ class _ModifyPageState extends State<ModifyPage> {
                                             ),
                                           ),
                                           // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
-                                          SizedBox(
-                                            width: screenWidth * 0.09,
-                                            height: screenWidth * 0.1,
-                                            //입력 칸 너비,높이 조절
-                                            child: MyFormField(
-                                              key: const ValueKey(2),
-                                              initText: data.height.toString(),
-                                              hintText: "입력",
-                                              screenWidth: screenWidth,
-                                              validator: (val) {
-                                                if (val == '' || val!.isEmpty) {
-                                                  return "필수입력";
-                                                }
-                                                return null;
-                                              },
-                                              onSaved: (val) {
-                                                setState(
-                                                  () {
-                                                    data.height =
-                                                        int.parse(val);
-                                                  },
-                                                );
-                                              },
+                                          Flexible(
+                                            child: SizedBox(
+                                              width: screenWidth * 0.09,
+                                              height: screenWidth * 0.1,
+                                              //입력 칸 너비,높이 조절
+                                              child: MyFormField(
+                                                key: const ValueKey(2),
+                                                initText:
+                                                    data.height.toString(),
+                                                hintText: "입력",
+                                                screenWidth: screenWidth,
+                                                validator: (val) {
+                                                  if (val == '' ||
+                                                      val!.isEmpty) {
+                                                    return "필수입력";
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (val) {
+                                                  setState(
+                                                    () {
+                                                      data.height =
+                                                          int.parse(val);
+                                                    },
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ),
-
                                           Text(
                                             "cm",
                                             style: TextStyle(
@@ -437,29 +434,30 @@ class _ModifyPageState extends State<ModifyPage> {
                           ),
                         ],
                       ),
-                      Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: screenWidth * 0.07,
-                          ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: screenWidth * 0.07,
                         ),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
-                          fixedSize: const Size(95, 36),
+                          fixedSize:
+                              Size(screenWidth * 0.2, screenWidth * 0.06),
                           side:
                               const BorderSide(color: Colors.black, width: 0.5),
                           backgroundColor:
                               const Color.fromRGBO(255, 255, 255, 1),
                           shadowColor: const Color.fromRGBO(0, 0, 0, 0.5),
                         ),
-                        child: Text(
-                          "수정 완료",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: screenWidth * 0.043,
-                              fontFamily: "Nanum_Ogbice"),
+                        child: Center(
+                          child: Text(
+                            "수정 완료",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.038,
+                                fontFamily: "Nanum_Ogbice"),
+                          ),
                         ),
                         onPressed: () {
                           formKey.currentState!.save(); // 일단 저장
