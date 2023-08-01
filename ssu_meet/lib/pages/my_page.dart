@@ -29,7 +29,7 @@ class _MyPageState extends State<MyPage> {
     const ViewRegistered(),
     const PurchasedPostItPage(),
     const ModifyPage(),
-    const LogoutPage()
+    const LogoutPage(),
   ];
 
   @override
@@ -226,7 +226,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                     // if(index==2) return LoadingModifyPage().getOldProfile(context);
+                      // if(index==2) return LoadingModifyPage().getOldProfile(context);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => _mypageMenu[index],

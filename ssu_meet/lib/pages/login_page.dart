@@ -23,147 +23,153 @@ class LoginPage extends StatelessWidget {
           image: AssetImage('assets/images/paper_background.png'),
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: const Color(0xffEFEFEF),
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: screenWidth,
-                height: screenHeight * 0.33,
-                child: Stack(
-                  alignment: Alignment.center,
+      child: WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: const Color(0xffEFEFEF),
+            elevation: 0,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: screenWidth,
+                  height: screenHeight * 0.33,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenWidth * 0.5,
+                        child: const Image(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/pink_yellow.png')),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 1),
+                Stack(
                   children: [
                     Container(
-                      width: screenWidth * 0.5,
-                      child: Image(
+                      width: screenWidth,
+                      height: screenHeight * 0.66,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        image: const DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage('assets/images/pink_yellow.png')),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 1),
-              Stack(
-                children: [
-                  Container(
-                    width: screenWidth,
-                    height: screenHeight * 0.66,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      image: const DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/images/rectangle.png'),
+                          image: AssetImage('assets/images/rectangle.png'),
+                        ),
                       ),
                     ),
-                  ),
-                  Column(
-                    children: [
-                      const SizedBox(height: 55),
-                      const Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Color(0xffA9A8A8),
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                      Container(
-                        margin: const EdgeInsets.only(left: 60, right: 60),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 5,
-                              blurRadius: 5,
-                            )
-                          ],
-                        ),
-                        child: TextField(
-                          controller: studentIdController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 20),
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: '학번',
-                            hintStyle: TextStyle(
-                                color: Color(0xffA9A8A8), fontSize: 14),
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                              child: Icon(Icons.person_outline_rounded),
-                            ),
-                            prefixIconColor: Color(0xffA9A8A8),
+                    Column(
+                      children: [
+                        const SizedBox(height: 55),
+                        const Text(
+                          "Login",
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Color(0xffA9A8A8),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        margin: const EdgeInsets.only(left: 60, right: 60),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 5,
-                              blurRadius: 5,
-                            )
-                          ],
-                        ),
-                        child: TextField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(top: 20),
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: '유세인트 비밀번호',
-                            hintStyle: const TextStyle(
-                                color: Color(0xffA9A8A8), fontSize: 14),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
+                        const SizedBox(height: 40),
+                        Container(
+                          margin: const EdgeInsets.only(left: 60, right: 60),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(40),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 5,
+                                blurRadius: 5,
+                              )
+                            ],
+                          ),
+                          child: TextField(
+                            controller: studentIdController,
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.only(top: 20),
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              hintText: '학번',
+                              hintStyle: TextStyle(
+                                  color: Color(0xffA9A8A8), fontSize: 14),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                child: Icon(Icons.person_outline_rounded),
+                              ),
+                              prefixIconColor: Color(0xffA9A8A8),
                             ),
-                            prefixIcon: const Padding(
-                              padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                              child: Icon(Icons.lock_outline_rounded),
-                            ),
-                            prefixIconColor: const Color(0xffA9A8A8),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 40),
-                      SizedBox(
-                        width: screenWidth / 6 + 15,
-                        height: 40,
-                        child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.black,
-                                side:
-                                    const BorderSide(color: Color(0xff8E8E8E)),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)),
-                                elevation: 0),
-                            onPressed: () {
-                              print(studentIdController.text);
-                              print(passwordController.text);
-                            },
-                            child: const Text(
-                              "로그인",
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.white),
-                            )),
-                      ),
-                    ],
-                  )
-                ],
-              )
-            ],
+                        const SizedBox(height: 20),
+                        Container(
+                          margin: const EdgeInsets.only(left: 60, right: 60),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(40),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 5,
+                                blurRadius: 5,
+                              )
+                            ],
+                          ),
+                          child: TextField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.only(top: 20),
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              hintText: '유세인트 비밀번호',
+                              hintStyle: const TextStyle(
+                                  color: Color(0xffA9A8A8), fontSize: 14),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                child: Icon(Icons.lock_outline_rounded),
+                              ),
+                              prefixIconColor: const Color(0xffA9A8A8),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        SizedBox(
+                          width: screenWidth / 6 + 15,
+                          height: 40,
+                          child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                  side: const BorderSide(
+                                      color: Color(0xff8E8E8E)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40)),
+                                  elevation: 0),
+                              onPressed: () {
+                                print(studentIdController.text);
+                                print(passwordController.text);
+                              },
+                              child: const Text(
+                                "로그인",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.white),
+                              )),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
