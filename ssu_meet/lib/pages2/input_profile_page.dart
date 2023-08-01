@@ -92,6 +92,15 @@ class _InputProfile extends State<InputProfile> {
                             fontFamily: "Nanum_Ogbice",
                             fontSize: screenWidth * 0.05),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.01),
+                      ),
+                      Text(
+                        "*성별, 생년월일은 추후 수정 불가합니다.",
+                        style: TextStyle(
+                            fontSize: 0.025 * screenWidth,
+                            color: Colors.red),
+                      ),
                       Stack(
                         alignment: Alignment.center,
                         children: [
