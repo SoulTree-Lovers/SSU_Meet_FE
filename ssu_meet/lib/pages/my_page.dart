@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/my_page/loading_modifypage.dart';
 import 'package:ssu_meet/my_page/logout.dart';
 import 'package:ssu_meet/my_page/modify_information.dart';
 import 'package:ssu_meet/my_page/view_registered.dart';
@@ -29,7 +28,7 @@ class _MyPageState extends State<MyPage> {
   final List _mypageMenu = [
     const ViewRegistered(),
     const PurchasedPostItPage(),
-    LoadingModifyPage(),
+    const ModifyPage(),
     const LogoutPage()
   ];
 
@@ -227,7 +226,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      if(index==2) return LoadingModifyPage().getOldProfile(context);
+                     // if(index==2) return LoadingModifyPage().getOldProfile(context);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => _mypageMenu[index],

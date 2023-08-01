@@ -1,15 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import '../profile_data/profile.dart';
 
 
 
 class ModifyPage extends StatefulWidget {
-  final MyData? initData;
-
-  const ModifyPage({super.key, this.initData});
+  const ModifyPage({super.key});
 
   @override
   State<ModifyPage> createState() => _ModifyPageState();
@@ -23,28 +21,38 @@ class _ModifyPageState extends State<ModifyPage> {
   Item? tmpCollege;
   Item? tmpMajor;
   var data;
+  bool isLoading=false;
 
   Item? searchInItemList(String name, List<DropdownMenuItem<Item>> list) {
     for (int i = 0; i < list.length; i++) {
       if (list[i].value!.title == name) return list[i].value;
     }
   }
+  void getOldProfile() async{
+    var jsonString = await rootBundle.loadString('json/old_profile.json');
+    setState(()  {
+      data = MyData.fromJson(jsonDecode(jsonString) as Map<String, dynamic>);
+      collegeList = Colleges().colleges;
+      tmpCollege = searchInItemList(data.college, collegeList);
+      majorList = Majors(tmpCollege!.ind).majors;
+      tmpMajor = searchInItemList(data.major, majorList);
+      isLoading=true;
+    });
+
+  }
 
   @override
   void initState() {
     super.initState();
-    data = widget.initData!;
-    collegeList = Colleges().colleges;
-    tmpCollege = searchInItemList(data.college, collegeList);
-    majorList = Majors(tmpCollege!.ind).majors;
-    tmpMajor = searchInItemList(data.major, majorList);
+    getOldProfile();
   }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
+     if(!isLoading) return const Center(child:CircularProgressIndicator(color: Colors.transparent,));
+     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
@@ -345,7 +353,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                           Flexible(
                                             child: MyFormField(
                                               key: const ValueKey(3),
-                                              initText: data.instaId,
+                                              initText: data.instaId!,
                                               hintText: "1.인스타",
                                               screenWidth: screenWidth,
                                               onSaved: (val) {
@@ -371,7 +379,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                         ),
                                         child: MyFormField(
                                           key: const ValueKey(4),
-                                          initText: data.kakaoId,
+                                          initText: data.kakaoId!,
                                           hintText: "2.카카오",
                                           screenWidth: screenWidth,
                                           onSaved: (val) {
@@ -395,7 +403,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                         ),
                                         child: MyFormField(
                                           key: const ValueKey(5),
-                                          initText: data.phoneNumber,
+                                          initText: data.phoneNumber!,
                                           hintText: "3.전화번호",
                                           screenWidth: screenWidth,
                                           onSaved: (val) {
