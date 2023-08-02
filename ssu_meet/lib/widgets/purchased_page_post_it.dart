@@ -45,7 +45,7 @@ SizedBox PurchasedPagePostIt(double screenHeight,
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return ClickedPurchasedPostItDialog(
+                return PurchasedPostItDialog(
                   nickname: nickname,
                   age: age,
                   major: major,

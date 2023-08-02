@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ClickedMainPostItDialog extends StatefulWidget {
+class MainPostItDialog extends StatefulWidget {
   final String nickname;
   final int age;
   final String major;
@@ -13,7 +13,7 @@ class ClickedMainPostItDialog extends StatefulWidget {
   final String? phoneNumber;
   final List ideals;
 
-  const ClickedMainPostItDialog({
+  const MainPostItDialog({
     required this.nickname,
     required this.age,
     required this.major,
@@ -29,10 +29,10 @@ class ClickedMainPostItDialog extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ClickedMainPostItDialog();
+  State<StatefulWidget> createState() => _MainPostItDialog();
 }
 
-class _ClickedMainPostItDialog extends State<ClickedMainPostItDialog> {
+class _MainPostItDialog extends State<MainPostItDialog> {
   final formKey = GlobalKey<FormState>();
 
   @override

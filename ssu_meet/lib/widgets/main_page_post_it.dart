@@ -44,7 +44,7 @@ SizedBox MainPagePostIt(double screenHeight,
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return ClickedMainPostItDialog(
+                return MainPostItDialog(
                   nickname: nickname,
                   age: age,
                   major: major,
