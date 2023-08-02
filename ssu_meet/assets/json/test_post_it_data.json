@@ -76,7 +76,167 @@
                     ],
                     "introduce": "I wanna be a dentist"
                 }
+            },
+            {
+                "stickyId": 3,
+                "isSold": 0,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 31,
+                    "college": "경영대",
+                    "major": "마케팅",
+                    "height": 176,
+                    "instaId": "ijkl",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "cc",
+                    "mbti": "ENTJ",
+                    "hobbies": ["aa", "bb", "cc"],
+                    "ideals": ["#E", "#E", "#E", "#F", "#F", "#F", "#G", "#G", "#G", "#H", "#H", "#H"],
+                    "introduce": "Business enthusiast"
+                }
+            },
+            {
+                "stickyId": 4,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "FEMALE",
+                    "birthDate": null,
+                    "age": 27,
+                    "college": "의대",
+                    "major": "외과",
+                    "height": 170,
+                    "instaId": "mnop",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "dd",
+                    "mbti": "ISTJ",
+                    "hobbies": ["dd", "ee", "ff"],
+                    "ideals": ["#I", "#I", "#I", "#J", "#J", "#J", "#K", "#K", "#K", "#L", "#L", "#L"],
+                    "introduce": "Future surgeon"
+                }
+            },
+            {
+                "stickyId": 5,
+                "isSold": 0,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 22,
+                    "college": "문과대",
+                    "major": "심리학",
+                    "height": 178,
+                    "instaId": "qrst",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "ee",
+                    "mbti": "INTP",
+                    "hobbies": ["gg", "hh", "ii"],
+                    "ideals": ["#M", "#M", "#M", "#N", "#N", "#N", "#O", "#O", "#O", "#P", "#P", "#P"],
+                    "introduce": "Exploring the human mind"
+                }
+            },
+            {
+                "stickyId": 6,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "FEMALE",
+                    "birthDate": null,
+                    "age": 26,
+                    "college": "경제대",
+                    "major": "경영학",
+                    "height": 163,
+                    "instaId": "uvwx",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "ff",
+                    "mbti": "ESTJ",
+                    "hobbies": ["jj", "kk", "ll"],
+                    "ideals": ["#Q", "#Q", "#Q", "#R", "#R", "#R", "#S", "#S", "#S", "#T", "#T", "#T"],
+                    "introduce": "Passionate about business"
+                }
+            },
+            {
+                "stickyId": 7,
+                "isSold": 0,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 30,
+                    "college": "법대",
+                    "major": "국제법",
+                    "height": 185,
+                    "instaId": "yzab",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "gg",
+                    "mbti": "INFJ",
+                    "hobbies": ["mm", "nn", "oo"],
+                    "ideals": ["#U", "#U", "#U", "#V", "#V", "#V", "#W", "#W", "#W", "#X", "#X", "#X"],
+                    "introduce": "Advocate for justice"
+                }
+            },
+            {
+                "stickyId": 8,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "FEMALE",
+                    "birthDate": null,
+                    "age": 23,
+                    "college": "공대",
+                    "major": "컴퓨터공학",
+                    "height": 170,
+                    "instaId": "cdef",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "hh",
+                    "mbti": "ISTP",
+                    "hobbies": ["pp", "qq", "rr"],
+                    "ideals": ["#Y", "#Y", "#Y", "#Z", "#Z", "#Z", "#A1", "#A1", "#A1", "#B1", "#B1", "#B1"],
+                    "introduce": "Exploring the world of technology"
+                }
+            },
+            {
+                "stickyId": 9,
+                "isSold": 0,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 28,
+                    "college": "예대",
+                    "major": "연극",
+                    "height": 177,
+                    "instaId": "ghij",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "ii",
+                    "mbti": "ENFP",
+                    "hobbies": ["ss", "tt", "uu"],
+                    "ideals": ["#B1", "#B1", "#B1", "#C1", "#C1", "#C1", "#D1", "#D1", "#D1", "#E1", "#E1", "#E1"],
+                    "introduce": "Living for the stage"
+                }
+            },
+            {
+                "stickyId": 10,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "FEMALE",
+                    "birthDate": null,
+                    "age": 25,
+                    "college": "의대",
+                    "major": "내과",
+                    "height": 168,
+                    "instaId": "klmn",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "jj",
+                    "mbti": "ENTP",
+                    "hobbies": ["vv", "ww", "xx"],
+                    "ideals": ["#F1", "#F1", "#F1", "#G1", "#G1", "#G1", "#H1", "#H1", "#H1", "#I1", "#I1", "#I1"],
+                    "introduce": "Future medical pioneer"
+                }
             }
-				]
+		]
     }
 }
