@@ -1,159 +1,82 @@
 {
-    "status": "success",
-    "message": "등록한 포스트잇 목록입니다.",
+    "status": "SUCCESS",
+    "message": "내가 등록한 포스트잇 확인",
     "data": {
-        "members": [
+        "stickyData": [
             {
-                "id": 1,
-                "info": {
-                    "nickName": "슝슝이",
+                "stickyId": 1,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 24,
+                    "college": "IT대",
+                    "major": "AI융합학부",
+                    "height": 182,
+                    "instaId": "abcd",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "aa",
                     "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
+                    "hobbies": [
+                        "qq",
+                        "ww",
+                        "ee"
+                    ],
+                    "ideals": [
+                        "#z",
+                        "#z",
+                        "#z",
+                        "#P",
+                        "#P",
+                        "#P",
+                        "#H",
+                        "#H",
+                        "#H",
+                        "#R",
+                        "#R",
+                        "#R"
+                    ],
+                    "introduce": "I wanna be a dentist"
                 }
             },
             {
-                "id": 2,
-                "info": {
-                    "nickName": "슝슝이",
+                "stickyId": 2,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 24,
+                    "college": "IT대",
+                    "major": "AI융합학부",
+                    "height": 182,
+                    "instaId": "abcd",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "bb",
                     "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 3,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 4,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 5,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 6,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 7,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 8,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 9,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
-                }
-            },
-            {
-                "id": 10,
-                "info": {
-                    "nickName": "슝슝이",
-                    "mbti": "ESFP",
-                    "hobbyFirst": "Soccer",
-                    "hobbySecond": "Baseball",
-                    "hobbyThird": "Study",
-                    "ideal": "#Cute",
-                    "introduce": "hi im injun",
-                    "sns_instagram": "exam_insta",
-                    "sns_kakao": "exam_kakao",
-                    "sns_phone": "010-1234-1234"
+                    "hobbies": [
+                        "qq",
+                        "ww",
+                        "ee"
+                    ],
+                    "ideals": [
+                        "#z",
+                        "#z",
+                        "#z",
+                        "#P",
+                        "#P",
+                        "#P",
+                        "#H",
+                        "#H",
+                        "#H",
+                        "#R",
+                        "#R",
+                        "#R"
+                    ],
+                    "introduce": "I wanna be a dentist"
                 }
             }
-            
-        ]
+				]
     }
 }
