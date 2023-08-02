@@ -1,0 +1,82 @@
+{
+    "status": "SUCCESS",
+    "message": "내가 구입한 포스트잇 확인",
+    "data": {
+        "stickyData": [
+            {
+                "stickyId": 1,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 24,
+                    "college": "IT대",
+                    "major": "AI융합학부",
+                    "height": 182,
+                    "instaId": "abcd",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "aa",
+                    "mbti": "ESFP",
+                    "hobbies": [
+                        "qq",
+                        "ww",
+                        "ee"
+                    ],
+                    "ideals": [
+                        "#z",
+                        "#z",
+                        "#z",
+                        "#P",
+                        "#P",
+                        "#P",
+                        "#H",
+                        "#H",
+                        "#H",
+                        "#R",
+                        "#R",
+                        "#R"
+                    ],
+                    "introduce": "I wanna be a dentist"
+                }
+            },
+            {
+                "stickyId": 2,
+                "isSold": 1,
+                "stickyData": {
+                    "sex": "MALE",
+                    "birthDate": null,
+                    "age": 24,
+                    "college": "IT대",
+                    "major": "AI융합학부",
+                    "height": 182,
+                    "instaId": "abcd",
+                    "kakaoId": null,
+                    "phoneNumber": null,
+                    "nickname": "bb",
+                    "mbti": "ESFP",
+                    "hobbies": [
+                        "qq",
+                        "ww",
+                        "ee"
+                    ],
+                    "ideals": [
+                        "#z",
+                        "#z",
+                        "#z",
+                        "#P",
+                        "#P",
+                        "#P",
+                        "#H",
+                        "#H",
+                        "#H",
+                        "#R",
+                        "#R",
+                        "#R"
+                    ],
+                    "introduce": "I wanna be a dentist"
+                }
+            }
+		]
+    }
+}

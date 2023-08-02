@@ -145,7 +145,7 @@ class _MainPageState extends State<MainPage> {
 Future<List> getPostItFrontData() async {
   // 서버에서 포스트잇 앞면 데이터 가져오기 (임시)
   String jsonString =
-      await rootBundle.loadString('json/test_post_it_data.json');
+      await rootBundle.loadString('json/test_main_post_it_data.json');
   final jsonResponse = json.decode(jsonString);
   // print(jsonResponse["data"]["stickyData"]);
   return jsonResponse["data"]["stickyData"];

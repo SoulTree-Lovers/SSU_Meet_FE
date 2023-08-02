@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
-import 'package:ssu_meet/widgets/main_page_post_it.dart';
+import 'package:ssu_meet/widgets/purchased_page_post_it.dart';
 
 class PurchasedPostItPage extends StatefulWidget {
   const PurchasedPostItPage({super.key});
@@ -180,7 +180,7 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
                   return Text('Error: ${snapshot.error}');
                 } else {
                   // If the future completed successfully
-                  return MainPagePostIt(
+                  return PurchasedPagePostIt(
                     screenHeight,
                     snapshot,
                     screenWidth,
@@ -198,8 +198,8 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
 Future<List> getPurchasedPostItData() async {
   // 서버에서 포스트잇 앞면 데이터 가져오기
   String jsonString =
-      await rootBundle.loadString('json/purchased_post_it_json.json');
+      await rootBundle.loadString('json/test_purchased_post_it_json.json');
   final jsonResponse = json.decode(jsonString);
 
-  return jsonResponse;
+  return jsonResponse["data"]["stickyData"];
 }
