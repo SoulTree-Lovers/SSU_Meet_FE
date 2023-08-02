@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/pages2/main_post_it_dialog.dart';
 
 SizedBox MainPagePostIt(double screenHeight,
     AsyncSnapshot<List<dynamic>> snapshot, double screenWidth) {
@@ -19,12 +20,20 @@ SizedBox MainPagePostIt(double screenHeight,
         var postIt = snapshot.data![index];
         var id = postIt["stickyId"];
 
-        var nickname = postIt["stickyData"]["nickname"];
+        var sex = postIt["stickyData"]["sex"];
+        var birthDate = postIt["stickyData"]["birthDate"];
         var age = postIt["stickyData"]["age"];
+        var college = postIt["stickyData"]["college"];
+        var major = postIt["stickyData"]["major"];
+        var height = postIt["stickyData"]["height"];
+        var instaId = postIt["stickyData"]["instaId"];
+        var kakaoId = postIt["stickyData"]["kakaoId"];
+        var phoneNumber = postIt["stickyData"]["phoneNumber"];
+        var nickname = postIt["stickyData"]["nickname"];
         var mbti = postIt["stickyData"]["mbti"];
         var hobbies = postIt["stickyData"]["hobbies"];
-        var instaId = postIt["stickyData"]["instaId"];
-
+        var ideals = postIt["stickyData"]["ideals"];
+        var introduce = postIt["stickyData"]["introduce"];
         // return Text(index.toString());
         // Future<String> nickname = getPostItFrontNickname(index);
         // var age = getPostItFrontData(index)["age"];
@@ -32,6 +41,24 @@ SizedBox MainPagePostIt(double screenHeight,
         // var hobby = getPostItFrontData(index)["hobby"];
         return GestureDetector(
           onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ClickedMainPostItDialog(
+                  nickname: nickname,
+                  age: age,
+                  major: major,
+                  mbti: mbti,
+                  height: height,
+                  hobbies: hobbies,
+                  introduce: introduce,
+                  instaId: instaId,
+                  kakaoId: kakaoId,
+                  phoneNumber: phoneNumber,
+                  ideals: ideals,
+                );
+              },
+            );
             print("Tapped Post It (id: $id)");
             print("Tapped Post It (age: $age)");
             print("Tapped Post It (instaId: $instaId)");
