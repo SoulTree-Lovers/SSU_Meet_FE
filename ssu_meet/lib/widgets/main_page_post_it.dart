@@ -17,10 +17,14 @@ SizedBox MainPagePostIt(double screenHeight,
       ),
       itemBuilder: (BuildContext context, int index) {
         var postIt = snapshot.data![index];
-        var nickname = postIt["nickname"];
-        var age = postIt["age"];
-        var mbti = postIt["mbti"];
-        var hobby = postIt["hobby"];
+        var id = postIt["stickyId"];
+
+        var nickname = postIt["stickyData"]["nickname"];
+        var age = postIt["stickyData"]["age"];
+        var mbti = postIt["stickyData"]["mbti"];
+        var hobbies = postIt["stickyData"]["hobbies"];
+        var instaId = postIt["stickyData"]["instaId"];
+
         // return Text(index.toString());
         // Future<String> nickname = getPostItFrontNickname(index);
         // var age = getPostItFrontData(index)["age"];
@@ -28,7 +32,9 @@ SizedBox MainPagePostIt(double screenHeight,
         // var hobby = getPostItFrontData(index)["hobby"];
         return GestureDetector(
           onTap: () {
-            print("Tapped Post It $index");
+            print("Tapped Post It (id: $id)");
+            print("Tapped Post It (age: $age)");
+            print("Tapped Post It (instaId: $instaId)");
           },
           child: Center(
             child: Container(
@@ -90,7 +96,23 @@ SizedBox MainPagePostIt(double screenHeight,
                               ),
                             ),
                             Text(
-                              "취미: $hobby",
+                              "취미 1: ${hobbies[0]}",
+                              style: TextStyle(
+                                fontFamily: "Nanum_Ogbice",
+                                fontSize: screenWidth * 0.04,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              "취미 2: ${hobbies[1]}",
+                              style: TextStyle(
+                                fontFamily: "Nanum_Ogbice",
+                                fontSize: screenWidth * 0.04,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              "취미 3: ${hobbies[2]}",
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,

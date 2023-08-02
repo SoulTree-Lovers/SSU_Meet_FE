@@ -134,12 +134,21 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-Future<List> getPostItFrontData() async {
-  // 서버에서 포스트잇 앞면 데이터 가져오기
-  String jsonString = await rootBundle.loadString('json/post_it_json.json');
-  final jsonResponse = json.decode(jsonString);
+// Future<List> getPostItFrontData() async {
+//   // 서버에서 포스트잇 앞면 데이터 가져오기 (임시)
+//   String jsonString = await rootBundle.loadString('json/post_it_json.json');
+//   final jsonResponse = json.decode(jsonString);
 
-  return jsonResponse;
+//   return jsonResponse;
+// }
+
+Future<List> getPostItFrontData() async {
+  // 서버에서 포스트잇 앞면 데이터 가져오기 (임시)
+  String jsonString =
+      await rootBundle.loadString('json/test_post_it_data.json');
+  final jsonResponse = json.decode(jsonString);
+  // print(jsonResponse["data"]["stickyData"]);
+  return jsonResponse["data"]["stickyData"];
 }
 
 // 내가 등록한 포스트잇 개수 가져오기 (임시)
