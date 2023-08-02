@@ -186,13 +186,12 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
-                                    height: screenWidth * 0.15,
+                                    height: screenWidth * 0.12,
                                     child: MyFormField(
                                       key: const ValueKey(2),
-                                      hintText: "50자 이내",
+                                      hintText: "1. 15자 이내",
                                       screenWidth: screenWidth,
-                                      maxLine: null,
-                                      maxLength: 50,
+                                      maxLength: 15,
                                       validator: (val) {
                                         if (val == '' || val!.isEmpty) {
                                           return "필수입력";
@@ -207,6 +206,54 @@ class _InputPostIt extends State<InputPostIt> {
                                     ),
                                   ),
                                 ],
+                              ),
+                              Container(
+                                width: screenWidth * 0.45,
+                                height: screenWidth * 0.12,
+                                padding: EdgeInsets.only(
+                                  left: screenWidth * 0.048,
+                                ),
+                                child: MyFormField(
+                                  key: const ValueKey(2),
+                                  hintText: "2.",
+                                  screenWidth: screenWidth,
+                                  maxLength: 15,
+                                  validator: (val) {
+                                    if (val == '' || val!.isEmpty) {
+                                      return "필수입력";
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (val) {
+                                    setState(() {
+                                      _hobby = val;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: screenWidth * 0.45,
+                                height: screenWidth * 0.12,
+                                padding: EdgeInsets.only(
+                                  left: screenWidth * 0.048,
+                                ),
+                                child: MyFormField(
+                                  key: const ValueKey(2),
+                                  hintText: "3.",
+                                  screenWidth: screenWidth,
+                                  maxLength: 15,
+                                  validator: (val) {
+                                    if (val == '' || val!.isEmpty) {
+                                      return "필수입력";
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (val) {
+                                    setState(() {
+                                      _hobby = val;
+                                    });
+                                  },
+                                ),
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
