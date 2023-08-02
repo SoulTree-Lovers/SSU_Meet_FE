@@ -13,7 +13,7 @@ class MyFormField extends StatefulWidget {
     required this.hintText,
     required this.screenWidth,
     required this.maxLength,
-    required this.maxLine,
+    this.maxLine,
     this.validator,
     this.onSaved,
   }) : super(key: key);
