@@ -280,7 +280,7 @@ class _InputProfile extends State<InputProfile> {
                                               hintText: "MMYYDD",
                                               screenWidth: screenWidth,
                                               validator: (val) {
-                                                if (val == '' || val!.isEmpty) {
+                                                if (val == '' || val==null) {
                                                   return "필수입력";
                                                 }
                                                 return null;
@@ -310,7 +310,7 @@ class _InputProfile extends State<InputProfile> {
                                               hintText: "입력",
                                               screenWidth: screenWidth,
                                               validator: (val) {
-                                                if (val == '' || val!.isEmpty) {
+                                                if (val == '' || val==null) {
                                                   return "필수입력";
                                                 }
                                                 return null;
@@ -460,20 +460,23 @@ class _InputProfile extends State<InputProfile> {
                         ),
                         ),
                         onPressed: () {
-                          formKey.currentState!.save();
-                          if (formKey.currentState!.validate() &&
-                              sex != genderList[0] &&
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save(); //생년월일, 키 제대로 입력 시 저장.
+                            if(sex != genderList[0] && //나머지 조건들 한 번 더 체크
                               college != collegeList[0].value &&
                               major != majorList[0].value &&
                               instaId != '' ||
                               kakaoId != '' ||
                               phoneNumber != '') {
-                            age = AgeCalculation(birth!);
-                            print("필수 입력 요건이 충족됨");
-                            printData();
-                          } else {
-                            print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
+                              age = AgeCalculation(birth!);
+                              print("필수 입력 요건이 충족됨");
+                              printData();
+                            }
+                            else print("필수 입력 조건이 충족되지 않음");
+                          } else  {
+                            print("필수 입력 조건이 충족되지 않음");
                           }
+
                         },
                       ),
                     ],
