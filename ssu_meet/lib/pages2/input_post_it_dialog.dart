@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages2/select_idealtype_modal.dart';
+import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
 import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
 
 class InputPostIt extends StatefulWidget {
@@ -11,14 +11,15 @@ class InputPostIt extends StatefulWidget {
 
 class _InputPostIt extends State<InputPostIt> {
   final formKey = GlobalKey<FormState>();
-  String? _nikname;
-  String? _mbti;
-  String? _myself;
-  List _hobby = ['', '', '']; //취미 리스트
-  List ideal_list = []; //이상형 리스트
+  String? nikname;
+  String? mbti;
+  String? myself;
+  List hobby = ['', '', '']; //취미 리스트
+  List idealList = [];
+
   int flag = 0;
 
-  List<String> mbti_list = [
+  List<String> mbtiList = [
     'ENFP',
     'ENFJ',
     'ENTP',
@@ -40,7 +41,7 @@ class _InputPostIt extends State<InputPostIt> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    // double screenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -122,7 +123,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       },
                                       onSaved: (val) {
                                         setState(() {
-                                          _nikname = val;
+                                          nikname = val;
                                         });
                                       },
                                     ),
@@ -143,7 +144,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     height: screenWidth * 0.08,
                                     child: DropdownButton(
                                       alignment: Alignment.center,
-                                      value: _mbti,
+                                      value: mbti,
                                       underline: Container(
                                           height: screenWidth * 0.0015,
                                           color: Colors.black),
@@ -157,7 +158,7 @@ class _InputPostIt extends State<InputPostIt> {
                                             fontFamily: "Nanum_Ogbice",
                                             fontSize: screenWidth * 0.04,
                                           )),
-                                      items: mbti_list
+                                      items: mbtiList
                                           .map<DropdownMenuItem<String>>(
                                         (String value) {
                                           return DropdownMenuItem<String>(
@@ -168,7 +169,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       ).toList(),
                                       onChanged: (newVal) {
                                         setState(() {
-                                          _mbti = newVal;
+                                          mbti = newVal;
                                         });
                                       },
                                     ),
@@ -195,7 +196,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       maxLine: 1,
                                       onSaved: (val) {
                                         setState(() {
-                                          _hobby[0] = val;
+                                          hobby[0] = val;
                                         });
                                       },
                                     ),
@@ -216,7 +217,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      _hobby[1] = val;
+                                      hobby[1] = val;
                                     });
                                   },
                                 ),
@@ -235,7 +236,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      _hobby[2] = val;
+                                      hobby[2] = val;
                                     });
                                   },
                                 ),
@@ -250,7 +251,9 @@ class _InputPostIt extends State<InputPostIt> {
                                       color: Colors.red),
                                 ),
                               ),
-                              Padding(padding: EdgeInsets.only(top:screenWidth*0.01)),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.only(top: screenWidth * 0.01)),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -277,7 +280,7 @@ class _InputPostIt extends State<InputPostIt> {
                                         },
                                         onSaved: (val) {
                                           setState(() {
-                                            _myself = val;
+                                            myself = val;
                                           });
                                         },
                                         //maxLength: 200,
@@ -309,17 +312,21 @@ class _InputPostIt extends State<InputPostIt> {
                                                   fixedSize: Size(
                                                       screenWidth * 0.3,
                                                       screenWidth * 0.05)),
-                                              onPressed: () {
-                                                showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return SelectIdealType();
-                                                  },
-                                                );
+                                              onPressed: () async {
+                                                await showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        myModal(
+                                                            context,
+                                                            screenHeight,
+                                                            screenWidth,
+                                                            idealList=[]));
+                                              //  idealList.forEach(print);
+
                                               },
                                               child: Text(
                                                 "  이상형 선택하기!",
@@ -374,15 +381,16 @@ class _InputPostIt extends State<InputPostIt> {
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
-                          if (_mbti != null &&
-                              (_hobby[0] != '' ||
-                              _hobby[1] != '' ||
-                              _hobby[2] != '')) {
+                          if (mbti != null &&
+                              (hobby[0] != '' ||
+                                  hobby[1] != '' ||
+                                  hobby[2] != '')) {
                             print(
-                                "닉네임: $_nikname\nmbti: $_mbti\n취미: ${_hobby[0]} ${_hobby[1]} ${_hobby[2]}\n자기소개: $_myself\n이상형: ");
+                                "닉네임: $nikname\nmbti: $mbti\n취미: ${hobby[0]} ${hobby[1]} ${hobby[2]}\n자기소개: $myself\n이상형: ");
                             Navigator.pop(context);
-                          } else
+                          } else {
                             print("값이 유효하지 않음");
+                          }
                         } else {
                           print("값이 유효하지 않음");
                         }
