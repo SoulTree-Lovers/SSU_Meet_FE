@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class MyFormField extends StatefulWidget {
   final String hintText;
   final double screenWidth;
-  final FormFieldValidator? validator;
-  final FormFieldSetter? onSaved;
   final int maxLength;
   final int? maxLine;
+  final String? helperText;
+  final FormFieldValidator? validator;
+  final FormFieldSetter? onSaved;
 
   const MyFormField({
     Key? key,
@@ -14,6 +15,7 @@ class MyFormField extends StatefulWidget {
     required this.screenWidth,
     required this.maxLength,
     required this.maxLine,
+    this.helperText,
     this.validator,
     this.onSaved,
   }) : super(key: key);
@@ -46,6 +48,11 @@ class _MyFormFieldState extends State<MyFormField> {
         color: Colors.black,
       ),
       decoration: InputDecoration(
+        helperText: widget.helperText,
+        helperStyle:
+            TextStyle(fontSize: 0.015 * widget.screenWidth, color: Colors.red),
+        counterStyle: TextStyle(
+            fontSize: widget.screenWidth * 0.02, color: Colors.black54),
         errorStyle: TextStyle(fontSize: widget.screenWidth * 0.02),
         hintText: widget.hintText,
         hintStyle: TextStyle(
