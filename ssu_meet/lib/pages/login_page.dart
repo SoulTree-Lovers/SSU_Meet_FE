@@ -46,9 +46,10 @@ class LoginPage extends StatelessWidget {
                       SizedBox(
                         width: screenWidth * 0.5,
                         child: const Image(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/pink_yellow.png')),
-                      )
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/images/pink_yellow.png'),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -87,7 +88,7 @@ class LoginPage extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 5,
                                 blurRadius: 5,
-                              )
+                              ),
                             ],
                           ),
                           child: TextField(
@@ -118,7 +119,7 @@ class LoginPage extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 5,
                                 blurRadius: 5,
-                              )
+                              ),
                             ],
                           ),
                           child: TextField(
@@ -147,27 +148,30 @@ class LoginPage extends StatelessWidget {
                           width: screenWidth / 6 + 15,
                           height: 40,
                           child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                  side: const BorderSide(
-                                      color: Color(0xff8E8E8E)),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40)),
-                                  elevation: 0),
-                              onPressed: () {
-                                print(studentIdController.text);
-                                print(passwordController.text);
-                              },
-                              child: const Text(
-                                "로그인",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.white),
-                              )),
+                            style: OutlinedButton.styleFrom(
+                                backgroundColor: Colors.black,
+                                side:
+                                    const BorderSide(color: Color(0xff8E8E8E)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40)),
+                                elevation: 0),
+                            onPressed: () {
+                              print(studentIdController.text);
+                              print(passwordController.text);
+                            },
+                            child: const Text(
+                              "로그인",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),

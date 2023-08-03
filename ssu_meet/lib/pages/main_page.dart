@@ -38,40 +38,6 @@ class _MainPageState extends State<MainPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(20.0),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.end,
-                //     children: [
-                //       GestureDetector(
-                //         onTap: () {
-                //           print("등록하기 버튼 클릭 !");
-                //         },
-                //         child: Container(
-                //           width: 90,
-                //           height: 40,
-                //           decoration: ShapeDecoration(
-                //             color: Colors.white.withOpacity(0.5),
-                //             shape: RoundedRectangleBorder(
-                //               side: const BorderSide(
-                //                   width: 1, color: Color(0xFF010101)),
-                //               borderRadius: BorderRadius.circular(20),
-                //             ),
-                //           ),
-                //           child: const Center(
-                //             child: Text(
-                //               "+ 등록하기",
-                //               style: TextStyle(
-                //                 fontFamily: "Ongeul",
-                //                 fontSize: 20,
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(
@@ -127,7 +93,11 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           // RegistrationButtonWhite(screenHeight, screenWidth),
-          RegistrationButtonBlack(screenHeight, screenWidth, context),
+          RegistrationButtonBlack(
+            screenHeight,
+            screenWidth,
+            context,
+          ),
         ],
       ),
     );
