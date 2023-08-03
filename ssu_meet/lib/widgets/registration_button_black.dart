@@ -8,6 +8,7 @@ Positioned RegistrationButtonBlack(double screenHeight, double screenWidth,Build
     child: GestureDetector(
       onTap: () {
         showDialog(
+          barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {return InputPostIt(); });
         print("등록하기 버튼 클릭 !");
