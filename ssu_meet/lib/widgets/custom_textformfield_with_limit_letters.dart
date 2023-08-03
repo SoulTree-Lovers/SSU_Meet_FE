@@ -13,7 +13,7 @@ class MyFormField extends StatefulWidget {
     required this.hintText,
     required this.screenWidth,
     required this.maxLength,
-    this.maxLine,
+    required this.maxLine,
     this.validator,
     this.onSaved,
   }) : super(key: key);
@@ -38,10 +38,10 @@ class _MyFormFieldState extends State<MyFormField> {
       maxLines: widget.maxLine,
       maxLength: widget.maxLength,
       cursorWidth: 1.5,
-      cursorHeight: widget.screenWidth * 0.03,
+      cursorHeight: widget.screenWidth * 0.04,
       cursorColor: Colors.transparent,
       style: TextStyle(
-        fontSize: widget.screenWidth * 0.04,
+        fontSize: widget.screenWidth * 0.035,
         fontFamily: "Nanum_Ogbice",
         color: Colors.black,
       ),

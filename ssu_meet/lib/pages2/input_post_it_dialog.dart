@@ -13,9 +13,9 @@ class _InputPostIt extends State<InputPostIt> {
   final formKey = GlobalKey<FormState>();
   String? _nikname;
   String? _mbti;
-  String? _hobby;
   String? _myself;
-  List ideal_list = [];
+  List _hobby = ['', '', '']; //취미 리스트
+  List ideal_list = []; //이상형 리스트
   int flag = 0;
 
   List<String> mbti_list = [
@@ -40,7 +40,7 @@ class _InputPostIt extends State<InputPostIt> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-   // double screenHeight = MediaQuery.of(context).size.height;
+    // double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -79,17 +79,17 @@ class _InputPostIt extends State<InputPostIt> {
                 Padding(padding: EdgeInsets.only(top: screenWidth * 0.03)),
                 Stack(
                   children: [
-                     Image(
+                    Image(
                       image: const AssetImage(
                         "assets/images/images2/yellowpostit2.png",
                       ),
                       width: screenWidth * 0.85,
-                       height: screenWidth * 1.1 ,
+                      height: screenWidth * 1.1,
                     ),
                     //텍스트
                     Positioned(
-                      top: screenWidth * 0.23,
-                      left: screenWidth * 0.1,
+                      top: screenWidth * 0.18,
+                      left: screenWidth * 0.12,
                       child: SizedBox(
                         width: screenWidth * 0.6,
                         height: screenWidth * 0.8,
@@ -115,7 +115,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       maxLength: 10,
                                       maxLine: 1,
                                       validator: (val) {
-                                        if (val == '' || val!.isEmpty) {
+                                        if (val == '' || val == null) {
                                           return "필수입력";
                                         }
                                         return null;
@@ -186,21 +186,16 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
-                                    height: screenWidth * 0.12,
+                                    height: screenWidth * 0.1,
                                     child: MyFormField(
                                       key: const ValueKey(2),
                                       hintText: "1. 15자 이내",
                                       screenWidth: screenWidth,
                                       maxLength: 15,
-                                      validator: (val) {
-                                        if (val == '' || val!.isEmpty) {
-                                          return "필수입력";
-                                        }
-                                        return null;
-                                      },
+                                      maxLine: 1,
                                       onSaved: (val) {
                                         setState(() {
-                                          _hobby = val;
+                                          _hobby[0] = val;
                                         });
                                       },
                                     ),
@@ -209,52 +204,53 @@ class _InputPostIt extends State<InputPostIt> {
                               ),
                               Container(
                                 width: screenWidth * 0.45,
-                                height: screenWidth * 0.12,
+                                height: screenWidth * 0.08,
                                 padding: EdgeInsets.only(
                                   left: screenWidth * 0.048,
                                 ),
                                 child: MyFormField(
-                                  key: const ValueKey(2),
+                                  key: const ValueKey(3),
                                   hintText: "2.",
                                   screenWidth: screenWidth,
                                   maxLength: 15,
-                                  validator: (val) {
-                                    if (val == '' || val!.isEmpty) {
-                                      return "필수입력";
-                                    }
-                                    return null;
-                                  },
+                                  maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      _hobby = val;
+                                      _hobby[1] = val;
                                     });
                                   },
                                 ),
                               ),
                               Container(
                                 width: screenWidth * 0.45,
-                                height: screenWidth * 0.12,
+                                height: screenWidth * 0.08,
                                 padding: EdgeInsets.only(
                                   left: screenWidth * 0.048,
                                 ),
                                 child: MyFormField(
-                                  key: const ValueKey(2),
+                                  key: const ValueKey(4),
                                   hintText: "3.",
                                   screenWidth: screenWidth,
                                   maxLength: 15,
-                                  validator: (val) {
-                                    if (val == '' || val!.isEmpty) {
-                                      return "필수입력";
-                                    }
-                                    return null;
-                                  },
+                                  maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      _hobby = val;
+                                      _hobby[2] = val;
                                     });
                                   },
                                 ),
                               ),
+                              SizedBox(
+                                width: screenWidth * 0.6,
+                                height: screenWidth * 0.026,
+                                child: Text(
+                                  "*취미는 하나 이상 필수로 입력해주세요.",
+                                  style: TextStyle(
+                                      fontSize: 0.02 * screenWidth,
+                                      color: Colors.red),
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.only(top:screenWidth*0.01)),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -266,15 +262,15 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                       width: screenWidth * 0.4,
-                                      height: screenWidth * 0.15,
+                                      height: screenWidth * 0.2,
                                       child: MyFormField(
-                                        key: const ValueKey(3),
+                                        key: const ValueKey(5),
                                         hintText: "200자 이내",
                                         screenWidth: screenWidth,
                                         maxLine: null,
                                         maxLength: 200,
                                         validator: (val) {
-                                          if (val == '' || val!.isEmpty) {
+                                          if (val == '' || val == null) {
                                             return "필수입력";
                                           }
                                           return null;
@@ -335,14 +331,14 @@ class _InputPostIt extends State<InputPostIt> {
                                               ),
                                             ),
                                           ),
-                                           Positioned(
-                                             top:screenWidth * -0.007,
-                                             width: screenWidth * 0.08,
-                                             height: screenWidth * 0.08,
-                                             child:const Image(
-                                                 image: AssetImage(
+                                          Positioned(
+                                            top: screenWidth * -0.007,
+                                            width: screenWidth * 0.08,
+                                            height: screenWidth * 0.08,
+                                            child: const Image(
+                                                image: AssetImage(
                                                     "assets/images/images2/whiteheart2.png")),
-                                           ),
+                                          ),
                                         ],
                                       ),
                                       //이상형 리스트...
@@ -376,11 +372,17 @@ class _InputPostIt extends State<InputPostIt> {
                             fontFamily: "Nanum_Ogbice"),
                       ),
                       onPressed: () {
-                        if (formKey.currentState!.validate() && _mbti != null) {
+                        if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
-                          print(
-                              "닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n이상형: ");
-                          Navigator.pop(context);
+                          if (_mbti != null &&
+                              (_hobby[0] != '' ||
+                              _hobby[1] != '' ||
+                              _hobby[2] != '')) {
+                            print(
+                                "닉네임: $_nikname\nmbti: $_mbti\n취미: ${_hobby[0]} ${_hobby[1]} ${_hobby[2]}\n자기소개: $_myself\n이상형: ");
+                            Navigator.pop(context);
+                          } else
+                            print("값이 유효하지 않음");
                         } else {
                           print("값이 유효하지 않음");
                         }
@@ -417,4 +419,3 @@ class _InputPostIt extends State<InputPostIt> {
     );
   }
 }
-
