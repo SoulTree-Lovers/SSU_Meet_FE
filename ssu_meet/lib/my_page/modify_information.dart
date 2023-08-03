@@ -28,6 +28,7 @@ class _ModifyPageState extends State<ModifyPage> {
     for (int i = 0; i < list.length; i++) {
       if (list[i].value!.title == name) return list[i].value;
     }
+    return null;
   }
 
   void getOldProfile() async {
@@ -209,6 +210,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                   majorList =
                                                       Majors(newVal.ind).majors;
                                                   tmpMajor = majorList[0].value;
+                                                  data.major = tmpMajor!.title;
                                                 },
                                               );
                                             },
@@ -241,10 +243,8 @@ class _ModifyPageState extends State<ModifyPage> {
                                             onChanged: (newVal) {
                                               setState(
                                                 () {
-                                                  tmpMajor =
-                                                      majorList[newVal!.ind]
-                                                          .value;
-                                                  data.major = newVal.title;
+                                                  tmpMajor = newVal;
+                                                  data.major = newVal!.title;
                                                 },
                                               );
                                             },
@@ -310,7 +310,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                 screenWidth: screenWidth,
                                                 validator: (val) {
                                                   if (val == '' ||
-                                                      val!.isEmpty) {
+                                                      val == null) {
                                                     return "필수입력";
                                                   }
                                                   return null;
@@ -463,12 +463,12 @@ class _ModifyPageState extends State<ModifyPage> {
                           ),
                         ),
                         onPressed: () {
-                          formKey.currentState!.save(); // 일단 저장
-                          if (formKey.currentState!.validate() &&
-                              data.sex != genderList[0] &&
-                              data.college != collegeList[0].value &&
-                              data.major != majorList[0].value) {
-                            if ((data.instaId != '' ||
+                          if (formKey.currentState!.validate()) {
+                            //키만 입력하면 키 저장.
+                            formKey.currentState!.save();
+                            if (data.college != collegeList[0].value!.title &&
+                                    data.major != majorList[0].value!.title &&
+                                (data.instaId != '' ||
                                 data.kakaoId != '' ||
                                 data.phoneNumber != '')) {
                               data.age = AgeCalculation(data.birth);
@@ -478,7 +478,7 @@ class _ModifyPageState extends State<ModifyPage> {
                               print(json.encode(data.toJson()));
                               Navigator.pop(context);
                             } else
-                              print("sns를 입력하지 않음");
+                              print("필수 입력 조건이 충족되지 않음");
                           } else {
                             print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
                           }
@@ -495,8 +495,3 @@ class _ModifyPageState extends State<ModifyPage> {
     );
   }
 }
-
-
-
-
-

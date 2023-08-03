@@ -465,9 +465,9 @@ class _InputProfile extends State<InputProfile> {
                             if(sex != genderList[0] && //나머지 조건들 한 번 더 체크
                               college != collegeList[0].value &&
                               major != majorList[0].value &&
-                              instaId != '' ||
+                                (instaId != '' ||
                               kakaoId != '' ||
-                              phoneNumber != '') {
+                              phoneNumber != '')) {
                               age = AgeCalculation(birth!);
                               print("필수 입력 요건이 충족됨");
                               printData();
