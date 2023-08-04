@@ -80,7 +80,7 @@ class _MyPageState extends State<MyPage> {
                               blurRadius: 8,
                               offset: Offset(0, 4),
                               spreadRadius: 0,
-                            )
+                            ),
                           ],
                         ),
                         child: ElevatedButton(
@@ -96,7 +96,8 @@ class _MyPageState extends State<MyPage> {
                                 child: Image(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
-                                      "assets/images/mypage_images/coin_icon.png"),
+                                    "assets/images/mypage_images/coin_icon.png",
+                                  ),
                                 ),
                               ),
                               SizedBox(

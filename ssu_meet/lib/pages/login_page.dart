@@ -131,7 +131,9 @@ class LoginPage extends StatelessWidget {
                               focusedBorder: InputBorder.none,
                               hintText: '유세인트 비밀번호',
                               hintStyle: const TextStyle(
-                                  color: Color(0xffA9A8A8), fontSize: 14),
+                                color: Color(0xffA9A8A8),
+                                fontSize: 14,
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -149,12 +151,15 @@ class LoginPage extends StatelessWidget {
                           height: 40,
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.black,
-                                side:
-                                    const BorderSide(color: Color(0xff8E8E8E)),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)),
-                                elevation: 0),
+                              backgroundColor: Colors.black,
+                              side: const BorderSide(
+                                color: Color(0xff8E8E8E),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              elevation: 0,
+                            ),
                             onPressed: () {
                               print(studentIdController.text);
                               print(passwordController.text);
