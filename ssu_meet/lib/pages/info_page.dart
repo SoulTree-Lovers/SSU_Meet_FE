@@ -107,7 +107,7 @@ class _InfoPageState extends State<InfoPage> {
                   ),
                 ),
                 const Text(
-                  "09.27 ~ 09.30",
+                  "09.20 ~ 09.22",
                   style: TextStyle(
                     fontFamily: "Nanum_Ogbice",
                     fontSize: 17,
@@ -134,10 +134,16 @@ class _InfoPageState extends State<InfoPage> {
                   width: screenWidth * 0.7,
                   height: screenWidth * 0.4,
                   decoration: const BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        blurRadius: 7,
+                      ),
+                    ],
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: AssetImage(
-                        "assets/images/info_images/festival.png",
+                        "assets/images/info_images/ssu_festival.png",
                       ),
                     ),
                   ),
