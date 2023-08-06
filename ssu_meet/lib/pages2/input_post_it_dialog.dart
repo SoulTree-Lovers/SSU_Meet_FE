@@ -198,7 +198,7 @@ class _InputPostIt extends State<InputPostIt> {
                                         setState(() {
                                           hobby[0] = val;
                                         });
-                                      }, maxLine: null,
+                                      }, //maxLine: null,
                                     ),
                                   ),
                                 ],
@@ -219,7 +219,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     setState(() {
                                       hobby[1] = val;
                                     });
-                                  }, maxLine: null,
+                                  }, //maxLine: null,
                                 ),
                               ),
                               Container(
@@ -239,7 +239,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     setState(() {
                                       hobby[2] = val;
                                     });
-                                  }, maxLine: null,
+                                  }, //maxLine: null,
                                 ),
                               ),
                               Padding(

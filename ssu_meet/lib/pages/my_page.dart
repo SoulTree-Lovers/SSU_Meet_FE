@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/my_page/logout.dart';
 import 'package:ssu_meet/my_page/modify_information.dart';
 import 'package:ssu_meet/my_page/view_registered.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/pages/purchased_post_it_page.dart';
 
 class MyPage extends StatefulWidget {
@@ -29,7 +29,7 @@ class _MyPageState extends State<MyPage> {
     const ViewRegistered(),
     const PurchasedPostItPage(),
     const ModifyPage(),
-    const LogoutPage(),
+    const LoginPage(),
   ];
 
   @override
