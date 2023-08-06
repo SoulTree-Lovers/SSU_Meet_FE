@@ -14,10 +14,7 @@ class ViewPurchased extends StatelessWidget {
         shadowColor: const Color.fromRGBO(158, 156, 156, 1),
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ResponsiveWebLayout()));
+              Navigator.pop(context);
             },
             icon: Icon(Icons.keyboard_arrow_left,
                 color: Color(0xff717171), size: 30)),

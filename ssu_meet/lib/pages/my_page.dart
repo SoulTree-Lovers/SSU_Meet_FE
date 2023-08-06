@@ -61,15 +61,15 @@ class _MyPageState extends State<MyPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 100,
+                 SizedBox(
+                    width: screenWidth * 0.2,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 140,
-                        height: 33,
+                        width: screenWidth * 0.3,
+                        height: screenWidth * 0.07,
                         decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -88,12 +88,13 @@ class _MyPageState extends State<MyPage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFD7D7D7),
                           ),
-                          child: const Row(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: Image(
+                             SizedBox(
+                                width: screenWidth * 0.03,
+                                height: screenWidth * 0.03,
+                                child: const Image(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
                                     "assets/images/mypage_images/coin_icon.png",
@@ -101,14 +102,14 @@ class _MyPageState extends State<MyPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 13,
+                                width: screenWidth * 0.01,
                               ),
                               Text(
                                 "보유 코인 : 3개",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 10,
+                                  fontSize: screenWidth * 0.02,
                                   fontFamily: 'NanumSquareRound',
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 0.20,
@@ -122,8 +123,8 @@ class _MyPageState extends State<MyPage> {
                         height: 18,
                       ),
                       Container(
-                        width: 140,
-                        height: 33,
+                        width: screenWidth * 0.3,
+                        height: screenWidth * 0.07,
                         decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
@@ -142,33 +143,32 @@ class _MyPageState extends State<MyPage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFD7D7D7),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                width: 20,
-                                height: 20,
+                             SizedBox(
+                                width: screenWidth * 0.03,
+                                height: screenWidth * 0.03,
                                 // child: Icon(
                                 //   Icons.content_copy,
                                 //   color: Color(0xff18181B),
-
                                 // ),
-                                child: Image(
+                                child: const Image(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
                                     "assets/images/mypage_images/my_post_it_icon.png",
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 4,
+                             SizedBox(
+                                width: screenWidth * 0.01,
                               ),
                               Text(
                                 "나의 포스트잇 : 3개",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 10,
+                                  fontSize: screenWidth * 0.02,
                                   fontFamily: 'NanumSquareRound',
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 0.20,
