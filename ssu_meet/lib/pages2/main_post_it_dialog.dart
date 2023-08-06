@@ -187,6 +187,9 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
+                onPressed: () {
+                  _showBuyDialog(context);
+                },
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     screenWidth * 0.3,
@@ -204,9 +207,6 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     fontFamily: "Nanum_Ogbice",
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -234,6 +234,108 @@ class _MainPostItDialog extends State<MainPostItDialog> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showBuyDialog(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    showDialog(
+      barrierColor: Colors.white.withOpacity(0.7),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+          actionsPadding: const EdgeInsets.only(bottom: 30),
+          alignment: Alignment.center,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              width: 1.5,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: Color(0xFF9E9C9C),
+            ),
+            borderRadius: BorderRadius.circular(40),
+          ),
+          shadowColor: const Color(0x3F000000),
+          content: const Text(
+            '구매를 진행하시면 코인 1개가 차감됩니다. \n구매하시겠습니까? \n',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'NanumSquareRoundBold',
+              // fontWeight: FontWeight.w700,
+              // height: 1.31,
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "구매하기",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareRoundR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "취소",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF010101),
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareRoundR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
