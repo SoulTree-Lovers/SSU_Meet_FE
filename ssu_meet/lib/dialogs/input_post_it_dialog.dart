@@ -136,8 +136,9 @@ class _InputPostIt extends State<InputPostIt> {
                                   Text(
                                     "MBTI:   ",
                                     style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.2,
@@ -146,21 +147,24 @@ class _InputPostIt extends State<InputPostIt> {
                                       alignment: Alignment.center,
                                       value: mbti,
                                       underline: Container(
-                                          height: screenWidth * 0.0015,
-                                          color: Colors.black),
+                                        height: screenWidth * 0.0015,
+                                        color: Colors.black,
+                                      ),
                                       style: TextStyle(
                                         fontFamily: "Nanum_Ogbice",
                                         fontSize: screenWidth * 0.045,
                                         color: Colors.black,
                                       ),
-                                      hint: Text("선택하기",
-                                          style: TextStyle(
-                                            fontFamily: "Nanum_Ogbice",
-                                            fontSize: screenWidth * 0.04,
-                                          )),
+                                      hint: Text(
+                                        "선택하기",
+                                        style: TextStyle(
+                                          fontFamily: "Nanum_Ogbice",
+                                          fontSize: screenWidth * 0.04,
+                                        ),
+                                      ),
                                       items: mbtiList
                                           .map<DropdownMenuItem<String>>(
-                                            (String value) {
+                                        (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -182,8 +186,9 @@ class _InputPostIt extends State<InputPostIt> {
                                   Text(
                                     "취미:     ",
                                     style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
@@ -243,39 +248,42 @@ class _InputPostIt extends State<InputPostIt> {
                                 ),
                               ),
                               Padding(
-                                  padding:
-                                  EdgeInsets.only(top: screenWidth * 0.01)),
+                                padding:
+                                    EdgeInsets.only(top: screenWidth * 0.01),
+                              ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     "자기소개: ",
                                     style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045,
+                                    ),
                                   ),
                                   SizedBox(
-                                      width: screenWidth * 0.4,
-                                      height: screenWidth * 0.2,
-                                      child: MyFormField(
-                                        key: const ValueKey(5),
-                                        hintText: "200자 이내",
-                                        screenWidth: screenWidth,
-                                        maxLine: null,
-                                        maxLength: 200,
-                                        validator: (val) {
-                                          if (val == '' || val == null) {
-                                            return "필수입력";
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (val) {
-                                          setState(() {
-                                            myself = val;
-                                          });
-                                        },
-                                        //maxLength: 200,
-                                      )),
+                                    width: screenWidth * 0.4,
+                                    height: screenWidth * 0.2,
+                                    child: MyFormField(
+                                      key: const ValueKey(5),
+                                      hintText: "200자 이내",
+                                      screenWidth: screenWidth,
+                                      maxLine: null,
+                                      maxLength: 200,
+                                      validator: (val) {
+                                        if (val == '' || val == null) {
+                                          return "필수입력";
+                                        }
+                                        return null;
+                                      },
+                                      onSaved: (val) {
+                                        setState(() {
+                                          myself = val;
+                                        });
+                                      },
+                                      //maxLength: 200,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Row(
@@ -284,12 +292,13 @@ class _InputPostIt extends State<InputPostIt> {
                                   Text(
                                     "이상형:  ",
                                     style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045,
+                                    ),
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Offstage(
                                         offstage: (flag == 0) ? true : false,
@@ -300,37 +309,39 @@ class _InputPostIt extends State<InputPostIt> {
                                             child: Wrap(
                                               children: [
                                                 for (var i = 0;
-                                                i < idealList.length;
-                                                i++)
+                                                    i < idealList.length;
+                                                    i++)
                                                   Container(
                                                     width: screenWidth * 0.12,
                                                     height: screenWidth * 0.04,
                                                     margin: EdgeInsets.fromLTRB(
-                                                        screenWidth * 0.01,
-                                                        screenWidth * 0.01,
-                                                        screenWidth * 0.01,
-                                                        0),
+                                                      screenWidth * 0.01,
+                                                      screenWidth * 0.01,
+                                                      screenWidth * 0.01,
+                                                      0,
+                                                    ),
                                                     decoration: BoxDecoration(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(20),
-                                                        border: Border.all(
-                                                            color: Colors.black,
-                                                            width: screenWidth *
-                                                                0.001),
-                                                        color:
-                                                        Colors.transparent),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      border: Border.all(
+                                                        color: Colors.black,
+                                                        width:
+                                                            screenWidth * 0.001,
+                                                      ),
+                                                      color: Colors.transparent,
+                                                    ),
                                                     child: Center(
                                                       child: Text(
                                                         "${idealList[i]}",
                                                         style: TextStyle(
-                                                            fontFamily:
-                                                            "Nanum_Ogbice",
-                                                            fontSize:
-                                                            screenWidth *
-                                                                0.025,
-                                                            color:
-                                                            Colors.black),
+                                                          fontFamily:
+                                                              "Nanum_Ogbice",
+                                                          fontSize:
+                                                              screenWidth *
+                                                                  0.025,
+                                                          color: Colors.black,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -340,8 +351,9 @@ class _InputPostIt extends State<InputPostIt> {
                                         ),
                                       ),
                                       Padding(
-                                          padding: EdgeInsets.only(
-                                              top: screenWidth * 0.01)),
+                                        padding: EdgeInsets.only(
+                                            top: screenWidth * 0.01),
+                                      ),
                                       SizedBox(
                                         width: screenWidth * 0.28,
                                         height: screenWidth * 0.05,
@@ -349,40 +361,44 @@ class _InputPostIt extends State<InputPostIt> {
                                           children: [
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.black,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          50))),
+                                                backgroundColor: Colors.black,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                ),
+                                              ),
                                               onPressed: () async {
                                                 await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                    Colors.transparent,
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                    context) =>
-                                                        myModal(
-                                                            context,
-                                                            screenHeight,
-                                                            screenWidth,
-                                                            idealList = []));
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          myModal(
+                                                    context,
+                                                    screenHeight,
+                                                    screenWidth,
+                                                    idealList = [],
+                                                  ),
+                                                );
                                                 flag =
-                                                (idealList.isEmpty) ? 0 : 1;
+                                                    (idealList.isEmpty) ? 0 : 1;
                                                 setState(() {});
                                               },
                                               child: Container(
                                                 height: screenWidth * 0.03,
                                                 padding: EdgeInsets.only(
-                                                    left: screenWidth * 0.03),
+                                                  left: screenWidth * 0.03,
+                                                ),
                                                 child: Text(
                                                   "이상형 선택하기!",
                                                   style: TextStyle(
-                                                      fontFamily:
-                                                      "Nanum_Ogbice",
-                                                      fontSize:
-                                                      screenWidth * 0.025,
-                                                      color: Colors.white),
+                                                    fontFamily: "Nanum_Ogbice",
+                                                    fontSize:
+                                                        screenWidth * 0.025,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -392,8 +408,10 @@ class _InputPostIt extends State<InputPostIt> {
                                               width: screenWidth * 0.07,
                                               height: screenWidth * 0.07,
                                               child: const Image(
-                                                  image: AssetImage(
-                                                      "assets/images/images2/whiteheart2.png")),
+                                                image: AssetImage(
+                                                  "assets/images/images2/whiteheart2.png",
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -409,7 +427,9 @@ class _InputPostIt extends State<InputPostIt> {
                     ),
                   ],
                 ),
-                Padding(padding: EdgeInsets.only(top: screenWidth * 0.02)),
+                Padding(
+                  padding: EdgeInsets.only(top: screenWidth * 0.02),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -418,18 +438,22 @@ class _InputPostIt extends State<InputPostIt> {
                       height: screenWidth * 0.05,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            side: const BorderSide(
-                                color: Colors.black, width: 0.5),
-                            backgroundColor:
-                            const Color.fromRGBO(255, 255, 255, 1),
-                            shadowColor: const Color.fromRGBO(0, 0, 0, 1),
-                            elevation: 10),
+                          side: const BorderSide(
+                            color: Colors.black,
+                            width: 0.5,
+                          ),
+                          backgroundColor:
+                              const Color.fromRGBO(255, 255, 255, 1),
+                          shadowColor: const Color.fromRGBO(0, 0, 0, 1),
+                          elevation: 10,
+                        ),
                         child: Text(
                           "작성 완료",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: screenWidth * 0.035,
-                              fontFamily: "Nanum_Ogbice"),
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.035,
+                            fontFamily: "Nanum_Ogbice",
+                          ),
                         ),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
@@ -453,24 +477,29 @@ class _InputPostIt extends State<InputPostIt> {
                         },
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(left: screenWidth * 0.05)),
+                    Padding(
+                      padding: EdgeInsets.only(left: screenWidth * 0.05),
+                    ),
                     SizedBox(
                       width: screenWidth * 0.2,
                       height: screenWidth * 0.05,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             side: const BorderSide(
-                                color: Colors.black, width: 0.5),
+                              color: Colors.black,
+                              width: 0.5,
+                            ),
                             backgroundColor:
-                            const Color.fromRGBO(255, 255, 255, 1),
+                                const Color.fromRGBO(255, 255, 255, 1),
                             shadowColor: const Color.fromRGBO(0, 0, 0, 1),
                             elevation: 10),
                         child: Text(
                           "작성 취소",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: screenWidth * 0.035,
-                              fontFamily: "Nanum_Ogbice"),
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.035,
+                            fontFamily: "Nanum_Ogbice",
+                          ),
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
