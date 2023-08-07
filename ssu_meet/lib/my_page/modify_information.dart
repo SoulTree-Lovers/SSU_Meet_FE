@@ -319,7 +319,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                   setState(
                                                     () {
                                                       data.height =
-                                                          int.parse(val);
+                                                          double.parse(val).round();
                                                     },
                                                   );
                                                 },

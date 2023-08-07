@@ -318,7 +318,7 @@ class _InputProfile extends State<InputProfile> {
                                               onSaved: (val) {
                                                 setState(
                                                       () {
-                                                    height = int.parse(val);
+                                                    height = double.parse(val).round();
                                                   },
                                                 );
                                               },
