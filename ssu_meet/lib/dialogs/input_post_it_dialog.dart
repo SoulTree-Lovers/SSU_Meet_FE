@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
 import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
 
 class InputPostIt extends StatefulWidget {
@@ -10,14 +11,15 @@ class InputPostIt extends StatefulWidget {
 
 class _InputPostIt extends State<InputPostIt> {
   final formKey = GlobalKey<FormState>();
-  String? _nikname;
-  String? _mbti;
-  String? _hobby;
-  String? _myself;
-  List ideal_list = [];
+  String? nikname;
+  String? mbti;
+  String? myself;
+  List hobby = ['', '', '']; //취미 리스트
+  List idealList = [];
+
   int flag = 0;
 
-  List<String> mbti_list = [
+  List<String> mbtiList = [
     'ENFP',
     'ENFJ',
     'ENTP',
@@ -39,7 +41,7 @@ class _InputPostIt extends State<InputPostIt> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    // double screenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -63,13 +65,13 @@ class _InputPostIt extends State<InputPostIt> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: screenWidth * 0.05)),
+                Padding(padding: EdgeInsets.only(top: screenHeight * 0.05)),
                 Text('자신을 소개할 내용을 등록해주세요!',
                     style: TextStyle(
                         fontFamily: "Nanum_Ogbice",
                         fontSize: screenWidth * 0.06),
                     textAlign: TextAlign.center),
-                Padding(padding: EdgeInsets.only(top: screenWidth * 0.02)),
+                Padding(padding: EdgeInsets.only(top: screenHeight * 0.02)),
                 Text('*추후 수정이 불가하니 신중히 입력 바랍니다.',
                     style: TextStyle(
                         fontFamily: "Nanum_Ogbice",
@@ -87,8 +89,8 @@ class _InputPostIt extends State<InputPostIt> {
                     ),
                     //텍스트
                     Positioned(
-                      top: screenWidth * 0.23,
-                      left: screenWidth * 0.1,
+                      top: screenHeight * 0.1,
+                      left: screenWidth * 0.11,
                       child: SizedBox(
                         width: screenWidth * 0.6,
                         height: screenWidth * 0.8,
@@ -114,14 +116,14 @@ class _InputPostIt extends State<InputPostIt> {
                                       maxLength: 10,
                                       maxLine: 1,
                                       validator: (val) {
-                                        if (val == '' || val!.isEmpty) {
+                                        if (val == '' || val == null) {
                                           return "필수입력";
                                         }
                                         return null;
                                       },
                                       onSaved: (val) {
                                         setState(() {
-                                          _nikname = val;
+                                          nikname = val;
                                         });
                                       },
                                     ),
@@ -142,7 +144,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     height: screenWidth * 0.08,
                                     child: DropdownButton(
                                       alignment: Alignment.center,
-                                      value: _mbti,
+                                      value: mbti,
                                       underline: Container(
                                           height: screenWidth * 0.0015,
                                           color: Colors.black),
@@ -156,9 +158,9 @@ class _InputPostIt extends State<InputPostIt> {
                                             fontFamily: "Nanum_Ogbice",
                                             fontSize: screenWidth * 0.04,
                                           )),
-                                      items: mbti_list
+                                      items: mbtiList
                                           .map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                            (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -167,7 +169,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       ).toList(),
                                       onChanged: (newVal) {
                                         setState(() {
-                                          _mbti = newVal;
+                                          mbti = newVal;
                                         });
                                       },
                                     ),
@@ -185,75 +187,64 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
-                                    height: screenWidth * 0.12,
+                                    height: screenWidth * 0.1,
                                     child: MyFormField(
                                       key: const ValueKey(2),
                                       hintText: "1. 15자 이내",
                                       screenWidth: screenWidth,
                                       maxLength: 15,
-                                      validator: (val) {
-                                        if (val == '' || val!.isEmpty) {
-                                          return "필수입력";
-                                        }
-                                        return null;
-                                      },
+                                      maxLine: 1,
                                       onSaved: (val) {
                                         setState(() {
-                                          _hobby = val;
+                                          hobby[0] = val;
                                         });
-                                      },
+                                      }, //maxLine: null,
                                     ),
                                   ),
                                 ],
                               ),
                               Container(
                                 width: screenWidth * 0.45,
-                                height: screenWidth * 0.12,
+                                height: screenWidth * 0.06,
                                 padding: EdgeInsets.only(
                                   left: screenWidth * 0.048,
                                 ),
                                 child: MyFormField(
-                                  key: const ValueKey(2),
+                                  key: const ValueKey(3),
                                   hintText: "2.",
                                   screenWidth: screenWidth,
                                   maxLength: 15,
-                                  validator: (val) {
-                                    if (val == '' || val!.isEmpty) {
-                                      return "필수입력";
-                                    }
-                                    return null;
-                                  },
+                                  maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      _hobby = val;
+                                      hobby[1] = val;
                                     });
-                                  },
+                                  }, //maxLine: null,
                                 ),
                               ),
                               Container(
                                 width: screenWidth * 0.45,
-                                height: screenWidth * 0.12,
+                                height: screenWidth * 0.06,
                                 padding: EdgeInsets.only(
                                   left: screenWidth * 0.048,
                                 ),
                                 child: MyFormField(
-                                  key: const ValueKey(2),
+                                  key: const ValueKey(4),
                                   hintText: "3.",
+                                  helperText: "*취미는 하나 이상 필수로 입력해주세요.",
                                   screenWidth: screenWidth,
                                   maxLength: 15,
-                                  validator: (val) {
-                                    if (val == '' || val!.isEmpty) {
-                                      return "필수입력";
-                                    }
-                                    return null;
-                                  },
+                                  maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      _hobby = val;
+                                      hobby[2] = val;
                                     });
-                                  },
+                                  }, //maxLine: null,
                                 ),
                               ),
+                              Padding(
+                                  padding:
+                                  EdgeInsets.only(top: screenWidth * 0.01)),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -265,22 +256,22 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                       width: screenWidth * 0.4,
-                                      height: screenWidth * 0.15,
+                                      height: screenWidth * 0.2,
                                       child: MyFormField(
-                                        key: const ValueKey(3),
+                                        key: const ValueKey(5),
                                         hintText: "200자 이내",
                                         screenWidth: screenWidth,
                                         maxLine: null,
                                         maxLength: 200,
                                         validator: (val) {
-                                          if (val == '' || val!.isEmpty) {
+                                          if (val == '' || val == null) {
                                             return "필수입력";
                                           }
                                           return null;
                                         },
                                         onSaved: (val) {
                                           setState(() {
-                                            _myself = val;
+                                            myself = val;
                                           });
                                         },
                                         //maxLength: 200,
@@ -288,6 +279,7 @@ class _InputPostIt extends State<InputPostIt> {
                                 ],
                               ),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     "이상형:  ",
@@ -295,60 +287,121 @@ class _InputPostIt extends State<InputPostIt> {
                                         fontFamily: "Nanum_Ogbice",
                                         fontSize: screenWidth * 0.045),
                                   ),
-                                  Offstage(
-                                    offstage: (flag == 0) ? false : true,
-                                    child: SizedBox(
-                                      //height: screenWidth * 0.09,
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                            child: ElevatedButton(
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Offstage(
+                                        offstage: (flag == 0) ? true : false,
+                                        child: SizedBox(
+                                          width: screenWidth * 0.45,
+                                          height: screenWidth * 0.1,
+                                          child: SingleChildScrollView(
+                                            child: Wrap(
+                                              children: [
+                                                for (var i = 0;
+                                                i < idealList.length;
+                                                i++)
+                                                  Container(
+                                                    width: screenWidth * 0.12,
+                                                    height: screenWidth * 0.04,
+                                                    margin: EdgeInsets.fromLTRB(
+                                                        screenWidth * 0.01,
+                                                        screenWidth * 0.01,
+                                                        screenWidth * 0.01,
+                                                        0),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(20),
+                                                        border: Border.all(
+                                                            color: Colors.black,
+                                                            width: screenWidth *
+                                                                0.001),
+                                                        color:
+                                                        Colors.transparent),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "${idealList[i]}",
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                            "Nanum_Ogbice",
+                                                            fontSize:
+                                                            screenWidth *
+                                                                0.025,
+                                                            color:
+                                                            Colors.black),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top: screenWidth * 0.01)),
+                                      SizedBox(
+                                        width: screenWidth * 0.28,
+                                        height: screenWidth * 0.05,
+                                        child: Stack(
+                                          children: [
+                                            ElevatedButton(
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor: Colors.black,
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              50)),
-                                                  fixedSize: Size(
-                                                      screenWidth * 0.3,
-                                                      screenWidth * 0.05)),
-                                              onPressed: () {
-                                                showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return SelectIdealType();
-                                                  },
-                                                );
+                                                      BorderRadius.circular(
+                                                          50))),
+                                              onPressed: () async {
+                                                await showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                    Colors.transparent,
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                    context) =>
+                                                        myModal(
+                                                            context,
+                                                            screenHeight,
+                                                            screenWidth,
+                                                            idealList = []));
+                                                flag =
+                                                (idealList.isEmpty) ? 0 : 1;
+                                                setState(() {});
                                               },
-                                              child: Text(
-                                                "  이상형 선택하기!",
-                                                style: TextStyle(
-                                                    fontFamily: "Nanum_Ogbice",
-                                                    fontSize:
-                                                        screenWidth * 0.03,
-                                                    color: Colors.white),
+                                              child: Container(
+                                                height: screenWidth * 0.03,
+                                                padding: EdgeInsets.only(
+                                                    left: screenWidth * 0.03),
+                                                child: Text(
+                                                  "이상형 선택하기!",
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      "Nanum_Ogbice",
+                                                      fontSize:
+                                                      screenWidth * 0.025,
+                                                      color: Colors.white),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            top: screenWidth * -0.007,
-                                            width: screenWidth * 0.08,
-                                            height: screenWidth * 0.08,
-                                            child: const Image(
-                                                image: AssetImage(
-                                                    "assets/images/images2/whiteheart2.png")),
-                                          ),
-                                        ],
+                                            Positioned(
+                                              top: screenWidth * -0.007,
+                                              left: screenWidth * -0.005,
+                                              width: screenWidth * 0.07,
+                                              height: screenWidth * 0.07,
+                                              child: const Image(
+                                                  image: AssetImage(
+                                                      "assets/images/images2/whiteheart2.png")),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      //이상형 리스트...
-                                    ),
+                                    ],
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -356,55 +409,73 @@ class _InputPostIt extends State<InputPostIt> {
                     ),
                   ],
                 ),
-                Padding(padding: EdgeInsets.only(top: screenWidth * 0.04)),
+                Padding(padding: EdgeInsets.only(top: screenWidth * 0.02)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(screenWidth * 0.22, screenWidth * 0.05),
-                        side: const BorderSide(color: Colors.black, width: 0.5),
-                        backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-                        shadowColor: const Color.fromRGBO(0, 0, 0, 0.25),
+                    SizedBox(
+                      width: screenWidth * 0.2,
+                      height: screenWidth * 0.05,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            side: const BorderSide(
+                                color: Colors.black, width: 0.5),
+                            backgroundColor:
+                            const Color.fromRGBO(255, 255, 255, 1),
+                            shadowColor: const Color.fromRGBO(0, 0, 0, 1),
+                            elevation: 10),
+                        child: Text(
+                          "작성 완료",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.035,
+                              fontFamily: "Nanum_Ogbice"),
+                        ),
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+                            if (mbti != null &&
+                                idealList.isNotEmpty &&
+                                (hobby[0] != '' ||
+                                    hobby[1] != '' ||
+                                    hobby[2] != '')) {
+                              print(
+                                  "닉네임: $nikname\nmbti: $mbti\n취미: 1. ${hobby[0]} 2. ${hobby[1]} 3. ${hobby[2]}\n자기소개: $myself");
+                              print("이상형: ");
+                              idealList.forEach(print);
+                              Navigator.pop(context);
+                            } else {
+                              print("값이 유효하지 않음");
+                            }
+                          } else {
+                            print("값이 유효하지 않음");
+                          }
+                        },
                       ),
-                      child: Text(
-                        "작성 완료",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.035,
-                            fontFamily: "Nanum_Ogbice"),
-                      ),
-                      onPressed: () {
-                        if (formKey.currentState!.validate() && _mbti != null) {
-                          formKey.currentState!.save();
-                          print(
-                              "닉네임: $_nikname\nmbti: $_mbti\n취미: $_hobby\n자기소개: $_myself\n이상형: ");
-                          Navigator.pop(context);
-                        } else {
-                          print("값이 유효하지 않음");
-                        }
-
-                        //Post New posiit
-                      },
                     ),
-                    const Padding(padding: EdgeInsets.only(left: 20)),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(screenWidth * 0.22, screenWidth * 0.05),
-                        side: const BorderSide(color: Colors.black, width: 0.5),
-                        backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-                        shadowColor: const Color.fromRGBO(0, 0, 0, 0.25),
+                    Padding(padding: EdgeInsets.only(left: screenWidth * 0.05)),
+                    SizedBox(
+                      width: screenWidth * 0.2,
+                      height: screenWidth * 0.05,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            side: const BorderSide(
+                                color: Colors.black, width: 0.5),
+                            backgroundColor:
+                            const Color.fromRGBO(255, 255, 255, 1),
+                            shadowColor: const Color.fromRGBO(0, 0, 0, 1),
+                            elevation: 10),
+                        child: Text(
+                          "작성 취소",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.035,
+                              fontFamily: "Nanum_Ogbice"),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                       ),
-                      child: Text(
-                        "작성 취소",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.035,
-                            fontFamily: "Nanum_Ogbice"),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
                     ),
                   ],
                 ),
