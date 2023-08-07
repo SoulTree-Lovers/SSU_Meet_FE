@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/tag_data/ideal_tag.dart';
 
-StatefulBuilder myModal(BuildContext context,
-    double screenHeight, double screenWidth, List idealList) {
+StatefulBuilder myModal(BuildContext context, double screenHeight,
+    double screenWidth, List idealList) {
   return StatefulBuilder(
       builder: (context, StateSetter setModalState) => Container(
             color: Colors.transparent,
@@ -219,8 +219,7 @@ StatefulBuilder myModal(BuildContext context,
                                                     personality[i]) //리스트에 포함 시킴
                                                 ? idealList
                                                     .remove(personality[i])
-                                                : idealList
-                                                    .add(personality[i]);
+                                                : idealList.add(personality[i]);
                                             setModalState(() {});
                                           }),
                                     ),
@@ -282,10 +281,10 @@ StatefulBuilder myModal(BuildContext context,
                                                     BorderRadius.circular(20),
                                                 border: Border.all(
                                                     color: Colors.black),
-                                                color: idealList
-                                                        .contains(style[i])
-                                                    ? Colors.black
-                                                    : Colors.white),
+                                                color:
+                                                    idealList.contains(style[i])
+                                                        ? Colors.black
+                                                        : Colors.white),
                                             child: Center(
                                               child: Text(
                                                 style[i],

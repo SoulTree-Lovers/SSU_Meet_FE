@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages2/input_post_it_dialog.dart';
+import 'package:ssu_meet/dialogs/input_post_it_dialog.dart';
 
-Positioned RegistrationButtonBlack(double screenHeight, double screenWidth,BuildContext context) {
+Positioned RegistrationButtonBlack(
+    double screenHeight, double screenWidth, BuildContext context) {
   return Positioned(
     top: screenHeight * 0.7,
     left: screenWidth * 0.7,
     child: GestureDetector(
       onTap: () {
         showDialog(
-          barrierDismissible: false,
+            barrierDismissible: false,
             context: context,
-            builder: (BuildContext context) {return InputPostIt(); });
+            builder: (BuildContext context) {
+              return const InputPostIt();
+            });
         print("등록하기 버튼 클릭 !");
       },
       child: Container(

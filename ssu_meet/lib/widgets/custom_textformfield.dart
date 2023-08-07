@@ -35,12 +35,12 @@ class MyFormField extends StatelessWidget {
           fontSize: screenWidth * 0.04,
         ),
         focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.black, width: screenWidth * 0.0015),
+          borderSide:
+              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
         ),
         errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.black, width: screenWidth * 0.0015),
+          borderSide:
+              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
         ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(

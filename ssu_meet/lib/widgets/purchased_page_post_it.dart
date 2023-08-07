@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages2/purchased_post_it_dialog.dart';
+import 'package:ssu_meet/dialogs/purchased_post_it_dialog.dart';
 
 SizedBox PurchasedPagePostIt(double screenHeight,
     AsyncSnapshot<List<dynamic>> snapshot, double screenWidth) {
