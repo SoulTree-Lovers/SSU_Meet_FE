@@ -42,6 +42,10 @@ class _InputPostIt extends State<InputPostIt> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    if (screenWidth >= 540) {
+      //태블릿 사이즈 레이아웃 설정
+      screenWidth *= 0.8;
+    }
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -65,18 +69,29 @@ class _InputPostIt extends State<InputPostIt> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: screenHeight * 0.05)),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: screenHeight * 0.05,
+                  ),
+                ),
                 Text('자신을 소개할 내용을 등록해주세요!',
                     style: TextStyle(
                         fontFamily: "Nanum_Ogbice",
                         fontSize: screenWidth * 0.06),
                     textAlign: TextAlign.center),
-                Padding(padding: EdgeInsets.only(top: screenHeight * 0.02)),
-                Text('*추후 수정이 불가하니 신중히 입력 바랍니다.',
-                    style: TextStyle(
-                        fontFamily: "Nanum_Ogbice",
-                        fontSize: screenWidth * 0.04),
-                    textAlign: TextAlign.center),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: screenHeight * 0.02,
+                  ),
+                ),
+                Text(
+                  '*추후 수정이 불가하니 신중히 입력 바랍니다.',
+                  style: TextStyle(
+                    fontFamily: "Nanum_Ogbice",
+                    fontSize: screenWidth * 0.04,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
                 Stack(
                   children: [
                     Image(
@@ -87,14 +102,14 @@ class _InputPostIt extends State<InputPostIt> {
                       height: screenWidth,
                       fit: BoxFit.cover,
                     ),
-                   //텍스트
+                    //텍스트
                     Positioned(
                       top: screenWidth * 0.15,
-                      left: screenWidth * 0.1,
+                      left: screenWidth * 0.08,
                       child: SizedBox(
                         width: screenWidth * 0.6,
                         height: screenWidth * 0.8,
-                          child:SingleChildScrollView(
+                        child: SingleChildScrollView(
                           child: Column(
                             children: [
                               Row(
@@ -103,8 +118,9 @@ class _InputPostIt extends State<InputPostIt> {
                                   Text(
                                     "닉네임:   ",
                                     style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.045),
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.045,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
@@ -377,8 +393,6 @@ class _InputPostIt extends State<InputPostIt> {
                                                             context) =>
                                                         myModal(
                                                           context,
-                                                          screenHeight,
-                                                          screenWidth,
                                                           idealList,
                                                         ));
                                                 setState(() {
@@ -404,8 +418,8 @@ class _InputPostIt extends State<InputPostIt> {
                                               ),
                                             ),
                                             Positioned(
-                                              top: screenWidth * -0.007,
-                                              left: screenWidth * -0.005,
+                                              top: screenWidth * -0.01,
+                                              left: screenWidth * -0.007,
                                               width: screenWidth * 0.07,
                                               height: screenWidth * 0.07,
                                               child: const Image(
@@ -424,7 +438,7 @@ class _InputPostIt extends State<InputPostIt> {
                             ],
                           ),
                         ),
-                    ),
+                      ),
                     ),
                   ],
                 ),
@@ -483,14 +497,15 @@ class _InputPostIt extends State<InputPostIt> {
                       height: screenWidth * 0.08,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            side: const BorderSide(
-                              color: Colors.black,
-                              width: 0.5,
-                            ),
-                            backgroundColor:
-                                const Color.fromRGBO(255, 255, 255, 1),
-                            shadowColor: const Color.fromRGBO(0, 0, 0, 1),
-                            elevation: 5),
+                          side: const BorderSide(
+                            color: Colors.black,
+                            width: 0.5,
+                          ),
+                          backgroundColor:
+                              const Color.fromRGBO(255, 255, 255, 1),
+                          shadowColor: const Color.fromRGBO(0, 0, 0, 1),
+                          elevation: 5,
+                        ),
                         child: Text(
                           "작성 취소",
                           style: TextStyle(
