@@ -369,15 +369,15 @@ StatefulBuilder myModal(BuildContext context, double screenHeight,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 fixedSize: Size(
-                                    screenWidth * 0.19, screenWidth * 0.06),
+                                    screenWidth * 0.22, screenWidth * 0.08),
                                 side: const BorderSide(
                                     color: Colors.black, width: 0.5),
                                 backgroundColor:
                                     const Color.fromRGBO(255, 255, 255, 1),
                                 shadowColor:
-                                    const Color.fromRGBO(0, 0, 0, 0.25),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20))),
+                                    const Color.fromRGBO(0, 0, 0, 1),
+                            elevation: 5,
+                            ),
                             child: Text(
                               "선택 완료",
                               style: TextStyle(

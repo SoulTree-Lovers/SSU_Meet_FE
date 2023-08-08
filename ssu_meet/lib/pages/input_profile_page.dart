@@ -443,12 +443,12 @@ class _InputProfile extends State<InputProfile> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
-                          fixedSize: Size(screenWidth * 0.2, screenWidth * 0.06),
+                          fixedSize: Size(screenWidth * 0.23, screenWidth * 0.08),
                           side:
                           const BorderSide(color: Colors.black, width: 0.5),
                           backgroundColor:
                           const Color.fromRGBO(255, 255, 255, 1),
-                          shadowColor: const Color.fromRGBO(0, 0, 0, 0.5),
+                          shadowColor: const Color.fromRGBO(0, 0, 0, 1),
                         ),
                         child: Center(
                           child:Text(

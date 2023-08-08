@@ -40,14 +40,8 @@ class _InputPostIt extends State<InputPostIt> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -83,24 +77,24 @@ class _InputPostIt extends State<InputPostIt> {
                         fontFamily: "Nanum_Ogbice",
                         fontSize: screenWidth * 0.04),
                     textAlign: TextAlign.center),
-                Padding(padding: EdgeInsets.only(top: screenWidth * 0.03)),
                 Stack(
                   children: [
                     Image(
                       image: const AssetImage(
                         "assets/images/images2/yellowpostit2.png",
                       ),
-                      width: screenWidth * 0.85,
-                      height: screenWidth * 1.1,
+                      width: screenWidth * 0.7,
+                      height: screenWidth,
+                      fit: BoxFit.cover,
                     ),
-                    //텍스트
+                   //텍스트
                     Positioned(
-                      top: screenHeight * 0.1,
-                      left: screenWidth * 0.11,
+                      top: screenWidth * 0.15,
+                      left: screenWidth * 0.1,
                       child: SizedBox(
                         width: screenWidth * 0.6,
                         height: screenWidth * 0.8,
-                        child: SingleChildScrollView(
+                          child:SingleChildScrollView(
                           child: Column(
                             children: [
                               Row(
@@ -170,7 +164,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       ),
                                       items: mbtiList
                                           .map<DropdownMenuItem<String>>(
-                                            (String value) {
+                                        (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -209,7 +203,7 @@ class _InputPostIt extends State<InputPostIt> {
                                         setState(() {
                                           hobby[0] = val;
                                         });
-                                      }, //maxLine: null,
+                                      },
                                     ),
                                   ),
                                 ],
@@ -230,7 +224,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     setState(() {
                                       hobby[1] = val;
                                     });
-                                  }, //maxLine: null,
+                                  },
                                 ),
                               ),
                               Container(
@@ -250,12 +244,12 @@ class _InputPostIt extends State<InputPostIt> {
                                     setState(() {
                                       hobby[2] = val;
                                     });
-                                  }, //maxLine: null,
+                                  },
                                 ),
                               ),
                               Padding(
                                 padding:
-                                EdgeInsets.only(top: screenWidth * 0.01),
+                                    EdgeInsets.only(top: screenWidth * 0.01),
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +281,6 @@ class _InputPostIt extends State<InputPostIt> {
                                           myself = val;
                                         });
                                       },
-                                      //maxLength: 200,
                                     ),
                                   ),
                                 ],
@@ -304,7 +297,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Offstage(
                                         offstage: (flag == 0) ? true : false,
@@ -315,8 +308,8 @@ class _InputPostIt extends State<InputPostIt> {
                                             child: Wrap(
                                               children: [
                                                 for (var i = 0;
-                                                i < idealList.length;
-                                                i++)
+                                                    i < idealList.length;
+                                                    i++)
                                                   Container(
                                                     width: screenWidth * 0.12,
                                                     height: screenWidth * 0.04,
@@ -328,12 +321,12 @@ class _InputPostIt extends State<InputPostIt> {
                                                     ),
                                                     decoration: BoxDecoration(
                                                       borderRadius:
-                                                      BorderRadius.circular(
-                                                          20),
+                                                          BorderRadius.circular(
+                                                              20),
                                                       border: Border.all(
                                                         color: Colors.black,
                                                         width:
-                                                        screenWidth * 0.001,
+                                                            screenWidth * 0.001,
                                                       ),
                                                       color: Colors.transparent,
                                                     ),
@@ -342,10 +335,10 @@ class _InputPostIt extends State<InputPostIt> {
                                                         "${idealList[i]}",
                                                         style: TextStyle(
                                                           fontFamily:
-                                                          "Nanum_Ogbice",
+                                                              "Nanum_Ogbice",
                                                           fontSize:
-                                                          screenWidth *
-                                                              0.025,
+                                                              screenWidth *
+                                                                  0.025,
                                                           color: Colors.black,
                                                         ),
                                                       ),
@@ -361,7 +354,7 @@ class _InputPostIt extends State<InputPostIt> {
                                             top: screenWidth * 0.01),
                                       ),
                                       SizedBox(
-                                        width: screenWidth * 0.28,
+                                        width: screenWidth * 0.3,
                                         height: screenWidth * 0.05,
                                         child: Stack(
                                           children: [
@@ -370,7 +363,7 @@ class _InputPostIt extends State<InputPostIt> {
                                                 backgroundColor: Colors.black,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                  BorderRadius.circular(50),
+                                                      BorderRadius.circular(50),
                                                 ),
                                               ),
                                               onPressed: () async {
@@ -378,24 +371,24 @@ class _InputPostIt extends State<InputPostIt> {
                                                 await showModalBottomSheet(
                                                     isScrollControlled: true,
                                                     backgroundColor:
-                                                    Colors.transparent,
+                                                        Colors.transparent,
                                                     context: context,
-                                                    builder: (
-                                                        BuildContext context) =>
+                                                    builder: (BuildContext
+                                                            context) =>
                                                         myModal(
                                                           context,
                                                           screenHeight,
                                                           screenWidth,
                                                           idealList,
-                                                        )
-                                                    );
+                                                        ));
                                                 setState(() {
-                                                  flag =
-                                                  (idealList.isEmpty) ? 0 : 1;
+                                                  flag = (idealList.isEmpty)
+                                                      ? 0
+                                                      : 1;
                                                 });
                                               },
                                               child: Container(
-                                                height: screenWidth * 0.03,
+                                                height: screenWidth * 0.04,
                                                 padding: EdgeInsets.only(
                                                   left: screenWidth * 0.03,
                                                 ),
@@ -404,7 +397,7 @@ class _InputPostIt extends State<InputPostIt> {
                                                   style: TextStyle(
                                                     fontFamily: "Nanum_Ogbice",
                                                     fontSize:
-                                                    screenWidth * 0.025,
+                                                        screenWidth * 0.028,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -431,19 +424,16 @@ class _InputPostIt extends State<InputPostIt> {
                             ],
                           ),
                         ),
-                      ),
+                    ),
                     ),
                   ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: screenWidth * 0.02),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: screenWidth * 0.2,
-                      height: screenWidth * 0.05,
+                      width: screenWidth * 0.22,
+                      height: screenWidth * 0.08,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           side: const BorderSide(
@@ -451,9 +441,9 @@ class _InputPostIt extends State<InputPostIt> {
                             width: 0.5,
                           ),
                           backgroundColor:
-                          const Color.fromRGBO(255, 255, 255, 1),
+                              const Color.fromRGBO(255, 255, 255, 1),
                           shadowColor: const Color.fromRGBO(0, 0, 0, 1),
-                          elevation: 10,
+                          elevation: 5,
                         ),
                         child: Text(
                           "작성 완료",
@@ -486,11 +476,11 @@ class _InputPostIt extends State<InputPostIt> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: screenWidth * 0.05),
+                      padding: EdgeInsets.only(left: screenWidth * 0.06),
                     ),
                     SizedBox(
-                      width: screenWidth * 0.2,
-                      height: screenWidth * 0.05,
+                      width: screenWidth * 0.22,
+                      height: screenWidth * 0.08,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             side: const BorderSide(
@@ -498,9 +488,9 @@ class _InputPostIt extends State<InputPostIt> {
                               width: 0.5,
                             ),
                             backgroundColor:
-                            const Color.fromRGBO(255, 255, 255, 1),
+                                const Color.fromRGBO(255, 255, 255, 1),
                             shadowColor: const Color.fromRGBO(0, 0, 0, 1),
-                            elevation: 10),
+                            elevation: 5),
                         child: Text(
                           "작성 취소",
                           style: TextStyle(
