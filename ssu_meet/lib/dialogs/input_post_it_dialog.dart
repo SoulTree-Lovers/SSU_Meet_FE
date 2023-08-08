@@ -40,8 +40,14 @@ class _InputPostIt extends State<InputPostIt> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -164,7 +170,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       ),
                                       items: mbtiList
                                           .map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                            (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -249,7 +255,7 @@ class _InputPostIt extends State<InputPostIt> {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsets.only(top: screenWidth * 0.01),
+                                EdgeInsets.only(top: screenWidth * 0.01),
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,7 +304,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Offstage(
                                         offstage: (flag == 0) ? true : false,
@@ -309,8 +315,8 @@ class _InputPostIt extends State<InputPostIt> {
                                             child: Wrap(
                                               children: [
                                                 for (var i = 0;
-                                                    i < idealList.length;
-                                                    i++)
+                                                i < idealList.length;
+                                                i++)
                                                   Container(
                                                     width: screenWidth * 0.12,
                                                     height: screenWidth * 0.04,
@@ -322,12 +328,12 @@ class _InputPostIt extends State<InputPostIt> {
                                                     ),
                                                     decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
+                                                      BorderRadius.circular(
+                                                          20),
                                                       border: Border.all(
                                                         color: Colors.black,
                                                         width:
-                                                            screenWidth * 0.001,
+                                                        screenWidth * 0.001,
                                                       ),
                                                       color: Colors.transparent,
                                                     ),
@@ -336,10 +342,10 @@ class _InputPostIt extends State<InputPostIt> {
                                                         "${idealList[i]}",
                                                         style: TextStyle(
                                                           fontFamily:
-                                                              "Nanum_Ogbice",
+                                                          "Nanum_Ogbice",
                                                           fontSize:
-                                                              screenWidth *
-                                                                  0.025,
+                                                          screenWidth *
+                                                              0.025,
                                                           color: Colors.black,
                                                         ),
                                                       ),
@@ -364,27 +370,29 @@ class _InputPostIt extends State<InputPostIt> {
                                                 backgroundColor: Colors.black,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(50),
+                                                  BorderRadius.circular(50),
                                                 ),
                                               ),
                                               onPressed: () async {
+                                                idealList = [];
                                                 await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          myModal(
-                                                    context,
-                                                    screenHeight,
-                                                    screenWidth,
-                                                    idealList = [],
-                                                  ),
-                                                );
-                                                flag =
-                                                    (idealList.isEmpty) ? 0 : 1;
-                                                setState(() {});
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                    Colors.transparent,
+                                                    context: context,
+                                                    builder: (
+                                                        BuildContext context) =>
+                                                        myModal(
+                                                          context,
+                                                          screenHeight,
+                                                          screenWidth,
+                                                          idealList,
+                                                        )
+                                                    );
+                                                setState(() {
+                                                  flag =
+                                                  (idealList.isEmpty) ? 0 : 1;
+                                                });
                                               },
                                               child: Container(
                                                 height: screenWidth * 0.03,
@@ -396,7 +404,7 @@ class _InputPostIt extends State<InputPostIt> {
                                                   style: TextStyle(
                                                     fontFamily: "Nanum_Ogbice",
                                                     fontSize:
-                                                        screenWidth * 0.025,
+                                                    screenWidth * 0.025,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -443,7 +451,7 @@ class _InputPostIt extends State<InputPostIt> {
                             width: 0.5,
                           ),
                           backgroundColor:
-                              const Color.fromRGBO(255, 255, 255, 1),
+                          const Color.fromRGBO(255, 255, 255, 1),
                           shadowColor: const Color.fromRGBO(0, 0, 0, 1),
                           elevation: 10,
                         ),
@@ -490,7 +498,7 @@ class _InputPostIt extends State<InputPostIt> {
                               width: 0.5,
                             ),
                             backgroundColor:
-                                const Color.fromRGBO(255, 255, 255, 1),
+                            const Color.fromRGBO(255, 255, 255, 1),
                             shadowColor: const Color.fromRGBO(0, 0, 0, 1),
                             elevation: 10),
                         child: Text(
