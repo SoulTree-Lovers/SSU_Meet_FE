@@ -254,7 +254,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             side: const BorderSide(
               width: 1.5,
               strokeAlign: BorderSide.strokeAlignOutside,
-              color: Color(0xFF9E9C9C),
+              color: Color(0xFF020202),
             ),
             borderRadius: BorderRadius.circular(40),
           ),
