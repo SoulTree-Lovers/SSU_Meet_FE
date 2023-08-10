@@ -311,14 +311,22 @@ class _InfoPageState extends State<InfoPage> {
                             fontFamily: 'Nanum_Ogbice',
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
                         const Text(
                           "구매하세요.",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
+                            fontFamily: 'Nanum_Ogbice',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "* 1코인 차감",
+                          style: TextStyle(
+                            color: Color(0xFFFF0000),
+                            fontSize: 11,
                             fontFamily: 'Nanum_Ogbice',
                           ),
                         ),
