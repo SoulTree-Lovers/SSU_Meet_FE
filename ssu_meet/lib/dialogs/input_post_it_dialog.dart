@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
 import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
 import 'package:ssu_meet/pages/main_page.dart';
-import 'package:ssu_meet/dialogs/alert_status_of_registration.dart';
+import 'package:ssu_meet/dialogs/status_of_registration_dialog.dart';
 
 class InputPostIt extends StatefulWidget {
   const InputPostIt({Key? key}) : super(key: key);
