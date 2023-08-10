@@ -29,8 +29,8 @@ StatefulBuilder myModal(BuildContext context, List idealList) {
                   ),
             ),
                   Positioned(
-                      left: screenWidth * 0.38,
-                      top: screenWidth * 0.13,
+                      left: screenWidth * 0.39,
+                      top: screenWidth * 0.14,
                       child: Image(
                           width: screenWidth * 0.03,
                           height: screenWidth * 0.03,
@@ -39,14 +39,14 @@ StatefulBuilder myModal(BuildContext context, List idealList) {
                       ),
                   ),
                   Positioned(
-                    left: screenWidth * 0.28,
-                    top: screenWidth * 0.11,
+                    left: screenWidth * 0.3,
+                    top: screenWidth * 0.12,
                     child: Text(
                       "원하는 이상형을 골라보세요!",
                       style: TextStyle(
                         fontFamily: "Nanum_Ogbice",
                         height: 2,
-                        fontSize: screenWidth * 0.05,
+                        fontSize: screenWidth * 0.045,
                       ),
                     ),
                   ),
