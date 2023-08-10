@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
 import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
+import 'package:ssu_meet/pages/main_page.dart';
+import 'package:ssu_meet/dialogs/alert_status_of_registration.dart';
 
 class InputPostIt extends StatefulWidget {
   const InputPostIt({Key? key}) : super(key: key);
@@ -475,11 +477,21 @@ class _InputPostIt extends State<InputPostIt> {
                                 (hobby[0] != '' ||
                                     hobby[1] != '' ||
                                     hobby[2] != '')) {
+                              // 필수 입력 조건 충족 완료(이상형 포함)
+                              bool isExceed = false;
+                              if (getMyPostIt() < 3) {
+                                // 포스트잇 등록 개수 초과 여부 체크
+                                print("포스트잇 등록 성공");
+                              } else {
+                                isExceed = true;
+                                print("포스트잇 등록 개수 초과");
+                              }
                               print(
-                                  "닉네임: $nikname\nmbti: $mbti\n취미: 1. ${hobby[0]} 2. ${hobby[1]} 3. ${hobby[2]}\n자기소개: $myself");
-                              print("이상형: ");
+                                  "닉네임: $nikname\nmbti: $mbti\n취미: 1. ${hobby[0]} 2. ${hobby[1]} 3. ${hobby[2]}\n자기소개: $myself\n이상형: ");
                               idealList.forEach(print);
-                              Navigator.pop(context);
+
+                              // 등록 개수 초과 여부 알림 팝업창 호출
+                              showStatusOfRegistration(context, isExceed);
                             } else {
                               print("값이 유효하지 않음");
                             }
