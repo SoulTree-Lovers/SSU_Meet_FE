@@ -14,10 +14,19 @@ class _InitialPageState extends State<InitialPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ResponsiveWebLayout()));
-    });
+    Timer(
+      const Duration(seconds: 3),
+      () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveWebLayout(
+              pageIndex: 1,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override

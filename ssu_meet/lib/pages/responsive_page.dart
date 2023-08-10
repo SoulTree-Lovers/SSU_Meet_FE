@@ -4,14 +4,20 @@ import 'package:ssu_meet/pages/my_page.dart';
 import 'package:ssu_meet/pages/main_page.dart';
 
 class ResponsiveWebLayout extends StatefulWidget {
-  const ResponsiveWebLayout({super.key});
+  final int pageIndex;
+  const ResponsiveWebLayout({super.key, required this.pageIndex});
 
   @override
-  State<ResponsiveWebLayout> createState() => _ResponsiveWebLayoutState();
+  State<ResponsiveWebLayout> createState() =>
+      _ResponsiveWebLayoutState(pageIndex: pageIndex);
 }
 
 class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
-  int _selectedIndexScreen = 1; // Main Page
+  int pageIndex;
+
+  _ResponsiveWebLayoutState({required this.pageIndex});
+
+  // int _selectedIndexScreen = 1; // Main Page
   int coins = getCoin();
 
   final List _children = [
@@ -82,7 +88,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
           ),
         ),
       ),
-      body: _children[_selectedIndexScreen],
+      body: _children[pageIndex],
       // body: LayoutBuilder(
       //   builder: (BuildContext context, BoxConstraints constraints) {
       //     if (constraints.maxWidth <= 600) {
@@ -99,10 +105,10 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
         selectedItemColor: const Color.fromRGBO(24, 24, 27, 1),
         unselectedItemColor: const Color.fromARGB(255, 114, 113, 113),
-        currentIndex: _selectedIndexScreen,
+        currentIndex: pageIndex,
         onTap: (int index) {
           setState(() {
-            _selectedIndexScreen = index;
+            pageIndex = index;
           });
         },
         items: const [

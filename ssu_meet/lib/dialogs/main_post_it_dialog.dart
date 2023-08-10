@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/pages/responsive_page.dart';
 
 class MainPostItDialog extends StatefulWidget {
   final String nickname;
@@ -189,6 +190,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
               ElevatedButton(
                 onPressed: () {
                   _showBuyDialog(context);
+                  // _showCompletedBuyingDialog(context);
                 },
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(
@@ -237,6 +239,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
     );
   }
 
+  // 메인화면 포스트잇 클릭 후 구매 버튼 클릭 시 팝업 창
   void _showBuyDialog(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
@@ -277,6 +280,20 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
+                    // 구매 성공 시
+                    if (true) {
+                      _showCompletedBuyingDialog(context);
+                    }
+
+                    // 이미 팔린 포스트잇인 경우
+                    else if (false) {
+                      _showSoldOutDialog(context);
+                    }
+
+                    // 코인이 부족할 경우
+                    else if (false) {
+                      _showNotEnoughCoinDialog(context);
+                    }
                   },
                   child: Container(
                     width: 70,
@@ -324,6 +341,273 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color(0xFF010101),
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareRoundR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // 포스트잇 구매 완료 시 팝업 창
+  void _showCompletedBuyingDialog(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    showDialog(
+      barrierColor: Colors.white.withOpacity(0.7),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+          actionsPadding: const EdgeInsets.only(bottom: 30),
+          alignment: Alignment.center,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              width: 1.5,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: Color(0xFF020202),
+            ),
+            borderRadius: BorderRadius.circular(40),
+          ),
+          shadowColor: const Color(0x3F000000),
+          content: const Text(
+            '포스트잇 구매가 완료되었습니다. \n확인하시겠습니까? \n',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'NanumSquareRoundBold',
+              // fontWeight: FontWeight.w700,
+              // height: 1.31,
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ResponsiveWebLayout(
+                          pageIndex: 1,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "더 둘러보기",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontFamily: 'NanumSquareRoundR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ResponsiveWebLayout(
+                          pageIndex: 2,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "마이페이지 이동",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF010101),
+                          fontSize: 9,
+                          fontFamily: 'NanumSquareRoundR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // 이미 팔린 포스트잇인 경우 팝업 창
+  void _showSoldOutDialog(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    showDialog(
+      barrierColor: Colors.white.withOpacity(0.7),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+          actionsPadding: const EdgeInsets.only(bottom: 30),
+          alignment: Alignment.center,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              width: 1.5,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: Color(0xFF020202),
+            ),
+            borderRadius: BorderRadius.circular(40),
+          ),
+          shadowColor: const Color(0x3F000000),
+          content: const Text(
+            '이미 판매된 포스트잇입니다. \n',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'NanumSquareRoundBold',
+              // fontWeight: FontWeight.w700,
+              // height: 1.31,
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ResponsiveWebLayout(
+                          pageIndex: 1,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "확인",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareRoundR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // 코인이 부족할 경우 팝업 창
+  void _showNotEnoughCoinDialog(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    showDialog(
+      barrierColor: Colors.white.withOpacity(0.7),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+          actionsPadding: const EdgeInsets.only(bottom: 30),
+          alignment: Alignment.center,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              width: 1.5,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: Color(0xFF020202),
+            ),
+            borderRadius: BorderRadius.circular(40),
+          ),
+          shadowColor: const Color(0x3F000000),
+          content: const Text(
+            '코인이 부족합니다. \n',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'NanumSquareRoundBold',
+              // fontWeight: FontWeight.w700,
+              // height: 1.31,
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "확인",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
                           fontSize: 10,
                           fontFamily: 'NanumSquareRoundR',
                         ),

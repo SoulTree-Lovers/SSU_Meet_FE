@@ -30,7 +30,9 @@ class MyApp extends StatelessWidget {
       // ),
       // home: InitialPage(),
 
-      home: ResponsiveWebLayout(),
+      home: ResponsiveWebLayout(
+        pageIndex: 1,
+      ),
       // home: InfiniteScrollDemo(),
 
       //home: LoginPage(),
