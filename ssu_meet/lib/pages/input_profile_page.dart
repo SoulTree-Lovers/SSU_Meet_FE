@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ssu_meet/dept_data/temp_majors.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:ssu_meet/dept_data/temp_majors.dart';
 import 'package:ssu_meet/profile_data/profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
-
-String? sex; //성별
-Item? college; //단과대
-Item? major; //전공
-String? birth; //생년월일
-int? height; //키
-int? age; //나이
-String? instaId;
-String? kakaoId;
-String? phoneNumber;
 
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
@@ -28,17 +19,47 @@ class _InputProfile extends State<InputProfile> {
   List<String> genderList = ["선택하기", '남', '여'];
   List<DropdownMenuItem<Item>> collegeList = List.empty(growable: true);
   List<DropdownMenuItem<Item>> majorList = List.empty(growable: true);
-
+  Item? college; //단과대
+  Item? major; //전공
+  var data;
   final formKey = GlobalKey<FormState>();
+
+  /* api 연동 - POST 요청 함수
+   Future<void> sendUserProfileData(MyData newData) async{
+    print(json.encode(newData.toJson()));
+    const url = 'http://localhost:8080/v1/members/new';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {"Authorization":"-----"},
+      body: json.encode(newData.toJson()),
+    );
+    final responseData = json.decode(response.body);
+    if(responseData["status"] == "SUCCESS"){
+      print(responseData["message"]);
+    }
+    else{
+      print('Failed to send data. Error: ${response.statusCode}');
+    }
+  }
+  */
 
   @override
   void initState() {
     super.initState();
-    sex = genderList[0];
     collegeList = Colleges().colleges;
     college = collegeList[0].value;
     majorList = Majors(0).majors;
     major = majorList[0].value;
+    data = MyData(
+        sex: genderList[0],
+        birth: '',
+        age: null,
+        college: college!.title,
+        major: major!.title,
+        height: 0,
+        instaId: null,
+        kakaoId: null,
+        phoneNumber: null);
   }
 
   @override
@@ -55,7 +76,7 @@ class _InputProfile extends State<InputProfile> {
           decoration: BoxDecoration(
             border: Border(
               bottom:
-              BorderSide(color: Colors.black12, width: screenWidth * 0.003),
+                  BorderSide(color: Colors.black12, width: screenWidth * 0.003),
             ),
           ),
         ),
@@ -101,8 +122,7 @@ class _InputProfile extends State<InputProfile> {
                       Text(
                         "*성별, 생년월일은 추후 수정 불가합니다.",
                         style: TextStyle(
-                            fontSize: 0.025 * screenWidth,
-                            color: Colors.red),
+                            fontSize: 0.025 * screenWidth, color: Colors.red),
                       ),
                       Stack(
                         alignment: Alignment.center,
@@ -149,12 +169,12 @@ class _InputProfile extends State<InputProfile> {
                                                 fontSize: screenWidth * 0.05),
                                           ),
                                           DropdownButton<String>(
-                                            value: sex,
+                                            value: data.sex,
                                             icon: const Icon(
                                                 Icons.arrow_drop_down),
                                             iconSize: screenWidth * 0.04,
                                             style:
-                                            DropdownTextStyle(screenWidth),
+                                                DropdownTextStyle(screenWidth),
                                             alignment: Alignment.center,
                                             underline: Container(
                                               height: screenWidth * 0.0015,
@@ -163,7 +183,7 @@ class _InputProfile extends State<InputProfile> {
                                             ),
                                             items: genderList
                                                 .map<DropdownMenuItem<String>>(
-                                                  (String value) {
+                                              (String value) {
                                                 return DropdownMenuItem<String>(
                                                   value: value,
                                                   child: Text(value),
@@ -172,8 +192,8 @@ class _InputProfile extends State<InputProfile> {
                                             ).toList(),
                                             onChanged: (String? newVal) {
                                               setState(
-                                                    () {
-                                                  sex = newVal!;
+                                                () {
+                                                  data.sex = newVal!;
                                                 },
                                               );
                                             },
@@ -203,15 +223,15 @@ class _InputProfile extends State<InputProfile> {
                                                 height: screenHeight * 0.001,
                                                 color: Colors.black),
                                             style:
-                                            DropdownTextStyle(screenWidth),
+                                                DropdownTextStyle(screenWidth),
                                             items: collegeList,
                                             onChanged: (Item? newVal) {
                                               setState(
-                                                    () {
+                                                () {
                                                   college = newVal;
+                                                  data.college = newVal!.title;
                                                   majorList =
-                                                      Majors(newVal!.ind)
-                                                          .majors;
+                                                      Majors(newVal.ind).majors;
                                                   major = majorList[0].value;
                                                 },
                                               );
@@ -240,12 +260,13 @@ class _InputProfile extends State<InputProfile> {
                                                 height: screenHeight * 0.001,
                                                 color: Colors.black),
                                             style:
-                                            DropdownTextStyle(screenWidth),
+                                                DropdownTextStyle(screenWidth),
                                             items: majorList,
                                             onChanged: (newVal) {
                                               setState(
-                                                    () {
+                                                () {
                                                   major = newVal;
+                                                  data.major = newVal!.title;
                                                 },
                                               );
                                             },
@@ -280,14 +301,14 @@ class _InputProfile extends State<InputProfile> {
                                               hintText: "MMYYDD",
                                               screenWidth: screenWidth,
                                               validator: (val) {
-                                                if (val == '' || val==null) {
+                                                if (val == '' || val == null) {
                                                   return "필수입력";
                                                 }
                                                 return null;
                                               },
                                               onSaved: (val) {
                                                 setState(() {
-                                                  birth = val;
+                                                  data.birth = val;
                                                 });
                                               },
                                             ),
@@ -310,15 +331,17 @@ class _InputProfile extends State<InputProfile> {
                                               hintText: "입력",
                                               screenWidth: screenWidth,
                                               validator: (val) {
-                                                if (val == '' || val==null) {
+                                                if (val == '' || val == null) {
                                                   return "필수입력";
                                                 }
                                                 return null;
                                               },
                                               onSaved: (val) {
                                                 setState(
-                                                      () {
-                                                    height = double.parse(val).round();
+                                                  () {
+                                                    data.height =
+                                                        double.parse(val)
+                                                            .round();
                                                   },
                                                 );
                                               },
@@ -356,8 +379,8 @@ class _InputProfile extends State<InputProfile> {
                                               screenWidth: screenWidth,
                                               onSaved: (val) {
                                                 setState(
-                                                      () {
-                                                    instaId = val;
+                                                  () {
+                                                    data.instaId = val;
                                                   },
                                                 );
                                               },
@@ -381,8 +404,8 @@ class _InputProfile extends State<InputProfile> {
                                           screenWidth: screenWidth,
                                           onSaved: (val) {
                                             setState(
-                                                  () {
-                                                kakaoId = val;
+                                              () {
+                                                data.kakaoId = val;
                                               },
                                             );
                                           },
@@ -404,8 +427,8 @@ class _InputProfile extends State<InputProfile> {
                                           screenWidth: screenWidth,
                                           onSaved: (val) {
                                             setState(
-                                                  () {
-                                                phoneNumber = val;
+                                              () {
+                                                data.phoneNumber = val;
                                               },
                                             );
                                           },
@@ -443,40 +466,40 @@ class _InputProfile extends State<InputProfile> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
-                          fixedSize: Size(screenWidth * 0.23, screenWidth * 0.08),
+                          fixedSize:
+                              Size(screenWidth * 0.23, screenWidth * 0.08),
                           side:
-                          const BorderSide(color: Colors.black, width: 0.5),
+                              const BorderSide(color: Colors.black, width: 0.5),
                           backgroundColor:
-                          const Color.fromRGBO(255, 255, 255, 1),
+                              const Color.fromRGBO(255, 255, 255, 1),
                           shadowColor: const Color.fromRGBO(0, 0, 0, 1),
                         ),
                         child: Center(
-                          child:Text(
-                          "작성 완료",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: screenWidth * 0.038,
-                              fontFamily: "Nanum_Ogbice"),
-                        ),
+                          child: Text(
+                            "작성 완료",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.038,
+                                fontFamily: "Nanum_Ogbice"),
+                          ),
                         ),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save(); //생년월일, 키 제대로 입력 시 저장.
-                            if(sex != genderList[0] && //나머지 조건들 한 번 더 체크
-                              college != collegeList[0].value &&
-                              major != majorList[0].value &&
-                                (instaId != '' ||
-                              kakaoId != '' ||
-                              phoneNumber != '')) {
-                              age = AgeCalculation(birth!);
+                            if (data.sex != genderList[0] && //나머지 조건들 한 번 더 체크
+                                data.college != collegeList[0].value!.title &&
+                                data.major != majorList[0].value!.title &&
+                                (data.instaId != '' ||
+                                    data.kakaoId != '' ||
+                                    data.phoneNumber != '')) {
+                              data.age = AgeCalculation(data.birth);
                               print("필수 입력 요건이 충족됨");
-                              printData();
-                            }
-                            else print("필수 입력 조건이 충족되지 않음");
-                          } else  {
+                              // sendUserProfileData(data);
+                            } else
+                              print("필수 입력 조건이 충족되지 않음");
+                          } else {
                             print("필수 입력 조건이 충족되지 않음");
                           }
-
                         },
                       ),
                     ],
@@ -489,20 +512,4 @@ class _InputProfile extends State<InputProfile> {
       ),
     );
   }
-}
-
-
-void printData() {
-  print("함수가 실행은 됐습니다.");
-  final data = MyData(
-      sex:sex!,
-      birth:birth!,
-      age:age!,
-      college:college!.title,
-      major:major!.title,
-      height:height!,
-      instaId:instaId,
-      kakaoId:kakaoId,
-      phoneNumber:phoneNumber);
-  print(json.encode(data.toJson()));
 }

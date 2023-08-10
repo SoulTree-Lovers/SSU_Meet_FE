@@ -1,5 +1,7 @@
-
-  {
+{
+  "status": "SUCCESS",
+  "message": "유저 기존 개인정보",
+  "data": {
     "sex": "FEMALE",
     "birth": "020902",
     "age": 20,
@@ -8,5 +10,6 @@
     "height": 164,
     "instaId": null,
     "kakaoId": "kakaoID",
-    "phoneNumber":"01012345678"
+    "phoneNumber": "01012345678"
   }
+}

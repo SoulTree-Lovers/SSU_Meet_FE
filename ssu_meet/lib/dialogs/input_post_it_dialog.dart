@@ -1,7 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
 import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
-import 'package:ssu_meet/pages/main_page.dart';
 import 'package:ssu_meet/dialogs/status_of_registration_dialog.dart';
 
 class InputPostIt extends StatefulWidget {
@@ -15,7 +16,7 @@ class _InputPostIt extends State<InputPostIt> {
   final formKey = GlobalKey<FormState>();
   String? nikname;
   String? mbti;
-  String? myself;
+  String? introduce;
   List hobby = ['', '', '']; //취미 리스트
   List idealList = [];
 
@@ -39,6 +40,42 @@ class _InputPostIt extends State<InputPostIt> {
     'ISTP',
     'ISTJ'
   ];
+
+/* api 연동- 포스트잇 등록 POST 요청
+  Future<int> sendStickyData() async {
+   int isExceed;
+    Map<String, dynamic> toJson() => {
+      "nikname" : nikname,
+      "mbti" : mbti,
+      "hobbies" : hobby,
+      "ideals": idealList,
+      "introduce": introduce,
+    };
+    print(json.encode(toJson()));
+
+    const url = 'http://localhost:8080/v1/sticky/new';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {"Authorization":"-----"},
+      body: json.encode(toJson()),
+    );
+    final responseData = json.decode(response.body);
+    if(responseData["status"] == "SUCCESS" && responseData["message"] == "포스트잇 등록 성공"){
+      isExceed = 0;
+
+    }
+    if (responseData["status"] == "ERROR" && responseData["message"] == "포스트잇 최대 등록 개수 초과"){
+      isExceed = 1;
+    }
+    else{
+      print('Failed to send data. Error: ${response.statusCode}');
+      isExceed = 2 ;
+    }
+    print(responseData["message"]);
+    return isExceed;
+
+  }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +333,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       },
                                       onSaved: (val) {
                                         setState(() {
-                                          myself = val;
+                                          introduce = val;
                                         });
                                       },
                                     ),
@@ -478,20 +515,14 @@ class _InputPostIt extends State<InputPostIt> {
                                     hobby[1] != '' ||
                                     hobby[2] != '')) {
                               // 필수 입력 조건 충족 완료(이상형 포함)
-                              bool isExceed = false;
-                              if (getMyPostIt() < 3) {
-                                // 포스트잇 등록 개수 초과 여부 체크
-                                print("포스트잇 등록 성공");
-                              } else {
-                                isExceed = true;
-                                print("포스트잇 등록 개수 초과");
-                              }
                               print(
-                                  "닉네임: $nikname\nmbti: $mbti\n취미: 1. ${hobby[0]} 2. ${hobby[1]} 3. ${hobby[2]}\n자기소개: $myself\n이상형: ");
+                                  "닉네임: $nikname\nmbti: $mbti\n취미: 1. ${hobby[0]} 2. ${hobby[1]} 3. ${hobby[2]}\n자기소개: $introduce\n이상형: ");
                               idealList.forEach(print);
 
                               // 등록 개수 초과 여부 알림 팝업창 호출
-                              showStatusOfRegistration(context, isExceed);
+                              // final result = sendStickyData();
+                              // if 햣(result == 0 || result == 1) showStatusOfRegistration(context, result);
+                              showStatusOfRegistration(context, 0); // 임시 (0: 등록 가능 , 1; 등록 불가능)
                             } else {
                               print("값이 유효하지 않음");
                             }

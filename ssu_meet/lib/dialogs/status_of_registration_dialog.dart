@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void showStatusOfRegistration(BuildContext context, bool isExceed) {
+void showStatusOfRegistration(BuildContext context, final isExceed) {
   showDialog(
       barrierColor: Colors.white.withOpacity(0.7),
       context: context,
@@ -22,7 +22,7 @@ void showStatusOfRegistration(BuildContext context, bool isExceed) {
                 width: 300,
                 height: 55,
                 alignment: Alignment.center,
-                child: (!isExceed)
+                child: (isExceed == 0)
                     ? const Text(
                         '포스트잇 등록을 마쳤습니다!',
                         textAlign: TextAlign.center,

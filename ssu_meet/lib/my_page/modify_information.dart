@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+//import 'package:http/http.dart' as http;
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import '../profile_data/profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
@@ -32,9 +34,24 @@ class _ModifyPageState extends State<ModifyPage> {
   }
 
   void getOldProfile() async {
+    /* api 연동- GET 요청 함수
+    const url='http://localhost:8080/v1/members/mypage/modify';
+    var response = await http.get(
+      Uri.parse(url),
+      headers: {"Authorization":"----"},
+    );
+    final responseData = json.decode(response.body);
+    if (responseData["status"] == "SUCCESS") {
+      print(responseData["message"]);
+      var jsonString = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    }
+    else {
+      print('Failed to get data. Error: ${response.statusCode}');
+    } */
     var jsonString = await rootBundle.loadString('json/old_profile.json');
     setState(() {
-      data = MyData.fromJson(jsonDecode(jsonString) as Map<String, dynamic>);
+      data = MyData.fromJson(
+          jsonDecode(jsonString)["data"] as Map<String, dynamic>);
       genderList.add(data.sex);
       collegeList = Colleges().colleges;
       tmpCollege = searchInItemList(data.college, collegeList);
@@ -43,6 +60,25 @@ class _ModifyPageState extends State<ModifyPage> {
       isLoading = true;
     });
   }
+
+  /* api 연동- 수정 완료 후 POST 요청 코드
+  Future<void> sendModifiedProfileData(MyData newData) async{
+    const url = 'http://localhost:8080/v1/members/mypage/modify';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {"Authorization":"-----"},
+      body: json.encode(newData.toJson()),
+    );
+    final responseData = json.decode(response.body);
+    if(responseData["status"] == "SUCCESS"){
+      print(responseData["message"]);
+    }
+    else{
+      print('Failed to get data. Error: ${response.statusCode}');
+    }
+  }
+
+   */
 
   @override
   void initState() {
@@ -319,7 +355,8 @@ class _ModifyPageState extends State<ModifyPage> {
                                                   setState(
                                                     () {
                                                       data.height =
-                                                          double.parse(val).round();
+                                                          double.parse(val)
+                                                              .round();
                                                     },
                                                   );
                                                 },
@@ -467,18 +504,20 @@ class _ModifyPageState extends State<ModifyPage> {
                             //키만 입력하면 키 저장.
                             formKey.currentState!.save();
                             if (data.college != collegeList[0].value!.title &&
-                                    data.major != majorList[0].value!.title &&
+                                data.major != majorList[0].value!.title &&
                                 (data.instaId != '' ||
-                                data.kakaoId != '' ||
-                                data.phoneNumber != '')) {
+                                    data.kakaoId != '' ||
+                                    data.phoneNumber != '')) {
                               data.age = AgeCalculation(data.birth);
                               print("필수 입력 요건이 충족됨");
                               // 변경된 값 보내기
+                              // sendModifiedProfileData(data);
                               print("수정 후 데이터");
                               print(json.encode(data.toJson()));
                               Navigator.pop(context);
-                            } else
+                            } else {
                               print("필수 입력 조건이 충족되지 않음");
+                            }
                           } else {
                             print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
                           }
