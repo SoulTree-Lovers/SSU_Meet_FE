@@ -71,7 +71,7 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                 left: screenWidth * 0.15,
                 child: SizedBox(
                   height: screenHeight * 0.4,
-                  width: screenWidth * 0.5,
+                  width: screenWidth * 0.55,
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,9 +81,9 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                         ),
                         Text(
                           "닉네임: ${widget.nickname}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         const SizedBox(
@@ -91,9 +91,9 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                         ),
                         Text(
                           "나이: ${widget.age}살",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         const SizedBox(
@@ -101,9 +101,9 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                         ),
                         Text(
                           "학과: ${widget.major}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         const SizedBox(
@@ -111,9 +111,9 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                         ),
                         Text(
                           "MBTI: ${widget.mbti}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         const SizedBox(
@@ -121,9 +121,9 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                         ),
                         Text(
                           "키: ${widget.height}cm",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         const SizedBox(
@@ -131,23 +131,23 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                         ),
                         Text(
                           "취미 1: ${widget.hobbies[0]}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         Text(
                           "취미 2: ${widget.hobbies[1]}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         Text(
                           "취미 3: ${widget.hobbies[2]}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         const SizedBox(
@@ -155,68 +155,110 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                         ),
                         Text(
                           "자기소개: ${widget.introduce}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
+                            fontSize: screenWidth * 0.04,
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         widget.instaId == null
-                            ? const Text(
+                            ? Text(
                                 "인스타: x",
                                 style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
-                                  fontSize: 20,
+                                  fontSize: screenWidth * 0.04,
                                 ),
                               )
                             : Text(
                                 "인스타: ${widget.instaId}",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
-                                  fontSize: 20,
+                                  fontSize: screenWidth * 0.04,
                                 ),
                               ),
                         widget.kakaoId == null
-                            ? const Text(
+                            ? Text(
                                 "카카오톡: x",
                                 style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
-                                  fontSize: 20,
+                                  fontSize: screenWidth * 0.04,
                                 ),
                               )
                             : Text(
                                 "카카오톡: ${widget.kakaoId}",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
-                                  fontSize: 20,
+                                  fontSize: screenWidth * 0.04,
                                 ),
                               ),
                         widget.phoneNumber == null
-                            ? const Text(
+                            ? Text(
                                 "연락처: x",
                                 style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
-                                  fontSize: 20,
+                                  fontSize: screenWidth * 0.04,
                                 ),
                               )
                             : Text(
                                 "연락처: ${widget.phoneNumber}",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
-                                  fontSize: 20,
+                                  fontSize: screenWidth * 0.04,
                                 ),
                               ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          "이상형: ${widget.ideals}",
-                          style: const TextStyle(
-                            fontFamily: "Nanum_Ogbice",
-                            fontSize: 20,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              "이상형:",
+                              style: TextStyle(
+                                fontFamily: "Nanum_Ogbice",
+                                fontSize: screenWidth * 0.04,
+                              ),
+                            ),
+                            SizedBox(
+                              width: screenWidth * 0.43,
+                              height: screenWidth * 0.1,
+                              child: SingleChildScrollView(
+                                child: Wrap(
+                                  children: widget.ideals.map((item) {
+                                    return Container(
+                                      width: screenWidth * 0.12,
+                                      height: screenWidth * 0.04,
+                                      margin: EdgeInsets.fromLTRB(
+                                        screenWidth * 0.01,
+                                        screenWidth * 0.01,
+                                        screenWidth * 0.01,
+                                        0,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: screenWidth * 0.001,
+                                        ),
+                                        color: Colors.transparent,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(
+                                            fontFamily: "Nanum_Ogbice",
+                                            fontSize: screenWidth * 0.025,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 10,
