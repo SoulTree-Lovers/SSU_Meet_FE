@@ -32,7 +32,11 @@ class MyApp extends StatelessWidget {
 
       home: ResponsiveWebLayout(
         pageIndex: 1,
+        // 0: 사용 설명서
+        // 1: 메인 화면
+        // 2: 마이 페이지
       ),
+
       // home: InfiniteScrollDemo(),
 
       //home: LoginPage(),
