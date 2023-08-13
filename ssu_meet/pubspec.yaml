@@ -84,6 +84,7 @@ flutter:
     - assets/images/document_duplicate.png
     - assets/images/vertical_line.png
     - assets/images/chevron_down.png
+    - assets/images/top_button.png
 
 
     # 사용 설명서 페이지에 들어가는 이미지
