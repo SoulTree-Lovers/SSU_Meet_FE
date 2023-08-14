@@ -14,33 +14,33 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  // final ScrollController _scrollController = ScrollController();
-  // bool _showScrollButton = false;
+  final ScrollController _scrollController = ScrollController();
+  bool _showScrollButton = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  //   _scrollController.addListener(() {
-  //     if (_scrollController.offset >= 200) {
-  //       setState(() {
-  //         _showScrollButton = true;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         _showScrollButton = false;
-  //       });
-  //     }
-  //   });
-  // }
+    _scrollController.addListener(() {
+      if (_scrollController.offset >= 200) {
+        setState(() {
+          _showScrollButton = true;
+        });
+      } else {
+        setState(() {
+          _showScrollButton = false;
+        });
+      }
+    });
+  }
 
-  // void _scrollToTop() {
-  //   _scrollController.animateTo(
-  //     0,
-  //     duration: const Duration(milliseconds: 500),
-  //     curve: Curves.easeInOut,
-  //   );
-  // }
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,18 +101,18 @@ class _MainPageState extends State<MainPage> {
                   future: getPostItFrontData(),
                   builder:
                       (BuildContext context, AsyncSnapshot<List> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      // While the future is not yet completed
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      // If an error occurred
-                      return Text('Error: ${snapshot.error}');
-                    } else {
+                    // if (snapshot.connectionState == ConnectionState.waiting) {
+                    //   // While the future is not yet completed
+                    //   return const CircularProgressIndicator();
+                    // } else if (snapshot.hasError) {
+                    //   // If an error occurred
+                    //   return Text('Error: ${snapshot.error}');
+                    if (snapshot.hasData) {
                       // If the future completed successfully
                       return SizedBox(
                         height: screenHeight * 0.75,
                         child: GridView.builder(
-                          // controller: _scrollController,
+                          controller: _scrollController,
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           gridDelegate:
@@ -269,6 +269,8 @@ class _MainPageState extends State<MainPage> {
                           },
                         ),
                       );
+                    } else {
+                      return const Text("데이터가 없습니다.");
                     }
                   },
                 ),
@@ -283,15 +285,31 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      // floatingActionButton: _showScronLocation.miniStartFloat, // 왼쪽 하단에 배치
+      floatingActionButton: _showScrollButton
+          ? FloatingActionButton(
+              backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+              elevation: 0, // 그림자 없애기
+              onPressed: _scrollToTop,
+              child: Container(
+                width: screenWidth * 0.1,
+                height: screenWidth * 0.1,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/top_button.png"),
+                  ),
+                ),
+              ),
+            )
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 
-  // @override
-  // void dispose() {
-  //   _scrollController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 }
 
 // Future<List> getPostItFrontData() async {
