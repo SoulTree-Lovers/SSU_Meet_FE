@@ -37,54 +37,56 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
         shadowColor: const Color.fromRGBO(158, 156, 156, 1),
         flexibleSpace: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: screenWidth * 0.2,
-                height: screenWidth * 0.05,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD7D7D7),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: screenWidth * 0.03,
-                      height: screenWidth * 0.03,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("images/currency_dollar.png"),
-                          fit: BoxFit.cover,
+          padding: EdgeInsets.only(right: screenWidth * 0.03),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: screenWidth * 0.23,
+                  height: screenWidth * 0.06,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD7D7D7),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 8,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: screenWidth * 0.03,
+                        height: screenWidth * 0.03,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("images/currency_dollar.png"),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        "보유 코인: $coins",
-                        style: TextStyle(
-                          color: const Color(0xFF1A1A1A),
-                          fontFamily: "NanumSquareRoundBold",
-                          fontSize: screenWidth * 0.025,
+                      Padding(
+                        padding: EdgeInsets.all(screenWidth * 0.002),
+                        child: Text(
+                          "보유 코인: $coins",
+                          style: TextStyle(
+                            color: const Color(0xFF1A1A1A),
+                            fontFamily: "NanumSquareRoundBold",
+                            fontSize: screenWidth * 0.025,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
