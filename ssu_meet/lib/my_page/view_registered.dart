@@ -77,6 +77,7 @@ class ViewRegistered extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var postIt = snapshot.data![index];
                       var id = postIt["stickyId"];
+                      var isSold = postIt["isSold"];
 
                       var nickname = postIt["stickyData"]["nickname"];
                       var hobbies = postIt["stickyData"]["hobbies"];
@@ -84,6 +85,16 @@ class ViewRegistered extends StatelessWidget {
                       var introduction = postIt["stickyData"]["introduction"];
                       var ideals = postIt["stickyData"]["ideals"];
 
+                      Widget isSoldPostIt() {
+                        if (isSold == 1) {
+                          return 
+                              const Image(
+                                fit: BoxFit.cover,
+                                image: AssetImage('assets/images/is_sold.png'),);
+                        } else {
+                          return const SizedBox();
+                        }
+                      }
                       return GestureDetector(
                         onTap: () {
                            showDialog(
@@ -182,8 +193,17 @@ class ViewRegistered extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                              ))
-            ]),
+                              ),),
+                              Positioned(
+                                left: screenWidth * 0.06,
+                                right: screenWidth * 0.01,
+                                top: screenWidth * - 0.15,
+                                //bottom: screenWidth * 0.07,
+                                child: SizedBox(
+                                  width: screenWidth * 0.9,
+                                  height: screenWidth * 0.75,
+                                  child: isSoldPostIt())),
+            ],),
                       );
                     }),
               );
@@ -201,7 +221,7 @@ class ViewRegistered extends StatelessWidget {
 
 Future<List> getRegisteredPostItData() async {
   String response =
-      await rootBundle.loadString('json/registered_post_it_json.json');
+      await rootBundle.loadString('json/test_registered_post_it_json.json');
   final jsonData = json.decode(response);
 
   return jsonData["data"]["stickyData"];

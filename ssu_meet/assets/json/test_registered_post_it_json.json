@@ -5,6 +5,7 @@
         "stickyData": [
             {
                 "stickyId": 1,
+                "isSold": 0,
                 "stickyData": {
                     "nickname": "슝슝이",
                     "hobbies": ["볼링", "캠핑", "코노가기"],
@@ -15,6 +16,7 @@
             },
             {
                 "stickyId": 2,
+                "isSold": 1,
                 "stickyData": {
                     "nickname": "숑숑잉",
                     "hobbies": ["김치볶음밥 만들기", "유튜브 보깅", "넷플릭스 보기"],
@@ -25,6 +27,7 @@
             },
             {
                 "stickyId": 3,
+                "isSold": 1,
                 "stickyData": {
                     "nickname": "뿡뿡이",
                     "hobbies": ["수영", "클라이밍", "혼코노", "러닝"],
