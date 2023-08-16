@@ -161,6 +161,7 @@ class LoginPage extends StatelessWidget {
                               elevation: 0,
                             ),
                             onPressed: () {
+                              sendData();
                               print(studentIdController.text);
                               print(passwordController.text);
                             },
@@ -187,20 +188,20 @@ class LoginPage extends StatelessWidget {
 }
 
 class MyData {
-  final String studentId;
-  final String pw;
+  final String studentNumber;
+  final String password;
 
-  MyData(this.studentId, this.pw);
+  MyData(this.studentNumber, this.password);
 
   Map<String, dynamic> toJson() => {
-        'studentId': studentId,
-        'pw': pw,
+        'studentNumber': studentNumber,
+        'password': password,
       };
 }
 
 Future<void> sendData() async {
   print("함수가 실행은 됐습니다.");
-  const url = 'http://localhost:8010/jsoup';
+  const url = 'http://localhost:8035/v1/members/login';
   final data = MyData(studentIdController.text, passwordController.text);
   print('Sending JSON payload: ${json.encode(data.toJson())}');
   final response = await http.post(
@@ -208,12 +209,14 @@ Future<void> sendData() async {
     headers: {'Content-Type': 'application/json'},
     body: json.encode(data.toJson()),
   );
+  print("데이터 전송");
 
   if (response.statusCode == 200) {
     final responseData = json.decode(response.body);
-    final result =
-        responseData; // result 값은 유세인트 인증 여부에 따라 true or false 값으로 bool형태로 받음
-    if (result) {
+
+    final isSuccess = responseData["status"];
+
+    if (isSuccess == "SUCCESS") {
       //유세인트 인증에 성공한 경우
       print("유세인트 인증 성공");
     } else {
