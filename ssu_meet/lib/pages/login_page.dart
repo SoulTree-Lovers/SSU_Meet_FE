@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:ssu_meet/pages/responsive_page.dart';
+
 final TextEditingController studentIdController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
 
@@ -161,7 +163,23 @@ class LoginPage extends StatelessWidget {
                               elevation: 0,
                             ),
                             onPressed: () {
-                              sendData();
+                              login().then(
+                                (result) {
+                                  if (result == true) {
+                                    print("로그인 성공");
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ResponsiveWebLayout(
+                                                pageIndex: 1),
+                                      ),
+                                    );
+                                  } else {
+                                    print("로그인 실패");
+                                  }
+                                },
+                              );
+
                               print(studentIdController.text);
                               print(passwordController.text);
                             },
@@ -185,6 +203,38 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+
+  Future<bool> login() async {
+    print("함수가 실행은 됐습니다.");
+    const url = 'http://localhost:8080/v1/members/login';
+    final data = MyData(studentIdController.text, passwordController.text);
+    print('Sending JSON payload: ${json.encode(data.toJson())}');
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(data.toJson()),
+    );
+    print("데이터 전송");
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      final isSuccess = responseData["status"];
+      print(responseData);
+      if (isSuccess == "SUCCESS") {
+        //유세인트 인증에 성공한 경우
+        print("유세인트 인증 성공");
+        return true; // 로그인 성공
+      } else {
+        //유세인트 인증에 실패한 경우
+        print("로그인 정보가 잘못되었습니다.");
+        return false; // 로그인 실패 (정보 오류)
+      }
+      // print('Received response: $result');
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
+      return false; // 로그인 실패 (네트워크 에러)
+    }
+  }
 }
 
 class MyData {
@@ -199,32 +249,31 @@ class MyData {
       };
 }
 
-Future<void> sendData() async {
-  print("함수가 실행은 됐습니다.");
-  const url = 'http://localhost:8035/v1/members/login';
-  final data = MyData(studentIdController.text, passwordController.text);
-  print('Sending JSON payload: ${json.encode(data.toJson())}');
-  final response = await http.post(
-    Uri.parse(url),
-    headers: {'Content-Type': 'application/json'},
-    body: json.encode(data.toJson()),
-  );
-  print("데이터 전송");
+// Future<void> sendData() async {
+//   print("함수가 실행은 됐습니다.");
+//   const url = 'http://localhost:8080/v1/members/login';
+//   final data = MyData(studentIdController.text, passwordController.text);
+//   print('Sending JSON payload: ${json.encode(data.toJson())}');
+//   final response = await http.post(
+//     Uri.parse(url),
+//     headers: {'Content-Type': 'application/json'},
+//     body: json.encode(data.toJson()),
+//   );
+//   print("데이터 전송");
 
-  if (response.statusCode == 200) {
-    final responseData = json.decode(response.body);
+//   if (response.statusCode == 200) {
+//     final responseData = json.decode(response.body);
+//     final isSuccess = responseData["status"];
 
-    final isSuccess = responseData["status"];
-
-    if (isSuccess == "SUCCESS") {
-      //유세인트 인증에 성공한 경우
-      print("유세인트 인증 성공");
-    } else {
-      //유세인트 인증에 실패한 경우
-      print("로그인 정보가 잘못되었습니다.");
-    }
-    // print('Received response: $result');
-  } else {
-    print('Failed to send data. Error: ${response.statusCode}');
-  }
-}
+//     if (isSuccess == "SUCCESS") {
+//       //유세인트 인증에 성공한 경우
+//       print("유세인트 인증 성공");
+//     } else {
+//       //유세인트 인증에 실패한 경우
+//       print("로그인 정보가 잘못되었습니다.");
+//     }
+//     // print('Received response: $result');
+//   } else {
+//     print('Failed to send data. Error: ${response.statusCode}');
+//   }
+// }
