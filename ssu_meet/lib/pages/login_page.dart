@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/pages/input_profile_page.dart';
 import 'dart:convert';
 
 import 'package:ssu_meet/pages/responsive_page.dart';
@@ -165,13 +166,24 @@ class LoginPage extends StatelessWidget {
                             onPressed: () {
                               login().then(
                                 (result) {
-                                  if (result == true) {
-                                    print("로그인 성공");
+                                  if (result == 1) {
+                                    // 개인정보등록화면으로 이동
+                                    print("개인정보등록 화면으로 이동합니다.");
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const InputProfile(),
+                                      ),
+                                    );
+                                  } else if (result == 2) {
+                                    // 홈 화면으로 이동
+                                    print("홈 화면으로 이동합니다.");
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             const ResponsiveWebLayout(
-                                                pageIndex: 1),
+                                          pageIndex: 1,
+                                        ),
                                       ),
                                     );
                                   } else {
@@ -204,7 +216,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Future<bool> login() async {
+  Future<int> login() async {
     print("함수가 실행은 됐습니다.");
     const url = 'http://localhost:8080/v1/members/login';
     final data = MyData(studentIdController.text, passwordController.text);
@@ -219,21 +231,30 @@ class LoginPage extends StatelessWidget {
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
       final isSuccess = responseData["status"];
+      final message = responseData["message"];
+
       print(responseData);
       if (isSuccess == "SUCCESS") {
         //유세인트 인증에 성공한 경우
         print("유세인트 인증 성공");
-        return true; // 로그인 성공
+        if (message == "Need new register") {
+          print("개인정보등록이 필요합니다.");
+          return 1;
+        } else if (message == "Main Ok") {
+          print("이미 개인정보등록이 완료된 사용자입니다.");
+          return 2;
+        }
       } else {
         //유세인트 인증에 실패한 경우
         print("로그인 정보가 잘못되었습니다.");
-        return false; // 로그인 실패 (정보 오류)
+        return 3; // 로그인 실패 (정보 오류)
       }
       // print('Received response: $result');
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
-      return false; // 로그인 실패 (네트워크 에러)
+      return 4; // 로그인 실패 (네트워크 에러)
     }
+    return 0;
   }
 }
 
