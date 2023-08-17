@@ -21,8 +21,7 @@ Scaffold MainPagePostIt(
         ),
         itemBuilder: (BuildContext context, int index) {
           var postIt = snapshot.data![index];
-          var id = postIt["stickyId"];
-
+          var stickyId = postIt["stickyId"];
           var sex = postIt["stickyData"]["sex"];
           var birthDate = postIt["stickyData"]["birthDate"];
           var age = postIt["stickyData"]["age"];
@@ -48,6 +47,7 @@ Scaffold MainPagePostIt(
                 context: context,
                 builder: (BuildContext context) {
                   return MainPostItDialog(
+                    stickyId: stickyId,
                     nickname: nickname,
                     age: age,
                     major: major,
@@ -62,7 +62,7 @@ Scaffold MainPagePostIt(
                   );
                 },
               );
-              print("Tapped Post It (id: $id)");
+              print("Tapped Post It (id: $stickyId)");
               print("Tapped Post It (age: $age)");
               print("Tapped Post It (instaId: $instaId)");
             },

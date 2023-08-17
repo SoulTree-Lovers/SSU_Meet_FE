@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
+import 'package:http/http.dart' as http;
 
 class MainPostItDialog extends StatefulWidget {
+  final int stickyId;
   final String nickname;
   final int age;
   final String major;
@@ -15,6 +19,7 @@ class MainPostItDialog extends StatefulWidget {
   final List ideals;
 
   const MainPostItDialog({
+    required this.stickyId,
     required this.nickname,
     required this.age,
     required this.major,
@@ -396,6 +401,44 @@ class _MainPostItDialog extends State<MainPostItDialog> {
         );
       },
     );
+  }
+
+  // 포스트잇 구매 api
+  Future<int> buyPostIt(int stickyId) async {
+    // print("함수가 실행은 됐습니다.");
+    var url = 'http://localhost:8080/v1/sticky/buy/$stickyId';
+    // print('Sending JSON payload: ${json.encode(data.toJson())}');
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {"Authorization": "-----"},
+    );
+
+    print("데이터 전송");
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      final isSuccess = responseData["status"];
+      final message = responseData["message"];
+
+      print(responseData);
+      if (isSuccess == "SUCCESS") {
+        // 포스트잇 구매 성공한 경우
+        print("포스트잇 구매 성공");
+        return 1;
+      } else {
+        if (message == "이미 판매된 포스트잇 입니다.") {
+          print("이미 판매된 포스트잇입니다.");
+          return 2;
+        } else {
+          print("코인이 부족합니다.");
+          return 3;
+        }
+      }
+      // print('Received response: $result');
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
+      return 4; // 로그인 실패 (네트워크 에러)
+    }
   }
 
   // 포스트잇 구매 완료 시 팝업 창

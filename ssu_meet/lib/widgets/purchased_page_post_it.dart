@@ -19,7 +19,6 @@ SizedBox PurchasedPagePostIt(double screenHeight,
       itemBuilder: (BuildContext context, int index) {
         var postIt = snapshot.data![index];
         var id = postIt["stickyId"];
-
         var sex = postIt["stickyData"]["sex"];
         var birthDate = postIt["stickyData"]["birthDate"];
         var age = postIt["stickyData"]["age"];
