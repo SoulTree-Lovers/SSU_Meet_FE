@@ -37,34 +37,37 @@ class LoginPage extends StatelessWidget {
             backgroundColor: const Color(0xffEFEFEF),
             elevation: 0,
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: screenWidth,
-                  height: screenHeight * 0.33,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SizedBox(
-                        width: screenWidth * 0.5,
-                        child: const Image(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/pink_yellow.png'),
-                        ),
+          body: Column(
+            children: [
+              SizedBox(
+                width: screenWidth,
+                height: screenHeight * 0.33,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: screenWidth * 0.5,
+                      child: const Image(
+                        fit: BoxFit.cover,
+                        image: AssetImage('assets/images/pink_yellow.png'),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 1),
-                Stack(
+              ),
+              const SizedBox(height: 1),
+              Flexible(
+                fit: FlexFit.tight,
+                child: Stack(
                   children: [
                     Container(
                       width: screenWidth,
-                      height: screenHeight * 0.66,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        image: const DecorationImage(
+                      //height: screenHeight * 0.59,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50)),
+                        image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage('assets/images/rectangle.png'),
                         ),
@@ -188,10 +191,10 @@ class LoginPage extends StatelessWidget {
                                     );
                                   } else {
                                     print("로그인 실패");
+                                    // 팝업 창 띄워주기
                                   }
                                 },
                               );
-
                               print(studentIdController.text);
                               print(passwordController.text);
                             },
@@ -208,8 +211,8 @@ class LoginPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -217,10 +220,10 @@ class LoginPage extends StatelessWidget {
   }
 
   Future<int> login() async {
-    print("함수가 실행은 됐습니다.");
+    // print("함수가 실행은 됐습니다.");
     const url = 'http://localhost:8080/v1/members/login';
     final data = MyData(studentIdController.text, passwordController.text);
-    print('Sending JSON payload: ${json.encode(data.toJson())}');
+    // print('Sending JSON payload: ${json.encode(data.toJson())}');
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},

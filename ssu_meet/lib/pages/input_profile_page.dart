@@ -43,6 +43,10 @@ class _InputProfile extends State<InputProfile> {
   }
   */
 
+  // 취미 3개 미만 입력 시
+  // ["축구", "", ""] x
+  // ["축구"] o -> 이 형식으로
+
   @override
   void initState() {
     super.initState();
@@ -495,8 +499,9 @@ class _InputProfile extends State<InputProfile> {
                               data.age = AgeCalculation(data.birth);
                               print("필수 입력 요건이 충족됨");
                               // sendUserProfileData(data);
-                            } else
+                            } else {
                               print("필수 입력 조건이 충족되지 않음");
+                            }
                           } else {
                             print("필수 입력 조건이 충족되지 않음");
                           }
