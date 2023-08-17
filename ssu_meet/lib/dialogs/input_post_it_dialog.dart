@@ -17,7 +17,7 @@ class _InputPostIt extends State<InputPostIt> {
   String? nikname;
   String? mbti;
   String? introduce;
-  List hobby = ['', '', '']; //취미 리스트
+  List hobby = ['','','']; //취미 리스트
   List idealList = [];
 
   int flag = 0;
@@ -41,7 +41,8 @@ class _InputPostIt extends State<InputPostIt> {
     'ISTJ'
   ];
 
-/* api 연동- 포스트잇 등록 POST 요청
+// api 연동- 포스트잇 등록 POST 요청
+
   Future<int> sendStickyData() async {
    int isExceed;
     Map<String, dynamic> toJson() => {
@@ -51,7 +52,7 @@ class _InputPostIt extends State<InputPostIt> {
       "ideals": idealList,
       "introduce": introduce,
     };
-    print(json.encode(toJson()));
+   // print(json.encode(toJson()));
 
     const url = 'http://localhost:8080/v1/sticky/new';
     final response = await http.post(
@@ -75,7 +76,7 @@ class _InputPostIt extends State<InputPostIt> {
     return isExceed;
 
   }
-  */
+
 
   @override
   Widget build(BuildContext context) {
@@ -515,14 +516,18 @@ class _InputPostIt extends State<InputPostIt> {
                                     hobby[1] != '' ||
                                     hobby[2] != '')) {
                               // 필수 입력 조건 충족 완료(이상형 포함)
+                              hobby.removeWhere((element) => element==''); // 취미에서 공백 요소 제거
                               print(
-                                  "닉네임: $nikname\nmbti: $mbti\n취미: 1. ${hobby[0]} 2. ${hobby[1]} 3. ${hobby[2]}\n자기소개: $introduce\n이상형: ");
+                                  "닉네임: $nikname\nmbti: $mbti\n자기소개: $introduce\n이상형:");
                               idealList.forEach(print);
+                              print("취미:");
+                              hobby.forEach(print);
 
                               // 등록 개수 초과 여부 알림 팝업창 호출
                               // final result = sendStickyData();
-                              // if 햣(result == 0 || result == 1) showStatusOfRegistration(context, result);
-                              showStatusOfRegistration(context, 0); // 임시 (0: 등록 가능 , 1; 등록 불가능)
+                              // if (result == 0 || result == 1) showStatusOfRegistration(context, result);
+                              showStatusOfRegistration(context, 0); // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
+                              sendStickyData();
                             } else {
                               print("값이 유효하지 않음");
                             }
