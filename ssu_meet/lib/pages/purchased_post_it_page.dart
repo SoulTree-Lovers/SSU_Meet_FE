@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 import 'package:ssu_meet/widgets/purchased_page_post_it.dart';
+import 'package:http/http.dart' as http;
 
 class PurchasedPostItPage extends StatefulWidget {
   const PurchasedPostItPage({super.key});
@@ -196,10 +197,42 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
 }
 
 Future<List> getPurchasedPostItData() async {
-  // 서버에서 포스트잇 앞면 데이터 가져오기
+  // 서버에서 포스트잇 데이터 가져오기
   String jsonString =
       await rootBundle.loadString('json/test_purchased_post_it_json.json');
   final jsonResponse = json.decode(jsonString);
 
   return jsonResponse["data"]["stickyData"];
+}
+
+// 구입한 포스트잇 데이터 가져오기 api
+Future<dynamic> getPurchasedPostItData2() async {
+  // print("함수가 실행은 됐습니다.");
+  var url = 'http://localhost:8080/v1/members/mypage/buy-list';
+  // print('Sending JSON payload: ${json.encode(data.toJson())}');
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {"Authorization": "-----"},
+  );
+
+  print("데이터 전송");
+
+  if (response.statusCode == 200) {
+    final responseData = json.decode(response.body);
+    final message = responseData["message"];
+
+    print(responseData);
+    if (message == "ExistPostIt") {
+      // 포스트잇 데이터 가져오기 성공한 경우
+      print("포스트잇 데이터 가져오기 성공");
+      return responseData["data"]["stickyData"];
+    } else {
+      print("구입한 포스트잇이 없습니다.");
+      return [];
+    }
+    // print('Received response: $result');
+  } else {
+    print('Failed to send data. Error: ${response.statusCode}');
+    return 0; // (네트워크 에러)
+  }
 }
