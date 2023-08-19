@@ -13,11 +13,15 @@ class ViewPurchased extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
         shadowColor: const Color.fromRGBO(158, 156, 156, 1),
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.keyboard_arrow_left,
-                color: Color(0xff717171), size: 30)),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+            color: Color(0xff717171),
+            size: 30,
+          ),
+        ),
       ),
     );
   }
