@@ -20,14 +20,6 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     int coins = getCoin();
-    // int selectedIndexScreen = 0; // Main Page
-
-    // final List children = [
-    //   PurchasedPostItBody(screenHeight, screenWidth),
-    //   const InfoPage(),
-    //   const MainPage(),
-    //   const MyPage(),
-    // ];
 
     return Scaffold(
       appBar: AppBar(
@@ -87,43 +79,6 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
         ),
       ),
       body: PurchasedPostItBody(screenHeight, screenWidth),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
-      //   selectedItemColor: const Color.fromRGBO(24, 24, 27, 1),
-      //   unselectedItemColor: const Color.fromARGB(255, 114, 113, 113),
-      //   currentIndex: selectedIndexScreen,
-      //   onTap: (int index) {
-      //     setState(() {
-      //       selectedIndexScreen = index;
-      //     });
-      //   },
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: ImageIcon(
-      //         AssetImage(
-      //           "assets/images/info_page_icon.png",
-      //         ),
-      //       ),
-      //       label: "설명서",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: ImageIcon(
-      //         AssetImage(
-      //           "assets/images/home_page_icon.png",
-      //         ),
-      //       ),
-      //       label: "홈",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: ImageIcon(
-      //         AssetImage(
-      //           "assets/images/my_page_icon.png",
-      //         ),
-      //       ),
-      //       label: "마이페이지",
-      //     ),
-      //   ],
-      // ),
     );
   }
 

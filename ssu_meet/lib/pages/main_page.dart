@@ -313,14 +313,6 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-// Future<List> getPostItFrontData() async {
-//   // 서버에서 포스트잇 앞면 데이터 가져오기 (임시)
-//   String jsonString = await rootBundle.loadString('json/post_it_json.json');
-//   final jsonResponse = json.decode(jsonString);
-
-//   return jsonResponse;
-// }
-
 Future<List> getPostItFrontData() async {
   // 서버에서 포스트잇 앞면 데이터 가져오기 (임시)
   String jsonString =
