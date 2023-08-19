@@ -1,6 +1,30 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-void removePurchasedPostIt(BuildContext context) {
+/* 구매한 포스트잇 삭제 api
+Future<void> deletePurchasedPostIt(int stickyId) async {
+  // print(stickyId);
+  final response = await http.delete(
+    Uri.parse('http://localhost:8080/v1/members/mypage/buy-list/$stickyId'),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  );
+  if (response.statusCode == 200) {
+    final responseData = json.decode(response.body);
+    if (responseData["status"] == "SUCCESS") {
+      print(responseData["message"]);
+    } else {
+      print(responseData["message"]);
+    }
+  } else {
+    print('Failed to delete data. Error: ${response.statusCode}');
+  }
+}
+*/
+
+void removePurchasedPostIt(BuildContext context, int stickyId) {
   showDialog(
       barrierColor: Colors.white.withOpacity(0.7),
       context: context,
@@ -64,11 +88,12 @@ void removePurchasedPostIt(BuildContext context) {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10
-                    ),
+                    const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
+                        // DELETE api 요청 함수
+                       // deletePurchasedPostIt(stickyId);
+                        Navigator.pop(context);
                         Navigator.pop(context);
                       },
                       child: Container(

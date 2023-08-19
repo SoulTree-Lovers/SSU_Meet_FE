@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ssu_meet/dialogs/remove_purchased_post_it_dialog.dart';
 
 class PurchasedPostItDialog extends StatefulWidget {
+  final int stickyId;
   final String nickname;
   final int age;
   final String major;
@@ -15,6 +16,7 @@ class PurchasedPostItDialog extends StatefulWidget {
   final List ideals;
 
   const PurchasedPostItDialog({
+    required this.stickyId,
     required this.nickname,
     required this.age,
     required this.major,
@@ -297,7 +299,7 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
                   ),
                 ),
                 onPressed: () {
-                  removePurchasedPostIt(context);
+                  removePurchasedPostIt(context, widget.stickyId);
                 },
               ),
               ElevatedButton(
