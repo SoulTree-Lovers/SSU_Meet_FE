@@ -190,6 +190,7 @@ class LoginPage extends StatelessWidget {
                                       ),
                                     );
                                   } else {
+                                    _showFailedToLoginDialog(context);
                                     print("로그인 실패");
                                     // 팝업 창 띄워주기
                                   }
@@ -258,6 +259,79 @@ class LoginPage extends StatelessWidget {
       return 4; // 로그인 실패 (네트워크 에러)
     }
     return 0;
+  }
+
+  // 로그인을 실패하였을 경우 팝업 창
+  void _showFailedToLoginDialog(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    showDialog(
+      barrierColor: Colors.white.withOpacity(0.7),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding:
+              const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+          actionsPadding: const EdgeInsets.only(bottom: 30),
+          alignment: Alignment.center,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              width: 1.5,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: Color(0xFF020202),
+            ),
+            borderRadius: BorderRadius.circular(40),
+          ),
+          shadowColor: const Color(0x3F000000),
+          content: const Text(
+            '로그인에 실패하였습니다. \n',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'NanumSquareRoundBold',
+              // fontWeight: FontWeight.w700,
+              // height: 1.31,
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black,
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "확인",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareRoundR',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
