@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/dialogs/remove_purchased_post_it_dialog.dart';
 
 class PurchasedPostItDialog extends StatefulWidget {
   final String nickname;
@@ -41,8 +42,8 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      backgroundColor:
-          Colors.transparent, // Set the background color to transparent
+      backgroundColor: Colors.transparent,
+      // Set the background color to transparent
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -273,27 +274,55 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
           const SizedBox(
             height: 30,
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              fixedSize: Size(
-                screenWidth * 0.2,
-                screenWidth * 0.1,
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 20,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: Size(
+                    screenWidth * 0.2,
+                    screenWidth * 0.1,
+                  ),
+                  side: const BorderSide(color: Colors.black, width: 0.5),
+                  backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                  shadowColor: const Color.fromRGBO(0, 0, 0, 0.25),
+                ),
+                child: Text(
+                  "삭제",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: screenWidth * 0.04,
+                    fontFamily: "Nanum_Ogbice",
+                  ),
+                ),
+                onPressed: () {
+                  removePurchasedPostIt(context);
+                },
               ),
-              side: const BorderSide(color: Colors.black, width: 0.5),
-              backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-              shadowColor: const Color.fromRGBO(0, 0, 0, 0.25),
-            ),
-            child: Text(
-              "닫기",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: screenWidth * 0.04,
-                fontFamily: "Nanum_Ogbice",
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: Size(
+                    screenWidth * 0.2,
+                    screenWidth * 0.1,
+                  ),
+                  side: const BorderSide(color: Colors.black, width: 0.5),
+                  backgroundColor: const Color.fromRGBO(0, 0, 0, 1),
+                  shadowColor: const Color.fromRGBO(0, 0, 0, 0.25),
+                ),
+                child: Text(
+                  "닫기",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: screenWidth * 0.04,
+                    fontFamily: "Nanum_Ogbice",
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            ],
           ),
         ],
       ),
