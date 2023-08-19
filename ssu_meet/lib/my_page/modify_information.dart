@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 
 //import 'package:http/http.dart' as http;
 import 'package:ssu_meet/dept_data/temp_majors.dart';
+import '../dialogs/alert_required_input.dialog.dart';
 import '../profile_data/profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
+
 
 class ModifyPage extends StatefulWidget {
   const ModifyPage({super.key});
@@ -516,10 +518,12 @@ class _ModifyPageState extends State<ModifyPage> {
                               print(json.encode(data.toJson()));
                               Navigator.pop(context);
                             } else {
-                              print("필수 입력 조건이 충족되지 않음");
+                             // print("필수 입력 조건이 충족되지 않음");
+                              alertRequiredInput(context);
                             }
                           } else {
-                            print("필수 입력 조건이 충족되지 않음"); //필수 입력 값을 다시 초기화
+                           // print("필수 입력 조건이 충족되지 않음");
+                            alertRequiredInput(context);
                           }
                         },
                       ),

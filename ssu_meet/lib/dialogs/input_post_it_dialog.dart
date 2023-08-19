@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
 import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
 import 'package:ssu_meet/dialogs/status_of_registration_dialog.dart';
+import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
 
 class InputPostIt extends StatefulWidget {
   const InputPostIt({Key? key}) : super(key: key);
@@ -529,10 +530,12 @@ class _InputPostIt extends State<InputPostIt> {
                               showStatusOfRegistration(context, 0); // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
                               sendStickyData();
                             } else {
-                              print("값이 유효하지 않음");
+                            //  print("값이 유효하지 않음");
+                              alertRequiredInput(context);
                             }
                           } else {
-                            print("값이 유효하지 않음");
+                           // print("값이 유효하지 않음");
+                            alertRequiredInput(context);
                           }
                         },
                       ),

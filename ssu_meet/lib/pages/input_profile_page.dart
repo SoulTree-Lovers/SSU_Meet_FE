@@ -7,6 +7,9 @@ import 'package:ssu_meet/profile_data/profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
+import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
+
+
 
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
@@ -237,6 +240,7 @@ class _InputProfile extends State<InputProfile> {
                                                   majorList =
                                                       Majors(newVal.ind).majors;
                                                   major = majorList[0].value;
+                                                  data.major = major!.title;
                                                 },
                                               );
                                             },
@@ -500,10 +504,12 @@ class _InputProfile extends State<InputProfile> {
                               print("필수 입력 요건이 충족됨");
                               // sendUserProfileData(data);
                             } else {
-                              print("필수 입력 조건이 충족되지 않음");
+                             //print("필수 입력 조건이 충족되지 않음");
+                              alertRequiredInput(context);
                             }
                           } else {
-                            print("필수 입력 조건이 충족되지 않음");
+                           // print("필수 입력 조건이 충족되지 않음");
+                            alertRequiredInput(context);
                           }
                         },
                       ),
