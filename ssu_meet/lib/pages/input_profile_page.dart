@@ -8,8 +8,7 @@ import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
 import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
-
-
+import 'package:ssu_meet/pages/responsive_page.dart';
 
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
@@ -503,12 +502,17 @@ class _InputProfile extends State<InputProfile> {
                               data.age = AgeCalculation(data.birth);
                               print("필수 입력 요건이 충족됨");
                               // sendUserProfileData(data);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          const ResponsiveWebLayout(pageIndex: 1)));
                             } else {
-                             //print("필수 입력 조건이 충족되지 않음");
+                              //print("필수 입력 조건이 충족되지 않음");
                               alertRequiredInput(context);
                             }
                           } else {
-                           // print("필수 입력 조건이 충족되지 않음");
+                            // print("필수 입력 조건이 충족되지 않음");
                             alertRequiredInput(context);
                           }
                         },
