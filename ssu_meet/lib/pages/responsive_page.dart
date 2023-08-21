@@ -40,8 +40,23 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
           padding: EdgeInsets.only(right: screenWidth * 0.03),
           child: Center(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.05),
+                  child: Container(
+                    width: screenWidth * 0.12,
+                    height: screenHeight * 0.025,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          "assets/images/ssu_meet_logo.png",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   width: screenWidth * 0.23,
                   height: screenWidth * 0.06,
