@@ -32,6 +32,7 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenheight = MediaQuery.of(context).size.height;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -41,35 +42,49 @@ class _InitialPageState extends State<InitialPage> {
           extendBodyBehindAppBar: true,
           body: Container(
             width: screenWidth,
-            decoration: BoxDecoration(
-              color: Colors.blue[100],
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(
+                  "assets/images/splash_page_images/paper_background.png",
+                ),
+              ),
             ),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 120,
-                  height: 100,
-                  child: Image(
+                  height: screenheight * 0.2,
+                ),
+                SizedBox(
+                  width: screenWidth * 0.35,
+                  height: screenWidth * 0.3,
+                  child: const Image(
+                    // fit: BoxFit.cover,
                     image: AssetImage(
-                      "assets/images/post-it.png",
+                      "assets/images/splash_page_images/heart.png",
                     ),
                   ),
                 ),
-                Text(
-                  "슈밋",
-                  style: TextStyle(
-                    fontFamily: "Ongeul",
-                    color: Colors.white,
-                    fontSize: 50,
+                SizedBox(
+                  width: screenWidth * 0.3,
+                  height: screenWidth * 0.15,
+                  child: const Image(
+                    // fit: BoxFit.cover,
+                    image: AssetImage(
+                      "assets/images/splash_page_images/ssu_meet.png",
+                    ),
                   ),
                 ),
+                SizedBox(
+                  height: screenheight * 0.3,
+                ),
                 Text(
-                  "포스트잇으로 정해지는 나의 인연",
+                  "ssu_meet",
                   style: TextStyle(
-                    fontFamily: "Ongeul",
-                    color: Colors.white70,
-                    fontSize: 30,
+                    fontFamily: "Nanum_Ogbice",
+                    color: Colors.black,
+                    fontSize: screenWidth * 0.04,
                   ),
                 ),
               ],

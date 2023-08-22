@@ -89,6 +89,11 @@ flutter:
     - assets/images/ssu_meet_logo.png
 
 
+    # 스플래시 페이지에 들어가는 이미지
+    - assets/images/splash_page_images/ssu_meet.png
+    - assets/images/splash_page_images/heart.png
+    - assets/images/splash_page_images/paper_background.png
+
     # 사용 설명서 페이지에 들어가는 이미지
     - assets/images/info_images/구매하기.png
     - assets/images/info_images/구입한포스트잇.png

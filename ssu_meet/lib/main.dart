@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages/responsive_page.dart';
+import 'package:ssu_meet/pages/initial_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,14 +27,14 @@ class MyApp extends StatelessWidget {
       //   fontFamily: "Ongeul",
       //   primaryColor: const Color.fromARGB(255, 182, 222, 255),
       // ),
-      // home: InitialPage(),
+      home: InitialPage(),
       // home: ScrollToTopExample(),
-      home: ResponsiveWebLayout(
-        pageIndex: 1,
-        // 0: 사용 설명서
-        // 1: 메인 화면
-        // 2: 마이 페이지
-      ),
+      // home: ResponsiveWebLayout(
+      //   pageIndex: 1,
+      //   // 0: 사용 설명서
+      //   // 1: 메인 화면
+      //   // 2: 마이 페이지
+      // ),
 
       // home: InfiniteScrollDemo(),
 
