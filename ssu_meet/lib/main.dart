@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssu_meet/pages/initial_page.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
       //   fontFamily: "Ongeul",
       //   primaryColor: const Color.fromARGB(255, 182, 222, 255),
       // ),
-      home: InitialPage(),
+      // home: InitialPage(),
+
       // home: ScrollToTopExample(),
       // home: ResponsiveWebLayout(
       //   pageIndex: 1,
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
 
       // home: InfiniteScrollDemo(),
 
-      // home: LoginPage(),
+      home: LoginPage(),
       // home: InputProfile(),
       // home: InputPostIt(),
       // home: PurchasedPostItPage(),

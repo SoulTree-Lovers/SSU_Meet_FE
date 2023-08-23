@@ -1,13 +1,39 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:ssu_meet/pages/input_profile_page.dart';
 import 'dart:convert';
 
 import 'package:ssu_meet/pages/responsive_page.dart';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 final TextEditingController studentIdController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
+
+const storage = FlutterSecureStorage();
+/* FlutterSecureStorage 사용법
+  // Import plugin 
+  import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+  // Create storage
+  final _storage = const FlutterSecureStorage();
+
+  // Read value
+  String value = await _storage.read(key: key);
+
+  // Read all values
+  Map<String, String> allValues = await _storage.readAll();
+
+  // Delete value
+  await _storage.delete(key: key);
+
+  // Delete all
+  await _storage.deleteAll();
+
+  // Write value
+  await _storage.write(key: key, value: value);
+  
+  */
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -175,7 +201,10 @@ class LoginPage extends StatelessWidget {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const InputProfile(),
+                                            // const InputProfile(),
+                                            const ResponsiveWebLayout(
+                                          pageIndex: 1,
+                                        ),
                                       ),
                                     );
                                   } else if (result == 2) {
@@ -239,10 +268,14 @@ class LoginPage extends StatelessWidget {
 
       print(responseData);
       if (isSuccess == "SUCCESS") {
+        await storage.write(
+            key: "token", value: responseData["data"]["accessToken"]);
         //유세인트 인증에 성공한 경우
         print("유세인트 인증 성공");
         if (message == "Need new register") {
           print("개인정보등록이 필요합니다.");
+          var token = await storage.read(key: "token");
+          print("token: $token");
           return 1;
         } else if (message == "Main Ok") {
           print("이미 개인정보등록이 완료된 사용자입니다.");

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dialogs/main_post_it_dialog.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/widgets/document_duplicate_image.dart';
 import 'package:ssu_meet/widgets/registration_button_black.dart';
 import 'package:ssu_meet/widgets/vertical_line_image.dart';
@@ -66,16 +67,22 @@ class _MainPageState extends State<MainPage> {
     });
 
     var url = 'http://localhost:8080/v1/members/main?page=$page&size=10';
+    var token = await storage.read(key: "token");
 
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {"Authorization": "-----"},
-    );
+    print("main page token: $token");
+
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
       final stickyData = responseData["data"]["stickyData"];
-
+      print(responseData);
       // 전체 포스트잇 개수 초기화 (page가 0일 때만)
       if (page == 0) {
         allStickyCount = responseData["data"]["allCount"];
@@ -403,6 +410,7 @@ class _MainPageState extends State<MainPage> {
                                     );
                                   },
                                 );
+                                fetchData();
                                 print("Tapped Post It (id: $stickyId)");
                                 print("Tapped Post It (age: $age)");
                                 print("Tapped Post It (instaId: $instaId)");
