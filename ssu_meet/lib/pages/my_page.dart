@@ -41,206 +41,71 @@ class _MyPageState extends State<MyPage> {
     return Scaffold(
       backgroundColor: const Color(0xffD8D8D8),
       // appBar: AppBar(
-      //   centerTitle: true,
+      //   backgroundColor: const Color(0xffEFEFEF),
+      //   elevation: 0.0,
       //   title: Text("마이페이지"),
       // ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: screenWidth,
-              height: screenHeight * 0.25,
-              //padding: EdgeInsets.all(30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: screenWidth * 0.25,
-                    height: screenWidth * 0.25,
-                    child: const Image(
-                      fit: BoxFit.contain,
-                      image: AssetImage(
-                        'assets/images/mypage_images/mypage_profile.png',
-                      ),
+        children: [
+          const SizedBox(height: 6),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.only(left: 5, right: 5),
+              itemCount: 4,
+              itemBuilder:(context, index) {
+                return Card(
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), 
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEFEFEF),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
-                 SizedBox(
-                    width: screenWidth * 0.15,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: screenWidth * 0.3,
-                        height: screenHeight * 0.04,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFD7D7D7),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          shadows: const [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 8,
-                              offset: Offset(5, 5),
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                             SizedBox(
-                                width: screenWidth * 0.03,
-                                height: screenWidth * 0.03,
-                                child: const Image(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    "assets/images/mypage_images/coin_icon.png",
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: screenWidth * 0.01,
-                              ),
-                              Text(
-                                "보유 코인 : 3개",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.02,
-                                  fontFamily: 'NanumSquareRound',
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 0.20,
-                                ),
-                              ),
-                            ],
-                          ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.only(left: 50, right: 35),
+                      title: Container(
+                        alignment: Alignment.centerLeft,
+                        height: screenHeight * 0.07,
+                        child: Text(mypageMenuText[index],
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 13,
+                            fontFamily: 'NanumSquare_ac',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.26,
+                          ),),
                       ),
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      Container(
-                        width: screenWidth * 0.3,
-                        height: screenHeight * 0.04,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFD7D7D7),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          shadows: const [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 8,
-                              offset: Offset(5, 5),
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                             SizedBox(
-                                width: screenWidth * 0.03,
-                                height: screenWidth * 0.03,
-                                // child: Icon(
-                                //   Icons.content_copy,
-                                //   color: Color(0xff18181B),
-                                // ),
-                                child: const Image(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    "assets/images/mypage_images/my_post_it_icon.png",
-                                  ),
-                                ),
-                              ),
-                             SizedBox(
-                                width: screenWidth * 0.01,
-                              ),
-                              Text(
-                                "나의 포스트잇 : 3개",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.02,
-                                  fontFamily: 'NanumSquareRound',
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 0.20,
-                                ),
-                              ),
-                            ],
-                          ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // const SizedBox(
-            //   height: 5,
-            // ),
-            Container(
-              width: screenWidth,
-              height: 260,
-              decoration: const BoxDecoration(
-                color: Color(0xFFEFEFEF),
-              ),
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    thickness: 1.2,
-                  );
-                },
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    contentPadding: const EdgeInsets.only(left: 50, right: 35),
-                    title: Container(
-                      alignment: Alignment.centerLeft,
-                      height: 44,
-                      child: Text(
-                        mypageMenuText[index],
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 13,
-                          fontFamily: 'NanumSquare_ac',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.26,
+                      leading: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Image.asset(
+                          mypageIcon[index],
+                          fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    leading: SizedBox(
-                      width: 30,
-                      height: 30,
-                      child: Image.asset(
-                        mypageIcon[index],
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () {
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {
                       // if(index==2) return LoadingModifyPage().getOldProfile(context);
-                      if (index==3) {
-                        return logoutDialog(context);
-                      }
-
-                      else {
-                        Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => _mypageMenu[index],
-                        ),
-                      );
-                      }
-                      
-                      print(mypageMenuText[index]);
-                    },
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.05),
-            Container(
+                        if (index==3) {
+                          return logoutDialog(context);
+                        } else {
+                            Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => _mypageMenu[index],
+                            ),
+                          );
+                        }
+                        print(mypageMenuText[index]);
+                      },
+                    ),
+                  ),
+                );
+              },),
+          ),
+          Container(
               width: screenWidth,
               height: screenHeight * 0.08,
               decoration: const BoxDecoration(
@@ -262,8 +127,8 @@ class _MyPageState extends State<MyPage> {
                 ],
               ),
             ),
-          ],
-        ),
+        ],
+      )
     );
   }
 }

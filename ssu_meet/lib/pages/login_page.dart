@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    double radians = 350 * math.pi / 180;
+    double radians = 40 * math.pi / 180;
 
     return Container(
       decoration: const BoxDecoration(
@@ -65,23 +65,72 @@ class LoginPage extends StatelessWidget {
           ),
           body: Column(
             children: [
+              SizedBox(height: screenHeight * 0.03),
               SizedBox(
                 width: screenWidth,
-                height: screenHeight * 0.33,
+                height: screenHeight * 0.35,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: screenWidth * 0.5,
+                      width: screenHeight * 0.4,
                       child: const Image(
                         fit: BoxFit.cover,
                         image: AssetImage('assets/images/pink_yellow.png'),
                       ),
                     ),
+                    Positioned.directional(
+                      // right: screenWidth * 0.68,
+                      bottom: screenHeight * 0.29,
+                      start: screenHeight * 0.04,
+                      end: screenHeight * 0.3,
+                      textDirection: TextDirection.ltr,
+                      child: SizedBox(
+                        width: screenHeight * 0.07,
+                        height: screenHeight * 0.07,
+                        child: const Image(
+                          fit: BoxFit.contain,
+                          image: AssetImage('assets/images/heart.png'),
+                        ),
+                      ),
+                    ),
+                    Positioned.directional(
+                      //left: screenWidth * 0.67,
+                      bottom: screenHeight * 0.26,
+                      start: screenHeight * 0.3,
+                      end: screenHeight * 0.07,
+                      textDirection: TextDirection.ltr,
+                      child: Transform.rotate(
+                        angle: radians * 0.75,
+                        child: SizedBox(
+                          width: screenHeight * 0.055,
+                          height: screenHeight * 0.055,
+                          child: const Image(
+                            fit: BoxFit.contain,
+                            image: AssetImage('assets/images/heart.png'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned.directional(
+                        //left: screenWidth * 0.8,
+                        bottom: screenHeight * 0.08,
+                        start: screenHeight * 0.35,
+                        end: screenHeight * 0.01,
+                        textDirection: TextDirection.ltr,
+                        child: Transform.rotate(
+                          angle: radians,
+                          child: SizedBox(
+                              width: screenHeight * 0.06,
+                              height: screenHeight * 0.06,
+                              child: const Image(
+                                fit: BoxFit.contain,
+                                image: AssetImage('assets/images/heart.png'),
+                              )),
+                        ))
                   ],
                 ),
               ),
-              const SizedBox(height: 1),
               Flexible(
                 fit: FlexFit.tight,
                 child: Stack(
@@ -225,8 +274,6 @@ class LoginPage extends StatelessWidget {
                                   }
                                 },
                               );
-                              print(studentIdController.text);
-                              print(passwordController.text);
                             },
                             child: const Text(
                               "로그인",

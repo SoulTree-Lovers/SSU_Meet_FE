@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-//import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import '../dialogs/alert_required_input.dialog.dart';
 import '../profile_data/profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
-
 
 class ModifyPage extends StatefulWidget {
   const ModifyPage({super.key});
@@ -34,26 +32,20 @@ class _ModifyPageState extends State<ModifyPage> {
     }
     return null;
   }
-
+// api 연동- GET 요청 함수
   void getOldProfile() async {
-    /* api 연동- GET 요청 함수
-    const url='http://localhost:8080/v1/members/mypage/modify';
+    const url = 'http://localhost:8080/v1/members/mypage/modify';
     var response = await http.get(
       Uri.parse(url),
-      headers: {"Authorization":"----"},
+      headers: {"Authorization": "----"},
     );
-    final responseData = json.decode(response.body);
-    if (responseData["status"] == "SUCCESS") {
-      print(responseData["message"]);
-      var jsonString = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
-    }
-    else {
-      print('Failed to get data. Error: ${response.statusCode}');
-    } */
-    var jsonString = await rootBundle.loadString('json/old_profile.json');
-    setState(() {
-      data = MyData.fromJson(
-          jsonDecode(jsonString)["data"] as Map<String, dynamic>);
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      if (responseData["status"] == "SUCCESS") {
+        print(responseData["message"]);
+         setState(() {
+      data = MyData.fromJson(jsonDecode(responseData)["data"] as Map<String, dynamic>);
       genderList.add(data.sex);
       collegeList = Colleges().colleges;
       tmpCollege = searchInItemList(data.college, collegeList);
@@ -61,10 +53,14 @@ class _ModifyPageState extends State<ModifyPage> {
       tmpMajor = searchInItemList(data.major, majorList);
       isLoading = true;
     });
+      }
+    } else {
+      print('Failed to get data. Error: ${response.statusCode}');
+    }
   }
 
-  /* api 연동- 수정 완료 후 POST 요청 코드
-  Future<void> sendModifiedProfileData(MyData newData) async{
+  // api 연동- 수정 완료 후 POST 요청 코드
+  Future<void> sendModifiedProfileData (MyData newData) async{
     const url = 'http://localhost:8080/v1/members/mypage/modify';
     final response = await http.post(
       Uri.parse(url),
@@ -79,8 +75,6 @@ class _ModifyPageState extends State<ModifyPage> {
       print('Failed to get data. Error: ${response.statusCode}');
     }
   }
-
-   */
 
   @override
   void initState() {
@@ -513,16 +507,16 @@ class _ModifyPageState extends State<ModifyPage> {
                               data.age = AgeCalculation(data.birth);
                               print("필수 입력 요건이 충족됨");
                               // 변경된 값 보내기
-                              // sendModifiedProfileData(data);
+                              //  sendModifiedProfileData(data);
                               print("수정 후 데이터");
                               print(json.encode(data.toJson()));
                               Navigator.pop(context);
                             } else {
-                             // print("필수 입력 조건이 충족되지 않음");
+                              // print("필수 입력 조건이 충족되지 않음");
                               alertRequiredInput(context);
                             }
                           } else {
-                           // print("필수 입력 조건이 충족되지 않음");
+                            // print("필수 입력 조건이 충족되지 않음");
                             alertRequiredInput(context);
                           }
                         },
