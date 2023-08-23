@@ -126,6 +126,7 @@ flutter:
     - assets/images/images2/long_tape.png
     - assets/images/images2/box1.png
     - assets/images/images2/sparkle.png
+    - assets/images/heart.png
 
     - assets/images/post_it_with_tape/pink_tape.png
     - assets/images/post_it_with_tape/yellow_tape.png
