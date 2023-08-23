@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    double radians = 350 * math.pi / 180;
+    double radians = 40 * math.pi / 180;
 
     return Container(
       decoration: const BoxDecoration(
@@ -39,23 +39,65 @@ class LoginPage extends StatelessWidget {
           ),
           body: Column(
             children: [
+              SizedBox(height: screenHeight * 0.03),
               SizedBox(
                 width: screenWidth,
-                height: screenHeight * 0.33,
+                height: screenHeight * 0.35,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: screenWidth * 0.5,
+                      width: screenHeight * 0.4,
                       child: const Image(
                         fit: BoxFit.cover,
                         image: AssetImage('assets/images/pink_yellow.png'),
                       ),
                     ),
+                    Positioned.directional(
+                      // right: screenWidth * 0.68,
+                      bottom: screenHeight * 0.29,
+                      start: screenHeight * 0.04,
+                      end: screenHeight * 0.3,
+                      textDirection: TextDirection.ltr,
+                      child: SizedBox(
+                        width: screenHeight * 0.07,
+                        height: screenHeight * 0.07,
+                        child: const Image(
+                          fit: BoxFit.contain,
+                          image: AssetImage('assets/images/heart.png'),),),),
+                    Positioned.directional(
+                      //left: screenWidth * 0.67,
+                      bottom: screenHeight * 0.26,
+                      start: screenHeight * 0.3,
+                      end: screenHeight * 0.07,
+                      textDirection: TextDirection.ltr,
+                      child: Transform.rotate(
+                        angle: radians * 0.75,
+                        child: SizedBox(
+                          width: screenHeight * 0.055,
+                          height: screenHeight * 0.055,
+                          child: const Image(
+                            fit: BoxFit.contain,
+                            image: AssetImage('assets/images/heart.png'),),),
+                      ),),
+                    Positioned.directional(
+                      //left: screenWidth * 0.8,
+                      bottom: screenHeight * 0.08,
+                      start: screenHeight * 0.35,
+                      end: screenHeight * 0.01,
+                      textDirection: TextDirection.ltr,
+                      child: Transform.rotate(
+                        angle: radians,
+                        child: SizedBox(
+                          width: screenHeight * 0.06,
+                          height: screenHeight * 0.06,
+                          child: const Image(
+                            fit: BoxFit.contain,
+                            image: AssetImage('assets/images/heart.png'),)),
+                      ))
                   ],
                 ),
               ),
-              const SizedBox(height: 1),
               Flexible(
                 fit: FlexFit.tight,
                 child: Stack(
@@ -66,171 +108,161 @@ class LoginPage extends StatelessWidget {
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50)),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/rectangle.png'),
+                            topRight: Radius.circular(50)
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/rectangle.png'),
+                          ),
                         ),
                       ),
-                    ),
-                    Column(
-                      children: [
-                        const SizedBox(height: 55),
-                        const Text(
-                          "Login",
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Color(0xffA9A8A8),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        Container(
-                          margin: const EdgeInsets.only(left: 60, right: 60),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 5,
-                                blurRadius: 5,
-                              ),
-                            ],
-                          ),
-                          child: TextField(
-                            controller: studentIdController,
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 20),
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              hintText: '학번',
-                              hintStyle: TextStyle(
-                                  color: Color(0xffA9A8A8), fontSize: 14),
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                                child: Icon(Icons.person_outline_rounded),
-                              ),
-                              prefixIconColor: Color(0xffA9A8A8),
+                      Column(
+                        children: [
+                          const SizedBox(height: 55),
+                          const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Color(0xffA9A8A8),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          margin: const EdgeInsets.only(left: 60, right: 60),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 5,
-                                blurRadius: 5,
-                              ),
-                            ],
-                          ),
-                          child: TextField(
-                            controller: passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.only(top: 20),
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              hintText: '유세인트 비밀번호',
-                              hintStyle: const TextStyle(
-                                color: Color(0xffA9A8A8),
-                                fontSize: 14,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              prefixIcon: const Padding(
-                                padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                                child: Icon(Icons.lock_outline_rounded),
-                              ),
-                              prefixIconColor: const Color(0xffA9A8A8),
+                          const SizedBox(height: 40),
+                          Container(
+                            margin: const EdgeInsets.only(left: 60, right: 60),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 5,
+                                  blurRadius: 5,
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        SizedBox(
-                          width: screenWidth / 6 + 15,
-                          height: 40,
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              side: const BorderSide(
-                                color: Color(0xff8E8E8E),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              elevation: 0,
-                            ),
-                            onPressed: () {
-                              login().then(
-                                (result) {
-                                  if (result == 1) {
-                                    // 개인정보등록화면으로 이동
-                                    print("개인정보등록 화면으로 이동합니다.");
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const InputProfile(),
-                                      ),
-                                    );
-                                  } else if (result == 2) {
-                                    // 홈 화면으로 이동
-                                    print("홈 화면으로 이동합니다.");
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ResponsiveWebLayout(
-                                          pageIndex: 1,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    _showFailedToLoginDialog(context);
-                                    print("로그인 실패");
-                                    // 팝업 창 띄워주기
-                                  }
-                                },
-                              );
-                              print(studentIdController.text);
-                              print(passwordController.text);
-                            },
-                            child: const Text(
-                              "로그인",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white,
+                            child: TextField(
+                              controller: studentIdController,
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 20),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                hintText: '학번',
+                                hintStyle: TextStyle(
+                                    color: Color(0xffA9A8A8), fontSize: 14),
+                                prefixIcon: Padding(
+                                  padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                  child: Icon(Icons.person_outline_rounded),
+                                ),
+                                prefixIconColor: Color(0xffA9A8A8),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(height: 20),
+                          Container(
+                            margin: const EdgeInsets.only(left: 60, right: 60),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 5,
+                                  blurRadius: 5,
+                                ),
+                              ],
+                            ),
+                            child: TextField(
+                              controller: passwordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.only(top: 20),
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                hintText: '유세인트 비밀번호',
+                                hintStyle: const TextStyle(
+                                  color: Color(0xffA9A8A8),
+                                  fontSize: 14,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                  child: Icon(Icons.lock_outline_rounded),
+                                ),
+                                prefixIconColor: const Color(0xffA9A8A8),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 40),
+                          SizedBox(
+                            width: screenWidth / 6 + 15,
+                            height: 40,
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                backgroundColor: Colors.black,
+                                side: const BorderSide(
+                                  color: Color(0xff8E8E8E),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                elevation: 0,
+                              ),
+                              onPressed: () {
+                                print(studentIdController.text);
+                                print(passwordController.text);
+                
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ResponsiveWebLayout(pageIndex: 1),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "로그인",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
+}
 
-  Future<int> login() async {
-    // print("함수가 실행은 됐습니다.");
-    const url = 'http://localhost:8080/v1/members/login';
-    final data = MyData(studentIdController.text, passwordController.text);
-    // print('Sending JSON payload: ${json.encode(data.toJson())}');
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(data.toJson()),
-    );
-    print("데이터 전송");
+class MyData {
+  final String studentId;
+  final String pw;
+
+  MyData(this.studentId, this.pw);
+
+  Map<String, dynamic> toJson() => {
+        'studentId': studentId,
+        'pw': pw,
+      };
+}
+
+Future<int> sendData() async {
+  print("함수가 실행은 됐습니다.");
+  const url = 'http://localhost:8010/jsoup';
+  final data = MyData(studentIdController.text, passwordController.text);
+  print('Sending JSON payload: ${json.encode(data.toJson())}');
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode(data.toJson()),
+  );
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -333,45 +365,4 @@ class LoginPage extends StatelessWidget {
       },
     );
   }
-}
 
-class MyData {
-  final String studentNumber;
-  final String password;
-
-  MyData(this.studentNumber, this.password);
-
-  Map<String, dynamic> toJson() => {
-        'studentNumber': studentNumber,
-        'password': password,
-      };
-}
-
-// Future<void> sendData() async {
-//   print("함수가 실행은 됐습니다.");
-//   const url = 'http://localhost:8080/v1/members/login';
-//   final data = MyData(studentIdController.text, passwordController.text);
-//   print('Sending JSON payload: ${json.encode(data.toJson())}');
-//   final response = await http.post(
-//     Uri.parse(url),
-//     headers: {'Content-Type': 'application/json'},
-//     body: json.encode(data.toJson()),
-//   );
-//   print("데이터 전송");
-
-//   if (response.statusCode == 200) {
-//     final responseData = json.decode(response.body);
-//     final isSuccess = responseData["status"];
-
-//     if (isSuccess == "SUCCESS") {
-//       //유세인트 인증에 성공한 경우
-//       print("유세인트 인증 성공");
-//     } else {
-//       //유세인트 인증에 실패한 경우
-//       print("로그인 정보가 잘못되었습니다.");
-//     }
-//     // print('Received response: $result');
-//   } else {
-//     print('Failed to send data. Error: ${response.statusCode}');
-//   }
-// }
