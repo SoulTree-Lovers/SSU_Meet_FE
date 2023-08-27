@@ -7,6 +7,30 @@ import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
 import 'package:ssu_meet/dialogs/status_of_registration_dialog.dart';
 import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
 
+class MyStickyData {
+  final String nickname;
+  final String mbti;
+  final List hobbies;
+  final List ideals;
+  final String introduce;
+
+  MyStickyData(
+    this.nickname,
+    this.mbti,
+    this.hobbies,
+    this.ideals,
+    this.introduce,
+  );
+
+  Map<String, dynamic> toJson() => {
+        "nickname": nickname,
+        "mbti": mbti,
+        "hobbies": hobbies,
+        "ideals": ideals,
+        "introduce": introduce,
+      };
+}
+
 class InputPostIt extends StatefulWidget {
   const InputPostIt({Key? key}) : super(key: key);
 
@@ -19,8 +43,8 @@ class _InputPostIt extends State<InputPostIt> {
   String? nickname;
   String? mbti;
   String? introduce;
-  List hobby = ['', '', '']; //취미 리스트
-  List idealList = [];
+  List hobbies = ['', '', '']; //취미 리스트
+  List ideals = [];
 
   int flag = 0;
 
@@ -43,23 +67,23 @@ class _InputPostIt extends State<InputPostIt> {
     'ISTJ'
   ];
 
-// api 연동- 포스트잇 등록 POST 요청
-
+  // api 연동- 포스트잇 등록 POST 요청
   Future<int> sendStickyData() async {
     int isExceed;
-    Map<String, dynamic> toJson() => {
-          "nickname": nickname,
-          "mbti": mbti,
-          "hobbies": hobby,
-          "ideals": idealList,
-          "introduce": introduce,
-        };
-    print(json.encode(toJson()));
+    final myStickyData = MyStickyData(
+      nickname!,
+      mbti!,
+      hobbies,
+      ideals,
+      introduce!,
+    );
+
     var token = await storage.read(key: "token");
 
     print("input post it dialog token: $token");
 
-    var body = json.encode(toJson());
+    print(json.encode(myStickyData.toJson()));
+
     const url = 'http://localhost:8080/v1/sticky/new';
     final response = await http.post(
       Uri.parse(url),
@@ -68,24 +92,69 @@ class _InputPostIt extends State<InputPostIt> {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      // body: json.encode(toJson()),
-      body: body,
+      body: json.encode(myStickyData.toJson()),
     );
-    final responseData = json.decode(response.body);
-    if (responseData["status"] == "SUCCESS" &&
-        responseData["message"] == "포스트잇 등록 성공") {
+
+    print(
+        "-------------------------------- 데이터 전송 --------------------------------");
+
+    // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
+    if (responseData["status"] == "SUCCESS") {
       isExceed = 0;
     }
-    if (responseData["status"] == "ERROR" &&
-        responseData["message"] == "포스트잇 최대 등록 개수 초과") {
+    if (responseData["status"] == "ERROR") {
       isExceed = 1;
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
       isExceed = 2;
     }
-    print(responseData["message"]);
+    print("responseData['message']: ${responseData["message"]}");
     return isExceed;
   }
+
+  // Future<int> sendStickyData() async {
+  //   int isExceed;
+  //   Map<String, dynamic> toJson() => {
+  //         "nickname": nickname,
+  //         "mbti": mbti,
+  //         "hobbies": hobby,
+  //         "ideals": idealList,
+  //         "introduce": introduce,
+  //       };
+  //   print(json.encode(toJson()));
+  //   var token = await storage.read(key: "token");
+
+  //   print("input post it dialog token: $token");
+
+  //   var body = json.encode(toJson());
+  //   const url = 'http://localhost:8080/v1/sticky/new';
+  //   final response = await http.post(
+  //     Uri.parse(url),
+  //     headers: {
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //       'Accept': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     },
+  //     // body: json.encode(toJson()),
+  //     body: body,
+  //   );
+  //   final responseData = json.decode(response.body);
+  //   if (responseData["status"] == "SUCCESS" &&
+  //       responseData["message"] == "포스트잇 등록 성공") {
+  //     isExceed = 0;
+  //   }
+  //   if (responseData["status"] == "ERROR" &&
+  //       responseData["message"] == "포스트잇 최대 등록 개수 초과") {
+  //     isExceed = 1;
+  //   } else {
+  //     print('Failed to send data. Error: ${response.statusCode}');
+  //     isExceed = 2;
+  //   }
+  //   print(responseData["message"]);
+  //   return isExceed;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +335,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       maxLine: 1,
                                       onSaved: (val) {
                                         setState(() {
-                                          hobby[0] = val;
+                                          hobbies[0] = val;
                                         });
                                       },
                                     ),
@@ -287,7 +356,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      hobby[1] = val;
+                                      hobbies[1] = val;
                                     });
                                   },
                                 ),
@@ -307,7 +376,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   maxLine: 1,
                                   onSaved: (val) {
                                     setState(() {
-                                      hobby[2] = val;
+                                      hobbies[2] = val;
                                     });
                                   },
                                 ),
@@ -373,7 +442,7 @@ class _InputPostIt extends State<InputPostIt> {
                                             child: Wrap(
                                               children: [
                                                 for (var i = 0;
-                                                    i < idealList.length;
+                                                    i < ideals.length;
                                                     i++)
                                                   Container(
                                                     width: screenWidth * 0.12,
@@ -397,7 +466,7 @@ class _InputPostIt extends State<InputPostIt> {
                                                     ),
                                                     child: Center(
                                                       child: Text(
-                                                        "${idealList[i]}",
+                                                        "${ideals[i]}",
                                                         style: TextStyle(
                                                           fontFamily:
                                                               "Nanum_Ogbice",
@@ -432,7 +501,7 @@ class _InputPostIt extends State<InputPostIt> {
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                idealList = [];
+                                                ideals = [];
                                                 await showModalBottomSheet(
                                                     isScrollControlled: true,
                                                     backgroundColor:
@@ -442,12 +511,11 @@ class _InputPostIt extends State<InputPostIt> {
                                                             context) =>
                                                         myModal(
                                                           context,
-                                                          idealList,
+                                                          ideals,
                                                         ));
                                                 setState(() {
-                                                  flag = (idealList.isEmpty)
-                                                      ? 0
-                                                      : 1;
+                                                  flag =
+                                                      (ideals.isEmpty) ? 0 : 1;
                                                 });
                                               },
                                               child: Container(
@@ -520,18 +588,18 @@ class _InputPostIt extends State<InputPostIt> {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save();
                             if (mbti != null &&
-                                idealList.isNotEmpty &&
-                                (hobby[0] != '' ||
-                                    hobby[1] != '' ||
-                                    hobby[2] != '')) {
+                                ideals.isNotEmpty &&
+                                (hobbies[0] != '' ||
+                                    hobbies[1] != '' ||
+                                    hobbies[2] != '')) {
                               // 필수 입력 조건 충족 완료(이상형 포함)
-                              hobby.removeWhere(
+                              hobbies.removeWhere(
                                   (element) => element == ''); // 취미에서 공백 요소 제거
                               print(
                                   "닉네임: $nickname\nmbti: $mbti\n자기소개: $introduce\n이상형:");
-                              idealList.forEach(print);
+                              ideals.forEach(print);
                               print("취미:");
-                              hobby.forEach(print);
+                              hobbies.forEach(print);
 
                               // 등록 개수 초과 여부 알림 팝업창 호출
                               // final result = sendStickyData();
