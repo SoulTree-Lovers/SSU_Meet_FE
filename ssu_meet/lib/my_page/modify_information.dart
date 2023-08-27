@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import '../dialogs/alert_required_input.dialog.dart';
-import '../profile_data/profile.dart';
+import '../user_profile_data/user_profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
@@ -35,9 +36,16 @@ class _ModifyPageState extends State<ModifyPage> {
 // api 연동- GET 요청 함수
   void getOldProfile() async {
     const url = 'http://localhost:8080/v1/members/mypage/modify';
+
+    var token = await storage.read(key: "token");
+
     var response = await http.get(
       Uri.parse(url),
-      headers: {"Authorization": "----"},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
 
     if (response.statusCode == 200) {
@@ -45,7 +53,7 @@ class _ModifyPageState extends State<ModifyPage> {
       if (responseData["status"] == "SUCCESS") {
         print(responseData["message"]);
          setState(() {
-      data = MyData.fromJson(jsonDecode(responseData)["data"] as Map<String, dynamic>);
+      data = UserProfile.fromJson(jsonDecode(responseData)["data"] as Map<String, dynamic>);
       genderList.add(data.sex);
       collegeList = Colleges().colleges;
       tmpCollege = searchInItemList(data.college, collegeList);

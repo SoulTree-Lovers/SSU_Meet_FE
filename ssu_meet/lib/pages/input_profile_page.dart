@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
-import 'package:ssu_meet/profile_data/profile.dart';
+import 'package:ssu_meet/user_profile_data/user_profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
@@ -54,7 +54,7 @@ class _InputProfile extends State<InputProfile> {
     college = collegeList[0].value;
     majorList = Majors(0).majors;
     major = majorList[0].value;
-    data = MyData(
+    data = UserProfile(
         sex: genderList[0],
         birth: '',
         age: null,

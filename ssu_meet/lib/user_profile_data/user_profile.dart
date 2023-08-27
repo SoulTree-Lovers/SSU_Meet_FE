@@ -1,4 +1,4 @@
-class MyData {
+class UserProfile {
   String sex; //성별
   String birth; //생년월일
   int? age; //나이
@@ -10,7 +10,7 @@ class MyData {
   String? phoneNumber; //전화번호
 
 
-  MyData({
+  UserProfile({
     required this.sex,
     required this.birth,
     required this.age,
@@ -34,8 +34,8 @@ class MyData {
     "phoneNumber": (phoneNumber != '') ? phoneNumber : null,
   };
 
-  factory MyData.fromJson(Map<String, dynamic> json) {
-    return MyData(
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
+    return UserProfile(
       sex: (json['sex'] == "MALE") ? "남" : "여",
       birth: json['birth'],
       age: json['age'],

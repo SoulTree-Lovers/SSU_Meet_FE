@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/my_page/registered_dialog.dart';
 
+
+
 class ViewRegistered extends StatelessWidget {
   const ViewRegistered({super.key});
 
