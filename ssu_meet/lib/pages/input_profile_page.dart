@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/user_profile_data/user_profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
 import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
+
+import 'package:http/http.dart' as http;
 
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
@@ -24,24 +29,31 @@ class _InputProfile extends State<InputProfile> {
   var data;
   final formKey = GlobalKey<FormState>();
 
-  /* api 연동 - POST 요청 함수
-   Future<void> sendUserProfileData(MyData newData) async{
-    print(json.encode(newData.toJson()));
+  // api 연동 - POST 요청 함수
+  Future<void> sendUserProfileData(UserProfile newUser) async {
+    var token = await storage.read(key: "token");
+
+    print(json.encode(newUser.toJson()));
     const url = 'http://localhost:8080/v1/members/new';
     final response = await http.post(
       Uri.parse(url),
-      headers: {"Authorization":"-----"},
-      body: json.encode(newData.toJson()),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: json.encode(newUser.toJson()),
     );
-    final responseData = json.decode(response.body);
-    if(responseData["status"] == "SUCCESS"){
+
+    // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
+    if (responseData["status"] == "SUCCESS") {
       print(responseData["message"]);
-    }
-    else{
+    } else {
       print('Failed to send data. Error: ${response.statusCode}');
     }
   }
-  */
 
   // 취미 3개 미만 입력 시
   // ["축구", "", ""] x
@@ -55,15 +67,16 @@ class _InputProfile extends State<InputProfile> {
     majorList = Majors(0).majors;
     major = majorList[0].value;
     data = UserProfile(
-        sex: genderList[0],
-        birth: '',
-        age: null,
-        college: college!.title,
-        major: major!.title,
-        height: 0,
-        instaId: null,
-        kakaoId: null,
-        phoneNumber: null);
+      sex: genderList[0],
+      birth: '',
+      age: null,
+      college: college!.title,
+      major: major!.title,
+      height: 0,
+      instaId: null,
+      kakaoId: null,
+      phoneNumber: null,
+    );
   }
 
   @override
@@ -365,7 +378,6 @@ class _InputProfile extends State<InputProfile> {
                                                 },
                                               ),
                                             ),
-
                                             Text(
                                               "cm",
                                               style: TextStyle(
@@ -457,15 +469,17 @@ class _InputProfile extends State<InputProfile> {
                                     Flexible(
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            top: screenWidth * 0.015),
+                                          top: screenWidth * 0.015,
+                                        ),
                                       ),
                                     ),
                                     Flexible(
                                       child: Text(
                                         "*SNS는 셋 중 하나 이상 필수로 입력해주세요.",
                                         style: TextStyle(
-                                            fontSize: 0.02 * screenWidth,
-                                            color: Colors.red),
+                                          fontSize: 0.02 * screenWidth,
+                                          color: Colors.red,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -496,9 +510,10 @@ class _InputProfile extends State<InputProfile> {
                             child: Text(
                               "작성 완료",
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.038,
-                                  fontFamily: "Nanum_Ogbice"),
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.038,
+                                fontFamily: "Nanum_Ogbice",
+                              ),
                             ),
                           ),
                           onPressed: () {
@@ -514,13 +529,17 @@ class _InputProfile extends State<InputProfile> {
                                       data.phoneNumber != '')) {
                                 data.age = AgeCalculation(data.birth);
                                 print("필수 입력 요건이 충족됨");
-                                // sendUserProfileData(data);
+
+                                // api 요청
+                                sendUserProfileData(data);
+
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            const ResponsiveWebLayout(
-                                                pageIndex: 1)));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        const ResponsiveWebLayout(pageIndex: 1),
+                                  ),
+                                );
                               } else {
                                 //print("필수 입력 조건이 충족되지 않음");
                                 alertRequiredInput(context);

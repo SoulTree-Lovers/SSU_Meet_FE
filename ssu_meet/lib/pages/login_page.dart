@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/pages/input_profile_page.dart';
 import 'dart:convert';
 
 import 'package:ssu_meet/pages/responsive_page.dart';
@@ -250,10 +251,7 @@ class LoginPage extends StatelessWidget {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            // const InputProfile(),
-                                            const ResponsiveWebLayout(
-                                          pageIndex: 1,
-                                        ),
+                                            const InputProfile(),
                                       ),
                                     );
                                   } else if (result == 2) {
