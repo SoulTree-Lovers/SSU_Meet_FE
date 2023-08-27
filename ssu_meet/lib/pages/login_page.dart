@@ -6,11 +6,25 @@ import 'dart:convert';
 
 import 'package:ssu_meet/pages/responsive_page.dart';
 
-final TextEditingController studentIdController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
+// final TextEditingController studentIdController = TextEditingController();
+// final TextEditingController passwordController = TextEditingController();
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-class LoginPage extends StatelessWidget {
+String? _studentId = '';
+String? _password = '';
+
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,204 +51,243 @@ class LoginPage extends StatelessWidget {
             backgroundColor: const Color(0xffEFEFEF),
             elevation: 0,
           ),
-          body: Column(
-            children: [
-              SizedBox(height: screenHeight * 0.03),
-              SizedBox(
-                width: screenWidth,
-                height: screenHeight * 0.35,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: screenHeight * 0.4,
-                      child: const Image(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/images/pink_yellow.png'),
-                      ),
-                    ),
-                    Positioned.directional(
-                      // right: screenWidth * 0.68,
-                      bottom: screenHeight * 0.29,
-                      start: screenHeight * 0.04,
-                      end: screenHeight * 0.3,
-                      textDirection: TextDirection.ltr,
-                      child: SizedBox(
-                        width: screenHeight * 0.07,
-                        height: screenHeight * 0.07,
+          body: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(height: screenHeight * 0.03),
+                SizedBox(
+                  width: screenWidth,
+                  height: screenHeight * 0.35,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenHeight * 0.4,
                         child: const Image(
-                          fit: BoxFit.contain,
-                          image: AssetImage('assets/images/heart.png'),),),),
-                    Positioned.directional(
-                      //left: screenWidth * 0.67,
-                      bottom: screenHeight * 0.26,
-                      start: screenHeight * 0.3,
-                      end: screenHeight * 0.07,
-                      textDirection: TextDirection.ltr,
-                      child: Transform.rotate(
-                        angle: radians * 0.75,
-                        child: SizedBox(
-                          width: screenHeight * 0.055,
-                          height: screenHeight * 0.055,
-                          child: const Image(
-                            fit: BoxFit.contain,
-                            image: AssetImage('assets/images/heart.png'),),),
-                      ),),
-                    Positioned.directional(
-                      //left: screenWidth * 0.8,
-                      bottom: screenHeight * 0.08,
-                      start: screenHeight * 0.35,
-                      end: screenHeight * 0.01,
-                      textDirection: TextDirection.ltr,
-                      child: Transform.rotate(
-                        angle: radians,
-                        child: SizedBox(
-                          width: screenHeight * 0.06,
-                          height: screenHeight * 0.06,
-                          child: const Image(
-                            fit: BoxFit.contain,
-                            image: AssetImage('assets/images/heart.png'),)),
-                      ))
-                  ],
-                ),
-              ),
-              Flexible(
-                fit: FlexFit.tight,
-                child: Stack(
-                  children: [
-                    Container(
-                      width: screenWidth,
-                      //height: screenHeight * 0.59,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50)
-                          ),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/rectangle.png'),
-                          ),
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/images/pink_yellow.png'),
                         ),
                       ),
-                      Column(
-                        children: [
-                          const SizedBox(height: 55),
-                          const Text(
-                            "Login",
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color(0xffA9A8A8),
-                            ),
-                          ),
-                          const SizedBox(height: 40),
-                          Container(
-                            margin: const EdgeInsets.only(left: 60, right: 60),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(40),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 5,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: TextField(
-                              controller: studentIdController,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.only(top: 20),
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                hintText: '학번',
-                                hintStyle: TextStyle(
-                                    color: Color(0xffA9A8A8), fontSize: 14),
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                                  child: Icon(Icons.person_outline_rounded),
-                                ),
-                                prefixIconColor: Color(0xffA9A8A8),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            margin: const EdgeInsets.only(left: 60, right: 60),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(40),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 5,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: TextField(
-                              controller: passwordController,
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.only(top: 20),
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                hintText: '유세인트 비밀번호',
-                                hintStyle: const TextStyle(
-                                  color: Color(0xffA9A8A8),
-                                  fontSize: 14,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                prefixIcon: const Padding(
-                                  padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                                  child: Icon(Icons.lock_outline_rounded),
-                                ),
-                                prefixIconColor: const Color(0xffA9A8A8),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 40),
-                          SizedBox(
-                            width: screenWidth / 6 + 15,
-                            height: 40,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.black,
-                                side: const BorderSide(
-                                  color: Color(0xff8E8E8E),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                elevation: 0,
-                              ),
-                              onPressed: () {
-                                print(studentIdController.text);
-                                print(passwordController.text);
-                
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ResponsiveWebLayout(pageIndex: 1),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                "로그인",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      Positioned.directional(
+                        // right: screenWidth * 0.68,
+                        bottom: screenHeight * 0.29,
+                        start: screenHeight * 0.04,
+                        end: screenHeight * 0.3,
+                        textDirection: TextDirection.ltr,
+                        child: SizedBox(
+                          width: screenHeight * 0.07,
+                          height: screenHeight * 0.07,
+                          child: const Image(
+                            fit: BoxFit.contain,
+                            image: AssetImage('assets/images/heart.png'),),),),
+                      Positioned.directional(
+                        //left: screenWidth * 0.67,
+                        bottom: screenHeight * 0.26,
+                        start: screenHeight * 0.3,
+                        end: screenHeight * 0.07,
+                        textDirection: TextDirection.ltr,
+                        child: Transform.rotate(
+                          angle: radians * 0.75,
+                          child: SizedBox(
+                            width: screenHeight * 0.055,
+                            height: screenHeight * 0.055,
+                            child: const Image(
+                              fit: BoxFit.contain,
+                              image: AssetImage('assets/images/heart.png'),),),
+                        ),),
+                      Positioned.directional(
+                        //left: screenWidth * 0.8,
+                        bottom: screenHeight * 0.08,
+                        start: screenHeight * 0.35,
+                        end: screenHeight * 0.01,
+                        textDirection: TextDirection.ltr,
+                        child: Transform.rotate(
+                          angle: radians,
+                          child: SizedBox(
+                            width: screenHeight * 0.06,
+                            height: screenHeight * 0.06,
+                            child: const Image(
+                              fit: BoxFit.contain,
+                              image: AssetImage('assets/images/heart.png'),)),
+                        ))
                     ],
                   ),
                 ),
-              ],
-            ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: screenWidth,
+                        //height: screenHeight * 0.59,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50)
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/rectangle.png'),
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            const SizedBox(height: 55),
+                            const Text(
+                              "Login",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color(0xffA9A8A8),
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            Container(
+                              margin: const EdgeInsets.only(left: 60, right: 60),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(40),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 5,
+                                    blurRadius: 5,
+                                  ),
+                                ],
+                              ),
+                              child: TextFormField(
+                                // controller: passwordController,
+                                autovalidateMode: AutovalidateMode.always,
+                                validator: (value) {
+                                  if (value == null || value == '') {
+                                    return '학번을 입력해주세요.';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (String? newValue) {
+                                  setState(() {
+                                    _studentId = newValue;
+                                  });
+                                },
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  contentPadding: const EdgeInsets.only(top: 20),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  hintText: '학번',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA9A8A8),
+                                    fontSize: 14,
+                                  ),
+                                  prefixIcon: Padding(
+                                    padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                    child: Icon(Icons.lock_outline_rounded),
+                                  ),
+                                  prefixIconColor: Color(0xffA9A8A8),
+                                  errorBorder: InputBorder.none,
+                                  focusedErrorBorder: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              margin: const EdgeInsets.only(left: 60, right: 60),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(40),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 5,
+                                    blurRadius: 5,
+                                  ),
+                                ],
+                              ),
+                              child: TextFormField(
+                                // controller: passwordController,
+                                autovalidateMode: AutovalidateMode.always,
+                                validator: (value) {
+                                  if (value == null || value == '') {
+                                    return '비밀번호를 입력해주세요.';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (String? newValue) {
+                                  setState(() {
+                                    _password = newValue;
+                                  });
+                                },
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  contentPadding: const EdgeInsets.only(top: 20),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  hintText: '유세인트 비밀번호',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA9A8A8),
+                                    fontSize: 14,
+                                  ),
+                                  prefixIcon: Padding(
+                                    padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                    child: Icon(Icons.lock_outline_rounded),
+                                  ),
+                                  prefixIconColor: Color(0xffA9A8A8),
+                                  errorBorder: InputBorder.none,
+                                  focusedErrorBorder: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            SizedBox(
+                              width: screenWidth / 6 + 15,
+                              height: 40,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                  side: const BorderSide(
+                                    color: Color(0xff8E8E8E),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                onPressed: () {
+                                  // print(studentIdController.text);
+                                  // print(passwordController.text);
+
+                                  if (!_formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  _formKey.currentState!.save();
+
+                                  print(_studentId);
+                                  print(_password);
+
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ResponsiveWebLayout(pageIndex: 1),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "로그인",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+          ),
           ),
         ),
     );
@@ -256,7 +309,7 @@ class MyData {
 Future<int> sendData() async {
   print("함수가 실행은 됐습니다.");
   const url = 'http://localhost:8010/jsoup';
-  final data = MyData(studentIdController.text, passwordController.text);
+  final data = MyData(_studentId!, _password!);
   print('Sending JSON payload: ${json.encode(data.toJson())}');
   final response = await http.post(
     Uri.parse(url),

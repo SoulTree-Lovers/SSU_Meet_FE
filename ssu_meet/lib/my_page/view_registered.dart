@@ -117,10 +117,13 @@ class ViewRegistered extends StatelessWidget {
                           return const Image(
                             fit: BoxFit.cover,
                             image:
-                                AssetImage('assets/images/is_sold.png'),
+                               AssetImage('assets/images/is_sold.png'),
                           );
                         } else {
-                          return const SizedBox();
+                          return const Image(
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                    'assets/images/images2/yellowpostit2.png'));
                         }
                       }
 
@@ -142,18 +145,19 @@ class ViewRegistered extends StatelessWidget {
                             SizedBox(
                               width: screenWidth * 0.35,
                               height: screenWidth * 0.5,
-                              child: const Image(
-                                fit: BoxFit.cover,
-                                image: AssetImage(
-                                    'assets/images/images2/yellowpostit2.png')),
+                              child: isSoldPostIt(),
                             ),
                             // Positioned.fill(
-                            //   left: screenWidth * 0.05,
-                            //   bottom: screenHeight * 0.01,
-                            //   child: SizedBox(
-                            //     width: screenWidth * 0.35,
-                            //     height: screenWidth * 0.5,
-                            //     child: isSoldPostIt())),
+                            //         left: screenWidth * 0.06,
+                            //         right: screenWidth * 0.01,
+                            //         top: screenWidth * -0.147,
+                            //         //bottom: screenWidth * 0.07,
+                            //         child: SizedBox(
+                            //           width: screenWidth * 0.9,
+                            //           height: screenWidth * 0.75,
+                            //           child: isSoldPostIt(),
+                            //         ),
+                            //       ),
                             Positioned(
                               child: SizedBox(
                                 width: screenWidth * 0.2,
@@ -230,17 +234,7 @@ class ViewRegistered extends StatelessWidget {
                                   ),
                                 ),
                               ),),
-                            Positioned(
-                                    left: screenWidth * 0.06,
-                                    right: screenWidth * 0.01,
-                                    top: screenWidth * -0.147,
-                                    //bottom: screenWidth * 0.07,
-                                    child: SizedBox(
-                                      width: screenWidth * 0.9,
-                                      height: screenWidth * 0.75,
-                                      child: isSoldPostIt(),
-                                    ),
-                                  ),
+                            
             ],),
                       );
                     }),
