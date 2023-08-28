@@ -99,7 +99,7 @@ class ViewRegistered extends StatelessWidget {
                                   crossAxisCount: 2,
                                   childAspectRatio: 1 / 1,
                                   crossAxisSpacing: 10,
-                                  mainAxisSpacing: 30),
+                                  mainAxisSpacing: 30,),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             var postIt = snapshot.data![index];
@@ -112,160 +112,137 @@ class ViewRegistered extends StatelessWidget {
                             var introduction =
                                 postIt["stickyData"]["introduce"];
                             var ideals = postIt["stickyData"]["ideals"];
+                            return null;
+                        
+                      Widget isSoldPostIt() {
+                        if (isSold == 1) {
+                          return const Image(
+                            fit: BoxFit.cover,
+                            image:
+                               AssetImage('assets/images/is_sold.png'),
+                          );
+                        } else {
+                          return const Image(
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                    'assets/images/images2/yellowpostit2.png'),);
+                        }
+                      }
+                    
 
-                            Widget isSoldPostIt() {
-                              if (isSold == 1) {
-                                return const Image(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      AssetImage('assets/images/is_sold.png'),
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
-                            }
-
-                            return GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => RegisteredDialog(
-                                          nickname: nickname,
-                                          hobbies: hobbies,
-                                          mbti: mbti,
-                                          introduction: introduction,
-                                          ideals: ideals,
-                                        ));
-                              },
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: screenWidth * 0.35,
-                                    height: screenWidth * 0.5,
-                                    child: const Image(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            'assets/images/images2/yellowpostit2.png')),
-                                  ),
-                                  // Positioned.fill(
-                                  //   left: screenWidth * 0.05,
-                                  //   bottom: screenHeight * 0.01,
-                                  //   child: SizedBox(
-                                  //     width: screenWidth * 0.35,
-                                  //     height: screenWidth * 0.5,
-                                  //     child: isSoldPostIt())),
-                                  Positioned(
-                                    child: SizedBox(
-                                      width: screenWidth * 0.2,
-                                      height: screenWidth * 0.3,
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "닉네임: $nickname",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.03,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 7),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "취미: ",
-                                                  style: TextStyle(
-                                                    fontFamily: "Nanum_Ogbice",
-                                                    fontSize:
-                                                        screenWidth * 0.03,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    "${hobbies[0]}",
-                                                    textAlign: TextAlign.left,
-                                                    softWrap: true,
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          "Nanum_Ogbice",
-                                                      fontSize:
-                                                          screenWidth * 0.03,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(height: 7),
-                                            Text(
-                                              "MBTI: $mbti",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.03,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 7),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "소개: ",
-                                                  style: TextStyle(
-                                                    fontFamily: "Nanum_Ogbice",
-                                                    fontSize:
-                                                        screenWidth * 0.03,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    "$introduction",
-                                                    textAlign: TextAlign.left,
-                                                    softWrap: true,
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          "Nanum_Ogbice",
-                                                      fontSize:
-                                                          screenWidth * 0.03,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                      return GestureDetector(
+                        onTap: () {
+                           showDialog(
+                            context: context, 
+                            builder: (_) => RegisteredDialog(
+                              nickname: nickname,
+                              hobbies: hobbies,
+                              mbti: mbti,
+                              introduction: introduction,
+                              ideals: ideals,
+                            ));
+                        },
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [ 
+                            SizedBox(
+                              width: screenWidth * 0.35,
+                              height: screenWidth * 0.5,
+                              child: isSoldPostIt(),
+                            ),
+                            // Positioned.fill(
+                            //         left: screenWidth * 0.06,
+                            //         right: screenWidth * 0.01,
+                            //         top: screenWidth * -0.147,
+                            //         //bottom: screenWidth * 0.07,
+                            //         child: SizedBox(
+                            //           width: screenWidth * 0.9,
+                            //           height: screenWidth * 0.75,
+                            //           child: isSoldPostIt(),
+                            //         ),
+                            //       ),
+                            Positioned(
+                              child: SizedBox(
+                                width: screenWidth * 0.2,
+                                height: screenWidth * 0.3,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,         
+                                    children: [
+                                      
+                                          Text("닉네임: $nickname",
+                                          style: TextStyle(
+                                  fontFamily: "Nanum_Ogbice",
+                                  fontSize: screenWidth * 0.03,
+                                  color: Colors.black,
+                                                                  ),),
+                                      
+                                  const SizedBox(height: 7),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("취미: ",
+                                          style: TextStyle(
+                                  fontFamily: "Nanum_Ogbice",
+                                  fontSize: screenWidth * 0.03,
+                                  color: Colors.black,
+                                                                  ),),
+                                      Expanded(
+                                          child: Text("${hobbies[0]}",
+                                          textAlign: TextAlign.left,
+                                          softWrap: true,
+                                            style: TextStyle(
+                                            
+                                                                          fontFamily: "Nanum_Ogbice",
+                                                                          fontSize: screenWidth * 0.03,
+                                                                          color: Colors.black,
+                                                                    ),),
+                                        )
+                                        ],
                                       ),
+                                    const SizedBox(height: 7),
+                                      Text(
+                                        "MBTI: $mbti",
+                                style: TextStyle(
+                                  fontFamily: "Nanum_Ogbice",
+                                  fontSize: screenWidth * 0.03,
+                                  color: Colors.black,
+                                                              ),
+                                                            ),
+                                 const SizedBox(height: 7),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("소개: ",
+                                          style: TextStyle(
+                                  fontFamily: "Nanum_Ogbice",
+                                  fontSize: screenWidth * 0.03,
+                                  color: Colors.black,
+                                                                  ),),
+                                      Expanded(
+                                          child: Text("$introduction",
+                                          textAlign: TextAlign.left,
+                                          softWrap: true,
+                                            style: TextStyle(
+                                            
+                                                                          fontFamily: "Nanum_Ogbice",
+                                                                          fontSize: screenWidth * 0.03,
+                                                                          color: Colors.black,
+                                                                    ),
+                                                                    ),
+                                        ),
+                                        ],
                                     ),
-                                  ),
-                                  Positioned(
-                                    left: screenWidth * 0.06,
-                                    right: screenWidth * 0.01,
-                                    top: screenWidth * -0.147,
-                                    //bottom: screenWidth * 0.07,
-                                    child: SizedBox(
-                                      width: screenWidth * 0.9,
-                                      height: screenWidth * 0.75,
-                                      child: isSoldPostIt(),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            );
-                          },
-                        ),
-                      );
-                    }
-                  },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  };
                 ),
               ],
             ),

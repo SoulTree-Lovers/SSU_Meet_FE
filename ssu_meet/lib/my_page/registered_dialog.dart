@@ -101,162 +101,224 @@ class _RegisteredDialogState extends State<RegisteredDialog> {
                                   textAlign: TextAlign.left,
                                   softWrap: true,
                                   style: TextStyle(
-                                      fontFamily: "Nanum_Ogbice",
-                                      fontSize: screenWidth * 0.04,
-                                      color: Colors.black),
+                                    fontFamily: "Nanum_Ogbice",
+                                    fontSize: screenWidth * 0.04,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ],
                             ),
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          "MBTI: ${widget.mbti}",
-                          style: TextStyle(
-                              fontFamily: "Nanum_Ogbice",
-                              fontSize: screenWidth * 0.04,
-                              color: Colors.black),
-                        ),
-                        const SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "자기소개: ",
+                              "이상형:  ",
                               style: TextStyle(
-                                  fontFamily: "Nanum_Ogbice",
-                                  fontSize: screenWidth * 0.04,
-                                  color: Colors.black),
-                            ),
-                            Expanded(
-                              child: Text(
-                                widget.introduction.toString(),
-                                textAlign: TextAlign.left,
-                                softWrap: true,
-                                style: TextStyle(
-                                    fontFamily: "Nanum_Ogbice",
-                                    fontSize: screenWidth * 0.04,
-                                    color: Colors.black),
+                                fontFamily: "Nanum_Ogbice",
+                                fontSize: screenWidth * 0.04,
+                                color: Colors.black,
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "이상형: ",
-                              style: TextStyle(
-                                  fontFamily: "Nanum_Ogbice",
-                                  fontSize: screenWidth * 0.04,
-                                  color: Colors.black),
                             ),
                             SizedBox(
-                              child: Wrap(
-                                direction: Axis.horizontal,
-                                spacing: 5,
-                                alignment: WrapAlignment.start,
-                                children: [
-                                  // Chip(
-                                  //   backgroundColor: Colors.transparent,
-
-                                  //   side: BorderSide(
-                                  //     color: Colors.black,
-                                  //     width: 0.5
-                                  //   ),
-                                  //   label: Text("${widget.ideals[0]}".toString(),
-                                  //     textAlign: TextAlign.center,
-                                  //     style: TextStyle(
-                                  //     fontFamily: "Nanum_Ogbice",
-                                  //     fontSize: screenWidth * 0.03,
-                                  //     color: Colors.black
-                                  //   ),),),
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    width: screenWidth * 0.14,
-                                    height: screenWidth * 0.05,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                          color: Colors.black, width: 0.5),
-                                    ),
-                                    child: Text(
-                                      "${widget.ideals[0]}".toString(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.03,
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    width: screenWidth * 0.14,
-                                    height: screenWidth * 0.05,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                          color: Colors.black, width: 0.5),
-                                    ),
-                                    child: Text(
-                                      "${widget.ideals[1]}".toString(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.03,
-                                          color: Colors.black),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    width: screenWidth * 0.14,
-                                    height: screenWidth * 0.05,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                          color: Colors.black, width: 0.5),
-                                    ),
-                                    child: Text(
-                                      "${widget.ideals[2]}".toString(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: "Nanum_Ogbice",
-                                        fontSize: screenWidth * 0.03,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              width: screenWidth * 0.28,
+                              height: screenWidth * 0.1,
+                              child: SingleChildScrollView(
+                                child: Wrap(
+                                  spacing: 4,
+                                  //alignment: WrapAlignment.start,
+                                  children: widget.ideals.map(
+                                    (item) {
+                                      return Container(
+                                        width: screenWidth * 0.11,
+                                        height: screenWidth * 0.04,
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.only(top: 2),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                              color: Colors.black, width: 0.5),
+                                        ),
+                                        child: Text(
+                                          item,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: "Nanum_Ogbice",
+                                            fontSize: screenWidth * 0.025,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
+                                ),
                               ),
                             ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "MBTI: ${widget.mbti}",
+                              style: TextStyle(
+                                fontFamily: "Nanum_Ogbice",
+                                fontSize: screenWidth * 0.04,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "자기소개: ",
+                                  style: TextStyle(
+                                    fontFamily: "Nanum_Ogbice",
+                                    fontSize: screenWidth * 0.04,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    widget.introduction.toString(),
+                                    textAlign: TextAlign.left,
+                                    softWrap: true,
+                                    style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.04,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "이상형: ",
+                                  style: TextStyle(
+                                      fontFamily: "Nanum_Ogbice",
+                                      fontSize: screenWidth * 0.04,
+                                      color: Colors.black),
+                                ),
+                                SizedBox(
+                                  child: Wrap(
+                                    direction: Axis.horizontal,
+                                    spacing: 5,
+                                    alignment: WrapAlignment.start,
+                                    children: [
+                                      // Chip(
+                                      //   backgroundColor: Colors.transparent,
+
+                                      //   side: BorderSide(
+                                      //     color: Colors.black,
+                                      //     width: 0.5
+                                      //   ),
+                                      //   label: Text("${widget.ideals[0]}".toString(),
+                                      //     textAlign: TextAlign.center,
+                                      //     style: TextStyle(
+                                      //     fontFamily: "Nanum_Ogbice",
+                                      //     fontSize: screenWidth * 0.03,
+                                      //     color: Colors.black
+                                      //   ),),),
+                                      Container(
+                                        padding: const EdgeInsets.only(top: 2),
+                                        width: screenWidth * 0.14,
+                                        height: screenWidth * 0.05,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                              color: Colors.black, width: 0.5),
+                                        ),
+                                        child: Text(
+                                          "${widget.ideals[0]}".toString(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: "Nanum_Ogbice",
+                                            fontSize: screenWidth * 0.03,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.only(top: 2),
+                                        width: screenWidth * 0.14,
+                                        height: screenWidth * 0.05,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "${widget.ideals[1]}".toString(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontFamily: "Nanum_Ogbice",
+                                              fontSize: screenWidth * 0.03,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.only(top: 2),
+                                        width: screenWidth * 0.14,
+                                        height: screenWidth * 0.05,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                            color: Colors.black,
+                                            width: 0.5,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "${widget.ideals[2]}".toString(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: "Nanum_Ogbice",
+                                            fontSize: screenWidth * 0.03,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
                           ],
                         ),
-                        const SizedBox(height: 10),
                       ],
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                shadowColor: Colors.black26,
-                side: const BorderSide(color: Colors.black, width: 0.5),
-                fixedSize: Size(screenWidth * 0.15, screenWidth * 0.06)),
-            child: Text(
-              "확인",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: "Nanum_Ogbice",
-                fontSize: screenWidth * 0.03,
-                //fontWeight: FontWeight.w500
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(color: Colors.black, width: 0.5),
+                    fixedSize: Size(screenWidth * 0.15, screenWidth * 0.06)),
+                child: Text(
+                  "확인",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Nanum_Ogbice",
+                    fontSize: screenWidth * 0.03,
+                    //fontWeight: FontWeight.w500
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),
