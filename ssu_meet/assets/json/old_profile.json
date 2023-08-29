@@ -3,7 +3,7 @@
   "message": "유저 기존 개인정보",
   "data": {
     "sex": "FEMALE",
-    "birth": "020902",
+    "birthDate": "020902",
     "age": 20,
     "college": "IT대학",
     "major": "소프트웨어학부",

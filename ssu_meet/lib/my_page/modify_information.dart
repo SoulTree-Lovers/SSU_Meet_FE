@@ -33,10 +33,40 @@ class _ModifyPageState extends State<ModifyPage> {
     }
     return null;
   }
-// api 연동- GET 요청 함수
+
+  void getOldProfileLocal() async {
+    /* api 연동- GET 요청 함수
+    const url='http://localhost:8080/v1/members/mypage/modify';
+    var response = await http.get(
+      Uri.parse(url),
+      headers: {"Authorization":"——"},
+    );
+    final responseData = json.decode(response.body);
+    if (responseData["status"] == "SUCCESS") {
+      print(responseData["message"]);
+      var jsonString = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    }
+    else {
+      print('Failed to get data. Error: ${response.statusCode}');
+    } */
+    print("함수 실행 완료");
+    var jsonString = await rootBundle.loadString('json/old_profile.json');
+    setState(() {
+      data = UserProfile.fromJson(
+          jsonDecode(jsonString)["data"] as Map<String, dynamic>);
+      genderList.add(data.sex);
+      collegeList = Colleges().colleges;
+      tmpCollege = searchInItemList(data.college, collegeList);
+      majorList = Majors(tmpCollege!.ind).majors;
+      tmpMajor = searchInItemList(data.major, majorList);
+      isLoading = true;
+    });
+  }
+
+  // api 연동- GET 요청 함수
   void getOldProfile() async {
     const url = 'http://localhost:8080/v1/members/mypage/modify';
-
+    print("함수 실행");
     var token = await storage.read(key: "token");
 
     var response = await http.get(
@@ -47,20 +77,46 @@ class _ModifyPageState extends State<ModifyPage> {
         'Authorization': 'Bearer $token',
       },
     );
+    print("응답 완료");
 
     if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
+      // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
+      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
       if (responseData["status"] == "SUCCESS") {
+        print("status success");
         print(responseData["message"]);
-         setState(() {
-      data = UserProfile.fromJson(jsonDecode(responseData)["data"] as Map<String, dynamic>);
-      genderList.add(data.sex);
-      collegeList = Colleges().colleges;
-      tmpCollege = searchInItemList(data.college, collegeList);
-      majorList = Majors(tmpCollege!.ind).majors;
-      tmpMajor = searchInItemList(data.major, majorList);
-      isLoading = true;
-    });
+        print("responseData: $responseData");
+        print("responseData['data']: ${responseData["data"]}");
+        var test = responseData["data"] as Map<String, dynamic>;
+
+        print("test: $test");
+
+        var localTest = {
+          "sex": "FEMALE",
+          "birthDate": "020902",
+          "age": 20,
+          "college": "IT대학",
+          "major": "소프트웨어학부",
+          "height": 164,
+          "instaId": null,
+          "kakaoId": "kakaoID",
+          "phoneNumber": "01012345678"
+        };
+        print("local test: $localTest");
+        setState(() {
+          // data = UserProfile.fromJson(
+          //     responseData["data"] as Map<String, dynamic>);
+          data = UserProfile.fromJson(test);
+
+          print("fromJson 실행 후");
+          genderList.add(data.sex);
+          collegeList = Colleges().colleges;
+          tmpCollege = searchInItemList(data.college, collegeList);
+          majorList = Majors(tmpCollege!.ind).majors;
+          tmpMajor = searchInItemList(data.major, majorList);
+          isLoading = true;
+        });
       }
     } else {
       print('Failed to get data. Error: ${response.statusCode}');
@@ -68,18 +124,26 @@ class _ModifyPageState extends State<ModifyPage> {
   }
 
   // api 연동- 수정 완료 후 POST 요청 코드
-  Future<void> sendModifiedProfileData (MyData newData) async{
+  Future<void> sendModifiedProfileData(UserProfile newData) async {
     const url = 'http://localhost:8080/v1/members/mypage/modify';
+
+    var token = await storage.read(key: "token");
+
     final response = await http.post(
       Uri.parse(url),
-      headers: {"Authorization":"-----"},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
       body: json.encode(newData.toJson()),
     );
-    final responseData = json.decode(response.body);
-    if(responseData["status"] == "SUCCESS"){
+    // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
+    if (responseData["status"] == "SUCCESS") {
       print(responseData["message"]);
-    }
-    else{
+    } else {
       print('Failed to get data. Error: ${response.statusCode}');
     }
   }
@@ -322,7 +386,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                       color: Colors.black54)),
                                             ),
                                             child: Text(
-                                              "${data.birth}",
+                                              "${data.birthDate}",
                                               style: TextStyle(
                                                   fontSize: screenWidth * 0.05,
                                                   fontFamily: "Nanum_Ogbice",
@@ -512,10 +576,10 @@ class _ModifyPageState extends State<ModifyPage> {
                                 (data.instaId != '' ||
                                     data.kakaoId != '' ||
                                     data.phoneNumber != '')) {
-                              data.age = AgeCalculation(data.birth);
+                              data.age = AgeCalculation(data.birthDate);
                               print("필수 입력 요건이 충족됨");
                               // 변경된 값 보내기
-                              //  sendModifiedProfileData(data);
+                              sendModifiedProfileData(data);
                               print("수정 후 데이터");
                               print(json.encode(data.toJson()));
                               Navigator.pop(context);

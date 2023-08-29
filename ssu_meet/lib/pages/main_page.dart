@@ -198,6 +198,9 @@ class _MainPageState extends State<MainPage> {
                     // itemCount: data.length + (hasMoreData ? 1 : 0),
                     itemCount: data.length,
                     itemBuilder: (context, index) {
+                      print("data: $data");
+                      print("data.length: ${data.length}");
+
                       var postIt = data[index];
                       var stickyId = postIt["stickyId"];
                       // var sex = postIt["stickyData"]["sex"];
@@ -218,137 +221,137 @@ class _MainPageState extends State<MainPage> {
                       print("postIt: ${data[index]}");
 
                       // if (true) {
-                      // if (data.isNotEmpty) {
-                      return GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return MainPostItDialog(
-                                stickyId: stickyId,
-                                nickname: nickname,
-                                age: age,
-                                major: major,
-                                mbti: mbti,
-                                height: height,
-                                hobbies: hobbies,
-                                introduce: introduce,
-                                instaId: instaId,
-                                kakaoId: kakaoId,
-                                phoneNumber: phoneNumber,
-                                ideals: ideals,
-                              );
-                            },
-                          );
-                          print("Tapped Post It (id: $stickyId)");
-                          print("Tapped Post It (age: $age)");
-                          print("Tapped Post It (instaId: $instaId)");
-                        },
-                        child: Center(
-                          child: Container(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                                // First image
-                                Image(
-                                  image: const AssetImage(
-                                      "assets/images/images2/yellowpostit.png"),
-                                  width: screenWidth * 0.4,
-                                  height: screenWidth * 0.4,
-                                ),
-
-                                // Second image overlapped on top of the first image
-                                Positioned(
-                                  left: screenWidth * 0.1,
-                                  top: screenWidth * -0.07,
-                                  child: Image(
-                                    width: screenWidth * 0.2,
-                                    height: screenWidth * 0.2,
+                      if (true) {
+                        return GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return MainPostItDialog(
+                                  stickyId: stickyId,
+                                  nickname: nickname,
+                                  age: age,
+                                  major: major,
+                                  mbti: mbti,
+                                  height: height,
+                                  hobbies: hobbies,
+                                  introduce: introduce,
+                                  instaId: instaId,
+                                  kakaoId: kakaoId,
+                                  phoneNumber: phoneNumber,
+                                  ideals: ideals,
+                                );
+                              },
+                            );
+                            print("Tapped Post It (id: $stickyId)");
+                            print("Tapped Post It (age: $age)");
+                            print("Tapped Post It (instaId: $instaId)");
+                          },
+                          child: Center(
+                            child: SizedBox(
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: <Widget>[
+                                  // First image
+                                  Image(
                                     image: const AssetImage(
-                                        "assets/images/images2/tape10.png"),
+                                        "assets/images/images2/yellowpostit.png"),
+                                    width: screenWidth * 0.4,
+                                    height: screenWidth * 0.4,
                                   ),
-                                ),
-                                Positioned(
-                                  top: screenWidth * 0.1,
-                                  left: screenWidth * 0.1,
-                                  child: SizedBox(
-                                    height: screenWidth * 0.2,
-                                    width: screenWidth * 0.2,
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "닉네임: $nickname",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Text(
-                                            "나이: $age",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Text(
-                                            "MBTI: $mbti",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Text(
-                                            "취미 1: ${hobbies[0]}",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Text(
-                                            "취미 2: ${hobbies[1]}",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Text(
-                                            "취미 3: ${hobbies[2]}",
-                                            style: TextStyle(
-                                              fontFamily: "Nanum_Ogbice",
-                                              fontSize: screenWidth * 0.04,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
+                                  // Second image overlapped on top of the first image
+                                  Positioned(
+                                    left: screenWidth * 0.1,
+                                    top: screenWidth * -0.07,
+                                    child: Image(
+                                      width: screenWidth * 0.2,
+                                      height: screenWidth * 0.2,
+                                      image: const AssetImage(
+                                        "assets/images/images2/tape10.png",
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Positioned(
+                                    top: screenWidth * 0.1,
+                                    left: screenWidth * 0.1,
+                                    child: SizedBox(
+                                      height: screenWidth * 0.2,
+                                      width: screenWidth * 0.2,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "닉네임: $nickname",
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.04,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              "나이: $age",
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.04,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              "MBTI: $mbti",
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.04,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              "취미 1: ${hobbies[0]}",
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.04,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              "취미 2: ${hobbies[1]}",
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.04,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              "취미 3: ${hobbies[2]}",
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.04,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                      // } else if (hasMoreData) {
-                      //   if (!isLoading) {
-                      //     fetchData(); // Fetch more data when reaching the end
-                      //   }
-                      //   return const Center(
-                      //     child: CircularProgressIndicator(),
-                      //   );
-                      // } else {
-                      //   return const Center(
-                      //     child: Text('더 이상 등록된 포스트잇이 없습니다.'),
-                      //   );
-                      // }
+                        );
+                      } else if (hasMoreData) {
+                        if (!isLoading) {
+                          fetchData(); // Fetch more data when reaching the end
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text('더 이상 등록된 포스트잇이 없습니다.'),
+                        );
+                      }
                     },
                   ),
                 ),

@@ -68,8 +68,8 @@ class _InputProfile extends State<InputProfile> {
     major = majorList[0].value;
     data = UserProfile(
       sex: genderList[0],
-      birth: '',
-      age: null,
+      birthDate: '',
+      age: 0,
       college: college!.title,
       major: major!.title,
       height: 0,
@@ -338,7 +338,7 @@ class _InputProfile extends State<InputProfile> {
                                                 },
                                                 onSaved: (val) {
                                                   setState(() {
-                                                    data.birth = val;
+                                                    data.birthDate = val;
                                                   });
                                                 },
                                               ),
@@ -527,7 +527,7 @@ class _InputProfile extends State<InputProfile> {
                                   (data.instaId != '' ||
                                       data.kakaoId != '' ||
                                       data.phoneNumber != '')) {
-                                data.age = AgeCalculation(data.birth);
+                                data.age = AgeCalculation(data.birthDate);
                                 print("필수 입력 요건이 충족됨");
 
                                 // api 요청
