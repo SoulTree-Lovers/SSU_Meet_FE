@@ -1,26 +1,37 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/pages/login_page.dart';
+import 'package:http/http.dart' as http;
 
-/* 구매한 포스트잇 삭제 api
-Future<void> deletePurchasedPostIt(int stickyId) async {
-  // print(stickyId);
-  final response = await http.delete(
+// 구매한 포스트잇 삭제 api
+Future<int> deletePurchasedSticky(int stickyId) async {
+   // print("stickyId: $stickyId");
+   var token = await storage.read(key: "token");
+
+   final response = await http.delete(
     Uri.parse('http://localhost:8080/v1/members/mypage/buy-list/$stickyId'),
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
     },
   );
   if (response.statusCode == 200) {
-    final responseData = json.decode(response.body);
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
     if (responseData["status"] == "SUCCESS") {
       print(responseData["message"]);
+      return 0; // 삭제 성공
     } else {
       print(responseData["message"]);
+      return 1; // 삭제 실패
     }
   } else {
     print('Failed to delete data. Error: ${response.statusCode}');
+    return 2;
   }
 }
-*/
+
 
 void removePurchasedPostIt(BuildContext context, int stickyId) {
   showDialog(
@@ -91,10 +102,14 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
             GestureDetector(
               onTap: () {
                 // DELETE api 요청 함수
-                // deletePurchasedPostIt(stickyId);
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
+                deletePurchasedSticky(stickyId).then((result) {
+                  // 삭제 완료
+                  if(result == 0){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                });
+                },
               child: Container(
                 width: 70,
                 height: 25,
