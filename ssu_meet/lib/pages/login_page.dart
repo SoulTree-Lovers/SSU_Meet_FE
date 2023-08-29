@@ -205,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                                   _studentId = newValue;
                                 });
                               },
-                              obscureText: true,
+                              obscureText: false,
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(top: 20),
                                 enabledBorder: InputBorder.none,
@@ -217,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 prefixIcon: Padding(
                                   padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                                  child: Icon(Icons.lock_outline_rounded),
+                                  child: Icon(Icons.person_outline_rounded),
                                 ),
                                 prefixIconColor: Color(0xffA9A8A8),
                                 errorBorder: InputBorder.none,
@@ -352,7 +352,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<int> login() async {
     // print("함수가 실행은 됐습니다.");
     const url = 'http://localhost:8080/v1/members/login';
-    final data = MyData(studentIdController.text, passwordController.text);
+    final data = MyData(_studentId!, _password!);
     // print('Sending JSON payload: ${json.encode(data.toJson())}');
     final response = await http.post(
       Uri.parse(url),
@@ -360,50 +360,6 @@ class _LoginPageState extends State<LoginPage> {
       body: json.encode(data.toJson()),
     );
     print("데이터 전송");
-
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
-      final isSuccess = responseData["status"];
-      final message = responseData["message"];
-
-      print(responseData);
-      if (isSuccess == "SUCCESS") {
-        await storage.write(
-            key: "token", value: responseData["data"]["accessToken"]);
-        //유세인트 인증에 성공한 경우
-        print("유세인트 인증 성공");
-        if (message == "Need new register") {
-          print("개인정보등록이 필요합니다.");
-          var token = await storage.read(key: "token");
-          print("token: $token");
-          return 1;
-        } else if (message == "Main Ok") {
-          print("이미 개인정보등록이 완료된 사용자입니다.");
-          return 2;
-        }
-      } else {
-        //유세인트 인증에 실패한 경우
-        print("로그인 정보가 잘못되었습니다.");
-        return 3; // 로그인 실패 (정보 오류)
-      }
-      // print('Received response: $result');
-    } else {
-      print('Failed to send data. Error: ${response.statusCode}');
-      return 4; // 로그인 실패 (네트워크 에러)
-    }
-    return 0;
-  }
-
-  Future<int> sendData() async {
-    print("함수가 실행은 됐습니다.");
-    const url = 'http://localhost:8010/jsoup';
-    final data = MyData(_studentId!, _password!);
-    print('Sending JSON payload: ${json.encode(data.toJson())}');
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(data.toJson()),
-    );
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
