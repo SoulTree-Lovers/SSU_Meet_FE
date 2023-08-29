@@ -5,10 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import '../dialogs/alert_required_input.dialog.dart';
+import '../dialogs/modify_completed.dialog.dart';
 import '../user_profile_data/user_profile.dart';
 import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
+
 
 class ModifyPage extends StatefulWidget {
   const ModifyPage({super.key});
@@ -108,7 +110,6 @@ class _ModifyPageState extends State<ModifyPage> {
           // data = UserProfile.fromJson(
           //     responseData["data"] as Map<String, dynamic>);
           data = UserProfile.fromJson(test);
-
           print("fromJson 실행 후");
           genderList.add(data.sex);
           collegeList = Colleges().colleges;
@@ -151,7 +152,7 @@ class _ModifyPageState extends State<ModifyPage> {
   @override
   void initState() {
     super.initState();
-    getOldProfile();
+    getOldProfileLocal();
   }
 
   @override
@@ -579,10 +580,10 @@ class _ModifyPageState extends State<ModifyPage> {
                               data.age = AgeCalculation(data.birthDate);
                               print("필수 입력 요건이 충족됨");
                               // 변경된 값 보내기
-                              sendModifiedProfileData(data);
-                              print("수정 후 데이터");
-                              print(json.encode(data.toJson()));
-                              Navigator.pop(context);
+                            //  sendModifiedProfileData(data);
+                            //  print("수정 후 데이터");
+                           //   print(json.encode(data.toJson()));
+                              modificationCompletionNotify(context);
                             } else {
                               // print("필수 입력 조건이 충족되지 않음");
                               alertRequiredInput(context);

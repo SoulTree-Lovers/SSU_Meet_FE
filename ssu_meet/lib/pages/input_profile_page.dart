@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/dept_data/temp_majors.dart';
@@ -9,8 +8,7 @@ import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
 import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
-import 'package:ssu_meet/pages/responsive_page.dart';
-
+import 'package:ssu_meet/dialogs/register_completed.dialog.dart';
 import 'package:http/http.dart' as http;
 
 class InputProfile extends StatefulWidget {
@@ -30,7 +28,7 @@ class _InputProfile extends State<InputProfile> {
   final formKey = GlobalKey<FormState>();
 
   // api 연동 - POST 요청 함수
-  Future<void> sendUserProfileData(UserProfile newUser) async {
+  Future<int> sendUserProfileData(UserProfile newUser) async {
     var token = await storage.read(key: "token");
 
     print(json.encode(newUser.toJson()));
@@ -46,12 +44,19 @@ class _InputProfile extends State<InputProfile> {
     );
 
     // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
-    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
-    if (responseData["status"] == "SUCCESS") {
-      print(responseData["message"]);
+      if (responseData["status"] == "SUCCESS") {
+        print(responseData["message"]);
+        return 0;
+      } else {
+        print(responseData["message"]);
+        return 1;
+      }
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
+      return 2; // 네트워크 에러
     }
   }
 
@@ -327,7 +332,7 @@ class _InputProfile extends State<InputProfile> {
                                               //입력칸 너비,높이 조절
                                               child: MyFormField(
                                                 key: const ValueKey(1),
-                                                hintText: "MMYYDD",
+                                                hintText: "YYMMDD",
                                                 screenWidth: screenWidth,
                                                 validator: (val) {
                                                   if (val == '' ||
@@ -529,17 +534,12 @@ class _InputProfile extends State<InputProfile> {
                                       data.phoneNumber != '')) {
                                 data.age = AgeCalculation(data.birthDate);
                                 print("필수 입력 요건이 충족됨");
-
                                 // api 요청
-                                sendUserProfileData(data);
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        const ResponsiveWebLayout(pageIndex: 1),
-                                  ),
-                                );
+                                sendUserProfileData(data).then((result) {
+                                  if (result == 0) {
+                                    registrationCompletionNotify(context);
+                                  }
+                                });
                               } else {
                                 //print("필수 입력 조건이 충족되지 않음");
                                 alertRequiredInput(context);
