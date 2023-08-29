@@ -112,8 +112,7 @@ class ViewRegistered extends StatelessWidget {
                             var introduction =
                                 postIt["stickyData"]["introduce"];
                             var ideals = postIt["stickyData"]["ideals"];
-                            return null;
-                        
+                      
                       Widget isSoldPostIt() {
                         if (isSold == 1) {
                           return const Image(
@@ -128,8 +127,6 @@ class ViewRegistered extends StatelessWidget {
                                     'assets/images/images2/yellowpostit2.png'),);
                         }
                       }
-                    
-
                       return GestureDetector(
                         onTap: () {
                            showDialog(
@@ -150,17 +147,6 @@ class ViewRegistered extends StatelessWidget {
                               height: screenWidth * 0.5,
                               child: isSoldPostIt(),
                             ),
-                            // Positioned.fill(
-                            //         left: screenWidth * 0.06,
-                            //         right: screenWidth * 0.01,
-                            //         top: screenWidth * -0.147,
-                            //         //bottom: screenWidth * 0.07,
-                            //         child: SizedBox(
-                            //           width: screenWidth * 0.9,
-                            //           height: screenWidth * 0.75,
-                            //           child: isSoldPostIt(),
-                            //         ),
-                            //       ),
                             Positioned(
                               child: SizedBox(
                                 width: screenWidth * 0.2,
@@ -170,81 +156,79 @@ class ViewRegistered extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,         
                                     children: [
-                                      
-                                          Text("닉네임: $nickname",
-                                          style: TextStyle(
-                                  fontFamily: "Nanum_Ogbice",
-                                  fontSize: screenWidth * 0.03,
-                                  color: Colors.black,
-                                                                  ),),
-                                      
-                                  const SizedBox(height: 7),
+                                      Text("닉네임: $nickname",
+                                        style: TextStyle(
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.03,
+                                        color: Colors.black,),
+                                      ),
+                                      const SizedBox(height: 7),
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text("취미: ",
-                                          style: TextStyle(
-                                  fontFamily: "Nanum_Ogbice",
-                                  fontSize: screenWidth * 0.03,
-                                  color: Colors.black,
-                                                                  ),),
-                                      Expanded(
-                                          child: Text("${hobbies[0]}",
-                                          textAlign: TextAlign.left,
-                                          softWrap: true,
                                             style: TextStyle(
-                                            
-                                                                          fontFamily: "Nanum_Ogbice",
-                                                                          fontSize: screenWidth * 0.03,
-                                                                          color: Colors.black,
-                                                                    ),),
-                                        )
+                                            fontFamily: "Nanum_Ogbice",
+                                            fontSize: screenWidth * 0.03,
+                                            color: Colors.black,),
+                                          ),
+                                          Expanded(
+                                            child: Text("${hobbies[0]}",
+                                            textAlign: TextAlign.left,
+                                            softWrap: true,
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.03,
+                                                color: Colors.black,),
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    const SizedBox(height: 7),
-                                      Text(
-                                        "MBTI: $mbti",
-                                style: TextStyle(
-                                  fontFamily: "Nanum_Ogbice",
-                                  fontSize: screenWidth * 0.03,
-                                  color: Colors.black,
-                                                              ),
-                                                            ),
-                                 const SizedBox(height: 7),
+                                      const SizedBox(height: 7),
+                                      Text("MBTI: $mbti",
+                                        style: TextStyle(
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.03,
+                                        color: Colors.black,),
+                                      ),
+                                      const SizedBox(height: 7),
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text("소개: ",
-                                          style: TextStyle(
-                                  fontFamily: "Nanum_Ogbice",
-                                  fontSize: screenWidth * 0.03,
-                                  color: Colors.black,
-                                                                  ),),
-                                      Expanded(
-                                          child: Text("$introduction",
-                                          textAlign: TextAlign.left,
-                                          softWrap: true,
                                             style: TextStyle(
-                                            
-                                                                          fontFamily: "Nanum_Ogbice",
-                                                                          fontSize: screenWidth * 0.03,
-                                                                          color: Colors.black,
-                                                                    ),
-                                                                    ),
-                                        ),
+                                            fontFamily: "Nanum_Ogbice",
+                                            fontSize: screenWidth * 0.03,
+                                            color: Colors.black,),
+                                          ),
+                                          Expanded(
+                                            child: Text("$introduction",
+                                            textAlign: TextAlign.left,
+                                            softWrap: true,
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.03,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
                                         ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  };
+                          ],
+                        ),
+                      );
+                    }
+                        ),
+                      );
+                    }
+                  }
                 ),
-              ],
+              ]
             ),
           ),
         ],
