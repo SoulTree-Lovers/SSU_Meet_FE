@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/info_page.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/pages/my_page.dart';
 import 'package:ssu_meet/pages/main_page.dart';
+
+import 'package:http/http.dart' as http;
 
 class ResponsiveWebLayout extends StatefulWidget {
   final int pageIndex;
@@ -18,7 +23,47 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
   _ResponsiveWebLayoutState({required this.pageIndex});
 
   // int _selectedIndexScreen = 1; // Main Page
-  int coins = getCoin();
+  int coins = 0;
+
+  // 서버에서 코인 가져오기
+  void getCoinFromServer() async {
+    const url = 'http://localhost:8080/v1/members/mycoin';
+    var token = await storage.read(key: "token");
+
+    var response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
+      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
+      if (responseData["status"] == "SUCCESS") {
+        setState(() {
+          coins = responseData["data"]["myCoinCount"];
+          print("서버에서 코인 가져옴 ! 현재 코인 개수: $coins");
+        });
+      } else {
+        // Error
+        print("Status is Error !!");
+      }
+    } else {
+      // Network error
+      print('Failed to get data. Error: ${response.statusCode}');
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCoinFromServer();
+  }
 
   final List _children = [
     const InfoPage(),
@@ -126,6 +171,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
         onTap: (int index) {
           setState(() {
             pageIndex = index;
+            getCoinFromServer();
           });
         },
         items: const [
