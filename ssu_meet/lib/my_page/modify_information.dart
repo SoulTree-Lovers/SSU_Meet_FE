@@ -11,7 +11,6 @@ import 'package:ssu_meet/functions/age_calculation.dart';
 import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
 
-
 class ModifyPage extends StatefulWidget {
   const ModifyPage({super.key});
 
@@ -152,7 +151,8 @@ class _ModifyPageState extends State<ModifyPage> {
   @override
   void initState() {
     super.initState();
-    getOldProfileLocal();
+    // getOldProfileLocal();
+    getOldProfile();
   }
 
   @override
@@ -580,9 +580,9 @@ class _ModifyPageState extends State<ModifyPage> {
                               data.age = AgeCalculation(data.birthDate);
                               print("필수 입력 요건이 충족됨");
                               // 변경된 값 보내기
-                            //  sendModifiedProfileData(data);
-                            //  print("수정 후 데이터");
-                           //   print(json.encode(data.toJson()));
+                              sendModifiedProfileData(data);
+                              //  print("수정 후 데이터");
+                              //   print(json.encode(data.toJson()));
                               modificationCompletionNotify(context);
                             } else {
                               // print("필수 입력 조건이 충족되지 않음");

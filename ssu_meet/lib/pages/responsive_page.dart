@@ -23,7 +23,9 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
   _ResponsiveWebLayoutState({required this.pageIndex});
 
   // int _selectedIndexScreen = 1; // Main Page
-  int coins = 0;
+
+  // int coins = 0;
+  int coins = getCoin();
 
   // 서버에서 코인 가져오기
   void getCoinFromServer() async {
@@ -62,7 +64,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCoinFromServer();
+    // getCoinFromServer();
   }
 
   final List _children = [
@@ -171,7 +173,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
         onTap: (int index) {
           setState(() {
             pageIndex = index;
-            getCoinFromServer();
+            // getCoinFromServer();
           });
         },
         items: const [
