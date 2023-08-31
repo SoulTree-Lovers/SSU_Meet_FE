@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:bottom_picker/bottom_picker.dart';
+
 import 'package:ssu_meet/dept_data/temp_majors.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/user_profile_data/user_profile.dart';
@@ -22,9 +25,17 @@ class _InputProfile extends State<InputProfile> {
   List<String> genderList = ["선택하기", '남', '여'];
   List<DropdownMenuItem<Item>> collegeList = List.empty(growable: true);
   List<DropdownMenuItem<Item>> majorList = List.empty(growable: true);
+  List<String> birthYearList = List.empty(growable: true);
+  List<String> birthMonthList = List.empty(growable: true);
+  List<String> birthDayList = List.empty(growable: true);
   Item? college; //단과대
   Item? major; //전공
+  String _birthDate = '';
+
+//  String birthMonth = '';
+  // String birthDay = '';
   var data;
+  bool isDateSelected = false;
   final formKey = GlobalKey<FormState>();
 
   // api 연동 - POST 요청 함수
@@ -71,6 +82,12 @@ class _InputProfile extends State<InputProfile> {
     college = collegeList[0].value;
     majorList = Majors(0).majors;
     major = majorList[0].value;
+    // for (int i = 1900; i <= 2023; i++) birthYearList.add(i.toString());
+    // for (int i = 1; i <= 12; i++) birthMonthList.add(i.toString());
+    // for (int i = 1; i <= 31; i++) birthDayList.add(i.toString());
+    // birthYear = birthYearList[90];
+    // birthMonth = birthMonthList[0];
+    // birthDay = birthDayList[0];
     data = UserProfile(
       sex: genderList[0],
       birthDate: '',
@@ -120,99 +137,307 @@ class _InputProfile extends State<InputProfile> {
                   decoration: const BoxDecoration(
                     //배경이미지
                     image: DecorationImage(
-                        image: AssetImage("assets/images/images2/paper.png"),
-                        fit: BoxFit.fill),
+                      image: AssetImage("assets/images/images2/paper.png"),
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: screenHeight * 0.08),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: screenHeight * 0.08,
                         ),
-                        Text(
-                          "기본 정보를 등록해주세요!",
-                          style: TextStyle(
-                              fontFamily: "Nanum_Ogbice",
-                              fontSize: screenWidth * 0.1),
+                      ),
+                      Text(
+                        "기본 정보를 등록해주세요!",
+                        style: TextStyle(
+                          fontFamily: "Nanum_Ogbice",
+                          fontSize: screenWidth * 0.1,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: screenHeight * 0.02),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: screenHeight * 0.02,
                         ),
-                        Text(
-                          "*구매할 경우 보이는 정보입니다.",
-                          style: TextStyle(
-                              fontFamily: "Nanum_Ogbice",
-                              fontSize: screenWidth * 0.05),
+                      ),
+                      Text(
+                        "*구매할 경우 보이는 정보입니다.",
+                        style: TextStyle(
+                          fontFamily: "Nanum_Ogbice",
+                          fontSize: screenWidth * 0.05,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: screenHeight * 0.01),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: screenHeight * 0.01,
                         ),
-                        Text(
-                          "*성별, 생년월일은 추후 수정 불가합니다.",
-                          style: TextStyle(
-                              fontSize: 0.025 * screenWidth, color: Colors.red),
+                      ),
+                      Text(
+                        "*성별, 생년월일은 추후 수정 불가합니다.",
+                        style: TextStyle(
+                          fontSize: 0.025 * screenWidth,
+                          color: Colors.red,
                         ),
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image(
-                                image: const AssetImage(
-                                    "assets/images/images2/yellowpostit.png"),
-                                width: screenWidth * 0.85,
-                                height: screenWidth * 0.85),
-                            Positioned(
-                              left: screenWidth * 0.31,
-                              top: screenWidth * -0.05,
-                              child: SizedBox(
-                                width: screenWidth * 0.25,
-                                height: screenWidth * 0.25,
-                                child: const Image(
-                                  image: AssetImage(
-                                      "assets/images/images2/tape10.png"),
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
+                      ),
+                      Stack(
+                        children: [
+                          SizedBox(
+                            width: screenWidth * 0.95,
+                            height: screenWidth * 0.95,
+                            child: const Image(
+                              image: AssetImage(
+                                  "assets/images/images2/yellowpostit.png"),
+                              fit: BoxFit.contain,
                             ),
-                            Positioned(
-                              //텍스트 위치 조정
-                              top: screenWidth * 0.11,
-                              left: screenWidth * 0.15,
-                              child: SizedBox(
-                                width: screenWidth * 0.8,
-                                height: screenWidth * 0.9,
+                          ),
+                          Positioned(
+                            left: screenWidth * 0.33,
+                            top: screenWidth * -0.07,
+                            child: Image(
+                              image: const AssetImage(
+                                "assets/images/images2/tape10.png",
+                              ),
+                              width: screenWidth * 0.28,
+                              height: screenWidth * 0.3,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Positioned(
+                            //텍스트 위치 조정
+                            top: screenWidth * 0.13,
+                            left: screenWidth * 0.18,
+                            child: SizedBox(
+                              width: screenWidth * 0.8,
+                              height: screenWidth * 0.8,
+                              child: Form(
+                                key: formKey,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Flexible(
+                                    SizedBox(
+                                      width: screenWidth * 0.8,
+                                      height: screenWidth * 0.08,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "성별:  ",
+                                            style: TextStyle(
+                                              fontFamily: "Nanum_Ogbice",
+                                              fontSize: screenWidth * 0.05,
+                                            ),
+                                          ),
+                                          DropdownButton<String>(
+                                            value: data.sex,
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                            ),
+                                            iconSize: screenWidth * 0.04,
+                                            style:
+                                                DropdownTextStyle(screenWidth),
+                                            alignment: Alignment.center,
+                                            underline: Container(
+                                              height: screenWidth * 0.0015,
+                                              //밑줄두께
+                                              color: Colors.black,
+                                            ),
+                                            items: genderList
+                                                .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(value),
+                                                );
+                                              },
+                                            ).toList(),
+                                            onChanged: (String? newVal) {
+                                              setState(
+                                                () {
+                                                  data.sex = newVal!;
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: screenWidth * 0.8,
+                                      height: screenWidth * 0.08,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "학과: ",
+                                            style: TextStyle(
+                                              fontFamily: "Nanum_Ogbice",
+                                              fontSize: screenWidth * 0.048,
+                                            ),
+                                          ),
+                                          DropdownButton<Item>(
+                                            value: college,
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                            ),
+                                            iconSize: screenWidth * 0.04,
+                                            underline: Container(
+                                              height: screenHeight * 0.001,
+                                              color: Colors.black,
+                                            ),
+                                            style:
+                                                DropdownTextStyle(screenWidth),
+                                            items: collegeList,
+                                            onChanged: (Item? newVal) {
+                                              setState(
+                                                () {
+                                                  college = newVal;
+                                                  data.college = newVal!.title;
+                                                  majorList =
+                                                      Majors(newVal.ind).majors;
+                                                  major = majorList[0].value;
+                                                  data.major = major!.title;
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: screenWidth * 0.8,
+                                      height: screenWidth * 0.09,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              left: screenWidth * 0.095,
+                                            ),
+                                          ),
+                                          DropdownButton<Item>(
+                                            value: major,
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                            ),
+                                            iconSize: screenWidth * 0.04,
+                                            underline: Container(
+                                              height: screenHeight * 0.001,
+                                              color: Colors.black,
+                                            ),
+                                            style:
+                                                DropdownTextStyle(screenWidth),
+                                            items: majorList,
+                                            onChanged: (newVal) {
+                                              setState(
+                                                () {
+                                                  major = newVal;
+                                                  data.major = newVal!.title;
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: screenWidth * 0.01,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showBottomDatePicker(screenWidth);
+                                      },
                                       child: SizedBox(
                                         width: screenWidth * 0.8,
                                         height: screenWidth * 0.08,
                                         child: Row(
                                           children: [
                                             Text(
-                                              "성별:  ",
+                                              "생년월일: ",
+                                              style: TextStyle(
+                                                fontFamily: "Nanum_Ogbice",
+                                                fontSize: screenWidth * 0.048,
+                                              ),
+                                            ),
+                                            (!isDateSelected)
+                                                ? Text(
+                                                    "선택하기",
+                                                    style: TextStyle(
+                                                      shadows: const [
+                                                        Shadow(
+                                                          offset: Offset(0, -3),
+                                                          color: Colors.black,
+                                                        ),
+                                                      ],
+                                                      color: Colors.transparent,
+                                                      fontFamily:
+                                                          "Nanum_Ogbice",
+                                                      fontSize:
+                                                          screenWidth * 0.04,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      decorationColor:
+                                                          Colors.black,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    "${_birthDate.toString().substring(0, 4)}년 / "
+                                                    "${_birthDate.toString().substring(4, 6)}월 / "
+                                                    "${_birthDate.toString().substring(6, 8)}일",
+                                                    style: TextStyle(
+                                                      shadows: const [
+                                                        Shadow(
+                                                          offset: Offset(0, -3),
+                                                          color: Colors.black,
+                                                        ),
+                                                      ],
+                                                      color: Colors.transparent,
+                                                      fontFamily:
+                                                          "Nanum_Ogbice",
+                                                      fontSize:
+                                                          screenWidth * 0.04,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      decorationColor:
+                                                          Colors.black,
+                                                    ),
+                                                  ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                left: screenWidth * 0.01,
+                                              ),
+                                            ),
+                                            (!isDateSelected)
+                                                ? Icon(
+                                                    Icons.check_circle_outline,
+                                                    size: screenWidth * 0.03,
+                                                  )
+                                                : Icon(
+                                                    Icons.check_circle,
+                                                    size: screenWidth * 0.03,
+                                                  )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    /* Text(
+                                              "생년월일:  ",
                                               style: TextStyle(
                                                   fontFamily: "Nanum_Ogbice",
                                                   fontSize: screenWidth * 0.05),
                                             ),
                                             DropdownButton<String>(
-                                              value: data.sex,
+                                              value: birthYear,
                                               icon: const Icon(
                                                   Icons.arrow_drop_down),
                                               iconSize: screenWidth * 0.04,
+                                              underline: Container(
+                                                  height: screenHeight * 0.001,
+                                                  color: Colors.black),
                                               style: DropdownTextStyle(
                                                   screenWidth),
-                                              alignment: Alignment.center,
-                                              underline: Container(
-                                                height: screenWidth * 0.0015,
-                                                //밑줄두께
-                                                color: Colors.black,
-                                              ),
-                                              items: genderList.map<
+                                              items: birthYearList.map<
                                                   DropdownMenuItem<String>>(
-                                                (String value) {
+                                                    (String value) {
                                                   return DropdownMenuItem<
                                                       String>(
                                                     value: value,
@@ -220,338 +445,291 @@ class _InputProfile extends State<InputProfile> {
                                                   );
                                                 },
                                               ).toList(),
-                                              onChanged: (String? newVal) {
-                                                setState(
-                                                  () {
-                                                    data.sex = newVal!;
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: SizedBox(
-                                        width: screenWidth * 0.8,
-                                        height: screenWidth * 0.08,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "학과: ",
-                                              style: TextStyle(
-                                                  fontFamily: "Nanum_Ogbice",
-                                                  fontSize:
-                                                      screenWidth * 0.048),
-                                            ),
-                                            DropdownButton<Item>(
-                                              value: college,
-                                              icon: const Icon(
-                                                  Icons.arrow_drop_down),
-                                              iconSize: screenWidth * 0.04,
-                                              underline: Container(
-                                                  height: screenHeight * 0.001,
-                                                  color: Colors.black),
-                                              style: DropdownTextStyle(
-                                                  screenWidth),
-                                              items: collegeList,
-                                              onChanged: (Item? newVal) {
-                                                setState(
-                                                  () {
-                                                    college = newVal;
-                                                    data.college =
-                                                        newVal!.title;
-                                                    majorList =
-                                                        Majors(newVal.ind)
-                                                            .majors;
-                                                    major = majorList[0].value;
-                                                    data.major = major!.title;
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: SizedBox(
-                                        width: screenWidth * 0.8,
-                                        height: screenWidth * 0.08,
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: screenWidth * 0.095),
-                                            ),
-                                            DropdownButton<Item>(
-                                              value: major,
-                                              icon: const Icon(
-                                                  Icons.arrow_drop_down),
-                                              iconSize: screenWidth * 0.04,
-                                              underline: Container(
-                                                  height: screenHeight * 0.001,
-                                                  color: Colors.black),
-                                              style: DropdownTextStyle(
-                                                  screenWidth),
-                                              items: majorList,
                                               onChanged: (newVal) {
                                                 setState(
-                                                  () {
-                                                    major = newVal;
-                                                    data.major = newVal!.title;
+                                                      () {
+                                                        birthYear = newVal!;
+                                                    data.birthDate = newVal.substring(2,4);
                                                   },
                                                 );
                                               },
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: SizedBox(
-                                        width: screenWidth * 0.8,
-                                        height: screenWidth * 0.1,
-                                        child: Row(
-                                          textBaseline: TextBaseline.alphabetic,
-                                          children: [
                                             Text(
-                                              "생년월일: ",
+                                              "년  ",
                                               style: TextStyle(
                                                   fontFamily: "Nanum_Ogbice",
-                                                  fontSize: screenWidth * 0.05),
+                                                  fontSize: screenWidth * 0.04),
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: screenWidth * 0.02),
-                                            ),
-                                            SizedBox(
-                                              width: screenWidth * 0.16,
-                                              height: screenWidth * 0.1,
-                                              //입력칸 너비,높이 조절
-                                              child: MyFormField(
-                                                key: const ValueKey(1),
-                                                hintText: "YYMMDD",
-                                                screenWidth: screenWidth,
-                                                validator: (val) {
-                                                  if (val == '' ||
-                                                      val == null) {
-                                                    return "필수입력";
-                                                  }
-                                                  return null;
-                                                },
-                                                onSaved: (val) {
-                                                  setState(() {
-                                                    data.birthDate = val;
-                                                  });
-                                                },
+                                            DropdownButton<String>(
+                                              value: birthMonth,
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down),
+                                              iconSize: screenWidth * 0.04,
+                                              underline: Container(
+                                                  height: screenHeight * 0.001,
+                                                  color: Colors.black),
+                                              style: DropdownTextStyle(
+                                                  screenWidth
                                               ),
-                                            ),
-
-                                            Text(
-                                              "  키: ",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.05,
-                                              ),
-                                            ),
-                                            // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
-                                            SizedBox(
-                                              width: screenWidth * 0.09,
-                                              height: screenWidth * 0.1,
-                                              //입력 칸 너비,높이 조절
-                                              child: MyFormField(
-                                                key: const ValueKey(2),
-                                                hintText: "입력",
-                                                screenWidth: screenWidth,
-                                                validator: (val) {
-                                                  if (val == '' ||
-                                                      val == null) {
-                                                    return "필수입력";
-                                                  }
-                                                  return null;
-                                                },
-                                                onSaved: (val) {
-                                                  setState(
-                                                    () {
-                                                      data.height =
-                                                          double.parse(val)
-                                                              .round();
-                                                    },
+                                              items: birthMonthList.map<
+                                                  DropdownMenuItem<String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value),
                                                   );
                                                 },
-                                              ),
+                                              ).toList(),
+                                              onChanged: (newVal) {
+                                                setState(
+                                                      () {
+                                                    birthMonth = newVal!;
+                                                    },
+                                                );
+                                              },
                                             ),
                                             Text(
-                                              "cm",
+                                              "월  ",
                                               style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.035,
-                                              ),
+                                                  fontFamily: "Nanum_Ogbice",
+                                                  fontSize: screenWidth * 0.04),
+                                            ),
+                                            DropdownButton<String>(
+                                              value: birthDay,
+                                              icon: const Icon(
+                                                  Icons.arrow_drop_down),
+                                              iconSize: screenWidth * 0.04,
+                                              underline: Container(
+                                                  height: screenHeight * 0.001,
+                                                  color: Colors.black),
+                                              style: DropdownTextStyle(
+                                                  screenWidth),
+                                              items: birthDayList.map<
+                                                  DropdownMenuItem<String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                },
+                                              ).toList(),
+                                              onChanged: (newVal) {
+                                                setState(
+                                                      () {
+                                                    birthDay = newVal!;
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                            Text(
+                                              "일  ",
+                                              style: TextStyle(
+                                                  fontFamily: "Nanum_Ogbice",
+                                                  fontSize: screenWidth * 0.04),
                                             ),
                                           ],
                                         ),
                                       ),
-                                    ),
-                                    Flexible(
-                                      child: SizedBox(
-                                        width: screenWidth * 0.5,
-                                        height: screenWidth * 0.07,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "SNS: ",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.05,
-                                              ),
+                                    ),*/
+                                    SizedBox(
+                                      width: screenWidth * 0.8,
+                                      height: screenWidth * 0.08,
+                                      child: Row(
+                                        textBaseline: TextBaseline.alphabetic,
+                                        children: [
+                                          Text(
+                                            "  키:  ",
+                                            style: TextStyle(
+                                              fontFamily: "Nanum_Ogbice",
+                                              fontSize: screenWidth * 0.05,
                                             ),
-                                            Flexible(
-                                              child: MyFormField(
-                                                key: const ValueKey(3),
-                                                hintText: "1.인스타",
-                                                screenWidth: screenWidth,
-                                                onSaved: (val) {
-                                                  setState(
-                                                    () {
-                                                      data.instaId = val;
-                                                    },
-                                                  );
-                                                },
-                                              ),
+                                          ),
+                                          // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
+                                          SizedBox(
+                                            width: screenWidth * 0.09,
+                                            height: screenWidth * 0.1,
+                                            //입력 칸 너비,높이 조절
+                                            child: MyFormField(
+                                              key: const ValueKey(1),
+                                              hintText: "입력",
+                                              screenWidth: screenWidth,
+                                              validator: (val) {
+                                                if (val == '' || val == null) {
+                                                  return "필수입력";
+                                                }
+                                                return null;
+                                              },
+                                              onSaved: (val) {
+                                                setState(
+                                                  () {
+                                                    data.height =
+                                                        double.parse(val)
+                                                            .round();
+                                                  },
+                                                );
+                                              },
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Text(
+                                            "cm",
+                                            style: TextStyle(
+                                              fontFamily: "Nanum_Ogbice",
+                                              fontSize: screenWidth * 0.035,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Flexible(
-                                      child: SizedBox(
-                                        width: screenWidth * 0.5,
-                                        height: screenWidth * 0.07,
-                                        child: Container(
-                                          padding: EdgeInsets.only(
-                                            left: screenWidth * 0.09,
+                                    SizedBox(
+                                      width: screenWidth * 0.5,
+                                      height: screenWidth * 0.07,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "SNS: ",
+                                            style: TextStyle(
+                                              fontFamily: "Nanum_Ogbice",
+                                              fontSize: screenWidth * 0.05,
+                                            ),
                                           ),
-                                          child: MyFormField(
-                                            key: const ValueKey(4),
-                                            hintText: "2.카카오",
-                                            screenWidth: screenWidth,
-                                            onSaved: (val) {
-                                              setState(
-                                                () {
-                                                  data.kakaoId = val;
-                                                },
-                                              );
-                                            },
+                                          Flexible(
+                                            child: MyFormField(
+                                              hintText: "1.인스타",
+                                              screenWidth: screenWidth,
+                                              onSaved: (val) {
+                                                setState(
+                                                  () {
+                                                    data.instaId = val;
+                                                  },
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                    Flexible(
-                                      child: SizedBox(
-                                        width: screenWidth * 0.5,
-                                        height: screenWidth * 0.07,
-                                        child: Container(
-                                          padding: EdgeInsets.only(
-                                            left: screenWidth * 0.09,
-                                          ),
-                                          child: MyFormField(
-                                            key: const ValueKey(5),
-                                            hintText: "3.전화번호",
-                                            screenWidth: screenWidth,
-                                            onSaved: (val) {
-                                              setState(
-                                                () {
-                                                  data.phoneNumber = val;
-                                                },
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Padding(
+                                    SizedBox(
+                                      width: screenWidth * 0.5,
+                                      height: screenWidth * 0.07,
+                                      child: Container(
                                         padding: EdgeInsets.only(
-                                          top: screenWidth * 0.015,
+                                          left: screenWidth * 0.09,
+                                        ),
+                                        child: MyFormField(
+                                          hintText: "2.카카오",
+                                          screenWidth: screenWidth,
+                                          onSaved: (val) {
+                                            setState(
+                                              () {
+                                                data.kakaoId = val;
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
-                                    Flexible(
-                                      child: Text(
-                                        "*SNS는 셋 중 하나 이상 필수로 입력해주세요.",
-                                        style: TextStyle(
-                                          fontSize: 0.02 * screenWidth,
-                                          color: Colors.red,
+                                    SizedBox(
+                                      width: screenWidth * 0.5,
+                                      height: screenWidth * 0.07,
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                          left: screenWidth * 0.09,
                                         ),
+                                        child: MyFormField(
+                                          hintText: "3.전화번호",
+                                          screenWidth: screenWidth,
+                                          onSaved: (val) {
+                                            setState(
+                                              () {
+                                                data.phoneNumber = val;
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: screenWidth * 0.015,
+                                      ),
+                                    ),
+                                    Text(
+                                      "*SNS는 셋 중 하나 이상 필수로 입력해주세요.",
+                                      style: TextStyle(
+                                        fontSize: 0.02 * screenWidth,
+                                        color: Colors.red,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: screenWidth * 0.07,
                         ),
-                        Flexible(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: screenWidth * 0.07,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 5,
+                          fixedSize: Size(
+                            screenWidth * 0.23,
+                            screenWidth * 0.08,
+                          ),
+                          side: const BorderSide(
+                            color: Colors.black,
+                            width: 0.5,
+                          ),
+                          backgroundColor:
+                              const Color.fromRGBO(255, 255, 255, 1),
+                          shadowColor: const Color.fromRGBO(0, 0, 0, 1),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "작성 완료",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.038,
+                              fontFamily: "Nanum_Ogbice",
                             ),
                           ),
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 5,
-                            fixedSize:
-                                Size(screenWidth * 0.23, screenWidth * 0.08),
-                            side: const BorderSide(
-                                color: Colors.black, width: 0.5),
-                            backgroundColor:
-                                const Color.fromRGBO(255, 255, 255, 1),
-                            shadowColor: const Color.fromRGBO(0, 0, 0, 1),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "작성 완료",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: screenWidth * 0.038,
-                                fontFamily: "Nanum_Ogbice",
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              formKey.currentState!
-                                  .save(); //생년월일, 키 제대로 입력 시 저장.
-                              if (data.sex !=
-                                      genderList[0] && //나머지 조건들 한 번 더 체크
-                                  data.college != collegeList[0].value!.title &&
-                                  data.major != majorList[0].value!.title &&
-                                  (data.instaId != '' ||
-                                      data.kakaoId != '' ||
-                                      data.phoneNumber != '')) {
-                                data.age = AgeCalculation(data.birthDate);
-                                print("필수 입력 요건이 충족됨");
-                                // api 요청
-                                sendUserProfileData(data).then((result) {
-                                  if (result == 0) {
-                                    registrationCompletionNotify(context);
-                                  }
-                                });
-                              } else {
-                                //print("필수 입력 조건이 충족되지 않음");
-                                alertRequiredInput(context);
-                              }
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save(); //키 제대로 입력 시 저장.
+                            if (data.sex != genderList[0] && //나머지 조건들 한 번 더 체크
+                                data.college != collegeList[0].value!.title &&
+                                data.major != majorList[0].value!.title &&
+                                isDateSelected &&
+                                (data.instaId != '' ||
+                                    data.kakaoId != '' ||
+                                    data.phoneNumber != '')) {
+                              data.birthDate =
+                                  _birthDate.toString().substring(2, 8);
+                              data.age = AgeCalculation(data.birthDate);
+                              print("필수 입력 요건이 충족됨");
+                              // api 요청
+                              sendUserProfileData(data).then((result) {
+                                if (result == 0) {
+                                  registrationCompletionNotify(context);
+                                }
+                              });
                             } else {
-                              // print("필수 입력 조건이 충족되지 않음");
+                              //print("필수 입력 조건이 충족되지 않음");
                               alertRequiredInput(context);
                             }
-                          },
-                        ),
-                      ],
-                    ),
+                          } else {
+                            // print("필수 입력 조건이 충족되지 않음");
+                            alertRequiredInput(context);
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -560,5 +738,30 @@ class _InputProfile extends State<InputProfile> {
         ),
       ),
     );
+  }
+
+  void showBottomDatePicker(double screenWidth) {
+    BottomPicker.date(
+      title: "생년월일을 입력해주세요!",
+      titleStyle: TextStyle(
+        fontFamily: "Nanum_Ogbice",
+        fontSize: screenWidth * 0.05,
+      ),
+      onSubmit: (index) {
+        setState(() {
+          _birthDate =
+              index.toString().replaceAll(RegExp('[^0-9]'), "").substring(0, 8);
+          isDateSelected = true;
+        });
+      },
+      buttonSingleColor: Colors.black,
+      maxDateTime: DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+      initialDateTime: DateTime(2000, 1, 1),
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+    ).show(context);
   }
 }

@@ -5,7 +5,6 @@ int AgeCalculation(String val) {
   int currentDay = DateTime.now().day;
   int _age;
 
-  if (val.length != 6) print("error:생년월일 6자리를 입력하세요");
 
   int birthYear = int.parse(val.substring(0, 2));
   int birthMonth = int.parse(val.substring(2, 4));
