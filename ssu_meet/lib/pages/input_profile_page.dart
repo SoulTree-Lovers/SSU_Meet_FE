@@ -25,15 +25,11 @@ class _InputProfile extends State<InputProfile> {
   List<String> genderList = ["선택하기", '남', '여'];
   List<DropdownMenuItem<Item>> collegeList = List.empty(growable: true);
   List<DropdownMenuItem<Item>> majorList = List.empty(growable: true);
-  List<String> birthYearList = List.empty(growable: true);
-  List<String> birthMonthList = List.empty(growable: true);
-  List<String> birthDayList = List.empty(growable: true);
+ // List<String> birthYearList = List.empty(growable: true);
+ // List<String> birthMonthList = List.empty(growable: true);
+ // List<String> birthDayList = List.empty(growable: true);
   Item? college; //단과대
   Item? major; //전공
-  String _birthDate = '';
-
-//  String birthMonth = '';
-  // String birthDay = '';
   var data;
   bool isDateSelected = false;
   final formKey = GlobalKey<FormState>();
@@ -82,12 +78,6 @@ class _InputProfile extends State<InputProfile> {
     college = collegeList[0].value;
     majorList = Majors(0).majors;
     major = majorList[0].value;
-    // for (int i = 1900; i <= 2023; i++) birthYearList.add(i.toString());
-    // for (int i = 1; i <= 12; i++) birthMonthList.add(i.toString());
-    // for (int i = 1; i <= 31; i++) birthDayList.add(i.toString());
-    // birthYear = birthYearList[90];
-    // birthMonth = birthMonthList[0];
-    // birthDay = birthDayList[0];
     data = UserProfile(
       sex: genderList[0],
       birthDate: '',
@@ -133,7 +123,7 @@ class _InputProfile extends State<InputProfile> {
               child: SingleChildScrollView(
                 child: Container(
                   width: screenWidth,
-                  height: screenWidth * 2,
+                  height: screenHeight,
                   decoration: const BoxDecoration(
                     //배경이미지
                     image: DecorationImage(
@@ -192,20 +182,20 @@ class _InputProfile extends State<InputProfile> {
                           ),
                           Positioned(
                             left: screenWidth * 0.33,
-                            top: screenWidth * -0.07,
+                            top: screenWidth * -0.08,
                             child: Image(
                               image: const AssetImage(
                                 "assets/images/images2/tape10.png",
                               ),
-                              width: screenWidth * 0.28,
-                              height: screenWidth * 0.3,
+                              width: screenWidth * 0.3,
+                              height: screenWidth * 0.32,
                               fit: BoxFit.contain,
                             ),
                           ),
                           Positioned(
                             //텍스트 위치 조정
-                            top: screenWidth * 0.13,
-                            left: screenWidth * 0.18,
+                            top: screenWidth * 0.14,
+                            left: screenWidth * 0.22,
                             child: SizedBox(
                               width: screenWidth * 0.8,
                               height: screenWidth * 0.8,
@@ -217,7 +207,7 @@ class _InputProfile extends State<InputProfile> {
                                   children: <Widget>[
                                     SizedBox(
                                       width: screenWidth * 0.8,
-                                      height: screenWidth * 0.08,
+                                      height: screenWidth * 0.09,
                                       child: Row(
                                         children: [
                                           Text(
@@ -263,7 +253,7 @@ class _InputProfile extends State<InputProfile> {
                                     ),
                                     SizedBox(
                                       width: screenWidth * 0.8,
-                                      height: screenWidth * 0.08,
+                                      height: screenWidth * 0.09,
                                       child: Row(
                                         children: [
                                           Text(
@@ -337,11 +327,6 @@ class _InputProfile extends State<InputProfile> {
                                         ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: screenWidth * 0.01,
-                                      ),
-                                    ),
                                     GestureDetector(
                                       onTap: () {
                                         showBottomDatePicker(screenWidth);
@@ -364,7 +349,7 @@ class _InputProfile extends State<InputProfile> {
                                                     style: TextStyle(
                                                       shadows: const [
                                                         Shadow(
-                                                          offset: Offset(0, -3),
+                                                          offset: Offset(0, -1),
                                                           color: Colors.black,
                                                         ),
                                                       ],
@@ -380,9 +365,9 @@ class _InputProfile extends State<InputProfile> {
                                                     ),
                                                   )
                                                 : Text(
-                                                    "${_birthDate.toString().substring(0, 4)}년 / "
-                                                    "${_birthDate.toString().substring(4, 6)}월 / "
-                                                    "${_birthDate.toString().substring(6, 8)}일",
+                                                    "${data.birthDate.toString().substring(0, 4)}년 / "
+                                                    "${data.birthDate.toString().substring(4, 6)}월 / "
+                                                    "${data.birthDate.toString().substring(6, 8)}일",
                                                     style: TextStyle(
                                                       shadows: const [
                                                         Shadow(
@@ -535,7 +520,7 @@ class _InputProfile extends State<InputProfile> {
                                     ),*/
                                     SizedBox(
                                       width: screenWidth * 0.8,
-                                      height: screenWidth * 0.08,
+                                      height: screenWidth * 0.07,
                                       child: Row(
                                         textBaseline: TextBaseline.alphabetic,
                                         children: [
@@ -548,7 +533,7 @@ class _InputProfile extends State<InputProfile> {
                                           ),
                                           // Padding(padding: EdgeInsets.only(left:screenWidth*0.056)),
                                           SizedBox(
-                                            width: screenWidth * 0.09,
+                                            width: screenWidth * 0.12,
                                             height: screenWidth * 0.1,
                                             //입력 칸 너비,높이 조절
                                             child: MyFormField(
@@ -556,11 +541,11 @@ class _InputProfile extends State<InputProfile> {
                                               hintText: "입력",
                                               screenWidth: screenWidth,
                                               validator: (val) {
-                                                if (val == '' || val == null) {
-                                                  return "필수입력";
-                                                }
-                                                return null;
-                                              },
+                                              if (val == '' || val == null) {
+                                                return "필수입력";
+                                              }
+                                              return null;
+                                            },
                                               onSaved: (val) {
                                                 setState(
                                                   () {
@@ -570,6 +555,12 @@ class _InputProfile extends State<InputProfile> {
                                                   },
                                                 );
                                               },
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter(
+                                                  RegExp('[0-9.]'),
+                                                  allow: true
+                                                )
+                                              ],
                                             ),
                                           ),
                                           Text(
@@ -596,6 +587,7 @@ class _InputProfile extends State<InputProfile> {
                                           ),
                                           Flexible(
                                             child: MyFormField(
+                                              key: const ValueKey(2),
                                               hintText: "1.인스타",
                                               screenWidth: screenWidth,
                                               onSaved: (val) {
@@ -652,7 +644,7 @@ class _InputProfile extends State<InputProfile> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                        top: screenWidth * 0.015,
+                                        top: screenWidth * 0.02,
                                       ),
                                     ),
                                     Text(
@@ -709,9 +701,7 @@ class _InputProfile extends State<InputProfile> {
                                 (data.instaId != '' ||
                                     data.kakaoId != '' ||
                                     data.phoneNumber != '')) {
-                              data.birthDate =
-                                  _birthDate.toString().substring(2, 8);
-                              data.age = AgeCalculation(data.birthDate);
+                              data.age = AgeCalculation(data.birthDate.toString().substring(2,8));
                               print("필수 입력 요건이 충족됨");
                               // api 요청
                               sendUserProfileData(data).then((result) {
@@ -749,7 +739,7 @@ class _InputProfile extends State<InputProfile> {
       ),
       onSubmit: (index) {
         setState(() {
-          _birthDate =
+          data.birthDate =
               index.toString().replaceAll(RegExp('[^0-9]'), "").substring(0, 8);
           isDateSelected = true;
         });

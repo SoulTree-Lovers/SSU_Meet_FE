@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MyFormField extends StatelessWidget {
   final String hintText;
@@ -6,6 +7,7 @@ class MyFormField extends StatelessWidget {
   final FormFieldValidator? validator;
   final FormFieldSetter? onSaved;
   final String? initText;
+  final List<TextInputFormatter>? inputFormatters;
 
   const MyFormField({
     Key? key,
@@ -14,6 +16,7 @@ class MyFormField extends StatelessWidget {
     this.initText,
     this.validator,
     this.onSaved,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -24,9 +27,8 @@ class MyFormField extends StatelessWidget {
       cursorHeight: screenWidth * 0.03,
       cursorColor: Colors.black,
       style: TextStyle(
-        fontSize: screenWidth * 0.05,
         fontFamily: "Nanum_Ogbice",
-        color: Colors.black,
+        fontSize: screenWidth * 0.05,
       ),
       decoration: InputDecoration(
         errorStyle: TextStyle(fontSize: screenWidth * 0.02),
@@ -35,12 +37,16 @@ class MyFormField extends StatelessWidget {
           fontSize: screenWidth * 0.04,
         ),
         focusedErrorBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: screenWidth * 0.0015,
+          ),
         ),
         errorBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.black, width: screenWidth * 0.0015),
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: screenWidth * 0.0015,
+          ),
         ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -65,6 +71,7 @@ class MyFormField extends StatelessWidget {
       onSaved: onSaved,
       initialValue: initText,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      inputFormatters: inputFormatters,
     );
   }
 }
