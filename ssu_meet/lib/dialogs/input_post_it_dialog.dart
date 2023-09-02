@@ -101,10 +101,11 @@ class _InputPostIt extends State<InputPostIt> {
     // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
+    // print("responseData: ${responseData["status"]}");
+
     if (responseData["status"] == "SUCCESS") {
       isExceed = 0;
-    }
-    if (responseData["status"] == "ERROR") {
+    } else if (responseData["status"] == "ERROR") {
       isExceed = 1;
     } else {
       print('Failed to send data. Error: ${response.statusCode}');

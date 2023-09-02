@@ -26,13 +26,14 @@ class _MainPageState extends State<MainPage> {
   bool isLoading = false;
   bool hasMoreData = true; // Flag to track if more data can be fetched
   int allStickyCount = 0;
+  int myStickyCount = 0;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
     fetchData(); // Initial data fetch
-    page += 1;
+    // page += 1;
 
     _scrollController.addListener(() {
       if (_scrollController.offset >= 200) {
@@ -53,7 +54,7 @@ class _MainPageState extends State<MainPage> {
         _scrollController.position.maxScrollExtent) {
       if (hasMoreData) {
         fetchData(); // Fetch more data when reaching the end
-        page += 1;
+        // page += 1;
       }
     }
   }
@@ -77,16 +78,21 @@ class _MainPageState extends State<MainPage> {
       'Authorization': 'Bearer $token',
     });
 
-    print(response.statusCode);
+    print("response status code: ${response.statusCode}");
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(utf8.decode(response.bodyBytes));
       // final responseData = json.decode(response.body);
       final stickyData = responseData["data"]["stickyData"];
-      print(responseData);
+      print("response data: $responseData");
       // 전체 포스트잇 개수 초기화 (page가 0일 때만)
+      print("page: $page");
       if (page == 0) {
-        allStickyCount = responseData["data"]["allCount"];
+        allStickyCount = responseData["data"]["allStickyCount"];
+        myStickyCount = responseData["data"]["myStickyCount"];
+
+        print("전체 포스트잇 개수 가져오기: $allStickyCount");
+        print("나의 포스트잇 개수 가져오기: $myStickyCount");
       }
 
       if (stickyData.isEmpty) {
@@ -96,7 +102,7 @@ class _MainPageState extends State<MainPage> {
       } else {
         setState(() {
           data.addAll(stickyData);
-          // page++; // 페이지 += 1
+          page++; // 페이지 += 1
         });
       }
     }
@@ -124,6 +130,7 @@ class _MainPageState extends State<MainPage> {
       data = [];
       isLoading = false;
       hasMoreData = true;
+      fetchData();
     });
   }
 
@@ -161,7 +168,7 @@ class _MainPageState extends State<MainPage> {
                         width: 3,
                       ),
                       Text(
-                        "나의 포스트잇: $myPostIt 개",
+                        "나의 포스트잇: $myStickyCount 개",
                         style: TextStyle(
                           fontFamily: "NanumSquareRoundR",
                           fontSize: screenWidth * 0.03,
@@ -173,7 +180,7 @@ class _MainPageState extends State<MainPage> {
                         width: 3,
                       ),
                       Text(
-                        "현재 등록된 포스트잇: $totalPostIt 장",
+                        "현재 등록된 포스트잇: $allStickyCount 장",
                         style: TextStyle(
                           fontFamily: "NanumSquareRoundR",
                           fontSize: screenWidth * 0.03,
@@ -198,7 +205,7 @@ class _MainPageState extends State<MainPage> {
                     // itemCount: data.length + (hasMoreData ? 1 : 0),
                     itemCount: data.length,
                     itemBuilder: (context, index) {
-                      print("data: $data");
+                      print("----data: $data");
                       print("data.length: ${data.length}");
 
                       var postIt = data[index];

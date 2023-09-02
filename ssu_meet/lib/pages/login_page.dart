@@ -371,12 +371,12 @@ class _LoginPageState extends State<LoginPage> {
             key: "token", value: responseData["data"]["accessToken"]);
         //유세인트 인증에 성공한 경우
         print("유세인트 인증 성공");
-        if (message == "Need new register") {
+        if (message == "RequiredFirstRegistration") {
           print("개인정보등록이 필요합니다.");
           var token = await storage.read(key: "token");
           print("token: $token");
           return 1;
-        } else if (message == "Main Ok") {
+        } else if (message == "RegisteredUser") {
           print("이미 개인정보등록이 완료된 사용자입니다.");
           return 2;
         }
