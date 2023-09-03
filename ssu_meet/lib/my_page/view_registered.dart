@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/my_page/registered_dialog.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:ssu_meet/pages/login_page.dart';
 
@@ -13,6 +12,7 @@ class ViewRegistered extends StatelessWidget {
   Future<dynamic> getRegisteredStickyData() async {
     const url = 'http://localhost:8080/v1/members/mypage/sticky-list';
     var token = await storage.read(key: "token");
+
 
     final response = await http.get(
       Uri.parse(url),
@@ -150,7 +150,7 @@ class ViewRegistered extends StatelessWidget {
                                     nickname: nickname,
                                     hobbies: hobbies,
                                     mbti: mbti,
-                                    introduction: introduction,
+                                    introduce: introduction,
                                     ideals: ideals,
                                   ),
                                 );

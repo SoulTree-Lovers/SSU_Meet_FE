@@ -5,14 +5,14 @@ class RegisteredDialog extends StatefulWidget {
   final String nickname;
   final List hobbies;
   final String mbti;
-  final String introduction;
+  final String introduce;
   final List ideals;
 
   const RegisteredDialog({
     required this.nickname,
     required this.hobbies,
     required this.mbti,
-    required this.introduction,
+    required this.introduce,
     required this.ideals, 
     Key? key}) : super(key: key);
 
@@ -129,7 +129,7 @@ class _RegisteredDialogState extends State<RegisteredDialog> {
                             ),
                           ),
                           Expanded(
-                            child: Text("${widget.introduction}",
+                            child: Text("${widget.introduce}",
                               textAlign: TextAlign.left,
                               softWrap: true,
                               style: TextStyle(
