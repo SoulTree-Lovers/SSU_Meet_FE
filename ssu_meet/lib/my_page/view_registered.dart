@@ -13,7 +13,6 @@ class ViewRegistered extends StatelessWidget {
     const url = 'http://localhost:8080/v1/members/mypage/sticky-list';
     var token = await storage.read(key: "token");
 
-
     final response = await http.get(
       Uri.parse(url),
       headers: {
@@ -121,7 +120,7 @@ class ViewRegistered extends StatelessWidget {
                             var nickname = postIt["stickyData"]["nickname"];
                             var hobbies = postIt["stickyData"]["hobbies"];
                             var mbti = postIt["stickyData"]["mbti"];
-                            var introduction =
+                            var introduce =
                                 postIt["stickyData"]["introduce"];
                             var ideals = postIt["stickyData"]["ideals"];
 
@@ -150,7 +149,7 @@ class ViewRegistered extends StatelessWidget {
                                     nickname: nickname,
                                     hobbies: hobbies,
                                     mbti: mbti,
-                                    introduce: introduction,
+                                    introduce: introduce,
                                     ideals: ideals,
                                   ),
                                 );
@@ -236,7 +235,7 @@ class ViewRegistered extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    "$introduction",
+                                                    "$introduce",
                                                     textAlign: TextAlign.left,
                                                     softWrap: true,
                                                     style: TextStyle(

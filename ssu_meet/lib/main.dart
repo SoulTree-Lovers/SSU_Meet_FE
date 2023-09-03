@@ -37,19 +37,13 @@ class MyApp extends StatelessWidget {
       //   // 2: 마이 페이지
       // ),
 
-
-      //  home: MyPage(),
+      // home: MyPage(),
       // home: InfiniteScrollDemo(),
 
-      home: LoginPage(),
-
-      
-      // home: InfiniteScrollDemo(),
-
-
-      // home: InputProfile(),
-      // home: InputPostIt(),
-      // home: PurchasedPostItPage(),
+        home: LoginPage(),
+    // home: InputProfile(),
+    // home: InputPostIt(),
+    // home: PurchasedPostItPage(),
     );
-  }
+    }
 }
