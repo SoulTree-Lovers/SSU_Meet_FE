@@ -130,7 +130,7 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
                 Icon(Icons.keyboard_arrow_down,
                     color: Color(0xff717171), size: 30),
                 Text(
-                  "등록한 포스트잇",
+                  "구입한 포스트잇",
                   style: TextStyle(
                       color: Color(0xff717171),
                       fontWeight: FontWeight.w600,
