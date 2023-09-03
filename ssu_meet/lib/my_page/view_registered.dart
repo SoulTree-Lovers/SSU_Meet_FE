@@ -3,23 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/my_page/registered_dialog.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:ssu_meet/pages/login_page.dart';
+
 class ViewRegistered extends StatelessWidget {
   const ViewRegistered({super.key});
 
   // API 연동 (등록한 포스트잇 가져오기)
-  /* Future<dynamic> getRegisteredStickyData() async {
+  Future<dynamic> getRegisteredStickyData() async {
     const url = 'http://localhost:8080/v1/members/mypage/sticky-list';
+    var token = await storage.read(key: "token");
+
     final response = await http.get(
       Uri.parse(url),
-      headers: {"Authorization":"-----"},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
-    final responseData = json.decode(response.body);
 
-    if (responseData["status"] == 200) {
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
       final message = responseData["message"];
 
       // 등록한 포스트잇 가져오기 성공
-      if (message == "ExistPostIt") {
+      if (message == "ExistRegisterPostIt") {
         return responseData["data"]["stickyData"];
       } else {
         print("등록한 포스트잇이 없습니다.");
@@ -29,7 +38,7 @@ class ViewRegistered extends StatelessWidget {
       print("Failed to get data. Error: ${response.statusCode}");
       return 0;
     }
-  } */
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +83,18 @@ class ViewRegistered extends StatelessWidget {
                     Text(
                       "등록한 포스트잇",
                       style: TextStyle(
-                          color: Color(0xff717171),
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "NanumSquareAc",
-                          fontSize: 16),
+                        color: Color(0xff717171),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "NanumSquareAc",
+                        fontSize: 16,
+                      ),
                     )
                   ],
                 ),
                 const SizedBox(height: 25),
                 FutureBuilder(
-                  future: getRegisteredPostItData(),
+                  // future: getRegisteredPostItData(),
+                  future: getRegisteredStickyData(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
@@ -102,6 +113,7 @@ class ViewRegistered extends StatelessWidget {
                           ),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
+                            print("index: $index");
                             var postIt = snapshot.data![index];
                             var id = postIt["stickyId"];
                             var isSold = postIt["isSold"];
