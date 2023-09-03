@@ -65,6 +65,9 @@ void registrationCompletionNotify(BuildContext context) {
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
                 shadowColor: Colors.black26,
+                side: const BorderSide(
+                  color: Colors.black,
+                ),
                 fixedSize: const Size(70, 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
