@@ -117,20 +117,20 @@ class _InputProfile extends State<InputProfile> {
           // 뒤로가기 버튼 동작을 막으려면 true를 반환합니다.
           return true;
         },
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  width: screenWidth,
-                  height: screenHeight,
-                  decoration: const BoxDecoration(
-                    //배경이미지
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/images2/paper.png"),
-                      fit: BoxFit.fill,
-                    ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: screenWidth,
+                height: screenHeight,
+                decoration: const BoxDecoration(
+                  //배경이미지
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/images2/paper.png"),
+                    fit: BoxFit.fill,
                   ),
+                ),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Padding(
@@ -711,11 +711,11 @@ class _InputProfile extends State<InputProfile> {
                               });
                             } else {
                               //print("필수 입력 조건이 충족되지 않음");
-                              alertRequiredInput(context);
+                              alertRequiredInput(context,screenWidth);
                             }
                           } else {
                             // print("필수 입력 조건이 충족되지 않음");
-                            alertRequiredInput(context);
+                            alertRequiredInput(context,screenWidth);
                           }
                         },
                       ),
@@ -723,8 +723,8 @@ class _InputProfile extends State<InputProfile> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
