@@ -156,7 +156,9 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(
+              width: 10,
+            ),
             ElevatedButton(
               onPressed: () {
                 // DELETE api 요청 함수

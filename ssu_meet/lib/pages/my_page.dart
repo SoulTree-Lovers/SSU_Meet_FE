@@ -248,15 +248,16 @@ void logoutDialog(BuildContext context) {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shadowColor: Colors.black26,
-                    side: const BorderSide(
-                      color: Colors.black,
-                    ),
-                    fixedSize: const Size(70, 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )),
+                  backgroundColor: Colors.white,
+                  shadowColor: Colors.black26,
+                  side: const BorderSide(
+                    color: Colors.black,
+                  ),
+                  fixedSize: const Size(70, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
                 child: const Text(
                   "취소",
                   style: TextStyle(
@@ -284,15 +285,16 @@ void logoutDialog(BuildContext context) {
                   // print("token is deleted: $token");
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shadowColor: Colors.black26,
-                    side: const BorderSide(
-                      color: Colors.black,
-                    ),
-                    fixedSize: const Size(70, 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )),
+                  backgroundColor: Colors.black,
+                  shadowColor: Colors.black26,
+                  side: const BorderSide(
+                    color: Colors.black,
+                  ),
+                  fixedSize: const Size(70, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
                 child: const Text(
                   "확인",
                   style: TextStyle(

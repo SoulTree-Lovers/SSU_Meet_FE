@@ -48,8 +48,8 @@ class _MainPostItDialog extends State<MainPostItDialog> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      backgroundColor:
-          Colors.transparent, // Set the background color to transparent
+      backgroundColor: Colors.transparent,
+      // Set the background color to transparent
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -325,7 +325,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-             /*   GestureDetector(
+                /*   GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                     final successToBuy = buyPostIt(stickyId);
@@ -434,6 +434,9 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                       //fontWeight: FontWeight.w500
                     ),
                   ),
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -548,7 +551,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-             /*   GestureDetector(
+                /*   GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -628,15 +631,20 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shadowColor: Colors.black26,
-                      side: const BorderSide(
-                        color: Colors.black,
-                      ),
-                      fixedSize: const Size(70, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
+                    padding: const EdgeInsets.only(
+                      left: 0,
+                      right: 0,
+                    ),
+                    backgroundColor: Colors.white,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   child: const Text(
                     "더 둘러보기",
                     style: TextStyle(
@@ -646,6 +654,9 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                       //fontWeight: FontWeight.w500
                     ),
                   ),
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -658,15 +669,20 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shadowColor: Colors.black26,
-                      side: const BorderSide(
-                        color: Colors.black,
-                      ),
-                      fixedSize: const Size(70, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
+                    padding: const EdgeInsets.only(
+                      left: 0,
+                      right: 0,
+                    ),
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   child: const Text(
                     "마이페이지 이동",
                     style: TextStyle(
@@ -677,7 +693,6 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ],
@@ -721,7 +736,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-          /*  Row(
+            /*  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
@@ -832,7 +847,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-           /* Row(
+            /* Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
