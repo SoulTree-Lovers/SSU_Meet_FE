@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/widgets/purchased_page_post_it.dart';
 import 'package:http/http.dart' as http;
 
@@ -97,8 +98,8 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
                   // If the future completed successfully
                   return PurchasedPagePostIt(
                     screenHeight,
-                    snapshot,
                     screenWidth,
+                    snapshot,
                   );
                 }
               },
@@ -110,7 +111,7 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
   }
 }
 
-Future<List> getPurchasedPostItData() async {
+Future<List> getPurchasedPostItDataLocal() async {
   // 서버에서 포스트잇 데이터 가져오기
   String jsonString =
       await rootBundle.loadString('json/test_purchased_post_it_json.json');
@@ -120,33 +121,39 @@ Future<List> getPurchasedPostItData() async {
 }
 
 // 구입한 포스트잇 데이터 가져오기 api
-Future<dynamic> getPurchasedPostItData2() async {
+Future<List<dynamic>> getPurchasedPostItData() async {
   // print("함수가 실행은 됐습니다.");
   var url = 'http://localhost:8080/v1/members/mypage/buy-list';
   // print('Sending JSON payload: ${json.encode(data.toJson())}');
+  var token = await storage.read(key: "token");
+
   final response = await http.get(
     Uri.parse(url),
-    headers: {"Authorization": "-----"},
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
   );
 
   print("데이터 전송");
 
   if (response.statusCode == 200) {
-    final responseData = json.decode(response.body);
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
     final message = responseData["message"];
 
     print(responseData);
-    if (message == "ExistPostIt") {
+    if (message == "ExistBuyPostIt") {
       // 포스트잇 데이터 가져오기 성공한 경우
       print("포스트잇 데이터 가져오기 성공");
       return responseData["data"]["stickyData"];
     } else {
-      print("구입한 포스트잇이 없습니다.");
+      print("Request 에러 발생");
       return [];
     }
     // print('Received response: $result');
   } else {
     print('Failed to send data. Error: ${response.statusCode}');
-    return 0; // (네트워크 에러)
+    return []; // (네트워크 에러)
   }
 }
