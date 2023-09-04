@@ -293,37 +293,50 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                                 _formKey.currentState!.save();
 
-                                if (_studentId == null || _studentId == null || _password == null || _password == "") {
+                                if (_studentId == null ||
+                                    _studentId == null ||
+                                    _password == null ||
+                                    _password == "") {
                                   showDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: ((context) {
-                                      return AlertDialog(
-                                        contentPadding:
-                                          const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 20),
-                                        actionsPadding: const EdgeInsets.only(bottom: 20),
-                                        alignment: Alignment.center,
-                                        shape: RoundedRectangleBorder(
-                                          side: const BorderSide(
-                                            width: 1.5,
-                                            strokeAlign: BorderSide.strokeAlignOutside,
-                                            color: Color(0xFF020202),
+                                      context: context,
+                                      barrierDismissible: true,
+                                      builder: ((context) {
+                                        return AlertDialog(
+                                          contentPadding: const EdgeInsets.only(
+                                              top: 30,
+                                              left: 30,
+                                              right: 30,
+                                              bottom: 20),
+                                          actionsPadding:
+                                              const EdgeInsets.only(bottom: 20),
+                                          alignment: Alignment.center,
+                                          shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                              width: 1.5,
+                                              strokeAlign:
+                                                  BorderSide.strokeAlignOutside,
+                                              color: Color(0xFF020202),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(40),
                                           ),
-                                          borderRadius: BorderRadius.circular(40),
-                                        ),
-                                        shadowColor: const Color(0x3F000000),
-                                        content: const Text("학번 또는 비밀번호를 입력해주세요.",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'NanumSquareRoundBold',
-                                          ),),
-                                        actions: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              GestureDetector(
+                                          shadowColor: const Color(0x3F000000),
+                                          content: const Text(
+                                            "학번 또는 비밀번호를 입력해주세요.",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontFamily:
+                                                  'NanumSquareRoundBold',
+                                            ),
+                                          ),
+                                          actions: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                /* GestureDetector(
                                                 onTap: () {
                                                   Navigator.pop(context);
                                                 },
@@ -348,13 +361,40 @@ class _LoginPageState extends State<LoginPage> {
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      );
-                                    })
-                                  );
+                                              ),*/
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    shadowColor: Colors.black26,
+                                                    side: const BorderSide(
+                                                      color: Colors.black,
+                                                    ),
+                                                    fixedSize: const Size(70, 10),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(5),
+                                                    ),
+                                                  ),
+                                                  child: const Text(
+                                                    "확인",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontFamily:
+                                                          "NanumSquareRoundR",
+                                                      fontSize: 10,
+                                                      //fontWeight: FontWeight.w500
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        );
+                                      }));
                                 }
                                 print(_studentId);
                                 print(_password);
@@ -494,7 +534,7 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
+               /* GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -518,6 +558,30 @@ class _LoginPageState extends State<LoginPage> {
                           fontFamily: 'NanumSquareRoundR',
                         ),
                       ),
+                    ),
+                  ),
+                ),*/
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shadowColor: Colors.black26,
+                      side: const BorderSide(
+                        color: Colors.black,
+                      ),
+                      fixedSize: const Size(70, 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                  child: const Text(
+                    "확인",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "NanumSquareRoundR",
+                      fontSize: 10,
+                      //fontWeight: FontWeight.w500
                     ),
                   ),
                 ),

@@ -177,7 +177,7 @@ void logoutDialog(BuildContext context) {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
+              /*GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -240,6 +240,66 @@ void logoutDialog(BuildContext context) {
                         fontFamily: 'NanumSquareRoundR',
                       ),
                     ),
+                  ),
+                ),
+              ), */
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.white,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                child: const Text(
+                  "취소",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "NanumSquareRoundR",
+                    fontSize: 10,
+                    //fontWeight: FontWeight.w500
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                  // 로그아웃 시 토큰 삭제
+                  // storage.deleteAll();
+                  // [logout api 요청]
+                  // var token = storage.read(key: "token");
+                  // print("token is deleted: $token");
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                child: const Text(
+                  "확인",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: "NanumSquareRoundR",
+                    fontSize: 10,
+                    //fontWeight: FontWeight.w500
                   ),
                 ),
               ),

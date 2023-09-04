@@ -325,7 +325,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
+             /*   GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                     final successToBuy = buyPostIt(stickyId);
@@ -394,6 +394,68 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                           fontFamily: 'NanumSquareRoundR',
                         ),
                       ),
+                    ),
+                  ),
+                ), */
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // 구매 성공 시
+                    if (true) {
+                      _showCompletedBuyingDialog(context);
+                    }
+
+                    // 이미 팔린 포스트잇인 경우
+                    else if (false) {
+                      _showSoldOutDialog(context);
+                    }
+
+                    // 코인이 부족할 경우
+                    else if (false) {
+                      _showNotEnoughCoinDialog(context);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shadowColor: Colors.black26,
+                      side: const BorderSide(
+                        color: Colors.black,
+                      ),
+                      fixedSize: const Size(70, 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                  child: const Text(
+                    "구매하기",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "NanumSquareRoundR",
+                      fontSize: 10,
+                      //fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shadowColor: Colors.black26,
+                      side: const BorderSide(
+                        color: Colors.black,
+                      ),
+                      fixedSize: const Size(70, 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                  child: const Text(
+                    "취소",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "NanumSquareRoundR",
+                      fontSize: 9,
+                      //fontWeight: FontWeight.w500
                     ),
                   ),
                 ),
@@ -486,7 +548,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
+             /*   GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -554,7 +616,68 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                       ),
                     ),
                   ),
+                ),*/
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ResponsiveWebLayout(
+                          pageIndex: 1,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shadowColor: Colors.black26,
+                      side: const BorderSide(
+                        color: Colors.black,
+                      ),
+                      fixedSize: const Size(70, 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                  child: const Text(
+                    "더 둘러보기",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "NanumSquareRoundR",
+                      fontSize: 9,
+                      //fontWeight: FontWeight.w500
+                    ),
+                  ),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ResponsiveWebLayout(
+                          pageIndex: 2,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shadowColor: Colors.black26,
+                      side: const BorderSide(
+                        color: Colors.black,
+                      ),
+                      fixedSize: const Size(70, 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                  child: const Text(
+                    "마이페이지 이동",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "NanumSquareRoundR",
+                      fontSize: 9,
+                      //fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+
               ],
             ),
           ],
@@ -598,7 +721,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-            Row(
+          /*  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
@@ -635,6 +758,38 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                   ),
                 ),
               ],
+            ), */
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ResponsiveWebLayout(
+                        pageIndex: 1,
+                      ),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                child: const Text(
+                  "확인",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: "NanumSquareRoundR",
+                    fontSize: 10,
+                    //fontWeight: FontWeight.w500
+                  ),
+                ),
+              ),
             ),
           ],
         );
@@ -677,7 +832,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-            Row(
+           /* Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
@@ -708,6 +863,32 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                   ),
                 ),
               ],
+            ),*/
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                child: const Text(
+                  "확인",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: "NanumSquareRoundR",
+                    fontSize: 10,
+                    //fontWeight: FontWeight.w500
+                  ),
+                ),
+              ),
             ),
           ],
         );
