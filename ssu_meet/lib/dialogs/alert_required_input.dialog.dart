@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-void alertRequiredInput(BuildContext context) {
+void alertRequiredInput(BuildContext context, double screenWidth) {
   showDialog(
     barrierColor: Colors.white.withOpacity(0.7),
     context: context,
     builder: (BuildContext context) => AlertDialog(
       contentPadding:
-          const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+          const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 10),
       actionsPadding: const EdgeInsets.only(bottom: 25),
       alignment: Alignment.center,
       shape: RoundedRectangleBorder(
@@ -34,31 +34,28 @@ void alertRequiredInput(BuildContext context) {
             ),
           )),
       actions: [
-        GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Center(
-            child: Container(
-              width: 70,
-              height: 25,
-              decoration: BoxDecoration(
-                border: Border.all(
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                shadowColor: Colors.black26,
+                side: const BorderSide(
                   color: Colors.black,
                 ),
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.black,
-              ),
-              child: const Center(
-                child: Text(
-                  "확인",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: 'NanumSquareRoundR',
-                  ),
-                ),
+                fixedSize: const Size(70, 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                )),
+            child: const Text(
+              "확인",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: "NanumSquareRoundR",
+                fontSize: 10,
+                //fontWeight: FontWeight.w500
               ),
             ),
           ),

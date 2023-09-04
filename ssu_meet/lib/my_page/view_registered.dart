@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ssu_meet/my_page/registered_dialog.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:ssu_meet/pages/login_page.dart';
 
@@ -121,7 +120,7 @@ class ViewRegistered extends StatelessWidget {
                             var nickname = postIt["stickyData"]["nickname"];
                             var hobbies = postIt["stickyData"]["hobbies"];
                             var mbti = postIt["stickyData"]["mbti"];
-                            var introduction =
+                            var introduce =
                                 postIt["stickyData"]["introduce"];
                             var ideals = postIt["stickyData"]["ideals"];
 
@@ -150,7 +149,7 @@ class ViewRegistered extends StatelessWidget {
                                     nickname: nickname,
                                     hobbies: hobbies,
                                     mbti: mbti,
-                                    introduction: introduction,
+                                    introduce: introduce,
                                     ideals: ideals,
                                   ),
                                 );
@@ -236,7 +235,7 @@ class ViewRegistered extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    "$introduction",
+                                                    "$introduce",
                                                     textAlign: TextAlign.left,
                                                     softWrap: true,
                                                     style: TextStyle(

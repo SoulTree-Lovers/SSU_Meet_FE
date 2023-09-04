@@ -610,11 +610,11 @@ class _InputPostIt extends State<InputPostIt> {
                               sendStickyData();
                             } else {
                               //  print("값이 유효하지 않음");
-                              alertRequiredInput(context);
+                              alertRequiredInput(context,screenWidth);
                             }
                           } else {
                             // print("값이 유효하지 않음");
-                            alertRequiredInput(context);
+                            alertRequiredInput(context,screenWidth);
                           }
                         },
                       ),

@@ -282,19 +282,22 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  fixedSize: Size(
-                    screenWidth * 0.2,
-                    screenWidth * 0.1,
+                  fixedSize: const Size(
+                    70,
+                    10,
                   ),
                   side: const BorderSide(color: Colors.black, width: 0.5),
                   backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
                   shadowColor: const Color.fromRGBO(0, 0, 0, 0.25),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-                child: Text(
+                child: const Text(
                   "삭제",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: screenWidth * 0.04,
+                    fontSize: 14,
                     fontFamily: "Nanum_Ogbice",
                   ),
                 ),
@@ -304,19 +307,22 @@ class _PurchasedPostItDialog extends State<PurchasedPostItDialog> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  fixedSize: Size(
-                    screenWidth * 0.2,
-                    screenWidth * 0.1,
+                  fixedSize: const Size(
+                    70,
+                    10,
                   ),
                   side: const BorderSide(color: Colors.black, width: 0.5),
                   backgroundColor: const Color.fromRGBO(0, 0, 0, 1),
                   shadowColor: const Color.fromRGBO(0, 0, 0, 0.25),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-                child: Text(
+                child: const Text(
                   "닫기",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: screenWidth * 0.04,
+                    fontSize: 14,
                     fontFamily: "Nanum_Ogbice",
                   ),
                 ),

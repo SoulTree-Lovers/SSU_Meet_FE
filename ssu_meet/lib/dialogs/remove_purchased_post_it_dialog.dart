@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 
 // 구매한 포스트잇 삭제 api
 Future<int> deletePurchasedSticky(int stickyId) async {
-   // print("stickyId: $stickyId");
-   var token = await storage.read(key: "token");
+  // print("stickyId: $stickyId");
+  var token = await storage.read(key: "token");
 
-   final response = await http.delete(
+  final response = await http.delete(
     Uri.parse('http://localhost:8080/v1/members/mypage/buy-list/$stickyId'),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -31,7 +31,6 @@ Future<int> deletePurchasedSticky(int stickyId) async {
     return 2;
   }
 }
-
 
 void removePurchasedPostIt(BuildContext context, int stickyId) {
   showDialog(
@@ -71,7 +70,7 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
+            /* GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },
@@ -130,6 +129,62 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
                       fontFamily: 'NanumSquareRoundR',
                     ),
                   ),
+                ),
+              ),
+            ), */
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shadowColor: Colors.black26,
+                  side: const BorderSide(
+                    color: Colors.black,
+                  ),
+                  fixedSize: const Size(70, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  )),
+              child: const Text(
+                "취소",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "NanumSquareRoundR",
+                  fontSize: 10,
+                  //fontWeight: FontWeight.w500
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            ElevatedButton(
+              onPressed: () {
+                // DELETE api 요청 함수
+               // deletePurchasedSticky(stickyId).then((result) {
+                  // 삭제 완료
+                //  if(result == 0){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+               //   }
+            //    });
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shadowColor: Colors.black26,
+                  side: const BorderSide(
+                    color: Colors.black,
+                  ),
+                  fixedSize: const Size(70, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  )),
+              child: const Text(
+                "삭제",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "NanumSquareRoundR",
+                  fontSize: 10,
+                  //fontWeight: FontWeight.w500
                 ),
               ),
             ),

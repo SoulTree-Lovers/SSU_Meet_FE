@@ -193,12 +193,12 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextFormField(
                               // controller: passwordController,
                               autovalidateMode: AutovalidateMode.always,
-                              validator: (value) {
-                                if (value == null || value == '') {
-                                  return '학번을 입력해주세요.';
-                                }
-                                return null;
-                              },
+                              // validator: (value) {
+                              //   if (value == null || value == '') {
+                              //     return '학번을 입력해주세요.';
+                              //   }
+                              //   return null;
+                              // },
                               onSaved: (String? newValue) {
                                 setState(() {
                                   _studentId = newValue;
@@ -241,12 +241,12 @@ class _LoginPageState extends State<LoginPage> {
                             child: TextFormField(
                               // controller: passwordController,
                               autovalidateMode: AutovalidateMode.always,
-                              validator: (value) {
-                                if (value == null || value == '') {
-                                  return '비밀번호를 입력해주세요.';
-                                }
-                                return null;
-                              },
+                              // validator: (value) {
+                              //   if (value == null || value == '') {
+                              //     return '비밀번호를 입력해주세요.';
+                              //   }
+                              //   return null;
+                              // },
                               onSaved: (String? newValue) {
                                 setState(() {
                                   _password = newValue;
@@ -293,6 +293,69 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                                 _formKey.currentState!.save();
 
+                                if (_studentId == null || _studentId == null || _password == null || _password == "") {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    builder: ((context) {
+                                      return AlertDialog(
+                                        contentPadding:
+                                          const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 20),
+                                        actionsPadding: const EdgeInsets.only(bottom: 20),
+                                        alignment: Alignment.center,
+                                        shape: RoundedRectangleBorder(
+                                          side: const BorderSide(
+                                            width: 1.5,
+                                            strokeAlign: BorderSide.strokeAlignOutside,
+                                            color: Color(0xFF020202),
+                                          ),
+                                          borderRadius: BorderRadius.circular(40),
+                                        ),
+                                        shadowColor: const Color(0x3F000000),
+                                        content: const Text("학번 또는 비밀번호를 입력해주세요.",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'NanumSquareRoundBold',
+                                          ),),
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Container(
+                                                  width: 70,
+                                                  height: 25,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                    color: Colors.black,
+                                                    ),
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    color: Colors.black,
+                                                  ),
+                                                  child: const Center(
+                                                    child: Text("확인",
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 10,
+                                                      fontFamily: 'NanumSquareRoundR',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    })
+                                  );
+                                }
                                 print(_studentId);
                                 print(_password);
 

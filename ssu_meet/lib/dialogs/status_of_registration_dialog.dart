@@ -76,32 +76,29 @@ void showStatusOfRegistration(BuildContext context, final isExceed) {
               ),
       ),
       actions: [
-        GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-          child: Center(
-            child: Container(
-              width: 70,
-              height: 25,
-              decoration: BoxDecoration(
-                border: Border.all(
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                shadowColor: Colors.black26,
+                side: const BorderSide(
                   color: Colors.black,
                 ),
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.black,
-              ),
-              child: const Center(
-                child: Text(
-                  "확인",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: 'NanumSquareRoundR',
-                  ),
-                ),
+                fixedSize: const Size(70, 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                )),
+            child: const Text(
+              "확인",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: "NanumSquareRoundR",
+                fontSize: 10,
+                //fontWeight: FontWeight.w500
               ),
             ),
           ),
