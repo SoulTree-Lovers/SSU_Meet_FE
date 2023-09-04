@@ -26,6 +26,16 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
         flexibleSpace: const Padding(
           padding: EdgeInsets.all(15.0),
         ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+            color: Color(0xff717171),
+            size: 30,
+          ),
+        ),
       ),
       body: PurchasedPostItBody(screenHeight, screenWidth),
     );
