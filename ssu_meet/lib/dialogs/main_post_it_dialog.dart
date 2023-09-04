@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -236,7 +237,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  _showBuyDialog(context);
+                  _showBuyDialog(context, widget.stickyId);
                   // _showCompletedBuyingDialog(context);
                 },
                 style: ElevatedButton.styleFrom(
@@ -287,7 +288,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
   }
 
   // 메인화면 포스트잇 클릭 후 구매 버튼 클릭 시 팝업 창
-  void _showBuyDialog(BuildContext context) {
+  void _showBuyDialog(BuildContext context, int stickyId) async {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -327,18 +328,19 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
+                    final successToBuy = buyPostIt(stickyId);
                     // 구매 성공 시
-                    if (true) {
+                    if (successToBuy == 1) {
                       _showCompletedBuyingDialog(context);
                     }
 
                     // 이미 팔린 포스트잇인 경우
-                    else if (false) {
+                    else if (successToBuy == 2) {
                       _showSoldOutDialog(context);
                     }
 
                     // 코인이 부족할 경우
-                    else if (false) {
+                    else if (successToBuy == 3) {
                       _showNotEnoughCoinDialog(context);
                     }
                   },
@@ -407,16 +409,21 @@ class _MainPostItDialog extends State<MainPostItDialog> {
   Future<int> buyPostIt(int stickyId) async {
     // print("함수가 실행은 됐습니다.");
     var url = 'http://localhost:8080/v1/sticky/buy/$stickyId';
+    var token = await storage.read(key: "token");
     // print('Sending JSON payload: ${json.encode(data.toJson())}');
     final response = await http.get(
       Uri.parse(url),
-      headers: {"Authorization": "-----"},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
 
     print("데이터 전송");
 
     if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
+      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
       final isSuccess = responseData["status"];
       final message = responseData["message"];
 
@@ -426,7 +433,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
         print("포스트잇 구매 성공");
         return 1;
       } else {
-        if (message == "이미 판매된 포스트잇 입니다.") {
+        if (message == "AlreadySold") {
           print("이미 판매된 포스트잇입니다.");
           return 2;
         } else {

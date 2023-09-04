@@ -160,13 +160,13 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
             ElevatedButton(
               onPressed: () {
                 // DELETE api 요청 함수
-               // deletePurchasedSticky(stickyId).then((result) {
+                deletePurchasedSticky(stickyId).then((result) {
                   // 삭제 완료
-                //  if(result == 0){
+                  if (result == 0) {
                     Navigator.pop(context);
                     Navigator.pop(context);
-               //   }
-            //    });
+                  }
+                });
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,

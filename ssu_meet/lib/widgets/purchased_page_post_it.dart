@@ -19,10 +19,10 @@ SizedBox PurchasedPagePostIt(double screenHeight, double screenWidth,
       itemBuilder: (BuildContext context, int index) {
         var postIt = snapshot.data![index];
         var id = postIt["stickyId"];
-        var sex = postIt["stickyData"]["sex"];
-        var birthDate = postIt["stickyData"]["birthDate"];
+        // var sex = postIt["stickyData"]["sex"];
+        // var birthDate = postIt["stickyData"]["birthDate"];
         var age = postIt["stickyData"]["age"];
-        var college = postIt["stickyData"]["college"];
+        // var college = postIt["stickyData"]["college"];
         var major = postIt["stickyData"]["major"];
         var height = postIt["stickyData"]["height"];
         var instaId = postIt["stickyData"]["instaId"];
@@ -60,10 +60,6 @@ SizedBox PurchasedPagePostIt(double screenHeight, double screenWidth,
                 );
               },
             );
-            print("Tapped Post It (id: $id)");
-            print("Tapped Post It (age: $age)");
-            print("Tapped Post It (instaId: $instaId)");
-            print("Tapped Post It (mbti: $mbti)");
           },
           child: Center(
             child: Container(
@@ -125,7 +121,7 @@ SizedBox PurchasedPagePostIt(double screenHeight, double screenWidth,
                               ),
                             ),
                             Text(
-                              "취미 1: ${hobbies[0]}",
+                              "취미 1: ${hobbies.length >= 1 ? hobbies[0] : 'x'}",
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,
@@ -133,7 +129,7 @@ SizedBox PurchasedPagePostIt(double screenHeight, double screenWidth,
                               ),
                             ),
                             Text(
-                              "취미 2: ${hobbies[1]}",
+                              "취미 2: ${hobbies.length >= 2 ? hobbies[1] : 'x'}",
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,
@@ -141,7 +137,7 @@ SizedBox PurchasedPagePostIt(double screenHeight, double screenWidth,
                               ),
                             ),
                             Text(
-                              "취미 3: ${hobbies[2]}",
+                              "취미 3: ${hobbies.length >= 3 ? hobbies[2] : 'x'}",
                               style: TextStyle(
                                 fontFamily: "Nanum_Ogbice",
                                 fontSize: screenWidth * 0.04,

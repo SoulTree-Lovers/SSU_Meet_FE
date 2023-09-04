@@ -120,8 +120,7 @@ class ViewRegistered extends StatelessWidget {
                             var nickname = postIt["stickyData"]["nickname"];
                             var hobbies = postIt["stickyData"]["hobbies"];
                             var mbti = postIt["stickyData"]["mbti"];
-                            var introduce =
-                                postIt["stickyData"]["introduce"];
+                            var introduce = postIt["stickyData"]["introduce"];
                             var ideals = postIt["stickyData"]["ideals"];
 
                             Widget isSoldPostIt() {
@@ -196,7 +195,7 @@ class ViewRegistered extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    "${hobbies[0]}",
+                                                    "${hobbies.length >= 1 ? hobbies[0] : 'x'}",
                                                     textAlign: TextAlign.left,
                                                     softWrap: true,
                                                     style: TextStyle(
