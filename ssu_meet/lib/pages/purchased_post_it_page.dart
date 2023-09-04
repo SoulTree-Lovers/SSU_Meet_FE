@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ssu_meet/pages/responsive_page.dart';
 import 'package:ssu_meet/widgets/purchased_page_post_it.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,63 +18,13 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    int coins = getCoin();
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
         shadowColor: const Color.fromRGBO(158, 156, 156, 1),
-        flexibleSpace: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: screenWidth * 0.2,
-                height: screenWidth * 0.05,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD7D7D7),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: screenWidth * 0.03,
-                      height: screenWidth * 0.03,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("images/currency_dollar.png"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        "보유 코인: $coins",
-                        style: TextStyle(
-                          color: const Color(0xFF1A1A1A),
-                          fontFamily: "NanumSquareRoundBold",
-                          fontSize: screenWidth * 0.025,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        flexibleSpace: const Padding(
+          padding: EdgeInsets.all(15.0),
         ),
       ),
       body: PurchasedPostItBody(screenHeight, screenWidth),
@@ -96,50 +45,35 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(15.0),
-            //   child: Row(
-            //     children: [
-            //       Container(
-            //         width: 15,
-            //         height: 15,
-            //         decoration: const BoxDecoration(
-            //           image: DecorationImage(
-            //             fit: BoxFit.cover,
-            //             image: AssetImage(
-            //               "assets/images/chevron_down.png",
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //       const Text(
-            //         "구입한 포스트잇",
-            //         style: TextStyle(
-            //           color: Color(0xFF707070),
-            //           fontFamily: "NanumSquareAc",
-            //           fontSize: 15,
-            //           letterSpacing: 0.30,
-            //           decoration: TextDecoration.none,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            const Row(
-              children: [
-                Icon(Icons.keyboard_arrow_down,
-                    color: Color(0xff717171), size: 30),
-                Text(
-                  "구입한 포스트잇",
-                  style: TextStyle(
-                      color: Color(0xff717171),
-                      fontWeight: FontWeight.w600,
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Row(
+                children: [
+                  Container(
+                    width: 15,
+                    height: 15,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          "assets/images/chevron_down.png",
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Text(
+                    "구입한 포스트잇",
+                    style: TextStyle(
+                      color: Color(0xFF707070),
                       fontFamily: "NanumSquareAc",
-                      fontSize: 16),
-                ),
-              ],
+                      fontSize: 15,
+                      letterSpacing: 0.30,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 25),
             FutureBuilder(
               future: getPurchasedPostItData(),
               builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
