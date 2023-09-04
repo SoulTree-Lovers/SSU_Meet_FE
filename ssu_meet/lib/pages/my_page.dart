@@ -248,10 +248,10 @@ void logoutDialog(BuildContext context) {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: Colors.white,
                     shadowColor: Colors.black26,
                     side: const BorderSide(
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     fixedSize: const Size(70, 10),
                     shape: RoundedRectangleBorder(
