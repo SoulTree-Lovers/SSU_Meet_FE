@@ -126,7 +126,7 @@ Scaffold MainPagePostIt(
                                 ),
                               ),
                               Text(
-                                "취미 1: ${hobbies[0]}",
+                                "취미 1: ${hobbies.length >= 1 ? hobbies[0] : 'x'}",
                                 style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
                                   fontSize: screenWidth * 0.04,
@@ -134,7 +134,7 @@ Scaffold MainPagePostIt(
                                 ),
                               ),
                               Text(
-                                "취미 2: ${hobbies[1]}",
+                                "취미 2: ${hobbies.length >= 2 ? hobbies[1] : 'x'}",
                                 style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
                                   fontSize: screenWidth * 0.04,
@@ -142,7 +142,7 @@ Scaffold MainPagePostIt(
                                 ),
                               ),
                               Text(
-                                "취미 3: ${hobbies[2]}",
+                                "취미 3: ${hobbies.length >= 3 ? hobbies[2] : 'x'}",
                                 style: TextStyle(
                                   fontFamily: "Nanum_Ogbice",
                                   fontSize: screenWidth * 0.04,

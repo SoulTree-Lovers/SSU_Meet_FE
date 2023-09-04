@@ -136,21 +136,21 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                           height: 10,
                         ),
                         Text(
-                          "취미 1: ${widget.hobbies[0]}",
+                          "취미 1: ${widget.hobbies.isNotEmpty ? widget.hobbies[0] : 'x'}",
                           style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
                             fontSize: screenWidth * 0.04,
                           ),
                         ),
                         Text(
-                          "취미 2: ${widget.hobbies[1]}",
+                          "취미 2: ${widget.hobbies.length >= 2 ? widget.hobbies[1] : 'x'}",
                           style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
                             fontSize: screenWidth * 0.04,
                           ),
                         ),
                         Text(
-                          "취미 3: ${widget.hobbies[2]}",
+                          "취미 3: ${widget.hobbies.length >= 3 ? widget.hobbies[2] : 'x'}",
                           style: TextStyle(
                             fontFamily: "Nanum_Ogbice",
                             fontSize: screenWidth * 0.04,

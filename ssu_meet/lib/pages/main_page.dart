@@ -49,19 +49,60 @@ class _MainPageState extends State<MainPage> {
   }
 
   // 스크롤이 최하단으로 내려갔을 때를 감지하는 함수
-  void _scrollListener() {
+  void _scrollListener() async {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      if (hasMoreData) {
+      if (hasMoreData && !isLoading) {
         fetchData(); // Fetch more data when reaching the end
         // page += 1;
       }
     }
   }
 
-  Future<void> fetchData() async {
+  Future<dynamic> getMainStickyData() async {
+    var url = 'http://localhost:8080/v1/members/main?page=$page&size=10';
+    var token = await storage.read(key: "token");
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+      final message = responseData["message"];
+      final status = responseData["status"];
+
+      if (status == "SUCCESS") {
+        if (message == "SuccessFirstMainPageAccess") {
+          print("SuccessFirstMainPageAccess");
+          allStickyCount = responseData["data"]["allStickyCount"];
+          myStickyCount = responseData["data"]["myStickyCount"];
+          print("전체 포스트잇 개수 가져오기: $allStickyCount");
+          print("나의 포스트잇 개수 가져오기: $myStickyCount");
+          print(responseData["data"]["stickyData"]);
+          return responseData["data"]["stickyData"];
+        } else {
+          return responseData["data"]["stickyData"];
+        }
+      } else {
+        return [];
+      }
+    } else {
+      print("Failed to get data. Error: ${response.statusCode}");
+      return [];
+    }
+  }
+
+  Future<List<dynamic>> fetchData() async {
     // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
-    if (isLoading || !hasMoreData) return;
+    if (isLoading || !hasMoreData) {
+      return data;
+    }
 
     setState(() {
       isLoading = true;
@@ -70,23 +111,27 @@ class _MainPageState extends State<MainPage> {
     var url = 'http://localhost:8080/v1/members/main?page=$page&size=10';
     var token = await storage.read(key: "token");
 
-    print("main page token: $token");
+    // print("main page token: $token");
 
-    final response = await http.get(Uri.parse(url), headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
 
-    print("response status code: ${response.statusCode}");
+    // print("response status code: ${response.statusCode}");
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(utf8.decode(response.bodyBytes));
       // final responseData = json.decode(response.body);
       final stickyData = responseData["data"]["stickyData"];
-      print("response data: $responseData");
+      // print("response data: $responseData");
+
       // 전체 포스트잇 개수 초기화 (page가 0일 때만)
-      print("page: $page");
+      // print("page: $page");
       if (page == 0) {
         allStickyCount = responseData["data"]["allStickyCount"];
         myStickyCount = responseData["data"]["myStickyCount"];
@@ -94,6 +139,8 @@ class _MainPageState extends State<MainPage> {
         print("전체 포스트잇 개수 가져오기: $allStickyCount");
         print("나의 포스트잇 개수 가져오기: $myStickyCount");
       }
+
+      // print("stickyData: $stickyData");
 
       if (stickyData.isEmpty) {
         setState(() {
@@ -110,10 +157,12 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       isLoading = false;
     });
+
+    return data;
   }
 
   // 스크롤 최상단으로 가기
-  void _scrollToTop() {
+  void _scrollToTop() async {
     _scrollController.animateTo(
       0,
       duration: const Duration(milliseconds: 500),
@@ -124,7 +173,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   // 포스트잇 데이터 새로고침
-  void _refresh() {
+  void _refresh() async {
     setState(() {
       page = 0;
       data = [];
@@ -139,8 +188,9 @@ class _MainPageState extends State<MainPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    int myPostIt = getMyPostIt();
-    int totalPostIt = getTotalPostIt();
+    // 포스트잇 개수 (테스트용)
+    // int myPostIt = getMyPostIt();
+    // int totalPostIt = getTotalPostIt();
 
     return Scaffold(
       body: Stack(
@@ -189,174 +239,175 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
-
                 // 서버 연동 시 사용할 포스트잇 데이터 패치 GridView
                 SizedBox(
                   height: screenHeight * 0.75,
-                  child: GridView.builder(
-                    controller: _scrollController,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Number of columns in the grid
-                      childAspectRatio: 1 / 1, //item 의 가로 1, 세로 1 의 비율
-                      mainAxisSpacing: 10, //수평 Padding
-                      crossAxisSpacing: 10,
-                    ),
-                    // itemCount: data.length + (hasMoreData ? 1 : 0),
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      print("----data: $data");
-                      print("data.length: ${data.length}");
-
-                      var postIt = data[index];
-                      var stickyId = postIt["stickyId"];
-                      // var sex = postIt["stickyData"]["sex"];
-                      // var birthDate = postIt["stickyData"]["birthDate"];
-                      var age = postIt["stickyData"]["age"];
-                      // var college = postIt["stickyData"]["college"];
-                      var major = postIt["stickyData"]["major"];
-                      var height = postIt["stickyData"]["height"];
-                      var instaId = postIt["stickyData"]["instaId"];
-                      var kakaoId = postIt["stickyData"]["kakaoId"];
-                      var phoneNumber = postIt["stickyData"]["phoneNumber"];
-                      var nickname = postIt["stickyData"]["nickname"];
-                      var mbti = postIt["stickyData"]["mbti"];
-                      var hobbies = postIt["stickyData"]["hobbies"];
-                      var ideals = postIt["stickyData"]["ideals"];
-                      var introduce = postIt["stickyData"]["introduce"];
-                      print("index: $index");
-                      print("postIt: ${data[index]}");
-
-                      // if (true) {
-                      if (true) {
-                        return GestureDetector(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return MainPostItDialog(
-                                  stickyId: stickyId,
-                                  nickname: nickname,
-                                  age: age,
-                                  major: major,
-                                  mbti: mbti,
-                                  height: height,
-                                  hobbies: hobbies,
-                                  introduce: introduce,
-                                  instaId: instaId,
-                                  kakaoId: kakaoId,
-                                  phoneNumber: phoneNumber,
-                                  ideals: ideals,
+                  child: FutureBuilder(
+                    future: fetchData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text("Error: ${snapshot.error}");
+                      } else {
+                        return GridView.builder(
+                          controller: _scrollController,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Number of columns in the grid
+                            childAspectRatio: 1 / 1, //item 의 가로 1, 세로 1 의 비율
+                            mainAxisSpacing: 10, //수평 Padding
+                            crossAxisSpacing: 10,
+                          ),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            print("----data: ${snapshot.data}");
+                            // print("data.length: ${snapshot.data!.length}");
+                            print("index: $index");
+                            var postIt = snapshot.data![index];
+                            var stickyId = postIt["stickyId"];
+                            // var sex = postIt["stickyData"]["sex"];
+                            // var birthDate = postIt["stickyData"]["birthDate"];
+                            var age = postIt["stickyData"]["age"];
+                            // var college = postIt["stickyData"]["college"];
+                            var major = postIt["stickyData"]["major"];
+                            var height = postIt["stickyData"]["height"];
+                            var instaId = postIt["stickyData"]["instaId"];
+                            var kakaoId = postIt["stickyData"]["kakaoId"];
+                            var phoneNumber =
+                                postIt["stickyData"]["phoneNumber"];
+                            var nickname = postIt["stickyData"]["nickname"];
+                            var mbti = postIt["stickyData"]["mbti"];
+                            var hobbies = postIt["stickyData"]["hobbies"];
+                            var ideals = postIt["stickyData"]["ideals"];
+                            var introduce = postIt["stickyData"]["introduce"];
+                            print("hobbies: ${hobbies[0]}");
+                            print("hobbies length: ${hobbies.length}");
+                            // if (true) {
+                            return GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => MainPostItDialog(
+                                    stickyId: stickyId,
+                                    nickname: nickname,
+                                    age: age,
+                                    major: major,
+                                    mbti: mbti,
+                                    height: height,
+                                    hobbies: hobbies,
+                                    introduce: introduce,
+                                    instaId: instaId,
+                                    kakaoId: kakaoId,
+                                    phoneNumber: phoneNumber,
+                                    ideals: ideals,
+                                  ),
                                 );
+                                print("hobbies: $hobbies");
+                                print("Tapped Post It (id: $stickyId)");
+                                print("Tapped Post It (age: $age)");
+                                print("Tapped Post It (instaId: $instaId)");
                               },
-                            );
-                            print("Tapped Post It (id: $stickyId)");
-                            print("Tapped Post It (age: $age)");
-                            print("Tapped Post It (instaId: $instaId)");
-                          },
-                          child: Center(
-                            child: SizedBox(
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: <Widget>[
-                                  // First image
-                                  Image(
-                                    image: const AssetImage(
-                                        "assets/images/images2/yellowpostit.png"),
-                                    width: screenWidth * 0.4,
-                                    height: screenWidth * 0.4,
-                                  ),
-                                  // Second image overlapped on top of the first image
-                                  Positioned(
-                                    left: screenWidth * 0.1,
-                                    top: screenWidth * -0.07,
-                                    child: Image(
-                                      width: screenWidth * 0.2,
-                                      height: screenWidth * 0.2,
-                                      image: const AssetImage(
-                                        "assets/images/images2/tape10.png",
+                              child: Center(
+                                child: SizedBox(
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: <Widget>[
+                                      // First image
+                                      Image(
+                                        image: const AssetImage(
+                                            "assets/images/images2/yellowpostit.png"),
+                                        width: screenWidth * 0.4,
+                                        height: screenWidth * 0.4,
                                       ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: screenWidth * 0.1,
-                                    left: screenWidth * 0.1,
-                                    child: SizedBox(
-                                      height: screenWidth * 0.2,
-                                      width: screenWidth * 0.2,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "닉네임: $nickname",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.04,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              "나이: $age",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.04,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              "MBTI: $mbti",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.04,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              "취미 1: ${hobbies[0]}",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.04,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              "취미 2: ${hobbies[1]}",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.04,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              "취미 3: ${hobbies[2]}",
-                                              style: TextStyle(
-                                                fontFamily: "Nanum_Ogbice",
-                                                fontSize: screenWidth * 0.04,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
+                                      // Second image overlapped on top of the first image
+                                      Positioned(
+                                        left: screenWidth * 0.1,
+                                        top: screenWidth * -0.07,
+                                        child: Image(
+                                          width: screenWidth * 0.2,
+                                          height: screenWidth * 0.2,
+                                          image: const AssetImage(
+                                            "assets/images/images2/tape10.png",
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      Positioned(
+                                        top: screenWidth * 0.1,
+                                        left: screenWidth * 0.1,
+                                        child: SizedBox(
+                                          height: screenWidth * 0.2,
+                                          width: screenWidth * 0.2,
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "닉네임: $nickname",
+                                                  style: TextStyle(
+                                                    fontFamily: "Nanum_Ogbice",
+                                                    fontSize:
+                                                        screenWidth * 0.04,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "나이: $age",
+                                                  style: TextStyle(
+                                                    fontFamily: "Nanum_Ogbice",
+                                                    fontSize:
+                                                        screenWidth * 0.04,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "MBTI: $mbti",
+                                                  style: TextStyle(
+                                                    fontFamily: "Nanum_Ogbice",
+                                                    fontSize:
+                                                        screenWidth * 0.04,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "취미 1: ${hobbies.length >= 1 ? hobbies[0] : 'x'}",
+                                                  style: TextStyle(
+                                                    fontFamily: "Nanum_Ogbice",
+                                                    fontSize:
+                                                        screenWidth * 0.04,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "취미 2: ${hobbies.length >= 2 ? hobbies[1] : 'x'}",
+                                                  style: TextStyle(
+                                                    fontFamily: "Nanum_Ogbice",
+                                                    fontSize:
+                                                        screenWidth * 0.04,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "취미 3: ${hobbies.length >= 3 ? hobbies[2] : 'x'}",
+                                                  style: TextStyle(
+                                                    fontFamily: "Nanum_Ogbice",
+                                                    fontSize:
+                                                        screenWidth * 0.04,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      } else if (hasMoreData) {
-                        if (!isLoading) {
-                          fetchData(); // Fetch more data when reaching the end
-                        }
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return const Center(
-                          child: Text('더 이상 등록된 포스트잇이 없습니다.'),
+                            );
+                          },
                         );
                       }
                     },
