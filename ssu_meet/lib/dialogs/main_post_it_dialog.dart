@@ -48,8 +48,8 @@ class _MainPostItDialog extends State<MainPostItDialog> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      backgroundColor:
-          Colors.transparent, // Set the background color to transparent
+      backgroundColor: Colors.transparent,
+      // Set the background color to transparent
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -441,6 +441,9 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -634,15 +637,20 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shadowColor: Colors.black26,
-                      side: const BorderSide(
-                        color: Colors.black,
-                      ),
-                      fixedSize: const Size(70, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
+                    padding: const EdgeInsets.only(
+                      left: 0,
+                      right: 0,
+                    ),
+                    backgroundColor: Colors.white,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   child: const Text(
                     "더 둘러보기",
                     style: TextStyle(
@@ -652,6 +660,9 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                       //fontWeight: FontWeight.w500
                     ),
                   ),
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -664,15 +675,20 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shadowColor: Colors.black26,
-                      side: const BorderSide(
-                        color: Colors.black,
-                      ),
-                      fixedSize: const Size(70, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
+                    padding: const EdgeInsets.only(
+                      left: 0,
+                      right: 0,
+                    ),
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   child: const Text(
                     "마이페이지 이동",
                     style: TextStyle(
