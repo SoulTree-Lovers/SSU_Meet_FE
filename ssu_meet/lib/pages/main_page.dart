@@ -59,44 +59,45 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  Future<dynamic> getMainStickyData() async {
-    var url = 'http://localhost:8080/v1/members/main?page=$page&size=10';
-    var token = await storage.read(key: "token");
+  // 테스트용 API 코드
+  // Future<dynamic> getMainStickyData() async {
+  //   var url = 'http://localhost:8080/v1/members/main?page=$page&size=10';
+  //   var token = await storage.read(key: "token");
 
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
+  //   final response = await http.get(
+  //     Uri.parse(url),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     },
+  //   );
 
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
-      final message = responseData["message"];
-      final status = responseData["status"];
+  //   if (response.statusCode == 200) {
+  //     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+  //     final message = responseData["message"];
+  //     final status = responseData["status"];
 
-      if (status == "SUCCESS") {
-        if (message == "SuccessFirstMainPageAccess") {
-          print("SuccessFirstMainPageAccess");
-          allStickyCount = responseData["data"]["allStickyCount"];
-          myStickyCount = responseData["data"]["myStickyCount"];
-          print("전체 포스트잇 개수 가져오기: $allStickyCount");
-          print("나의 포스트잇 개수 가져오기: $myStickyCount");
-          print(responseData["data"]["stickyData"]);
-          return responseData["data"]["stickyData"];
-        } else {
-          return responseData["data"]["stickyData"];
-        }
-      } else {
-        return [];
-      }
-    } else {
-      print("Failed to get data. Error: ${response.statusCode}");
-      return [];
-    }
-  }
+  //     if (status == "SUCCESS") {
+  //       if (message == "SuccessFirstMainPageAccess") {
+  //         print("SuccessFirstMainPageAccess");
+  //         allStickyCount = responseData["data"]["allStickyCount"];
+  //         myStickyCount = responseData["data"]["myStickyCount"];
+  //         print("전체 포스트잇 개수 가져오기: $allStickyCount");
+  //         print("나의 포스트잇 개수 가져오기: $myStickyCount");
+  //         print(responseData["data"]["stickyData"]);
+  //         return responseData["data"]["stickyData"];
+  //       } else {
+  //         return responseData["data"]["stickyData"];
+  //       }
+  //     } else {
+  //       return [];
+  //     }
+  //   } else {
+  //     print("Failed to get data. Error: ${response.statusCode}");
+  //     return [];
+  //   }
+  // }
 
   Future<List<dynamic>> fetchData() async {
     // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
