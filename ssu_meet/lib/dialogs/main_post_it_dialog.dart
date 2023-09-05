@@ -398,9 +398,10 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                   ),
                 ), */
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pop(context);
-                    final purchaseSuccess = buyPostIt(stickyId);
+                    final purchaseSuccess = await buyPostIt(stickyId);
+                    // print("purchase success: $purchaseSuccess");
                     // 구매 성공 시
                     if (purchaseSuccess == 1) {
                       _showCompletedBuyingDialog(context);
@@ -418,7 +419,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
 
                     // 네트워크 에러
                     else {
-                      print("포스트잇 구매 네트워크 에러 발생");
+                      print("포스트잇 구매 에러 발생");
                     }
                   },
                   style: ElevatedButton.styleFrom(
