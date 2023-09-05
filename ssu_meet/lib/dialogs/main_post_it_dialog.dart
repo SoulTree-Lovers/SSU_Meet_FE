@@ -325,7 +325,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-             /*   GestureDetector(
+                /*   GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                     final successToBuy = buyPostIt(stickyId);
@@ -400,19 +400,25 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    final purchaseSuccess = buyPostIt(stickyId);
                     // 구매 성공 시
-                    if (true) {
+                    if (purchaseSuccess == 1) {
                       _showCompletedBuyingDialog(context);
                     }
 
                     // 이미 팔린 포스트잇인 경우
-                    else if (false) {
+                    else if (purchaseSuccess == 2) {
                       _showSoldOutDialog(context);
                     }
 
                     // 코인이 부족할 경우
-                    else if (false) {
+                    else if (purchaseSuccess == 3) {
                       _showNotEnoughCoinDialog(context);
+                    }
+
+                    // 네트워크 에러
+                    else {
+                      print("포스트잇 구매 네트워크 에러 발생");
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -548,7 +554,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-             /*   GestureDetector(
+                /*   GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -677,7 +683,6 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ],
@@ -721,7 +726,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-          /*  Row(
+            /*  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
@@ -832,7 +837,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-           /* Row(
+            /* Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
