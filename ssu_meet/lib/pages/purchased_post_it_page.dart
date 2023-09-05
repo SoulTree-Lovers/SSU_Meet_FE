@@ -56,30 +56,22 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
+            const Padding(
+              padding: EdgeInsets.all(15.0),
               child: Row(
                 children: [
-                  Container(
-                    width: 15,
-                    height: 15,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(
-                          "assets/images/chevron_down.png",
-                        ),
-                      ),
-                    ),
+                  Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Color(0xff717171),
+                    size: 30,
                   ),
-                  const Text(
+                  Text(
                     "구입한 포스트잇",
                     style: TextStyle(
-                      color: Color(0xFF707070),
+                      color: Color(0xff717171),
+                      fontWeight: FontWeight.w600,
                       fontFamily: "NanumSquareAc",
-                      fontSize: 15,
-                      letterSpacing: 0.30,
-                      decoration: TextDecoration.none,
+                      fontSize: 16,
                     ),
                   ),
                 ],
