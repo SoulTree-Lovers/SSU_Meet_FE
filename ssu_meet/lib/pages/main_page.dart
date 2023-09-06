@@ -31,7 +31,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_scrollListener);
+    // _scrollController.addListener(_scrollListener);
     // fetchData(); // Initial data fetch
     // page += 1;
 
@@ -46,18 +46,34 @@ class _MainPageState extends State<MainPage> {
         });
       }
     });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        // 스크롤이 맨 아래로 갔을 때 필요한 데이터를 불러오도록 요청합니다.
+        if (!isLoading) {
+          setState(() {
+            isLoading = true;
+          });
+          fetchData();
+        }
+      }
+    });
+
+    // 페이지 로드 시 초기 데이터 불러오기
+    fetchData();
   }
 
   // 스크롤이 최하단으로 내려갔을 때를 감지하는 함수
-  void _scrollListener() async {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      if (hasMoreData && !isLoading) {
-        fetchData(); // Fetch more data when reaching the end
-        // page += 1;
-      }
-    }
-  }
+  // void _scrollListener() async {
+  //   if (_scrollController.position.pixels ==
+  //       _scrollController.position.maxScrollExtent) {
+  //     if (hasMoreData && !isLoading) {
+  //       fetchData(); // Fetch more data when reaching the end
+  //       // page += 1;
+  //     }
+  //   }
+  // }
 
   // 테스트용 API 코드
   // Future<dynamic> getMainStickyData() async {
@@ -111,7 +127,7 @@ class _MainPageState extends State<MainPage> {
     });
 
     print("page: $page");
-    var url = 'http://localhost:8080/v1/members/main?page=$page&size=10';
+    var url = 'http://localhost:8080/v1/members/main?page=$page&size=100';
     var token = await storage.read(key: "token");
 
     // print("main page token: $token");
@@ -249,7 +265,9 @@ class _MainPageState extends State<MainPage> {
                   height: screenHeight * 0.75,
                   child: FutureBuilder(
                     future: fetchData(),
-                    builder: (context, snapshot) {
+                    // future: getPostItFrontData(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<List> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
@@ -258,7 +276,7 @@ class _MainPageState extends State<MainPage> {
                         return const Text("Data is null");
                       } else {
                         return GridView.builder(
-                          controller: _scrollController,
+                          // controller: _scrollController,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2, // Number of columns in the grid

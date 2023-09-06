@@ -112,6 +112,7 @@ class _InputPostIt extends State<InputPostIt> {
       isExceed = 2;
     }
     print("responseData['message']: ${responseData["message"]}");
+    print("isExceed: $isExceed");
     return isExceed;
   }
 
@@ -585,7 +586,7 @@ class _InputPostIt extends State<InputPostIt> {
                             fontFamily: "Nanum_Ogbice",
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save();
                             if (mbti != null &&
@@ -603,12 +604,13 @@ class _InputPostIt extends State<InputPostIt> {
                               hobbies.forEach(print);
 
                               // 등록 개수 초과 여부 알림 팝업창 호출
-                              final result = sendStickyData();
+                              final result = await sendStickyData();
+                              print("result: $result");
                               // if (result == 0 || result == 1) showStatusOfRegistration(context, result);
 
                               // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
                               showStatusOfRegistration(context, result);
-                              sendStickyData();
+                              // sendStickyData();
 
                               // 홈 화면으로 이동
                               // Navigator.of(context).push(
