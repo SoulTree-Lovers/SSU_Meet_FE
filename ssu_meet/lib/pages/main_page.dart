@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
-    fetchData(); // Initial data fetch
+    // fetchData(); // Initial data fetch
     // page += 1;
 
     _scrollController.addListener(() {
@@ -100,6 +100,7 @@ class _MainPageState extends State<MainPage> {
   // }
 
   Future<List<dynamic>> fetchData() async {
+    print("Fetching data");
     // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
     if (isLoading || !hasMoreData) {
       return data;
@@ -109,6 +110,7 @@ class _MainPageState extends State<MainPage> {
       isLoading = true;
     });
 
+    print("page: $page");
     var url = 'http://localhost:8080/v1/members/main?page=$page&size=10';
     var token = await storage.read(key: "token");
 
@@ -129,13 +131,15 @@ class _MainPageState extends State<MainPage> {
       final responseData = jsonDecode(utf8.decode(response.bodyBytes));
       // final responseData = json.decode(response.body);
       final stickyData = responseData["data"]["stickyData"];
-      // print("response data: $responseData");
+      final message = responseData["message"];
+
+      print("response data: $responseData");
 
       // 전체 포스트잇 개수 초기화 (page가 0일 때만)
       // print("page: $page");
-      if (page == 0) {
-        allStickyCount = responseData["data"]["allStickyCount"];
-        myStickyCount = responseData["data"]["myStickyCount"];
+      if (page == 0 && message == "SuccessFirstMainPageAccess") {
+        allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
+        myStickyCount = responseData["data"]["myStickyCount"] ?? 0;
 
         print("전체 포스트잇 개수 가져오기: $allStickyCount");
         print("나의 포스트잇 개수 가져오기: $myStickyCount");
@@ -250,6 +254,8 @@ class _MainPageState extends State<MainPage> {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
                         return Text("Error: ${snapshot.error}");
+                      } else if (!snapshot.hasData) {
+                        return const Text("Data is null");
                       } else {
                         return GridView.builder(
                           controller: _scrollController,
@@ -262,9 +268,10 @@ class _MainPageState extends State<MainPage> {
                           ),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            print("----data: ${snapshot.data}");
+                            // print("hello world");
+                            // print("----data: ${snapshot.data}");
                             // print("data.length: ${snapshot.data!.length}");
-                            print("index: $index");
+                            // print("index: $index");
                             var postIt = snapshot.data![index];
                             var stickyId = postIt["stickyId"];
                             // var sex = postIt["stickyData"]["sex"];
@@ -282,8 +289,8 @@ class _MainPageState extends State<MainPage> {
                             var hobbies = postIt["stickyData"]["hobbies"];
                             var ideals = postIt["stickyData"]["ideals"];
                             var introduce = postIt["stickyData"]["introduce"];
-                            print("hobbies: ${hobbies[0]}");
-                            print("hobbies length: ${hobbies.length}");
+                            // print("hobbies: ${hobbies[0]}");
+                            // print("hobbies length: ${hobbies.length}");
                             // if (true) {
                             return GestureDetector(
                               onTap: () {
@@ -304,10 +311,10 @@ class _MainPageState extends State<MainPage> {
                                     ideals: ideals,
                                   ),
                                 );
-                                print("hobbies: $hobbies");
+                                // print("hobbies: $hobbies");
                                 print("Tapped Post It (id: $stickyId)");
-                                print("Tapped Post It (age: $age)");
-                                print("Tapped Post It (instaId: $instaId)");
+                                // print("Tapped Post It (age: $age)");
+                                // print("Tapped Post It (instaId: $instaId)");
                               },
                               child: Center(
                                 child: SizedBox(

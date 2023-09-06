@@ -603,18 +603,27 @@ class _InputPostIt extends State<InputPostIt> {
                               hobbies.forEach(print);
 
                               // 등록 개수 초과 여부 알림 팝업창 호출
-                              // final result = sendStickyData();
+                              final result = sendStickyData();
                               // if (result == 0 || result == 1) showStatusOfRegistration(context, result);
-                              showStatusOfRegistration(context,
-                                  0); // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
+
+                              // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
+                              showStatusOfRegistration(context, result);
                               sendStickyData();
+
+                              // 홈 화면으로 이동
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         const ResponsiveWebLayout(pageIndex: 1),
+                              //   ),
+                              // );
                             } else {
                               //  print("값이 유효하지 않음");
-                              alertRequiredInput(context,screenWidth);
+                              alertRequiredInput(context, screenWidth);
                             }
                           } else {
                             // print("값이 유효하지 않음");
-                            alertRequiredInput(context,screenWidth);
+                            alertRequiredInput(context, screenWidth);
                           }
                         },
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/pages/responsive_page.dart';
 
 void showStatusOfRegistration(BuildContext context, final isExceed) {
   showDialog(
@@ -81,6 +82,11 @@ void showStatusOfRegistration(BuildContext context, final isExceed) {
             onPressed: () {
               Navigator.pop(context);
               Navigator.pop(context);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ResponsiveWebLayout(pageIndex: 1),
+                ),
+              );
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,

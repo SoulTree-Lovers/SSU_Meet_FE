@@ -401,19 +401,22 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                   onPressed: () async {
                     Navigator.pop(context);
                     final purchaseSuccess = await buyPostIt(stickyId);
-                    // print("purchase success: $purchaseSuccess");
+                    print("purchase success: $purchaseSuccess");
                     // 구매 성공 시
                     if (purchaseSuccess == 1) {
+                      print("구매를 성공하였습니다.");
                       _showCompletedBuyingDialog(context);
                     }
 
                     // 이미 팔린 포스트잇인 경우
                     else if (purchaseSuccess == 2) {
+                      print("이미 팔린 포스트잇입니다.");
                       _showSoldOutDialog(context);
                     }
 
                     // 코인이 부족할 경우
                     else if (purchaseSuccess == 3) {
+                      print("코인이 부족합니다.");
                       _showNotEnoughCoinDialog(context);
                     }
 

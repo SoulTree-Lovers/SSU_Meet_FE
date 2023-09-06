@@ -131,8 +131,8 @@ class _InfoPageState extends State<InfoPage> {
                   height: 20,
                 ),
                 Container(
-                  width: screenWidth * 0.7,
-                  height: screenWidth * 0.4,
+                  width: screenWidth * 0.8,
+                  height: screenWidth * 1,
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -143,7 +143,7 @@ class _InfoPageState extends State<InfoPage> {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: AssetImage(
-                        "assets/images/info_images/ssu_festival.png",
+                        "assets/images/info_images/awake.png",
                       ),
                     ),
                   ),
