@@ -611,7 +611,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                 formKey.currentState!.save();
                                 if (data.college !=
                                         collegeList[0].value!.title &&
-                                    data.major != majorList[0].value!.title &&
+                                    data.major != "선택하기" &&
                                     (data.instaId != '' ||
                                         data.kakaoId != '' ||
                                         data.phoneNumber != '')) {

@@ -696,7 +696,7 @@ class _InputProfile extends State<InputProfile> {
                             formKey.currentState!.save(); //키 제대로 입력 시 저장.
                             if (data.sex != genderList[0] && //나머지 조건들 한 번 더 체크
                                 data.college != collegeList[0].value!.title &&
-                                data.major != majorList[0].value!.title &&
+                                data.major != "선택하기" &&
                                 isDateSelected &&
                                 (data.instaId != '' ||
                                     data.kakaoId != '' ||
