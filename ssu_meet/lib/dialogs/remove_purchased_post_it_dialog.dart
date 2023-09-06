@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/pages/responsive_page.dart';
 
 // 구매한 포스트잇 삭제 api
 Future<int> deletePurchasedSticky(int stickyId) async {
@@ -165,8 +166,16 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
                 deletePurchasedSticky(stickyId).then((result) {
                   // 삭제 완료
                   if (result == 0) {
+                    // 마이페이지로 이동
                     Navigator.pop(context);
                     Navigator.pop(context);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ResponsiveWebLayout(
+                          pageIndex: 2,
+                        ),
+                      ),
+                    );
                   }
                 });
               },
