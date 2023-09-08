@@ -43,7 +43,7 @@ class _InputPostIt extends State<InputPostIt> {
   String? nickname;
   String? mbti;
   String? introduce;
-  List hobbies = ['', '', '']; //취미 리스트
+  List hobbies = []; //취미 리스트
   List ideals = [];
 
   int flag = 0;
@@ -160,6 +160,7 @@ class _InputPostIt extends State<InputPostIt> {
 
   @override
   Widget build(BuildContext context) {
+    hobbies = ['','',''];
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     if (screenWidth >= 540) {
@@ -587,47 +588,48 @@ class _InputPostIt extends State<InputPostIt> {
                           ),
                         ),
                         onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
-                            if (mbti != null &&
-                                ideals.isNotEmpty &&
-                                (hobbies[0] != '' ||
-                                    hobbies[1] != '' ||
-                                    hobbies[2] != '')) {
-                              // 필수 입력 조건 충족 완료(이상형 포함)
-                              hobbies.removeWhere(
-                                  (element) => element == ''); // 취미에서 공백 요소 제거
-                              print(
-                                  "닉네임: $nickname\nmbti: $mbti\n자기소개: $introduce\n이상형:");
-                              ideals.forEach(print);
-                              print("취미:");
-                              hobbies.forEach(print);
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+                              if (mbti != null &&
+                                  ideals.isNotEmpty &&
+                                  (hobbies[0] != '' ||
+                                      hobbies[1] != '' ||
+                                      hobbies[2] != '')) {
+                                // 필수 입력 조건 충족 완료(이상형 포함)
+                                hobbies.removeWhere(
+                                        (element) =>
+                                    element == ''); // 취미에서 공백 요소 제거
+                                print(
+                                    "닉네임: $nickname\nmbti: $mbti\n자기소개: $introduce\n이상형:");
+                                ideals.forEach(print);
+                                print("취미:");
+                                hobbies.forEach(print);
 
-                              // 등록 개수 초과 여부 알림 팝업창 호출
-                              final result = await sendStickyData();
-                              print("result: $result");
-                              // if (result == 0 || result == 1) showStatusOfRegistration(context, result);
+                                // 등록 개수 초과 여부 알림 팝업창 호출
+                                final result = await sendStickyData();
+                                print("result: $result");
+                                // if (result == 0 || result == 1) showStatusOfRegistration(context, result);
 
-                              // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
-                              showStatusOfRegistration(context, result);
-                              // sendStickyData();
+                                // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
+                                showStatusOfRegistration(context, result);
+                                // sendStickyData();
 
-                              // 홈 화면으로 이동
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (context) =>
-                              //         const ResponsiveWebLayout(pageIndex: 1),
-                              //   ),
-                              // );
+                                // 홈 화면으로 이동
+                                // Navigator.of(context).push(
+                                //   MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         const ResponsiveWebLayout(pageIndex: 1),
+                                //   ),
+                                // );
+                              } else {
+                                //  print("값이 유효하지 않음");
+                                alertRequiredInput(context, screenWidth);
+                              }
                             } else {
-                              //  print("값이 유효하지 않음");
+                              // print("값이 유효하지 않음");
                               alertRequiredInput(context, screenWidth);
                             }
-                          } else {
-                            // print("값이 유효하지 않음");
-                            alertRequiredInput(context, screenWidth);
                           }
-                        },
                       ),
                     ),
                     Padding(
