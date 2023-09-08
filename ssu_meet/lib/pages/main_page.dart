@@ -19,16 +19,16 @@ class _MainPageState extends State<MainPage> {
   final ScrollController _scrollController = ScrollController();
   bool _showScrollButton = false;
 
-  var futureData;
+  var futureData; // 데이터 패치 함수 레퍼런스 변수
 
   // 서버에서 데이터 패치
   List<dynamic> data = [];
 
-  int page = 0;
-  bool isLoading = false;
-  bool hasMoreData = true; // Flag to track if more data can be fetched
-  int allStickyCount = 0;
-  int myStickyCount = 0;
+  int page = 0; // 초기 페이지 0
+  bool isLoading = false; // 현재 로딩 중인지 여부
+  bool hasMoreData = true; // 서버에 추가 데이터가 있는 지 여부
+  int allStickyCount = 0; // 전체 이성이 등록한 포스트잇 개수
+  int myStickyCount = 0; // 내가 등록한 포스트잇 개수
 
   @override
   void initState() {
@@ -55,13 +55,16 @@ class _MainPageState extends State<MainPage> {
       return [];
     }
 
+    // 현재 데이터 패치 중이므로 true
     setState(() {
       isLoading = true;
     });
 
     print("page: $page");
+
+    // 사이즈 1000으로 한 번에 모든 포스트잇 데이터 가져오기
     var url = 'http://localhost:8080/v1/members/main?page=$page&size=1000';
-    var token = await storage.read(key: "token");
+    var token = await storage.read(key: "token"); // 토큰 불러오기
 
     final response = await http.get(
       Uri.parse(url),
@@ -81,13 +84,12 @@ class _MainPageState extends State<MainPage> {
       print("response data: $responseData \n\n");
 
       // 전체 포스트잇 개수 초기화 (page가 0일 때만)
-      // print("page: $page");
       if (page == 0 && message == "SuccessFirstMainPageAccess") {
         allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
         myStickyCount = responseData["data"]["myStickyCount"] ?? 0;
 
-        print("전체 포스트잇 개수 가져오기: $allStickyCount");
-        print("나의 포스트잇 개수 가져오기: $myStickyCount");
+        // print("전체 포스트잇 개수 가져오기: $allStickyCount");
+        // print("나의 포스트잇 개수 가져오기: $myStickyCount");
       }
 
       if (stickyData.isEmpty) {
