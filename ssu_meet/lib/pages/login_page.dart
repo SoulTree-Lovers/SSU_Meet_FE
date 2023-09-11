@@ -287,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 elevation: 0,
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
@@ -374,9 +374,13 @@ class _LoginPageState extends State<LoginPage> {
                                                     side: const BorderSide(
                                                       color: Colors.black,
                                                     ),
-                                                    fixedSize: const Size(70, 10),
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(5),
+                                                    fixedSize:
+                                                        const Size(70, 10),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
                                                     ),
                                                   ),
                                                   child: const Text(
@@ -399,7 +403,7 @@ class _LoginPageState extends State<LoginPage> {
                                 print(_studentId);
                                 print(_password);
 
-                                login().then(
+                                /*  login().then(
                                   (result) {
                                     if (result == 1) {
                                       // 개인정보등록화면으로 이동
@@ -428,6 +432,42 @@ class _LoginPageState extends State<LoginPage> {
                                     }
                                   },
                                 );
+                                */
+
+                                while(true) {
+                                  final result = await login2();
+                                  if (result == 1) {
+                                    // 개인정보등록화면으로 이동
+                                    print("개인정보등록 화면으로 이동합니다.");
+                                    if (!mounted) return;
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        const InputProfile(),
+                                      ),
+                                    );
+                                    break;
+                                  } else if (result == 2) {
+                                    // 홈 화면으로 이동
+                                    print("홈 화면으로 이동합니다.");
+                                    if (!mounted) return;
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        const ResponsiveWebLayout(
+                                          pageIndex: 1,
+                                        ),
+                                      ),
+                                    );
+                                    break;
+                                  } else if (result == 3 || result != 4) {
+                                    if (!mounted) return;
+                                    _showFailedToLoginDialog(context);
+                                    break;
+                                    // print("로그인 실패");
+                                    // 팝업 창 띄워주기
+                                  }
+                                }
                               },
                               child: const Text(
                                 "로그인",
@@ -451,9 +491,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<int> login() async {
+  /* Future<int> login() async {
     // print("함수가 실행은 됐습니다.");
-    const url = 'http://localhost:8080/v1/members/login';
+    const url = 'http://43.202.77.44:8080/v1/members/login';
     final data = MyData(_studentId!, _password!);
     // print('Sending JSON payload: ${json.encode(data.toJson())}');
     final response = await http.post(
@@ -495,6 +535,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     return 0;
   }
+  */
 
   // 로그인을 실패하였을 경우 팝업 창
   void _showFailedToLoginDialog(BuildContext context) {
@@ -534,7 +575,7 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               /* GestureDetector(
+                /* GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -634,3 +675,109 @@ class MyData {
 //     print('Failed to send data. Error: ${response.statusCode}');
 //   }
 // }
+
+Future<int> login2() async {
+  const url = 'http://43.202.77.44:8080/v1/members/login';
+  final data = MyData(_studentId!, _password!);
+  var accessToken = await storage.read(key: "access_token");
+
+  try {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(data.toJson()),
+    );
+
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final isSuccess = responseData["status"];
+    final message = responseData["message"];
+
+    if (response.statusCode == 200) {
+      // 엑세스 토큰이 이미 있는 경우
+      if (accessToken != null) {
+        if (isSuccess == "SUCCESS") {
+          print("<Token exists>: $responseData");
+          if (message == "RequiredFirstRegistration") {
+            return 1;
+          } else if (message == "RegisteredUser") {
+            return 2;
+          }
+        } else if (isSuccess == "ERROR") {
+          print("로그인 정보 오류");
+          return 3;
+        }
+      } else {
+        // 엑세스 토큰이 없는 경우 -> 리프레시 + 엑세스 모두 새로 받아 저장 후 재 로그인 요청
+        print("<Token doesn't exist>: $responseData");
+        await storage.write(
+            key: 'refresh_token',
+            value: responseData["data"]["refreshToken"]);
+        await storage.write(
+            key: 'access_token', value: responseData["data"]["accessToken"]);
+        print("로그인을 재 요청합니다");
+        return 4;
+      }
+    } else if (response.statusCode == 401) {
+      print(message);
+      if (message == "Token has expired") {
+        // 유효하지 않은 토큰 처리
+        await getNewAccessToken();
+      } else if (message == "Token error") {
+        // 토큰이 틀린 경우
+        await storage.deleteAll(); // 기존 토큰 삭제
+      }
+      print("로그인을 재 요청합니다");
+      return 4; // 다시 로그인 시도
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
+      return 5; // 로그인 실패 (네트워크 에러)
+    }
+    return 0;
+  } catch (e) {
+    print("로그인 함수에서 에러 발생: $e");
+    return 6;
+  }
+}
+
+// 리프레시 토큰 -> 엑세스 토큰 재발급 요청 api
+Future<void> getNewAccessToken() async {
+  const url = 'http://43.202.77.44:8080/v1/members/new/accesstoken';
+  var refreshToken = await storage.read(key: 'refresh_token');
+
+  try {
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${refreshToken!}',
+    });
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final isSuccess = responseData["status"];
+    final message = responseData["message"];
+
+    if (response.statusCode == 200) {
+      if (isSuccess == "SUCCESS" && message == "NewAccessToken") {
+        // 리프레시 토큰이 유효한 경우 (정상 재발급)
+        await storage.write(
+            key: 'access_token', value: responseData["data"]["accessToken"]);
+      } else if (isSuccess == "ERROR") {
+        print("bearer가 없음");
+      }
+    } else if (response.statusCode == 401) {
+      // 리프레시 토큰 만료
+      print(message);
+      if (message == "Token has expired") {
+        await storage.deleteAll();
+        await login2();
+      } else if (message == "Token error") return; // 리프레시 토큰 틀림 -> 무시
+    } else {
+      print(
+          'Failed to get new accessToken. Error: ${response.statusCode}'); // 재발급 실패 (네트워크 에러)
+    }
+  } catch (e) {
+    print("토큰 재발급 함수에서 에러 발생: $e");
+  }
+}
+
+
