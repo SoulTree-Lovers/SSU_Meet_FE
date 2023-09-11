@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ssu_meet/dialogs/main_post_it_dialog.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/widgets/document_duplicate_image.dart';
@@ -48,7 +49,7 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  Future<List<dynamic>> fetchData() async {
+  Future<dynamic> fetchData() async {
     print("Fetching data");
     // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
     if (isLoading || !hasMoreData) {
@@ -62,56 +63,202 @@ class _MainPageState extends State<MainPage> {
 
     print("page: $page");
 
+    await makeAuthenticatedRequest(context);
+  }
+
+  Future<dynamic> refreshTokenValidation() async {
+    // 로컬에 저장된 refresh token 로드
+    final refreshToken = await storage.read(key: 'refresh_token');
+
     // 사이즈 1000으로 한 번에 모든 포스트잇 데이터 가져오기
     var url = 'http://localhost:8080/v1/members/main?page=$page&size=1000';
-    var token = await storage.read(key: "token"); // 토큰 불러오기
 
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $refreshToken',
+        },
+      );
 
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        // refresh token 유효한 경우, 새로운 access token 발급
+        var newAccessToken;
+        final authorizationHeader = response.headers['Authorization'];
+        if (authorizationHeader != null) {
+          // Authorization 헤더 공백으로 분리
+          final authorizationParts = authorizationHeader.split(' ');
+          // 'Bearer'로 시작하는 경우에만 access token으로 간주
+          if (authorizationParts.length == 2 && authorizationParts[0] == "Bearer") {
+            newAccessToken = authorizationParts[1];
+          }
+        }
+        // access token 갱신 후, 반환
+        await storage.write(key: 'access_token', value: newAccessToken);
+        return newAccessToken;
+      } else {
+        // refresh token 유효하지 않은 경우
+        print('refresh token validation failed: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('error : $e');
+      return null;
+    }
+  }
+
+  Future<dynamic> makeAuthenticatedRequest(BuildContext context) async {
+    // 로컬에 저장된 access token 읽어오기
+    final accessToken = await storage.read(key: 'access_token');
+
+    var url = 'http://localhost:8080/v1/members/main?page=$page&size=1000';
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
       final responseData = jsonDecode(utf8.decode(response.bodyBytes));
-      // final responseData = json.decode(response.body);
       final stickyData = responseData["data"]["stickyData"];
       final message = responseData["message"];
 
-      print("response data: $responseData \n\n");
+      // access token 상태에 따라 수정 (없는 경우, 만료된 경우 등 ..)
+      if (response.statusCode == 200) {
+        // access token 유효한 경우
+        print("response data: $responseData \n\n");
 
-      // 전체 포스트잇 개수 초기화 (page가 0일 때만)
-      if (page == 0 && message == "SuccessFirstMainPageAccess") {
-        allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
-        myStickyCount = responseData["data"]["myStickyCount"] ?? 0;
-
-        // print("전체 포스트잇 개수 가져오기: $allStickyCount");
-        // print("나의 포스트잇 개수 가져오기: $myStickyCount");
-      }
-
-      if (stickyData.isEmpty) {
+        // 전체 포스트잇 개수 초기화 (page가 0일 때만)
+        if (page == 0 && message == "SuccessFirstMainPageAccess") {
+          allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
+          myStickyCount = responseData["data"]["myStickyCount"] ?? 0;
+        }
+        if (stickyData.isEmpty) {
+          setState(() {
+            hasMoreData = false;
+          });
+        } else {
+          setState(() {
+            data.addAll(stickyData);
+            page++; // 페이지 += 1
+            print("page 1 증가 !! 현재 페이지 : $page");
+          });
+        }
         setState(() {
-          hasMoreData = false;
+          isLoading = false;
         });
+
+        return data;
+      } else if (response.statusCode == 401 || message == "Token error" || message == "Token has expired") {
+        // access token 만료되었을 경우, refresh token 사용하여 갱신
+        final newAccessToken = await refreshTokenValidation();
+
+        if (newAccessToken != null) {
+          // 갱신된 토큰으로 api 재요청
+          final refreshedResponse = await http.get(
+            Uri.parse(url),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Bearer $newAccessToken',
+            },
+          );
+          print('Refreshed Response : ${refreshedResponse.body}');
+        }
+      } else if (accessToken == null || message == "NoAccessToken") {
+        // access token 없는 경우 -> 로그인 api로 보내기
+        final newAccessToken = await performLogin();
+        if (newAccessToken != null) {
+          // 새로운 access token으로 api 재요청
+          final refreshedResponse = await http.get(
+            Uri.parse(url),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Bearer $newAccessToken',
+            },
+          );
+          print('Refreshed Response : ${refreshedResponse.body}');
+        }
       } else {
-        setState(() {
-          data.addAll(stickyData);
-          page++; // 페이지 += 1
-          print("page 1 증가 !! 현재 페이지 : $page");
-        });
+        // 다른 상태 코드
+        print('error : ${response.statusCode}');
       }
+    } catch (e) {
+      print('error : $e');
     }
-
-    setState(() {
-      isLoading = false;
-    });
-
-    return data;
-    // return [];
   }
+
+  // Future<List<dynamic>> fetchData() async {
+  //   print("Fetching data");
+  //   // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
+  //   if (isLoading || !hasMoreData) {
+  //     return [];
+  //   }
+
+  //   // 현재 데이터 패치 중이므로 true
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+
+  //   print("page: $page");
+
+  //   // 사이즈 1000으로 한 번에 모든 포스트잇 데이터 가져오기
+  //   var url = 'http://localhost:8080/v1/members/main?page=$page&size=1000';
+  //   var token = await storage.read(key: "token"); // 토큰 불러오기
+
+  //   final response = await http.get(
+  //     Uri.parse(url),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     },
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+  //     // final responseData = json.decode(response.body);
+  //     final stickyData = responseData["data"]["stickyData"];
+  //     final message = responseData["message"];
+
+  //     print("response data: $responseData \n\n");
+
+  //     // 전체 포스트잇 개수 초기화 (page가 0일 때만)
+  //     if (page == 0 && message == "SuccessFirstMainPageAccess") {
+  //       allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
+  //       myStickyCount = responseData["data"]["myStickyCount"] ?? 0;
+
+  //       // print("전체 포스트잇 개수 가져오기: $allStickyCount");
+  //       // print("나의 포스트잇 개수 가져오기: $myStickyCount");
+  //     }
+
+  //     if (stickyData.isEmpty) {
+  //       setState(() {
+  //         hasMoreData = false;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         data.addAll(stickyData);
+  //         page++; // 페이지 += 1
+  //         print("page 1 증가 !! 현재 페이지 : $page");
+  //       });
+  //     }
+  //   }
+
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+
+  //   return data;
+  //   // return [];
+  // }
 
   // 스크롤 최상단으로 가기
   void _scrollToTop() async {
