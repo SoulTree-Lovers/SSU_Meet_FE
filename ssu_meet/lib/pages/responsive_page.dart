@@ -29,7 +29,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
 
   // 서버에서 코인 가져오기
   void getCoinFromServer() async {
-    const url = 'http://localhost:8080/v1/members/mycoin';
+    const url = 'http://43.202.77.44:8080/v1/members/mycoin';
     var token = await storage.read(key: "token");
 
     var response = await http.get(
@@ -90,10 +90,10 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.05),
+                  padding: EdgeInsets.only(left: screenWidth * 0.05, top: screenWidth * 0.005),
                   child: Container(
-                    width: screenWidth * 0.12,
-                    height: screenHeight * 0.025,
+                    width: screenWidth * 0.17,
+                    height: screenHeight * 0.04,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
