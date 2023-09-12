@@ -298,109 +298,7 @@ class _LoginPageState extends State<LoginPage> {
                                     _studentId == "" ||
                                     _password == null ||
                                     _password == "") {
-                                  isMetInput = false; // 학과/비번 중 하나라도 입력하지 않은 경우 -> 학번/비번 팝업창 띄우도록
-                                  showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      builder: ((context) {
-                                        return AlertDialog(
-                                          contentPadding: const EdgeInsets.only(
-                                              top: 30,
-                                              left: 30,
-                                              right: 30,
-                                              bottom: 20),
-                                          actionsPadding:
-                                              const EdgeInsets.only(bottom: 20),
-                                          alignment: Alignment.center,
-                                          shape: RoundedRectangleBorder(
-                                            side: const BorderSide(
-                                              width: 1.5,
-                                              strokeAlign:
-                                                  BorderSide.strokeAlignOutside,
-                                              color: Color(0xFF020202),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
-                                          shadowColor: const Color(0x3F000000),
-                                          content: const Text(
-                                            "학번 또는 비밀번호를 입력해주세요.",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                              fontFamily:
-                                                  'NanumSquareRoundBold',
-                                            ),
-                                          ),
-                                          actions: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                /* GestureDetector(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Container(
-                                                  width: 70,
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                    color: Colors.black,
-                                                    ),
-                                                    borderRadius: BorderRadius.circular(5),
-                                                    color: Colors.black,
-                                                  ),
-                                                  child: const Center(
-                                                    child: Text("확인",
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 10,
-                                                      fontFamily: 'NanumSquareRoundR',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),*/
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.black,
-                                                    shadowColor: Colors.black26,
-                                                    side: const BorderSide(
-                                                      color: Colors.black,
-                                                    ),
-                                                    fixedSize:
-                                                        const Size(70, 10),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                    ),
-                                                  ),
-                                                  child: const Text(
-                                                    "확인",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontFamily:
-                                                          "NanumSquareRoundR",
-                                                      fontSize: 10,
-                                                      //fontWeight: FontWeight.w500
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      }));
+                                  isMetInput = false; // 학과/비번 중 하나라도 입력하지 않은 경우
                                 }
                                 print(_studentId);
                                 print(_password);
@@ -435,8 +333,12 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                 );
                                 */
-
                                 while (true) {
+                                  if (!isMetInput) { // 입력이 충족되지 않은 경우 -> 로그인 api 보내지 않고 프론트단에서 처리.
+                                    if (!mounted) return;
+                                    _showIsNotMetInput(context);
+                                    break;
+                                  }
                                   final result = await login2();
                                   if (result == 1) {
                                     // 개인정보등록화면으로 이동
@@ -472,7 +374,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     );
                                     break;
-                                  } else if ((result == 3 || result != 4) && isMetInput) {
+                                  } else if (result == 3 || result != 4) {
                                     if (!mounted) return;
                                     _showFailedToLoginDialog(context);
                                     break;
@@ -551,99 +453,136 @@ class _LoginPageState extends State<LoginPage> {
 
   // 로그인을 실패하였을 경우 팝업 창
   void _showFailedToLoginDialog(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     showDialog(
       barrierColor: Colors.white.withOpacity(0.7),
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding:
-              const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
-          actionsPadding: const EdgeInsets.only(bottom: 30),
-          alignment: Alignment.center,
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(
-              width: 1.5,
-              strokeAlign: BorderSide.strokeAlignOutside,
-              color: Color(0xFF020202),
-            ),
-            borderRadius: BorderRadius.circular(40),
+      builder: (BuildContext context) => AlertDialog(
+        contentPadding:
+        const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+        actionsPadding: const EdgeInsets.only(bottom: 30),
+        alignment: Alignment.center,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            width: 1.5,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF020202),
           ),
-          shadowColor: const Color(0x3F000000),
-          content: const Text(
-            '로그인에 실패하였습니다. \n',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 12,
-              fontFamily: 'NanumSquareRoundBold',
-              // fontWeight: FontWeight.w700,
-              // height: 1.31,
-            ),
-          ),
-          actions: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                /* GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.black,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "확인",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'NanumSquareRoundR',
-                        ),
-                      ),
-                    ),
+          borderRadius: BorderRadius.circular(40),
+        ),
+        shadowColor: const Color(0x3F000000),
+        content: Container(
+            width: 250,
+            height: 55,
+            alignment: Alignment.center,
+            child: const Text(
+              '로그인에 실패하였습니다.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+                fontFamily: 'NanumSquareRoundBold',
+                // fontWeight: FontWeight.w700,
+                // height: 1.31,
+              ),
+            )),
+        actions: [
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shadowColor: Colors.black26,
+                  side: const BorderSide(
+                    color: Colors.black,
                   ),
-                ),*/
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shadowColor: Colors.black26,
-                      side: const BorderSide(
-                        color: Colors.black,
-                      ),
-                      fixedSize: const Size(70, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
-                  child: const Text(
-                    "확인",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: "NanumSquareRoundR",
-                      fontSize: 10,
-                      //fontWeight: FontWeight.w500
-                    ),
-                  ),
+                  fixedSize: const Size(70, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  )),
+              child: const Text(
+                "확인",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "NanumSquareRoundR",
+                  fontSize: 10,
+                  //fontWeight: FontWeight.w500
                 ),
-              ],
+              ),
             ),
-          ],
-        );
-      },
+          ),
+        ],
+      ),
     );
+  }
+
+  // 학번이나 비밀번호를 입력하지 않았을 경우 팝업창
+  void _showIsNotMetInput(BuildContext context) {
+    print("학번/비밀번호 입력안함");
+    showDialog(
+      barrierColor: Colors.white.withOpacity(0.7),
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        contentPadding:
+        const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
+        actionsPadding: const EdgeInsets.only(bottom: 30),
+        alignment: Alignment.center,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            width: 1.5,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF020202),
+          ),
+          borderRadius: BorderRadius.circular(40),
+        ),
+        shadowColor: const Color(0x3F000000),
+        content: Container(
+            width: 250,
+            height: 55,
+            alignment: Alignment.center,
+            child: const Text(
+              '학번 또는 비밀번호를 입력해주세요.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+                fontFamily: 'NanumSquareRoundBold',
+                // fontWeight: FontWeight.w700,
+                // height: 1.31,
+              ),
+            )),
+        actions: [
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shadowColor: Colors.black26,
+                  side: const BorderSide(
+                    color: Colors.black,
+                  ),
+                  fixedSize: const Size(70, 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  )),
+              child: const Text(
+                "확인",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "NanumSquareRoundR",
+                  fontSize: 10,
+                  //fontWeight: FontWeight.w500
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
   }
 }
 
@@ -743,14 +682,16 @@ Future<int> login2() async {
           // 엑세스 토큰 재발급 성공 (기존 정보로 다시 로그인 후 개인정보 등록 여부에 따라 페이지 이동)
           print("로그인 api를 재 요청합니다");
           return 4;
-        } else if (newTokenMessage == "storageDeleted") { // 리프레시 토큰마저 만료됨 (로그인 화면으로 이동)
+        } else if (newTokenMessage == "storageDeleted") {
+          // 리프레시 토큰마저 만료됨 (로그인 화면으로 이동)
           print("로그인을 다시 합니다");
           return 5;
         } else {
           // Token Error || Network Error || Try Catch Error 인 경우
           return 6;
         }
-      } else if (message == "Token error") { // 엑세스 토큰이 틀린 경우
+      } else if (message == "Token error") {
+        // 엑세스 토큰이 틀린 경우
         await storage.deleteAll(); // 기존 토큰 삭제
       }
       print("로그인을 다시 합니다");
@@ -782,14 +723,16 @@ Future<String> getNewAccessToken() async {
     final isSuccess = responseData["status"];
     final message = responseData["message"];
 
-    if (response.statusCode == 200) { // 리프레시 토큰이 유효한 경우 (정상 재발급)
+    if (response.statusCode == 200) {
+      // 리프레시 토큰이 유효한 경우 (정상 재발급)
       await storage.write(
           key: 'access_token', value: responseData["data"]["accessToken"]);
       return "NewAccessToken";
     } else if (response.statusCode == 401) {
       print(message);
       await storage.deleteAll();
-      if (message == "Token has expired") { // 리프레시 만료
+      if (message == "Token has expired") {
+        // 리프레시 만료
         return "storageDeleted"; // 로그인 화면으로 이동
       } else {
         return "tokenError"; // 로그인 화면으로 이동
