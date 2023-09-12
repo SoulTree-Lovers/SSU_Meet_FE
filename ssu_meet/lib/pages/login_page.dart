@@ -434,7 +434,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                                 */
 
-                                while(true) {
+                                while (true) {
                                   final result = await login2();
                                   if (result == 1) {
                                     // 개인정보등록화면으로 이동
@@ -443,7 +443,7 @@ class _LoginPageState extends State<LoginPage> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        const InputProfile(),
+                                            const InputProfile(),
                                       ),
                                     );
                                     break;
@@ -454,9 +454,19 @@ class _LoginPageState extends State<LoginPage> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        const ResponsiveWebLayout(
+                                            const ResponsiveWebLayout(
                                           pageIndex: 1,
                                         ),
+                                      ),
+                                    );
+                                    break;
+                                  } else if (result == 5) {
+                                    // 로그인 화면으로 이동
+                                    print("로그인 화면으로 이동합니다.");
+                                    if (!mounted) return;
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => const LoginPage(),
                                       ),
                                     );
                                     break;
@@ -679,6 +689,9 @@ class MyData {
 Future<int> login2() async {
   const url = 'http://43.202.77.44:8080/v1/members/login';
   final data = MyData(_studentId!, _password!);
+
+  var newTokenMessage;
+
   var accessToken = await storage.read(key: "access_token");
 
   try {
@@ -712,27 +725,39 @@ Future<int> login2() async {
         // 엑세스 토큰이 없는 경우 -> 리프레시 + 엑세스 모두 새로 받아 저장 후 재 로그인 요청
         print("<Token doesn't exist>: $responseData");
         await storage.write(
-            key: 'refresh_token',
-            value: responseData["data"]["refreshToken"]);
+            key: 'refresh_token', value: responseData["data"]["refreshToken"]);
         await storage.write(
             key: 'access_token', value: responseData["data"]["accessToken"]);
-        print("로그인을 재 요청합니다");
+        print("로그인 api를 재 요청합니다");
         return 4;
       }
     } else if (response.statusCode == 401) {
       print(message);
       if (message == "Token has expired") {
         // 유효하지 않은 토큰 처리
-        await getNewAccessToken();
+        newTokenMessage = await getNewAccessToken();
+
+        if (newTokenMessage == "NewAccessToken") {
+          // 엑세스 토큰 재발급 성공 (기존 정보로 다시 로그인)
+          print("로그인 api를 재 요청합니다");
+          return 4;
+        } else if (newTokenMessage == "storageDeleted") {
+          // 리프레시 토큰마저 만료됨 (로그인 화면으로 이동)
+          print("로그인을 다시 합니다");
+          return 5;
+        } else {
+          // Token Error || Network Error || Try Catch Error 인 경우
+          return 6;
+        }
       } else if (message == "Token error") {
         // 토큰이 틀린 경우
         await storage.deleteAll(); // 기존 토큰 삭제
       }
-      print("로그인을 재 요청합니다");
-      return 4; // 다시 로그인 시도
+      print("로그인을 다시 합니다");
+      return 5; // (로그인 화면으로 이동)
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
-      return 5; // 로그인 실패 (네트워크 에러)
+      return 6; // 로그인 실패 (네트워크 에러)
     }
     return 0;
   } catch (e) {
@@ -742,7 +767,7 @@ Future<int> login2() async {
 }
 
 // 리프레시 토큰 -> 엑세스 토큰 재발급 요청 api
-Future<void> getNewAccessToken() async {
+Future<String> getNewAccessToken() async {
   const url = 'http://43.202.77.44:8080/v1/members/new/accesstoken';
   var refreshToken = await storage.read(key: 'refresh_token');
 
@@ -752,32 +777,31 @@ Future<void> getNewAccessToken() async {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${refreshToken!}',
     });
+
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
     final isSuccess = responseData["status"];
     final message = responseData["message"];
 
     if (response.statusCode == 200) {
-      if (isSuccess == "SUCCESS" && message == "NewAccessToken") {
-        // 리프레시 토큰이 유효한 경우 (정상 재발급)
-        await storage.write(
-            key: 'access_token', value: responseData["data"]["accessToken"]);
-      } else if (isSuccess == "ERROR") {
-        print("bearer가 없음");
-      }
+      // 리프레시 토큰이 유효한 경우 (정상 재발급)
+      await storage.write(
+          key: 'access_token', value: responseData["data"]["accessToken"]);
+      return "NewAccessToken";
     } else if (response.statusCode == 401) {
-      // 리프레시 토큰 만료
       print(message);
-      if (message == "Token has expired") {
-        await storage.deleteAll();
-        await login2();
-      } else if (message == "Token error") return; // 리프레시 토큰 틀림 -> 무시
+      await storage.deleteAll();
+      if (message == "Token has expired") { // 리프레시 만료
+        return "storageDeleted"; // 로그인 화면으로 이동
+      } else {
+        return "tokenError"; // 로그인 화면으로 이동
+      }
     } else {
       print(
           'Failed to get new accessToken. Error: ${response.statusCode}'); // 재발급 실패 (네트워크 에러)
+      return "NetworkError";
     }
   } catch (e) {
     print("토큰 재발급 함수에서 에러 발생: $e");
+    return "TryCatchError";
   }
 }
-
-
