@@ -66,16 +66,16 @@ class _ModifyPageState extends State<ModifyPage> {
 
   // api 연동- GET 요청 함수
   void getOldProfile() async {
-    const url = 'http://localhost:8080/v1/members/mypage/modify';
+    const url = 'http://43.202.77.44:8080/v1/members/mypage/modify';
     print("함수 실행");
-    var token = await storage.read(key: "token");
+    var accessToken = await storage.read(key: "access_token");
 
     var response = await http.get(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $accessToken',
       },
     );
     print("응답 완료");
@@ -125,16 +125,16 @@ class _ModifyPageState extends State<ModifyPage> {
 
   // api 연동- 수정 완료 후 POST 요청 코드
   Future<void> sendModifiedProfileData(UserProfile newData) async {
-    const url = 'http://localhost:8080/v1/members/mypage/modify';
+    const url = 'http://43.202.77.44:8080/v1/members/mypage/modify';
 
-    var token = await storage.read(key: "token");
+    var accessToken = await storage.read(key: "access_token");
 
     final response = await http.post(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $accessToken',
       },
       body: json.encode(newData.toJson()),
     );
@@ -582,7 +582,7 @@ class _ModifyPageState extends State<ModifyPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              top: screenWidth * 0.07,
+                              top: screenWidth * 0.02,
                             ),
                           ),
                           ElevatedButton(

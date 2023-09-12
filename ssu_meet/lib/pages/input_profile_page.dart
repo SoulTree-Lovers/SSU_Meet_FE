@@ -14,6 +14,8 @@ import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
 import 'package:ssu_meet/dialogs/register_completed.dialog.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/link_text.dart';
+
 class InputProfile extends StatefulWidget {
   const InputProfile({super.key});
 
@@ -25,45 +27,54 @@ class _InputProfile extends State<InputProfile> {
   List<String> genderList = ["선택하기", '남', '여'];
   List<DropdownMenuItem<Item>> collegeList = List.empty(growable: true);
   List<DropdownMenuItem<Item>> majorList = List.empty(growable: true);
- // List<String> birthYearList = List.empty(growable: true);
- // List<String> birthMonthList = List.empty(growable: true);
- // List<String> birthDayList = List.empty(growable: true);
+
+  // List<String> birthYearList = List.empty(growable: true);
+  // List<String> birthMonthList = List.empty(growable: true);
+  // List<String> birthDayList = List.empty(growable: true);
   Item? college; //단과대
   Item? major; //전공
   var data;
   bool isDateSelected = false;
   final formKey = GlobalKey<FormState>();
 
-  // api 연동 - POST 요청 함수
+  // api 연동 - 기본정보등록 POST 요청 함수
   Future<int> sendUserProfileData(UserProfile newUser) async {
-    var token = await storage.read(key: "token");
-
+    var accessToken = await storage.read(key: "access_token");
     print(json.encode(newUser.toJson()));
-    const url = 'http://localhost:8080/v1/members/new';
+
+    const url = 'http://43.202.77.44:8080/v1/members/new';
     final response = await http.post(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $accessToken',
       },
       body: json.encode(newUser.toJson()),
     );
 
-    // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final isSuccess = responseData["status"];
+    final message = responseData["message"];
+    print(responseData);
 
-      if (responseData["status"] == "SUCCESS") {
-        print(responseData["message"]);
-        return 0;
-      } else {
-        print(responseData["message"]);
+    if (response.statusCode == 200) {
+      if (isSuccess == "SUCCESS") {
+        // 기본 정보 등록 완료
         return 1;
+      } else if (isSuccess == "ERROR") {
+        if (accessToken == null) {
+          // 엑세스 토큰이 없음. 로그인 api
+          return 2;
+        } else {
+          // can't find user
+          return 3;
+        }
       }
+      return 4;
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
-      return 2; // 네트워크 에러
+      return 5; // 네트워크 에러
     }
   }
 
@@ -95,6 +106,20 @@ class _InputProfile extends State<InputProfile> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    List<LinkTextItem> linkTextItems = [
+      LinkTextItem(text: '     기본 정보 등록 시 '),
+      LinkTextItem(
+        text: '개인정보 처리방침,\n',
+        isLink: true,
+        onTap: () => print('개인정보 처리방침 페이지 보여주기'),
+      ),
+      LinkTextItem(
+        text: '서비스 이용약관',
+        isLink: true,
+        onTap: () => print('서비스 이용약관 페이지 보여주기'),
+      ),
+      LinkTextItem(text: '에 동의하는 것을 의미합니다.'),
+    ];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -404,120 +429,6 @@ class _InputProfile extends State<InputProfile> {
                                         ),
                                       ),
                                     ),
-                                    /* Text(
-                                              "생년월일:  ",
-                                              style: TextStyle(
-                                                  fontFamily: "Nanum_Ogbice",
-                                                  fontSize: screenWidth * 0.05),
-                                            ),
-                                            DropdownButton<String>(
-                                              value: birthYear,
-                                              icon: const Icon(
-                                                  Icons.arrow_drop_down),
-                                              iconSize: screenWidth * 0.04,
-                                              underline: Container(
-                                                  height: screenHeight * 0.001,
-                                                  color: Colors.black),
-                                              style: DropdownTextStyle(
-                                                  screenWidth),
-                                              items: birthYearList.map<
-                                                  DropdownMenuItem<String>>(
-                                                    (String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                },
-                                              ).toList(),
-                                              onChanged: (newVal) {
-                                                setState(
-                                                      () {
-                                                        birthYear = newVal!;
-                                                    data.birthDate = newVal.substring(2,4);
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                            Text(
-                                              "년  ",
-                                              style: TextStyle(
-                                                  fontFamily: "Nanum_Ogbice",
-                                                  fontSize: screenWidth * 0.04),
-                                            ),
-                                            DropdownButton<String>(
-                                              value: birthMonth,
-                                              icon: const Icon(
-                                                  Icons.arrow_drop_down),
-                                              iconSize: screenWidth * 0.04,
-                                              underline: Container(
-                                                  height: screenHeight * 0.001,
-                                                  color: Colors.black),
-                                              style: DropdownTextStyle(
-                                                  screenWidth
-                                              ),
-                                              items: birthMonthList.map<
-                                                  DropdownMenuItem<String>>(
-                                                    (String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                },
-                                              ).toList(),
-                                              onChanged: (newVal) {
-                                                setState(
-                                                      () {
-                                                    birthMonth = newVal!;
-                                                    },
-                                                );
-                                              },
-                                            ),
-                                            Text(
-                                              "월  ",
-                                              style: TextStyle(
-                                                  fontFamily: "Nanum_Ogbice",
-                                                  fontSize: screenWidth * 0.04),
-                                            ),
-                                            DropdownButton<String>(
-                                              value: birthDay,
-                                              icon: const Icon(
-                                                  Icons.arrow_drop_down),
-                                              iconSize: screenWidth * 0.04,
-                                              underline: Container(
-                                                  height: screenHeight * 0.001,
-                                                  color: Colors.black),
-                                              style: DropdownTextStyle(
-                                                  screenWidth),
-                                              items: birthDayList.map<
-                                                  DropdownMenuItem<String>>(
-                                                    (String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                },
-                                              ).toList(),
-                                              onChanged: (newVal) {
-                                                setState(
-                                                      () {
-                                                    birthDay = newVal!;
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                            Text(
-                                              "일  ",
-                                              style: TextStyle(
-                                                  fontFamily: "Nanum_Ogbice",
-                                                  fontSize: screenWidth * 0.04),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),*/
                                     SizedBox(
                                       width: screenWidth * 0.8,
                                       height: screenWidth * 0.07,
@@ -541,11 +452,11 @@ class _InputProfile extends State<InputProfile> {
                                               hintText: "입력",
                                               screenWidth: screenWidth,
                                               validator: (val) {
-                                              if (val == '' || val == null) {
-                                                return "필수입력";
-                                              }
-                                              return null;
-                                            },
+                                                if (val == '' || val == null) {
+                                                  return "필수입력";
+                                                }
+                                                return null;
+                                              },
                                               onSaved: (val) {
                                                 setState(
                                                   () {
@@ -557,9 +468,8 @@ class _InputProfile extends State<InputProfile> {
                                               },
                                               inputFormatters: [
                                                 FilteringTextInputFormatter(
-                                                  RegExp('[0-9.]'),
-                                                  allow: true
-                                                )
+                                                    RegExp('[0-9.]'),
+                                                    allow: true)
                                               ],
                                             ),
                                           ),
@@ -663,7 +573,7 @@ class _InputProfile extends State<InputProfile> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: screenWidth * 0.07,
+                          top: screenWidth * 0.02,
                         ),
                       ),
                       ElevatedButton(
@@ -701,7 +611,8 @@ class _InputProfile extends State<InputProfile> {
                                 (data.instaId != '' ||
                                     data.kakaoId != '' ||
                                     data.phoneNumber != '')) {
-                              data.age = AgeCalculation(data.birthDate.toString().substring(2,8));
+                              data.age = AgeCalculation(
+                                  data.birthDate.toString().substring(2, 8));
                               print("필수 입력 요건이 충족됨");
                               // api 요청
                               sendUserProfileData(data).then((result) {
@@ -711,13 +622,28 @@ class _InputProfile extends State<InputProfile> {
                               });
                             } else {
                               //print("필수 입력 조건이 충족되지 않음");
-                              alertRequiredInput(context,screenWidth);
+                              alertRequiredInput(context, screenWidth);
                             }
                           } else {
                             // print("필수 입력 조건이 충족되지 않음");
-                            alertRequiredInput(context,screenWidth);
+                            alertRequiredInput(context, screenWidth);
                           }
                         },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: screenWidth * 0.06,
+                        ),
+                      ),
+                      Center(
+                        child: RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              for (int i = 0; i < linkTextItems.length; i++)
+                                getTextSpan(linkTextItems[i], screenWidth)
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
