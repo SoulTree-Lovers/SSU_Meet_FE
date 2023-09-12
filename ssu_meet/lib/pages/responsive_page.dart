@@ -78,6 +78,10 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    if(screenWidth >= 540) { //태블릿 사이즈 레이아웃 설정
+      screenWidth *= 0.7;
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
