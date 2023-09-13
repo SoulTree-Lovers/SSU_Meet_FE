@@ -387,7 +387,7 @@ class _MainPageState extends State<MainPage> {
                         width: 3,
                       ),
                       Text(
-                        "현재 등록된 이성 포스트잇: $allStickyCount 개",
+                        "모든 포스트잇: $allStickyCount 개",
                         style: TextStyle(
                           fontFamily: "NanumSquareRoundR",
                           fontSize: screenWidth * 0.03,
