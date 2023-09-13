@@ -325,78 +325,6 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /*   GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    final successToBuy = buyPostIt(stickyId);
-                    // 구매 성공 시
-                    if (successToBuy == 1) {
-                      _showCompletedBuyingDialog(context);
-                    }
-
-                    // 이미 팔린 포스트잇인 경우
-                    else if (successToBuy == 2) {
-                      _showSoldOutDialog(context);
-                    }
-
-                    // 코인이 부족할 경우
-                    else if (successToBuy == 3) {
-                      _showNotEnoughCoinDialog(context);
-                    }
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.black,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "구매하기",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'NanumSquareRoundR',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "취소",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF010101),
-                          fontSize: 10,
-                          fontFamily: 'NanumSquareRoundR',
-                        ),
-                      ),
-                    ),
-                  ),
-                ), */
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.pop(context);
@@ -420,6 +348,14 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                       _showNotEnoughCoinDialog(context);
                     }
 
+                    // 토큰을 보유하지 않은 사용자
+                    else if (purchaseSuccess == "GoToLoginPage") {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    }
                     // 네트워크 에러
                     else {
                       print("포스트잇 구매 에러 발생");
@@ -481,42 +417,70 @@ class _MainPostItDialog extends State<MainPostItDialog> {
   }
 
   // 포스트잇 구매 api
-  Future<int> buyPostIt(int stickyId) async {
+  Future<dynamic> buyPostIt(int stickyId) async {
     // print("함수가 실행은 됐습니다.");
-    var url = 'http://localhost:8080/v1/sticky/buy/$stickyId';
-    var token = await storage.read(key: "token");
+    var url = 'http://43.202.77.44:8080/v1/sticky/buy/$stickyId';
+    // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
+    final accessToken = await storage.read(key: 'access_token');
+
+    if (accessToken == null) {
+      return "GoToLoginPage";
+    }
     // print('Sending JSON payload: ${json.encode(data.toJson())}');
     final response = await http.get(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
     print("데이터 전송");
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final isSuccess = responseData["status"];
+    final message = responseData["message"];
 
     if (response.statusCode == 200) {
-      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
-      final isSuccess = responseData["status"];
-      final message = responseData["message"];
-
-      print(responseData);
+      // print(responseData);
       if (isSuccess == "SUCCESS") {
         // 포스트잇 구매 성공한 경우
-        print("포스트잇 구매 성공");
+        // print("포스트잇 구매 성공");
         return 1;
       } else {
         if (message == "AlreadySold") {
-          print("이미 판매된 포스트잇입니다.");
+          // print("이미 판매된 포스트잇입니다.");
           return 2;
         } else {
-          print("코인이 부족합니다.");
+          // print("코인이 부족합니다.");
           return 3;
         }
       }
       // print('Received response: $result');
+    } else if (response.statusCode == 401) {
+      // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
+      if (message == "Token has expired") {
+        // 엑세스 토큰이 만료된 경우
+        final isSuccessNewToken =
+            await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+        if (isSuccessNewToken == "NewAccessToken") {
+          // 엑세스 토큰을 정상적으로 재발급 받은 경우
+          return await buyPostIt(stickyId); // 포스트잇 구매 함수 재실행
+        } else if (isSuccessNewToken == "storageDelete") {
+          // 리프레시 토큰이 만료된 경우
+          return "GoToLoginPage";
+        } else if (isSuccessNewToken == "tokenError") {
+          // 리프레시 토큰이 에러가 발생한 경우
+          return "GoToLoginPage";
+        } else {
+          // 네트워크 에러 또는 토큰 재발급 함수 자체에 에러가 발생한 경우
+          return "GoToLoginPage";
+        }
+      } else {
+        // 엑세스 토큰이 유효하지 않은 경우 및 그 외 예외
+        await storage.deleteAll(); // 저장되어 있던 토큰 모두 삭제
+        return "GoToLoginPage";
+      }
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
       return 4; // 로그인 실패 (네트워크 에러)
@@ -561,75 +525,6 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /*   GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ResponsiveWebLayout(
-                          pageIndex: 1,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.black,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "더 둘러보기",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 9,
-                          fontFamily: 'NanumSquareRoundR',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ResponsiveWebLayout(
-                          pageIndex: 2,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "마이페이지 이동",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF010101),
-                          fontSize: 9,
-                          fontFamily: 'NanumSquareRoundR',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),*/
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
@@ -746,44 +641,6 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-            /*  Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ResponsiveWebLayout(
-                          pageIndex: 1,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.black,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "확인",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'NanumSquareRoundR',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ), */
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -857,38 +714,6 @@ class _MainPostItDialog extends State<MainPostItDialog> {
             ),
           ),
           actions: <Widget>[
-            /* Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.black,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "확인",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'NanumSquareRoundR',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),*/
             Center(
               child: ElevatedButton(
                 onPressed: () {
