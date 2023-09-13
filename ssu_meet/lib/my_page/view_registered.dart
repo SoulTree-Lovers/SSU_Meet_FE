@@ -10,22 +10,28 @@ class ViewRegistered extends StatelessWidget {
 
   // API 연동 (등록한 포스트잇 가져오기)
   Future<dynamic> getRegisteredStickyData() async {
-    const url = 'http://localhost:8080/v1/members/mypage/sticky-list';
-    var token = await storage.read(key: "token");
+    const url = 'http://43.202.77.44:8080/v1/members/mypage/sticky-list';
+    // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
+    final accessToken = await storage.read(key: 'access_token');
+
+    if (accessToken == null) {
+      // 미등록 사용자
+      return [];
+    }
 
     final response = await http.get(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
-      final message = responseData["message"];
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final message = responseData["message"];
 
+    if (response.statusCode == 200) {
       // 등록한 포스트잇 가져오기 성공
       if (message == "ExistRegisterPostIt") {
         return responseData["data"]["stickyData"];
@@ -33,9 +39,33 @@ class ViewRegistered extends StatelessWidget {
         print("등록한 포스트잇이 없습니다.");
         return [];
       }
+    } else if (response.statusCode == 401) {
+      // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
+      if (message == "Token has expired") {
+        // 엑세스 토큰이 만료된 경우
+        final isSuccessNewToken =
+            await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+        if (isSuccessNewToken == "NewAccessToken") {
+          // 엑세스 토큰을 정상적으로 재발급 받은 경우
+          return await getRegisteredStickyData(); // 등록된 포스트잇 요청 함수 재실행
+        } else if (isSuccessNewToken == "storageDelete") {
+          // 리프레시 토큰이 만료된 경우
+          return "GoToLoginPage";
+        } else if (isSuccessNewToken == "tokenError") {
+          // 리프레시 토큰이 에러가 발생한 경우
+          return "GoToLoginPage";
+        } else {
+          // 네트워크 에러 또는 토큰 재발급 함수 자체에 에러가 발생한 경우
+          return "GoToLoginPage";
+        }
+      } else {
+        // 엑세스 토큰이 유효하지 않은 경우 및 그 외 예외
+        await storage.deleteAll(); // 저장되어 있던 토큰 모두 삭제
+        return "GoToLoginPage";
+      }
     } else {
       print("Failed to get data. Error: ${response.statusCode}");
-      return 0;
+      return "GoToLoginPage";
     }
   }
 
@@ -99,6 +129,14 @@ class ViewRegistered extends StatelessWidget {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.data == "GoToLoginPage") {
+                      print("GoToLoginPage");
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                      return const Text("GoToLoginPage");
                     } else {
                       return Expanded(
                         child: GridView.builder(

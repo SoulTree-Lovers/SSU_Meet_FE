@@ -298,7 +298,8 @@ class _LoginPageState extends State<LoginPage> {
                                     _studentId == "" ||
                                     _password == null ||
                                     _password == "") {
-                                  isMetInput = false; // 학과/비번 중 하나라도 입력하지 않은 경우 -> 학번/비번 팝업창 띄우도록
+                                  isMetInput =
+                                      false; // 학과/비번 중 하나라도 입력하지 않은 경우 -> 학번/비번 팝업창 띄우도록
                                   showDialog(
                                       context: context,
                                       barrierDismissible: true,
@@ -472,7 +473,8 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     );
                                     break;
-                                  } else if ((result == 3 || result != 4) && isMetInput) {
+                                  } else if ((result == 3 || result != 4) &&
+                                      isMetInput) {
                                     if (!mounted) return;
                                     _showFailedToLoginDialog(context);
                                     break;
@@ -692,7 +694,7 @@ Future<int> login2() async {
   const url = 'http://43.202.77.44:8080/v1/members/login';
   final data = MyData(_studentId!, _password!);
 
-  var newTokenMessage;
+  String newTokenMessage;
 
   var accessToken = await storage.read(key: "access_token");
 
@@ -743,14 +745,16 @@ Future<int> login2() async {
           // 엑세스 토큰 재발급 성공 (기존 정보로 다시 로그인 후 개인정보 등록 여부에 따라 페이지 이동)
           print("로그인 api를 재 요청합니다");
           return 4;
-        } else if (newTokenMessage == "storageDeleted") { // 리프레시 토큰마저 만료됨 (로그인 화면으로 이동)
+        } else if (newTokenMessage == "storageDeleted") {
+          // 리프레시 토큰마저 만료됨 (로그인 화면으로 이동)
           print("로그인을 다시 합니다");
           return 5;
         } else {
           // Token Error || Network Error || Try Catch Error 인 경우
           return 6;
         }
-      } else if (message == "Token error") { // 엑세스 토큰이 틀린 경우
+      } else if (message == "Token error") {
+        // 엑세스 토큰이 틀린 경우
         await storage.deleteAll(); // 기존 토큰 삭제
       }
       print("로그인을 다시 합니다");
@@ -782,16 +786,19 @@ Future<String> getNewAccessToken() async {
     final isSuccess = responseData["status"];
     final message = responseData["message"];
 
-    if (response.statusCode == 200) { // 리프레시 토큰이 유효한 경우 (정상 재발급)
+    if (response.statusCode == 200) {
+      // 리프레시 토큰이 유효한 경우 (정상 재발급)
       await storage.write(
           key: 'access_token', value: responseData["data"]["accessToken"]);
       return "NewAccessToken";
     } else if (response.statusCode == 401) {
-      print(message);
-      await storage.deleteAll();
-      if (message == "Token has expired") { // 리프레시 만료
+      // print(message);
+      await storage.deleteAll(); // 저장되어 있던 토큰 모두 삭제
+      if (message == "Token has expired") {
+        // 리프레시 만료
         return "storageDeleted"; // 로그인 화면으로 이동
       } else {
+        // 토큰 에러
         return "tokenError"; // 로그인 화면으로 이동
       }
     } else {

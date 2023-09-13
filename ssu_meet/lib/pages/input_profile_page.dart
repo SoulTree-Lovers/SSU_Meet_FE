@@ -25,9 +25,9 @@ class _InputProfile extends State<InputProfile> {
   List<String> genderList = ["선택하기", '남', '여'];
   List<DropdownMenuItem<Item>> collegeList = List.empty(growable: true);
   List<DropdownMenuItem<Item>> majorList = List.empty(growable: true);
- // List<String> birthYearList = List.empty(growable: true);
- // List<String> birthMonthList = List.empty(growable: true);
- // List<String> birthDayList = List.empty(growable: true);
+  // List<String> birthYearList = List.empty(growable: true);
+  // List<String> birthMonthList = List.empty(growable: true);
+  // List<String> birthDayList = List.empty(growable: true);
   Item? college; //단과대
   Item? major; //전공
   var data;
@@ -35,11 +35,11 @@ class _InputProfile extends State<InputProfile> {
   final formKey = GlobalKey<FormState>();
 
   // api 연동 - POST 요청 함수
-  Future<int> sendUserProfileData(UserProfile newUser) async {
+  Future<dynamic> sendUserProfileData(UserProfile newUser) async {
     var token = await storage.read(key: "token");
 
     print(json.encode(newUser.toJson()));
-    const url = 'http://localhost:8080/v1/members/new';
+    const url = 'http://43.202.77.44:8080/v1/members/new';
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -49,17 +49,40 @@ class _InputProfile extends State<InputProfile> {
       },
       body: json.encode(newUser.toJson()),
     );
-
+    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final message = responseData["message"];
     // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
     if (response.statusCode == 200) {
-      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
-
       if (responseData["status"] == "SUCCESS") {
-        print(responseData["message"]);
+        // print(responseData["message"]);
         return 0;
       } else {
-        print(responseData["message"]);
+        // print(responseData["message"]);
         return 1;
+      }
+    } else if (response.statusCode == 401) {
+      // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
+      if (message == "Token has expired") {
+        // 엑세스 토큰이 만료된 경우
+        final isSuccessNewToken =
+            await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+        if (isSuccessNewToken == "NewAccessToken") {
+          // 엑세스 토큰을 정상적으로 재발급 받은 경우
+          return 0;
+        } else if (isSuccessNewToken == "storageDelete") {
+          // 리프레시 토큰이 만료된 경우
+          return "GoToLoginPage";
+        } else if (isSuccessNewToken == "tokenError") {
+          // 리프레시 토큰이 에러가 발생한 경우
+          return "GoToLoginPage";
+        } else {
+          // 네트워크 에러 또는 토큰 재발급 함수 자체에 에러가 발생한 경우
+          return "GoToLoginPage";
+        }
+      } else {
+        // 엑세스 토큰이 유효하지 않은 경우 및 그 외 예외
+        await storage.deleteAll(); // 저장되어 있던 토큰 모두 삭제
+        return "GoToLoginPage";
       }
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
@@ -541,11 +564,11 @@ class _InputProfile extends State<InputProfile> {
                                               hintText: "입력",
                                               screenWidth: screenWidth,
                                               validator: (val) {
-                                              if (val == '' || val == null) {
-                                                return "필수입력";
-                                              }
-                                              return null;
-                                            },
+                                                if (val == '' || val == null) {
+                                                  return "필수입력";
+                                                }
+                                                return null;
+                                              },
                                               onSaved: (val) {
                                                 setState(
                                                   () {
@@ -557,9 +580,8 @@ class _InputProfile extends State<InputProfile> {
                                               },
                                               inputFormatters: [
                                                 FilteringTextInputFormatter(
-                                                  RegExp('[0-9.]'),
-                                                  allow: true
-                                                )
+                                                    RegExp('[0-9.]'),
+                                                    allow: true)
                                               ],
                                             ),
                                           ),
@@ -701,7 +723,8 @@ class _InputProfile extends State<InputProfile> {
                                 (data.instaId != '' ||
                                     data.kakaoId != '' ||
                                     data.phoneNumber != '')) {
-                              data.age = AgeCalculation(data.birthDate.toString().substring(2,8));
+                              data.age = AgeCalculation(
+                                  data.birthDate.toString().substring(2, 8));
                               print("필수 입력 요건이 충족됨");
                               // api 요청
                               sendUserProfileData(data).then((result) {
@@ -711,11 +734,11 @@ class _InputProfile extends State<InputProfile> {
                               });
                             } else {
                               //print("필수 입력 조건이 충족되지 않음");
-                              alertRequiredInput(context,screenWidth);
+                              alertRequiredInput(context, screenWidth);
                             }
                           } else {
                             // print("필수 입력 조건이 충족되지 않음");
-                            alertRequiredInput(context,screenWidth);
+                            alertRequiredInput(context, screenWidth);
                           }
                         },
                       ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/info_page.dart';
@@ -24,39 +25,103 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
 
   // int _selectedIndexScreen = 1; // Main Page
 
-  int coins = 0;
+  dynamic coins = 0;
   // int coins = getCoin();
 
   // 서버에서 코인 가져오기
   void getCoinFromServer() async {
-    const url = 'http://localhost:8080/v1/members/mycoin';
-    var token = await storage.read(key: "token");
+    const url = 'http://43.202.77.44:8080/v1/members/mycoin';
 
-    var response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
+    // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
+    final accessToken = await storage.read(key: 'access_token');
+    // final refreshToken = await storage.read(key: 'refresh_token');
+    final http.Response response;
+    // print("access token: $accessToken");
 
-    if (response.statusCode == 200) {
-      // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
-      final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    if (accessToken != null) {
+      // 엑세스 토큰을 보유한 경우
+      try {
+        response = await http.get(
+          Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $accessToken',
+          },
+        );
 
-      if (responseData["status"] == "SUCCESS") {
-        setState(() {
-          coins = responseData["data"]["myCoinCount"];
-          print("서버에서 코인 가져옴 ! 현재 코인 개수: $coins");
+        // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
+        final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+        final message = responseData["message"];
+
+        if (response.statusCode == 200) {
+          // 엑세스 토큰이 유효한 경우
+          if (responseData["status"] == "SUCCESS") {
+            setState(() {
+              coins = responseData["data"]["myCoinCount"];
+              print("서버에서 코인 가져옴 ! 현재 코인 개수: $coins");
+            });
+          } else {
+            // Error
+            setState(() {
+              coins = 0;
+            });
+
+            print("Status is Error !!");
+          }
+        } else if (response.statusCode == 401) {
+          // 엑세스 토큰이 유효하지 않거나 만료된 경우
+          if (message == "Token has expired") {
+            // 엑세스 토큰이 만료된 경우
+            final isSuccessNewToken =
+                await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+            if (isSuccessNewToken == "NewAccessToken") {
+              // 엑세스 토큰을 정상적으로 재발급 받은 경우
+              getCoinFromServer(); // 코인 가져오기 함수 재실행
+            } else if (isSuccessNewToken == "storageDelete") {
+              // 리프레시 토큰이 만료된 경우
+              setState(() {
+                coins = 0;
+              });
+            } else if (isSuccessNewToken == "tokenError") {
+              // 리프레시 토큰이 에러가 발생한 경우
+              setState(() {
+                coins = 0;
+              });
+            } else {
+              // 네트워크 에러 또는 토큰 재발급 함수 자체에 에러가 발생한 경우
+              setState(() async {
+                await storage.deleteAll();
+                coins = "로그인 후 이용 가능";
+              });
+            }
+          } else {
+            // 엑세스 토큰이 유효하지 않은 경우
+            setState(() async {
+              await storage.deleteAll();
+              coins = "로그인 후 이용 가능";
+            });
+          }
+        } else {
+          // Network error
+          setState(() {
+            coins = 0;
+          });
+          print('Failed to get data. Error: ${response.statusCode}');
+        }
+      } catch (e) {
+        // 엑세스 토큰이 유효하지 않은 경우
+        print(e);
+        setState(() async {
+          await storage.deleteAll();
+          coins = "로그인 후 이용 가능";
         });
-      } else {
-        // Error
-        print("Status is Error !!");
       }
     } else {
-      // Network error
-      print('Failed to get data. Error: ${response.statusCode}');
+      // 엑세스 토큰을 보유하지 않은 경우
+      setState(() {
+        coins = "로그인 후 이용 가능";
+      });
     }
   }
 
@@ -105,7 +170,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
                   ),
                 ),
                 Container(
-                  width: screenWidth * 0.23,
+                  width: coins is int ? screenWidth * 0.23 : screenWidth * 0.4,
                   height: screenWidth * 0.06,
                   decoration: BoxDecoration(
                     color: const Color(0xFFD7D7D7),
@@ -124,8 +189,8 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: screenWidth * 0.03,
-                        height: screenWidth * 0.03,
+                        width: screenWidth * 0.04,
+                        height: screenWidth * 0.04,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage("images/currency_dollar.png"),
