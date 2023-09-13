@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/my_page/modify_information.dart';
 import 'package:ssu_meet/my_page/view_registered.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/pages/purchased_post_it_page.dart';
+import 'package:ssu_meet/pages/responsive_page.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -37,7 +40,8 @@ class _MyPageState extends State<MyPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    if(screenWidth >= 540) { //태블릿 사이즈 레이아웃 설정
+    if (screenWidth >= 540) {
+      //태블릿 사이즈 레이아웃 설정
       screenWidth *= 0.8;
     }
     return Scaffold(
@@ -66,15 +70,15 @@ class _MyPageState extends State<MyPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListTile(
-                        contentPadding:
-                             EdgeInsets.only(left: screenWidth * 0.09, right: screenWidth * 0.1),
+                        contentPadding: EdgeInsets.only(
+                            left: screenWidth * 0.09, right: screenWidth * 0.1),
                         title: Container(
                           alignment: Alignment.centerLeft,
                           height: screenWidth * 0.13,
                           child: Text(
                             mypageMenuText[index],
                             textAlign: TextAlign.start,
-                            style:  TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: screenWidth * 0.035,
                               fontFamily: 'NanumSquare_ac',
@@ -86,7 +90,7 @@ class _MyPageState extends State<MyPage> {
                         leading: Container(
                           alignment: Alignment.centerLeft,
                           width: screenWidth * 0.07,
-                          height:screenWidth * 0.11,
+                          height: screenWidth * 0.11,
                           child: Image.asset(
                             mypageIcon[index],
                             fit: BoxFit.contain,
@@ -94,7 +98,7 @@ class _MyPageState extends State<MyPage> {
                         ),
                         trailing: Container(
                           width: screenWidth * 0.07,
-                          height:screenWidth * 0.09,
+                          height: screenWidth * 0.09,
                           alignment: Alignment.centerLeft,
                           child: Icon(
                             Icons.chevron_right,
@@ -139,7 +143,7 @@ class _MyPageState extends State<MyPage> {
                   Text(
                     "rkdtmdals999@naver.com",
                     style: TextStyle(
-                      color:const Color.fromARGB(150, 0, 0, 0),
+                      color: const Color.fromARGB(150, 0, 0, 0),
                       fontSize: screenWidth * 0.025,
                     ),
                   ),
@@ -220,9 +224,13 @@ void logoutDialog(BuildContext context) {
               ),
               GestureDetector(
                 onTap: () {
+                  // 저장되어 있던 토큰 모두 삭제
+                  storage.deleteAll();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
+                      builder: (context) => const ResponsiveWebLayout(
+                        pageIndex: 1,
+                      ),
                     ),
                   );
                 },
