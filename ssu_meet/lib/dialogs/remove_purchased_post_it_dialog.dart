@@ -2,34 +2,68 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/pages/purchased_post_it_page.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 
 // 구매한 포스트잇 삭제 api
-Future<int> deletePurchasedSticky(int stickyId) async {
+Future<dynamic> deletePurchasedSticky(int stickyId) async {
   // print("stickyId: $stickyId");
-  var token = await storage.read(key: "token");
+  var accessToken = await storage.read(key: "access_token");
+
+  if(accessToken == null){
+    return "GoToLoginPage";
+  }
 
   final response = await http.delete(
-    Uri.parse('http://localhost:8080/v1/members/mypage/buy-list/$stickyId'),
+    Uri.parse('http://43.202.77.44:8080/v1/members/mypage/buy-list/$stickyId'),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer $accessToken',
     },
   );
-  if (response.statusCode == 200) {
-    final responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
-    if (responseData["status"] == "SUCCESS") {
-      print(responseData["message"]);
-      return 0; // 삭제 성공
-    } else {
-      print(responseData["message"]);
-      return 1; // 삭제 실패
+  final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+  final isSuccess = responseData["status"];
+  final message = responseData["message"];
+
+  if (response.statusCode == 200) {
+    if (isSuccess == "SUCCESS") {
+      return "CompletedToRemove"; // 삭제 성공
+    } else if(message == "FailedToRemove"){
+      return "FailToRemove"; // 삭제 실패
     }
-  } else {
+    else{
+      return "GoToLoginPage";
+    }
+  } else if(response.statusCode == 401){
+    // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
+    if (message == "Token has expired") {
+      // 엑세스 토큰이 만료된 경우
+      final isSuccessNewToken =
+      await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+      if (isSuccessNewToken == "NewAccessToken") {
+        // 엑세스 토큰을 정상적으로 재발급 받은 경우 -> 그대로 작업 완료
+        return "CompletedToRemove";
+      } else if (isSuccessNewToken == "storageDelete") {
+        // 리프레시 토큰이 만료된 경우
+        return "GoToLoginPage";
+      } else if (isSuccessNewToken == "tokenError") {
+        // 리프레시 토큰이 에러가 발생한 경우
+        return "GoToLoginPage";
+      } else {
+        // 네트워크 에러 또는 토큰 재발급 함수 자체에 에러가 발생한 경우
+        return "GoToLoginPage";
+      }
+    } else {
+      // 엑세스 토큰이 유효하지 않은 경우 및 그 외 예외
+      await storage.deleteAll(); // 저장되어 있던 토큰 모두 삭제
+      return "GoToLoginPage";
+    }
+  }
+  else {
     print('Failed to delete data. Error: ${response.statusCode}');
-    return 2;
+    return "GoToLoginPage";
   }
 }
 
@@ -71,68 +105,6 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            /* GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: 70,
-                height: 25,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-                child: const Center(
-                  child: Text(
-                    "취소",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                      fontFamily: 'NanumSquareRoundR',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            GestureDetector(
-              onTap: () {
-                // DELETE api 요청 함수
-                deletePurchasedSticky(stickyId).then((result) {
-                  // 삭제 완료
-                  if(result == 0){
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  }
-                });
-                },
-              child: Container(
-                width: 70,
-                height: 25,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.black,
-                ),
-                child: const Center(
-                  child: Text(
-                    "삭제",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontFamily: 'NanumSquareRoundR',
-                    ),
-                  ),
-                ),
-              ),
-            ), */
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -161,23 +133,27 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
               width: 10,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // DELETE api 요청 함수
-                deletePurchasedSticky(stickyId).then((result) {
-                  // 삭제 완료
-                  if (result == 0) {
-                    // 마이페이지로 이동
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ResponsiveWebLayout(
-                          pageIndex: 2,
-                        ),
-                      ),
-                    );
-                  }
-                });
+                final result = await deletePurchasedSticky(stickyId);
+                if(result == "CompletedToRemove"){
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ResponsiveWebLayout(
+                            pageIndex: 2,
+                            // 0: 사용 설명서
+                            // 1: 메인 화면
+                            // 2: 마이 페이지
+                          ),
+                    ),
+                  );
+
+                }
+                else {
+                  Navigator.pop(context);
+                }
+
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
