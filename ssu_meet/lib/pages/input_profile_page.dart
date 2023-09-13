@@ -39,9 +39,10 @@ class _InputProfile extends State<InputProfile> {
   // api 연동 - POST 요청 함수
   Future<dynamic> sendUserProfileData(UserProfile newUser) async {
     final accessToken = await storage.read(key: 'access_token');
+    const url = 'http://43.202.77.44:8080/v1/members/new';
 
     print(json.encode(newUser.toJson()));
-    const url = 'http://43.202.77.44:8080/v1/members/new';
+
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -57,28 +58,26 @@ class _InputProfile extends State<InputProfile> {
     final message = responseData["message"];
     print(responseData);
 
-    if (response.statusCode == 200) {
-      if (isSuccess == "SUCCESS") {
-        // 기본 정보 등록 완료
-        return 1;
-      } else if (isSuccess == "ERROR") {
-        if (accessToken == null) {
-          // 엑세스 토큰이 없음. 로그인 api
-          return 2;
-        } else {
-          // can't find user
-          return 3;
-        }
+    if(response.statusCode == 200){
+      if(isSuccess == "SUCCESS"){ // 개인 정보 등록 완료
+         return "CompletedRegister";
       }
-    } else if (response.statusCode == 401) {
+      else if (message == "NoAccessToken"){
+        return "GoToLoginPage";
+      }
+      else if (message == "CantFindUser"){
+        return "GoToLoginPage";
+      }
+    }
+    else if (response.statusCode == 401) {
       // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
       if (message == "Token has expired") {
         // 엑세스 토큰이 만료된 경우
         final isSuccessNewToken =
             await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
         if (isSuccessNewToken == "NewAccessToken") {
-          // 엑세스 토큰을 정상적으로 재발급 받은 경우
-          return 0;
+          // 엑세스 토큰을 정상적으로 재발급 받은 경우 -> 그대로 작업 완료
+          return "CompletedRegister";
         } else if (isSuccessNewToken == "storageDelete") {
           // 리프레시 토큰이 만료된 경우
           return "GoToLoginPage";
@@ -96,7 +95,7 @@ class _InputProfile extends State<InputProfile> {
       }
     } else {
       print('Failed to send data. Error: ${response.statusCode}');
-      return 5; // 네트워크 에러
+      return "GoToLoginPage"; // 네트워크 에러
     }
   }
 
