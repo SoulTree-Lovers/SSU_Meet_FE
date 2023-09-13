@@ -67,10 +67,10 @@ class _InputProfile extends State<InputProfile> {
       if(isSuccess == "SUCCESS"){ // 개인 정보 등록 완료
          return "CompletedRegister";
       }
-      else if (message == "NoAccessToken"){
+      else if (message == "NoAccessToken"){ // 토큰 없음
         return "GoToLoginPage";
       }
-      else if (message == "CantFindUser"){
+      else if (message == "CantFindUser"){ // 유저 찾을 수 없음
         return "GoToLoginPage";
       }
     }
@@ -627,7 +627,7 @@ class _InputProfile extends State<InputProfile> {
                             ),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save(); //키 제대로 입력 시 저장.
                             if (data.sex != genderList[0] && //나머지 조건들 한 번 더 체크
@@ -641,11 +641,21 @@ class _InputProfile extends State<InputProfile> {
                                   data.birthDate.toString().substring(2, 8));
                               print("필수 입력 요건이 충족됨");
                               // api 요청
-                              sendUserProfileData(data).then((result) {
-                                if (result == 0) {
-                                  registrationCompletionNotify(context);
-                                }
-                              });
+                              final result = await sendUserProfileData(data);
+                              if (result == "CompletedRegister"){ // 개인 정보 등록 완료
+                                if(!mounted) return;
+                                registrationCompletionNotify(context);
+                              }
+                              else{ // 그 외- > 로그인 페이지로
+                                if(!mounted) return;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                    const LoginPage(),
+                                  ),
+                                );
+                              }
+
                             } else {
                               //print("필수 입력 조건이 충족되지 않음");
                               alertRequiredInput(context, screenWidth);
