@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/pages/input_profile_page.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
 import 'package:ssu_meet/widgets/custom_textformfield_with_limit_letters.dart';
@@ -68,8 +69,7 @@ class _InputPostIt extends State<InputPostIt> {
   ];
 
   // api 연동- 포스트잇 등록 POST 요청
-  Future<int> sendStickyData() async {
-    int isExceed;
+  Future<dynamic> sendStickyData() async {
     final myStickyData = MyStickyData(
       nickname!,
       mbti!,
@@ -78,19 +78,20 @@ class _InputPostIt extends State<InputPostIt> {
       introduce!,
     );
 
-    var token = await storage.read(key: "token");
+    var accessToken = await storage.read(key: "access_token");
 
-    print("input post it dialog token: $token");
+    print("input post it dialog token: $accessToken");
 
     print(json.encode(myStickyData.toJson()));
 
-    const url = 'http://localhost:8080/v1/sticky/new';
+    const url = 'http://43.202.77.44:8080/v1/sticky/new';
+
     final response = await http.post(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $accessToken',
       },
       body: json.encode(myStickyData.toJson()),
     );
@@ -100,63 +101,57 @@ class _InputPostIt extends State<InputPostIt> {
 
     // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+    final isSuccess = responseData["status"];
+    final message = responseData["message"];
+    print(responseData);
+
+    if(response.statusCode == 200){
+      if(isSuccess == "SUCCESS"){ // 포스트잇 등록 완료 -> 메인
+        return "SuccessToRegisterPostIt";
+      }
+      else if (message == "ExceedingPostItRegistrations"){ // 등록 개수 초과 -> 팝업
+        return "StickyExceeded";
+      }
+      else if (message == "NeedBasicInfo"){
+        return "GoToRegisterPage"; // 개인 정보 등록이 안 된 경우 -> 개인 정보 화면으로
+      }
+      else {
+        return "GoToLoginPage"; // 토큰이 없는 경우 -> 로그인 화면으로
+      }
+    }
+    else if (response.statusCode == 401) {
+      // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
+      if (message == "Token has expired") {
+        // 엑세스 토큰이 만료된 경우
+        final isSuccessNewToken =
+        await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+        if (isSuccessNewToken == "NewAccessToken") {
+          // 엑세스 토큰을 정상적으로 재발급 받은 경우 -> 그대로 작업 완료
+          return "SuccessToRegisterPostIt";
+        } else if (isSuccessNewToken == "storageDelete") {
+          // 리프레시 토큰이 만료된 경우
+          return "GoToLoginPage";
+        } else if (isSuccessNewToken == "tokenError") {
+          // 리프레시 토큰이 에러가 발생한 경우
+          return "GoToLoginPage";
+        } else {
+          // 네트워크 에러 또는 토큰 재발급 함수 자체에 에러가 발생한 경우
+          return "GoToLoginPage";
+        }
+      } else {
+        // 엑세스 토큰이 유효하지 않은 경우 및 그 외 예외
+        await storage.deleteAll(); // 저장되어 있던 토큰 모두 삭제
+        return "GoToLoginPage";
+      }
+    } else {
+      print('Failed to send data. Error: ${response.statusCode}');
+      return "GoToLoginPage"; // 네트워크 에러
+    }
 
     // print("responseData: ${responseData["status"]}");
 
-    if (responseData["status"] == "SUCCESS") {
-      isExceed = 0;
-    } else if (responseData["status"] == "ERROR") {
-      isExceed = 1;
-    } else {
-      print('Failed to send data. Error: ${response.statusCode}');
-      isExceed = 2;
-    }
-    print("responseData['message']: ${responseData["message"]}");
-    print("isExceed: $isExceed");
-    return isExceed;
+
   }
-
-  // Future<int> sendStickyData() async {
-  //   int isExceed;
-  //   Map<String, dynamic> toJson() => {
-  //         "nickname": nickname,
-  //         "mbti": mbti,
-  //         "hobbies": hobby,
-  //         "ideals": idealList,
-  //         "introduce": introduce,
-  //       };
-  //   print(json.encode(toJson()));
-  //   var token = await storage.read(key: "token");
-
-  //   print("input post it dialog token: $token");
-
-  //   var body = json.encode(toJson());
-  //   const url = 'http://localhost:8080/v1/sticky/new';
-  //   final response = await http.post(
-  //     Uri.parse(url),
-  //     headers: {
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //       'Accept': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //     // body: json.encode(toJson()),
-  //     body: body,
-  //   );
-  //   final responseData = json.decode(response.body);
-  //   if (responseData["status"] == "SUCCESS" &&
-  //       responseData["message"] == "포스트잇 등록 성공") {
-  //     isExceed = 0;
-  //   }
-  //   if (responseData["status"] == "ERROR" &&
-  //       responseData["message"] == "포스트잇 최대 등록 개수 초과") {
-  //     isExceed = 1;
-  //   } else {
-  //     print('Failed to send data. Error: ${response.statusCode}');
-  //     isExceed = 2;
-  //   }
-  //   print(responseData["message"]);
-  //   return isExceed;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -606,13 +601,30 @@ class _InputPostIt extends State<InputPostIt> {
                                 hobbies.forEach(print);
 
                                 // 등록 개수 초과 여부 알림 팝업창 호출
-                                final result = await sendStickyData();
-                                print("result: $result");
-                                // if (result == 0 || result == 1) showStatusOfRegistration(context, result);
+                                var result = await sendStickyData();
+                                if (result == "SuccessToRegisterPostIt" || result == "StickyExceeded" ){
+                                  if(!mounted) return;
+                                  showStatusOfRegistration(context, result);
+                                }
+                                else if (result == "GoToRegisterPage"){ // 개인 정보 등록 화면으로 이동
+                                  if(!mounted) return;
+                                  Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const InputProfile(),
+                                        ),
+                                      );
+                                }
+                                else{
+                                  if(!mounted) return;
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                      const LoginPage(),
+                                    ),
+                                  );
+                                }
 
-                                // 임시 (0: 등록 가능 , 1; 등록 불가능 , 2: error)
-                                showStatusOfRegistration(context, result);
-                                // sendStickyData();
 
                                 // 홈 화면으로 이동
                                 // Navigator.of(context).push(

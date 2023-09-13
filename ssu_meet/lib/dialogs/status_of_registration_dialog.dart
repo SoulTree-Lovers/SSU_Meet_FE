@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 
-void showStatusOfRegistration(BuildContext context, final isExceed) {
+void showStatusOfRegistration(BuildContext context, final result) {
   showDialog(
     barrierColor: Colors.white.withOpacity(0.7),
     context: context,
@@ -23,7 +23,7 @@ void showStatusOfRegistration(BuildContext context, final isExceed) {
         width: 300,
         height: 55,
         alignment: Alignment.center,
-        child: (isExceed == 0)
+        child: (result != "StickyExceeded")
             ? const Text(
                 '포스트잇 등록을 마쳤습니다!',
                 textAlign: TextAlign.center,
