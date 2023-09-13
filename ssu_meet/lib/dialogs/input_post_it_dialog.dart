@@ -86,6 +86,10 @@ class _InputPostIt extends State<InputPostIt> {
 
     const url = 'http://43.202.77.44:8080/v1/sticky/new';
 
+    if(accessToken == null) {
+      return "GoToLoginPage";
+    }
+
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -105,9 +109,6 @@ class _InputPostIt extends State<InputPostIt> {
     final message = responseData["message"];
     print(responseData);
 
-    if(accessToken == null) {
-      return "GoToLoginPage";
-    }
 
     if(response.statusCode == 200){
       if(isSuccess == "SUCCESS"){ // 포스트잇 등록 완료 -> 메인
