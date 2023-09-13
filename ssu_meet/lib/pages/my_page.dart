@@ -37,6 +37,9 @@ class _MyPageState extends State<MyPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    if(screenWidth >= 540) { //태블릿 사이즈 레이아웃 설정
+      screenWidth *= 0.8;
+    }
     return Scaffold(
         backgroundColor: const Color(0xffD8D8D8),
         // appBar: AppBar(
@@ -64,31 +67,40 @@ class _MyPageState extends State<MyPage> {
                       ),
                       child: ListTile(
                         contentPadding:
-                            const EdgeInsets.only(left: 50, right: 35),
+                             EdgeInsets.only(left: screenWidth * 0.09, right: screenWidth * 0.1),
                         title: Container(
                           alignment: Alignment.centerLeft,
-                          height: screenHeight * 0.07,
+                          height: screenWidth * 0.13,
                           child: Text(
                             mypageMenuText[index],
                             textAlign: TextAlign.start,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               color: Colors.black,
-                              fontSize: 13,
+                              fontSize: screenWidth * 0.035,
                               fontFamily: 'NanumSquare_ac',
                               fontWeight: FontWeight.w600,
                               letterSpacing: 0.26,
                             ),
                           ),
                         ),
-                        leading: SizedBox(
-                          width: 30,
-                          height: 30,
+                        leading: Container(
+                          alignment: Alignment.centerLeft,
+                          width: screenWidth * 0.07,
+                          height:screenWidth * 0.11,
                           child: Image.asset(
                             mypageIcon[index],
                             fit: BoxFit.contain,
                           ),
                         ),
-                        trailing: const Icon(Icons.chevron_right),
+                        trailing: Container(
+                          width: screenWidth * 0.07,
+                          height:screenWidth * 0.09,
+                          alignment: Alignment.centerLeft,
+                          child: Icon(
+                            Icons.chevron_right,
+                            size: screenWidth * 0.05,
+                          ),
+                        ),
                         onTap: () {
                           // if(index==2) return LoadingModifyPage().getOldProfile(context);
                           if (index == 3) {
@@ -109,26 +121,26 @@ class _MyPageState extends State<MyPage> {
               ),
             ),
             Container(
-              width: screenWidth,
+              width: screenWidth * 1.5,
               height: screenHeight * 0.08,
               decoration: const BoxDecoration(
                 color: Color(0xFFEFEFEF),
               ),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "문의사항",
                     style: TextStyle(
-                      color: Color.fromARGB(150, 0, 0, 0),
-                      fontSize: 11,
+                      color: const Color.fromARGB(150, 0, 0, 0),
+                      fontSize: screenWidth * 0.025,
                     ),
                   ),
                   Text(
                     "rkdtmdals999@naver.com",
                     style: TextStyle(
-                      color: Color.fromARGB(150, 0, 0, 0),
-                      fontSize: 11,
+                      color:const Color.fromARGB(150, 0, 0, 0),
+                      fontSize: screenWidth * 0.025,
                     ),
                   ),
                 ],
