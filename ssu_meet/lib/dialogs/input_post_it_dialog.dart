@@ -105,6 +105,10 @@ class _InputPostIt extends State<InputPostIt> {
     final message = responseData["message"];
     print(responseData);
 
+    if(accessToken == null) {
+      return "GoToLoginPage";
+    }
+
     if(response.statusCode == 200){
       if(isSuccess == "SUCCESS"){ // 포스트잇 등록 완료 -> 메인
         return "SuccessToRegisterPostIt";
