@@ -32,6 +32,8 @@ class _MainPageState extends State<MainPage> {
   int allStickyCount = 0; // 전체 이성이 등록한 포스트잇 개수
   int myStickyCount = 0; // 내가 등록한 포스트잇 개수
 
+  bool isRegistered = true;
+
   @override
   void initState() {
     super.initState();
@@ -133,6 +135,7 @@ class _MainPageState extends State<MainPage> {
     final http.Response response;
 
     if (accessToken == null) {
+      isRegistered = false;
       // 로그인한 적 없는 사용자 (엑세스 토큰을 전달하지 않음 - 모든 성별 포스트잇 공개)
       response = await http.get(
         Uri.parse(url),
@@ -177,6 +180,7 @@ class _MainPageState extends State<MainPage> {
         return [];
       }
     } else {
+      isRegistered = true;
       // 이미 로그인한 기록이 있는 사용자 (엑세스 토큰 전달 - 이성 포스트잇만 공개)
       response = await http.get(
         Uri.parse(url),
@@ -368,37 +372,75 @@ class _MainPageState extends State<MainPage> {
                 Padding(
                   padding: EdgeInsets.all(screenHeight * 0.01),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      DocumentDuplicateImage(screenWidth),
-                      const SizedBox(
-                        width: 3,
-                      ),
-                      Text(
-                        "나의 포스트잇: $myStickyCount 개",
-                        style: TextStyle(
-                          fontFamily: "NanumSquareRoundR",
-                          fontSize: screenWidth * 0.03,
-                        ),
-                      ),
-                      VerticalLineImage(),
-                      DocumentDuplicateImage(screenWidth),
-                      const SizedBox(
-                        width: 3,
-                      ),
-                      Text(
-                        "모든 포스트잇: $allStickyCount 개",
-                        style: TextStyle(
-                          fontFamily: "NanumSquareRoundR",
-                          fontSize: screenWidth * 0.03,
-                        ),
+                      !isRegistered
+                          ? ElevatedButton(
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                shadowColor: Colors.black26,
+                                side: const BorderSide(
+                                  color: Colors.black,
+                                ),
+                                fixedSize: Size(
+                                    screenWidth * 0.25, screenHeight * 0.005),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              child: Text(
+                                "< 로그인하러 가기",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: "NanumSquareRoundR",
+                                  fontSize: screenWidth * 0.02,
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              width: screenWidth * 0.25,
+                            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          DocumentDuplicateImage(screenWidth),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            "나의 포스트잇: $myStickyCount 개",
+                            style: TextStyle(
+                              fontFamily: "NanumSquareRoundR",
+                              fontSize: screenWidth * 0.03,
+                            ),
+                          ),
+                          VerticalLineImage(),
+                          DocumentDuplicateImage(screenWidth),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            !isRegistered
+                                ? "모든 포스트잇: $allStickyCount 개"
+                                : "모든 이성 포스트잇: $allStickyCount 개",
+                            style: TextStyle(
+                              fontFamily: "NanumSquareRoundR",
+                              fontSize: screenWidth * 0.03,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
                 // 서버 연동 시 사용할 포스트잇 데이터 패치 GridView
                 SizedBox(
-                  height: screenHeight * 0.75,
+                  height: screenHeight * 0.73,
                   child: FutureBuilder(
                     future: futureData,
                     builder: (BuildContext context,
