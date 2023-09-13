@@ -173,7 +173,7 @@ class _MainPageState extends State<MainPage> {
         }
       } else if (accessToken == null || message == "NoAccessToken") {
         // access token 없는 경우 -> 로그인 api로 보내기
-        final newAccessToken = await performLogin();
+        final newAccessToken = "";
         if (newAccessToken != null) {
           // 새로운 access token으로 api 재요청
           final refreshedResponse = await http.get(

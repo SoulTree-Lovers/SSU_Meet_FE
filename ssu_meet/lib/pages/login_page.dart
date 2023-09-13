@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: screenHeight * 0.4,
                         child: const Image(
                           fit: BoxFit.cover,
-                          image: AssetImage('assets/images/pink_yellow.png'),
+                          image: AssetImage('assets/images/login_logo.png'),
                         ),
                       ),
                       Positioned.directional(
