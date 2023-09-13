@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/dialogs/purchased_post_it_dialog.dart';
 
-SizedBox PurchasedPagePostIt(double screenHeight, double screenWidth,
-    AsyncSnapshot<List<dynamic>> snapshot) {
+SizedBox PurchasedPagePostIt(
+    double screenHeight, double screenWidth, AsyncSnapshot<dynamic> snapshot) {
   ScrollController scrollController = ScrollController();
 
   return SizedBox(
