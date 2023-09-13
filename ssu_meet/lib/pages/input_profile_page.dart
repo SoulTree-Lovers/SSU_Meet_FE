@@ -43,6 +43,10 @@ class _InputProfile extends State<InputProfile> {
 
     print(json.encode(newUser.toJson()));
 
+    if(accessToken == null) {
+      return "GoToLoginPage";
+    }
+
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -57,6 +61,7 @@ class _InputProfile extends State<InputProfile> {
     final isSuccess = responseData["status"];
     final message = responseData["message"];
     print(responseData);
+
 
     if(response.statusCode == 200){
       if(isSuccess == "SUCCESS"){ // 개인 정보 등록 완료
