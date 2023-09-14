@@ -398,7 +398,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     width: screenWidth * 0.4,
                                     height: screenWidth * 0.1,
                                     child: MyFormField(
-                                      key: const ValueKey(1),
+                                      key: const ValueKey(2),
                                       hintText: "1. 15자 이내",
                                       screenWidth: screenWidth,
                                       maxLength: 15,
