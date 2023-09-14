@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ssu_meet/dialogs/main_post_it_dialog.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/widgets/document_duplicate_image.dart';
@@ -382,6 +380,8 @@ class _MainPageState extends State<MainPage> {
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
+                                padding:
+                                    const EdgeInsets.only(left: 0, right: 0),
                                 backgroundColor: Colors.white,
                                 shadowColor: Colors.black26,
                                 side: const BorderSide(
@@ -393,12 +393,15 @@ class _MainPageState extends State<MainPage> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              child: Text(
-                                "< 로그인하러 가기",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: "NanumSquareRoundR",
-                                  fontSize: screenWidth * 0.02,
+                              child: Center(
+                                child: Text(
+                                  "<  로그인 하기",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: "NanumSquareRoundR",
+                                    fontSize: screenWidth * 0.025,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             )
