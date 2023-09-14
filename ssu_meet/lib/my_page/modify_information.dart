@@ -245,8 +245,9 @@ class _ModifyPageState extends State<ModifyPage> {
                               Text(
                                 "*성별, 생년월일은 수정 불가합니다.",
                                 style: TextStyle(
-                                  fontSize: 0.025 * screenWidth,
-                                  color: Colors.red,
+                                  fontFamily: "NanumSquareAc",
+                                  fontSize: 0.03 * screenWidth,
+                                  color: const Color.fromRGBO(255, 0, 0, 1),
                                 ),
                               ),
                               Stack(
@@ -496,6 +497,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                           .toString(),
                                                       hintText: "입력",
                                                       screenWidth: screenWidth,
+                                                      textInputAction: TextInputAction.next,
                                                       validator: (val) {
                                                         if (val == '' ||
                                                             val == null) {
@@ -551,6 +553,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                       key: const ValueKey(2),
                                                       initText: data.instaId!,
                                                       hintText: "1.인스타",
+                                                      textInputAction: TextInputAction.next,
                                                       screenWidth: screenWidth,
                                                       onSaved: (val) {
                                                         setState(
@@ -575,6 +578,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                   key: const ValueKey(3),
                                                   initText: data.kakaoId!,
                                                   hintText: "2.카카오",
+                                                  textInputAction: TextInputAction.next,
                                                   screenWidth: screenWidth,
                                                   onSaved: (val) {
                                                     setState(
@@ -597,6 +601,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                                   key: const ValueKey(4),
                                                   initText: data.phoneNumber!,
                                                   hintText: "3.전화번호",
+                                                  textInputAction: TextInputAction.done,
                                                   screenWidth: screenWidth,
                                                   onSaved: (val) {
                                                     setState(
@@ -608,16 +613,13 @@ class _ModifyPageState extends State<ModifyPage> {
                                                 ),
                                               ),
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                top: screenWidth * 0.02,
-                                              ),
-                                            ),
                                             Text(
                                               "*SNS는 셋 중 하나 이상 필수로 입력해주세요.",
                                               style: TextStyle(
-                                                  fontSize: 0.02 * screenWidth,
-                                                  color: Colors.red),
+                                                fontSize: 0.03 * screenWidth,
+                                                fontFamily: "Nanum_Ogbice",
+                                                color: const Color.fromRGBO(255, 0, 0, 1),
+                                              ),
                                             ),
                                           ],
                                         ),

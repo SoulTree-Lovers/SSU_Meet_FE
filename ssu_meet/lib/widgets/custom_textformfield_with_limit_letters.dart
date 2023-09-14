@@ -8,6 +8,7 @@ class MyFormField extends StatefulWidget {
   final String? helperText;
   final FormFieldValidator? validator;
   final FormFieldSetter? onSaved;
+  final TextInputAction? textInputAction;
 
   const MyFormField({
     Key? key,
@@ -15,6 +16,7 @@ class MyFormField extends StatefulWidget {
     required this.screenWidth,
     required this.maxLength,
     required this.maxLine,
+    required this.textInputAction,
     this.helperText,
     this.validator,
     this.onSaved,
@@ -43,28 +45,44 @@ class _MyFormFieldState extends State<MyFormField> {
       cursorHeight: widget.screenWidth * 0.04,
       cursorColor: Colors.transparent,
       style: TextStyle(
-        fontSize: widget.screenWidth * 0.035,
+        fontSize: widget.screenWidth * 0.04,
         fontFamily: "Nanum_Ogbice",
         color: Colors.black,
       ),
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: const EdgeInsets.fromLTRB(0,10,0,5),
         helperText: widget.helperText,
-        helperStyle:
-            TextStyle(fontSize: 0.015 * widget.screenWidth, color: Colors.red),
+        helperStyle: TextStyle(
+          fontSize: widget.screenWidth * 0.028,
+          fontFamily: "Nanum_Ogbice",
+          color: const Color.fromRGBO(255, 0, 0, 1),
+        ),
         counterStyle: TextStyle(
-            fontSize: widget.screenWidth * 0.02, color: Colors.black54),
-        errorStyle: TextStyle(fontSize: widget.screenWidth * 0.02),
+          fontSize: widget.screenWidth * 0.025,
+          fontFamily: "NanumSquareAc",
+          color: Colors.black54,
+        ),
+        errorStyle: TextStyle(
+          fontSize: widget.screenWidth * 0.03,
+          fontFamily: "Nanum_Ogbice",
+          color: const Color.fromRGBO(255, 0, 0, 1),
+        ),
         hintText: widget.hintText,
         hintStyle: TextStyle(
           fontSize: widget.screenWidth * 0.04,
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-              color: Colors.black, width: widget.screenWidth * 0.0015),
+            color: Colors.black,
+            width: widget.screenWidth * 0.0015,
+          ),
         ),
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-              color: Colors.black, width: widget.screenWidth * 0.0015),
+            color: Colors.black,
+            width: widget.screenWidth * 0.0015,
+          ),
         ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -98,6 +116,7 @@ class _MyFormFieldState extends State<MyFormField> {
         }
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      textInputAction: widget.textInputAction,
     );
   }
 }

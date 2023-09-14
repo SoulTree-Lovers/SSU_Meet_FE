@@ -8,11 +8,13 @@ class MyFormField extends StatelessWidget {
   final FormFieldSetter? onSaved;
   final String? initText;
   final List<TextInputFormatter>? inputFormatters;
+  final TextInputAction? textInputAction;
 
   const MyFormField({
     Key? key,
     required this.hintText,
     required this.screenWidth,
+    required this.textInputAction,
     this.initText,
     this.validator,
     this.onSaved,
@@ -24,14 +26,20 @@ class MyFormField extends StatelessWidget {
     return TextFormField(
       textAlign: TextAlign.center,
       cursorWidth: 1.5,
-      cursorHeight: screenWidth * 0.03,
+      cursorHeight: screenWidth * 0.04,
       cursorColor: Colors.black,
       style: TextStyle(
         fontFamily: "Nanum_Ogbice",
         fontSize: screenWidth * 0.05,
       ),
       decoration: InputDecoration(
-        errorStyle: TextStyle(fontSize: screenWidth * 0.02),
+        isDense: true,
+        contentPadding: const EdgeInsets.fromLTRB(0,10,0,5),
+        errorStyle: TextStyle(
+          fontSize: 0.03 * screenWidth,
+          fontFamily: "Nanum_Ogbice",
+          color: const Color.fromRGBO(255, 0, 0, 1),
+        ),
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: screenWidth * 0.04,
@@ -72,6 +80,7 @@ class MyFormField extends StatelessWidget {
       initialValue: initText,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: inputFormatters,
+      textInputAction: textInputAction,
     );
   }
 }

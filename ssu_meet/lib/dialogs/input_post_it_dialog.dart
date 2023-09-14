@@ -248,6 +248,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       screenWidth: screenWidth,
                                       maxLength: 10,
                                       maxLine: 1,
+                                      textInputAction: TextInputAction.done,
                                       validator: (val) {
                                         if (val == '' || val == null) {
                                           return "필수입력";
@@ -275,7 +276,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.2,
-                                    height: screenWidth * 0.08,
+                                    height: screenWidth * 0.09,
                                     child: DropdownButton(
                                       alignment: Alignment.center,
                                       value: mbti,
@@ -313,25 +314,96 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                 ],
                               ),
+                              // Row(
+                              //  // crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     Text(
+                              //       "취미:     ",
+                              //       style: TextStyle(
+                              //         fontFamily: "Nanum_Ogbice",
+                              //         fontSize: screenWidth * 0.045,
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       width: screenWidth * 0.4,
+                              //       height: screenWidth * 0.1,
+                              //       child: MyFormField(
+                              //         key: const ValueKey(2),
+                              //         hintText: "1. 15자 이내",
+                              //         screenWidth: screenWidth,
+                              //         maxLength: 15,
+                              //         maxLine: 1,
+                              //         onSaved: (val) {
+                              //           setState(() {
+                              //             hobbies[0] = val;
+                              //           });
+                              //         },
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                              // Container(
+                              //   width: screenWidth * 0.45,
+                              //   height: screenWidth * 0.06,
+                              //   padding: EdgeInsets.only(
+                              //     left: screenWidth * 0.048,
+                              //   ),
+                              //   child: MyFormField(
+                              //     key: const ValueKey(3),
+                              //     hintText: "2.",
+                              //     screenWidth: screenWidth,
+                              //     maxLength: 15,
+                              //     maxLine: 1,
+                              //     onSaved: (val) {
+                              //       setState(() {
+                              //         hobbies[1] = val;
+                              //       });
+                              //     },
+                              //   ),
+                              // ),
+                              // Container(
+                              //   width: screenWidth * 0.45,
+                              //   height: screenWidth * 0.06,
+                              //   padding: EdgeInsets.only(
+                              //     left: screenWidth * 0.048,
+                              //   ),
+                              //   child: MyFormField(
+                              //     key: const ValueKey(4),
+                              //     hintText: "3.",
+                              //     helperText: "*취미는 하나 이상 필수로 입력해주세요.",
+                              //     screenWidth: screenWidth,
+                              //     maxLength: 15,
+                              //     maxLine: 1,
+                              //     onSaved: (val) {
+                              //       setState(() {
+                              //         hobbies[2] = val;
+                              //       });
+                              //     },
+                              //   ),
+                              // ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "취미:     ",
+                                    "취미:",
                                     style: TextStyle(
                                       fontFamily: "Nanum_Ogbice",
                                       fontSize: screenWidth * 0.045,
                                     ),
                                   ),
                                   SizedBox(
+                                    width: screenWidth * 0.07,
+                                  ),
+                                  SizedBox(
                                     width: screenWidth * 0.4,
                                     height: screenWidth * 0.1,
                                     child: MyFormField(
-                                      key: const ValueKey(2),
+                                      key: const ValueKey(1),
                                       hintText: "1. 15자 이내",
                                       screenWidth: screenWidth,
                                       maxLength: 15,
                                       maxLine: 1,
+                                      textInputAction: TextInputAction.next,
                                       onSaved: (val) {
                                         setState(() {
                                           hobbies[0] = val;
@@ -341,44 +413,53 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                width: screenWidth * 0.45,
-                                height: screenWidth * 0.06,
-                                padding: EdgeInsets.only(
-                                  left: screenWidth * 0.048,
-                                ),
-                                child: MyFormField(
-                                  key: const ValueKey(3),
-                                  hintText: "2.",
-                                  screenWidth: screenWidth,
-                                  maxLength: 15,
-                                  maxLine: 1,
-                                  onSaved: (val) {
-                                    setState(() {
-                                      hobbies[1] = val;
-                                    });
-                                  },
-                                ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: screenWidth * 0.125,
+                                  ),
+                                  SizedBox(
+                                    width: screenWidth * 0.4,
+                                    height: screenWidth * 0.07,
+                                    child: MyFormField(
+                                      key: const ValueKey(3),
+                                      hintText: "2.",
+                                      screenWidth: screenWidth,
+                                      maxLength: 15,
+                                      maxLine: 1,
+                                      textInputAction: TextInputAction.next,
+                                      onSaved: (val) {
+                                        setState(() {
+                                          hobbies[1] = val;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                width: screenWidth * 0.45,
-                                height: screenWidth * 0.06,
-                                padding: EdgeInsets.only(
-                                  left: screenWidth * 0.048,
-                                ),
-                                child: MyFormField(
-                                  key: const ValueKey(4),
-                                  hintText: "3.",
-                                  helperText: "*취미는 하나 이상 필수로 입력해주세요.",
-                                  screenWidth: screenWidth,
-                                  maxLength: 15,
-                                  maxLine: 1,
-                                  onSaved: (val) {
-                                    setState(() {
-                                      hobbies[2] = val;
-                                    });
-                                  },
-                                ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: screenWidth * 0.125,
+                                  ),
+                                  SizedBox(
+                                    width: screenWidth * 0.4,
+                                    height: screenWidth * 0.07,
+                                    child: MyFormField(
+                                      key: const ValueKey(4),
+                                      hintText: "3.",
+                                      screenWidth: screenWidth,
+                                      maxLength: 15,
+                                      maxLine: 1,
+                                      textInputAction: TextInputAction.next,
+                                      onSaved: (val) {
+                                        setState(() {
+                                          hobbies[2] = val;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                               Padding(
                                 padding:
@@ -403,6 +484,7 @@ class _InputPostIt extends State<InputPostIt> {
                                       screenWidth: screenWidth,
                                       maxLine: null,
                                       maxLength: 200,
+                                      textInputAction: TextInputAction.done,
                                       validator: (val) {
                                         if (val == '' || val == null) {
                                           return "필수입력";
@@ -590,8 +672,7 @@ class _InputPostIt extends State<InputPostIt> {
                               // 토큰이 없는 경우 로그인 창으로 보내는 팝업 호출
                               if (!mounted) return;
                               alertLoginRequired(context);
-                            }
-                            else if (formKey.currentState!.validate()) {
+                            } else if (formKey.currentState!.validate()) {
                               formKey.currentState!.save();
                               if (mbti != null &&
                                   ideals.isNotEmpty &&
@@ -607,10 +688,12 @@ class _InputPostIt extends State<InputPostIt> {
                                 // print("취미:");
                                 // hobbies.forEach(print);
                                 var result = await sendStickyData();
-                                if (result == "SuccessToRegisterPostIt" || result == "StickyExceeded") {
+                                if (result == "SuccessToRegisterPostIt" ||
+                                    result == "StickyExceeded") {
                                   if (!mounted) return;
                                   showStatusOfRegistration(context, result);
-                                } else if (result == "GoToRegisterPage") { // 개인 정보 등록 화면으로 이동
+                                } else if (result == "GoToRegisterPage") {
+                                  // 개인 정보 등록 화면으로 이동
                                   if (!mounted) return;
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
