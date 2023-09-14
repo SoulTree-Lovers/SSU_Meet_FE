@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/dialogs/alert_login_required_dialog.dart';
 import 'package:ssu_meet/pages/input_profile_page.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/widgets/select_idealtype_modal.dart';
@@ -86,7 +87,7 @@ class _InputPostIt extends State<InputPostIt> {
 
     const url = 'http://43.202.77.44:8080/v1/sticky/new';
 
-    if(accessToken == null) {
+    if (accessToken == null) {
       return "GoToLoginPage";
     }
 
@@ -109,27 +110,24 @@ class _InputPostIt extends State<InputPostIt> {
     final message = responseData["message"];
     print(responseData);
 
-
-    if(response.statusCode == 200){
-      if(isSuccess == "SUCCESS"){ // 포스트잇 등록 완료 -> 메인
+    if (response.statusCode == 200) {
+      if (isSuccess == "SUCCESS") {
+        // 포스트잇 등록 완료 -> 메인
         return "SuccessToRegisterPostIt";
-      }
-      else if (message == "ExceedingPostItRegistrations"){ // 등록 개수 초과 -> 팝업
+      } else if (message == "ExceedingPostItRegistrations") {
+        // 등록 개수 초과 -> 팝업
         return "StickyExceeded";
-      }
-      else if (message == "NeedBasicInfo"){
+      } else if (message == "NeedBasicInfo") {
         return "GoToRegisterPage"; // 개인 정보 등록이 안 된 경우 -> 개인 정보 화면으로
-      }
-      else {
+      } else {
         return "GoToLoginPage"; // 토큰이 없는 경우 -> 로그인 화면으로
       }
-    }
-    else if (response.statusCode == 401) {
+    } else if (response.statusCode == 401) {
       // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
       if (message == "Token has expired") {
         // 엑세스 토큰이 만료된 경우
         final isSuccessNewToken =
-        await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+            await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
         if (isSuccessNewToken == "NewAccessToken") {
           // 엑세스 토큰을 정상적으로 재발급 받은 경우 -> 그대로 작업 완료
           return "SuccessToRegisterPostIt";
@@ -154,13 +152,11 @@ class _InputPostIt extends State<InputPostIt> {
     }
 
     // print("responseData: ${responseData["status"]}");
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-    hobbies = ['','',''];
+    hobbies = ['', '', ''];
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     if (screenWidth >= 540) {
@@ -569,26 +565,33 @@ class _InputPostIt extends State<InputPostIt> {
                       width: screenWidth * 0.22,
                       height: screenWidth * 0.08,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          side: const BorderSide(
-                            color: Colors.black,
-                            width: 0.5,
+                          style: ElevatedButton.styleFrom(
+                            side: const BorderSide(
+                              color: Colors.black,
+                              width: 0.5,
+                            ),
+                            backgroundColor:
+                                const Color.fromRGBO(255, 255, 255, 1),
+                            shadowColor: const Color.fromRGBO(0, 0, 0, 1),
+                            elevation: 5,
                           ),
-                          backgroundColor:
-                              const Color.fromRGBO(255, 255, 255, 1),
-                          shadowColor: const Color.fromRGBO(0, 0, 0, 1),
-                          elevation: 5,
-                        ),
-                        child: Text(
-                          "작성 완료",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.035,
-                            fontFamily: "Nanum_Ogbice",
+                          child: Text(
+                            "작성 완료",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.035,
+                              fontFamily: "Nanum_Ogbice",
+                            ),
                           ),
-                        ),
-                        onPressed: () async {
-                            if (formKey.currentState!.validate()) {
+                          onPressed: () async {
+                            var accessToken =
+                                await storage.read(key: "access_token");
+                            if (accessToken == null) {
+                              // 토큰이 없는 경우 로그인 창으로 보내는 팝업 호출
+                              if (!mounted) return;
+                              alertLoginRequired(context);
+                            }
+                            else if (formKey.currentState!.validate()) {
                               formKey.currentState!.save();
                               if (mbti != null &&
                                   ideals.isNotEmpty &&
@@ -596,58 +599,40 @@ class _InputPostIt extends State<InputPostIt> {
                                       hobbies[1] != '' ||
                                       hobbies[2] != '')) {
                                 // 필수 입력 조건 충족 완료(이상형 포함)
-                                hobbies.removeWhere(
-                                        (element) =>
+                                hobbies.removeWhere((element) =>
                                     element == ''); // 취미에서 공백 요소 제거
-                                print(
-                                    "닉네임: $nickname\nmbti: $mbti\n자기소개: $introduce\n이상형:");
-                                ideals.forEach(print);
-                                print("취미:");
-                                hobbies.forEach(print);
-
-                                // 등록 개수 초과 여부 알림 팝업창 호출
+                                // print(
+                                //     "닉네임: $nickname\nmbti: $mbti\n자기소개: $introduce\n이상형:");
+                                // ideals.forEach(print);
+                                // print("취미:");
+                                // hobbies.forEach(print);
                                 var result = await sendStickyData();
-                                if (result == "SuccessToRegisterPostIt" || result == "StickyExceeded" ){
-                                  if(!mounted) return;
+                                if (result == "SuccessToRegisterPostIt" || result == "StickyExceeded") {
+                                  if (!mounted) return;
                                   showStatusOfRegistration(context, result);
-                                }
-                                else if (result == "GoToRegisterPage"){ // 개인 정보 등록 화면으로 이동
-                                  if(!mounted) return;
-                                  Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const InputProfile(),
-                                        ),
-                                      );
-                                }
-                                else{
-                                  if(!mounted) return;
+                                } else if (result == "GoToRegisterPage") { // 개인 정보 등록 화면으로 이동
+                                  if (!mounted) return;
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                      const LoginPage(),
+                                          const InputProfile(),
                                     ),
                                   );
+                                } else {
+                                  if (!mounted) return;
+                                  alertLoginRequired(context);
                                 }
-
-
-                                // 홈 화면으로 이동
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         const ResponsiveWebLayout(pageIndex: 1),
-                                //   ),
-                                // );
                               } else {
                                 //  print("값이 유효하지 않음");
+                                if (!mounted) return;
                                 alertRequiredInput(context, screenWidth);
                               }
                             } else {
                               // print("값이 유효하지 않음");
+                              if (!mounted) return;
                               alertRequiredInput(context, screenWidth);
                             }
-                          }
-                      ),
+                          }),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: screenWidth * 0.06),
