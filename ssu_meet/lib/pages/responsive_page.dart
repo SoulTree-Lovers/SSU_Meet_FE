@@ -199,7 +199,8 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
                         height: screenWidth * 0.04,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("images/currency_dollar.png"),
+                            image:
+                                AssetImage("assets/images/currency_dollar.png"),
                             fit: BoxFit.cover,
                           ),
                         ),

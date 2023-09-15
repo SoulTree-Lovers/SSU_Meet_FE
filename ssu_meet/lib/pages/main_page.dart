@@ -356,9 +356,11 @@ class _MainPageState extends State<MainPage> {
         alignment: Alignment.center,
         children: [
           Container(
+            width: screenWidth,
+            height: screenHeight,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("images/paper_background.png"),
+                image: AssetImage("assets/images/paper_background.png"),
                 fit: BoxFit.cover,
               ),
             ),
