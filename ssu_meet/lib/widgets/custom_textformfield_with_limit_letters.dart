@@ -43,7 +43,7 @@ class _MyFormFieldState extends State<MyFormField> {
       maxLength: widget.maxLength,
       cursorWidth: 1.5,
       cursorHeight: widget.screenWidth * 0.04,
-      cursorColor: Colors.transparent,
+      cursorColor: Colors.black,
       style: TextStyle(
         fontSize: widget.screenWidth * 0.04,
         fontFamily: "Nanum_Ogbice",
