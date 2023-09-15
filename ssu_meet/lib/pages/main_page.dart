@@ -453,9 +453,25 @@ class _MainPageState extends State<MainPage> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Text("Error: ${snapshot.error}");
+                        return Center(
+                          child: Text(
+                            "네트워크 에러 발생 !!",
+                            style: TextStyle(
+                              fontFamily: "Nanum_Ogbice",
+                              fontSize: screenWidth * 0.1,
+                              color: Colors.black,
+                            ),
+                          ),
+                        );
                       } else if (!snapshot.hasData) {
-                        return const Text("Data is null");
+                        return Text(
+                          "Data is null",
+                          style: TextStyle(
+                            fontFamily: "Nanum_Ogbice",
+                            fontSize: screenWidth * 0.1,
+                            color: Colors.black,
+                          ),
+                        );
                       } else if (snapshot.data == "GoToLoginPage") {
                         print("GoToLoginPage");
                         Navigator.of(context).push(

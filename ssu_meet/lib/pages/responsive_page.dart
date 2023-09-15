@@ -8,6 +8,7 @@ import 'package:ssu_meet/pages/my_page.dart';
 import 'package:ssu_meet/pages/main_page.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:ssu_meet/widgets/desktop_layout.dart';
 
 class ResponsiveWebLayout extends StatefulWidget {
   final int pageIndex;
@@ -224,19 +225,19 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
           ),
         ),
       ),
-      body: _children[pageIndex],
-      // body: LayoutBuilder(
-      //   builder: (BuildContext context, BoxConstraints constraints) {
-      //     if (constraints.maxWidth <= 600) {
-      //       // Layout for iPhone-sized screens
-      //       // return const HomePage();
-      //       return const TestMainPage();
-      //     } else {
-      //       // Layout for computer screens
-      //       return const DesktopLayout();
-      //     }
-      //   },
-
+      // body: _children[pageIndex],
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          if (constraints.maxWidth <= 850) {
+            // Layout for iPhone-sized screens
+            // return const HomePage();
+            return _children[pageIndex];
+          } else {
+            // Layout for computer screens
+            return const DesktopLayout();
+          }
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(239, 239, 239, 1),
         selectedItemColor: const Color.fromRGBO(24, 24, 27, 1),

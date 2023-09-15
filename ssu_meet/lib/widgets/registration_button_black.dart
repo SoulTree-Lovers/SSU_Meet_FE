@@ -5,7 +5,7 @@ Positioned RegistrationButtonBlack(
     double screenHeight, double screenWidth, BuildContext context) {
   return Positioned(
     top: screenHeight * 0.7,
-    left: screenWidth * 0.7,
+    left: screenWidth * 0.65,
     child: GestureDetector(
       onTap: () {
         showDialog(
@@ -17,8 +17,8 @@ Positioned RegistrationButtonBlack(
         print("등록하기 버튼 클릭 !");
       },
       child: Container(
-        width: 90,
-        height: 40,
+        width: screenWidth * 0.3,
+        height: screenHeight * 0.07,
         decoration: ShapeDecoration(
           color: Colors.black,
           shape: RoundedRectangleBorder(
@@ -28,15 +28,15 @@ Positioned RegistrationButtonBlack(
                 0x3F000000,
               ),
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(45),
           ),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
             "+ 등록하기",
             style: TextStyle(
               fontFamily: "Ongeul",
-              fontSize: 20,
+              fontSize: screenWidth * 0.07,
               color: Colors.white,
             ),
           ),
