@@ -205,6 +205,8 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               },
                               obscureText: false,
+                              cursorColor: Colors.black,
+                              textInputAction: TextInputAction.next,
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(top: 20),
                                 enabledBorder: InputBorder.none,
@@ -253,6 +255,8 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               },
                               obscureText: true,
+                              cursorColor: Colors.black,
+                              textInputAction: TextInputAction.done,
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(top: 20),
                                 enabledBorder: InputBorder.none,
