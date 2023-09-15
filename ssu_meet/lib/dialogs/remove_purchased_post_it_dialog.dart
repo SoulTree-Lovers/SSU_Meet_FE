@@ -15,7 +15,7 @@ Future<dynamic> deletePurchasedSticky(int stickyId) async {
   }
 
   final response = await http.delete(
-    Uri.parse('http://43.202.77.44:8080/v1/members/mypage/buy-list/$stickyId'),
+    Uri.parse('http://54.180.20.191:8080/v1/members/mypage/buy-list/$stickyId'),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',

@@ -10,7 +10,7 @@ class ViewRegistered extends StatelessWidget {
 
   // API 연동 (등록한 포스트잇 가져오기)
   Future<dynamic> getRegisteredStickyData() async {
-    const url = 'http://43.202.77.44:8080/v1/members/mypage/sticky-list';
+    const url = 'http://54.180.20.191:8080/v1/members/mypage/sticky-list';
     // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
     final accessToken = await storage.read(key: 'access_token');
 

@@ -41,7 +41,7 @@ class _InputProfile extends State<InputProfile> {
   // api 연동 - POST 요청 함수
   Future<dynamic> sendUserProfileData(UserProfile newUser) async {
     final accessToken = await storage.read(key: 'access_token');
-    const url = 'http://43.202.77.44:8080/v1/members/new';
+    const url = 'http://54.180.20.191:8080/v1/members/new';
 
     print(json.encode(newUser.toJson()));
 

@@ -67,7 +67,7 @@ class _ModifyPageState extends State<ModifyPage> {
 
   // api 연동- GET 요청 함수
   void getOldProfile() async {
-    const url = 'http://43.202.77.44:8080/v1/members/mypage/modify';
+    const url = 'http://54.180.20.191:8080/v1/members/mypage/modify';
     print("함수 실행");
     var accessToken = await storage.read(key: "access_token");
 
@@ -135,7 +135,7 @@ class _ModifyPageState extends State<ModifyPage> {
 
   // api 연동- 수정 완료 후 POST 요청 코드
   Future<void> sendModifiedProfileData(UserProfile newData) async {
-    const url = 'http://43.202.77.44:8080/v1/members/mypage/modify';
+    const url = 'http://54.180.20.191:8080/v1/members/mypage/modify';
 
     var accessToken = await storage.read(key: "access_token");
 

@@ -31,7 +31,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
 
   // 서버에서 코인 가져오기
   void getCoinFromServer() async {
-    const url = 'http://43.202.77.44:8080/v1/members/mycoin';
+    const url = 'http://54.180.20.191:8080/v1/members/mycoin';
 
     // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
     final accessToken = await storage.read(key: 'access_token');

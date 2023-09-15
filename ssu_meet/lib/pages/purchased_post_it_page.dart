@@ -123,7 +123,7 @@ Future<List> getPurchasedPostItDataLocal() async {
 // 구입한 포스트잇 데이터 가져오기 api
 Future<dynamic> getPurchasedPostItData() async {
   // print("함수가 실행은 됐습니다.");
-  var url = 'http://43.202.77.44:8080/v1/members/mypage/buy-list';
+  var url = 'http://54.180.20.191:8080/v1/members/mypage/buy-list';
   // print('Sending JSON payload: ${json.encode(data.toJson())}');
 
   // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
