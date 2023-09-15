@@ -31,7 +31,7 @@ StatefulBuilder myModal(BuildContext context, List idealList) {
                 ),
                 Positioned(
                   left: screenWidth * 0.39,
-                  top: screenWidth * 0.14,
+                  top: screenWidth * 0.13,
                   child: Image(
                     width: screenWidth * 0.03,
                     height: screenWidth * 0.03,
