@@ -314,73 +314,6 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                 ],
                               ),
-                              // Row(
-                              //  // crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     Text(
-                              //       "취미:     ",
-                              //       style: TextStyle(
-                              //         fontFamily: "Nanum_Ogbice",
-                              //         fontSize: screenWidth * 0.045,
-                              //       ),
-                              //     ),
-                              //     SizedBox(
-                              //       width: screenWidth * 0.4,
-                              //       height: screenWidth * 0.1,
-                              //       child: MyFormField(
-                              //         key: const ValueKey(2),
-                              //         hintText: "1. 15자 이내",
-                              //         screenWidth: screenWidth,
-                              //         maxLength: 15,
-                              //         maxLine: 1,
-                              //         onSaved: (val) {
-                              //           setState(() {
-                              //             hobbies[0] = val;
-                              //           });
-                              //         },
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              // Container(
-                              //   width: screenWidth * 0.45,
-                              //   height: screenWidth * 0.06,
-                              //   padding: EdgeInsets.only(
-                              //     left: screenWidth * 0.048,
-                              //   ),
-                              //   child: MyFormField(
-                              //     key: const ValueKey(3),
-                              //     hintText: "2.",
-                              //     screenWidth: screenWidth,
-                              //     maxLength: 15,
-                              //     maxLine: 1,
-                              //     onSaved: (val) {
-                              //       setState(() {
-                              //         hobbies[1] = val;
-                              //       });
-                              //     },
-                              //   ),
-                              // ),
-                              // Container(
-                              //   width: screenWidth * 0.45,
-                              //   height: screenWidth * 0.06,
-                              //   padding: EdgeInsets.only(
-                              //     left: screenWidth * 0.048,
-                              //   ),
-                              //   child: MyFormField(
-                              //     key: const ValueKey(4),
-                              //     hintText: "3.",
-                              //     helperText: "*취미는 하나 이상 필수로 입력해주세요.",
-                              //     screenWidth: screenWidth,
-                              //     maxLength: 15,
-                              //     maxLine: 1,
-                              //     onSaved: (val) {
-                              //       setState(() {
-                              //         hobbies[2] = val;
-                              //       });
-                              //     },
-                              //   ),
-                              // ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -644,7 +577,7 @@ class _InputPostIt extends State<InputPostIt> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: screenWidth * 0.22,
+                      width: screenWidth * 0.27,
                       height: screenWidth * 0.08,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -661,7 +594,7 @@ class _InputPostIt extends State<InputPostIt> {
                             "작성 완료",
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: screenWidth * 0.035,
+                              fontSize: screenWidth * 0.03,
                               fontFamily: "Nanum_Ogbice",
                             ),
                           ),
@@ -721,7 +654,7 @@ class _InputPostIt extends State<InputPostIt> {
                       padding: EdgeInsets.only(left: screenWidth * 0.06),
                     ),
                     SizedBox(
-                      width: screenWidth * 0.22,
+                      width: screenWidth * 0.27,
                       height: screenWidth * 0.08,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -738,7 +671,7 @@ class _InputPostIt extends State<InputPostIt> {
                           "작성 취소",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: screenWidth * 0.035,
+                            fontSize: screenWidth * 0.03,
                             fontFamily: "Nanum_Ogbice",
                           ),
                         ),
