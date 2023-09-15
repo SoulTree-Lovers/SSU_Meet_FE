@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
   int allStickyCount = 0; // 전체 이성이 등록한 포스트잇 개수
   int myStickyCount = 0; // 내가 등록한 포스트잇 개수
 
-  bool isRegistered = true;
+  bool isRegistered = false;
 
   @override
   void initState() {
