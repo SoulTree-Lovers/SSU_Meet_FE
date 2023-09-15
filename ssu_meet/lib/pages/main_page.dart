@@ -400,7 +400,7 @@ class _MainPageState extends State<MainPage> {
                                   "<  로그인 하기",
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontFamily: "NanumSquareRoundR",
+                                    fontFamily: "NanumSquareRoundBold",
                                     fontSize: screenWidth * 0.025,
                                     fontWeight: FontWeight.bold,
                                   ),
