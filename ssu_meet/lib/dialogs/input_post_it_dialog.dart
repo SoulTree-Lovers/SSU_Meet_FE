@@ -325,7 +325,7 @@ class _InputPostIt extends State<InputPostIt> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: screenWidth * 0.07,
+                                    width: screenWidth * 0.068,
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
@@ -377,10 +377,11 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
-                                    height: screenWidth * 0.07,
+                                    height: screenWidth * 0.09,
                                     child: MyFormField(
                                       key: const ValueKey(4),
                                       hintText: "3.",
+                                      helperText: "*취미는 하나 이상 필수로 입력해 주세요. ",
                                       screenWidth: screenWidth,
                                       maxLength: 15,
                                       maxLine: 1,

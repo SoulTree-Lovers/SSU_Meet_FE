@@ -59,7 +59,7 @@ class _MyFormFieldState extends State<MyFormField> {
           color: const Color.fromRGBO(255, 0, 0, 1),
         ),
         counterStyle: TextStyle(
-          fontSize: widget.screenWidth * 0.025,
+          fontSize: widget.screenWidth * 0.02,
           fontFamily: "NanumSquareAc",
           color: Colors.black54,
         ),
