@@ -12,6 +12,7 @@ import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
 import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
 import 'package:ssu_meet/dialogs/register_completed.dialog.dart';
+import 'package:ssu_meet/dialogs/personal_info_processing_policy.dialog.dart';
 import 'package:http/http.dart' as http;
 
 import '../widgets/link_text.dart';
@@ -34,6 +35,7 @@ class _InputProfile extends State<InputProfile> {
   Item? major; //전공
   var data;
   bool isDateSelected = false;
+  bool isAgree = false;
   final formKey = GlobalKey<FormState>();
 
   // api 연동 - POST 요청 함수
@@ -133,16 +135,13 @@ class _InputProfile extends State<InputProfile> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     List<LinkTextItem> linkTextItems = [
-      LinkTextItem(text: '     기본 정보 등록 시 '),
+      LinkTextItem(text: '기본 정보 등록 시 '),
       LinkTextItem(
-        text: '개인정보 처리방침,\n',
+        text: '개인정보 처리방침 및\n서비스 이용약관',
         isLink: true,
-        onTap: () => print('개인정보 처리방침 페이지 보여주기'),
-      ),
-      LinkTextItem(
-        text: '서비스 이용약관',
-        isLink: true,
-        onTap: () => print('서비스 이용약관 페이지 보여주기'),
+        onTap: (){
+          showPersonalInfoProcessingPolicy(context, screenWidth);
+        },
       ),
       LinkTextItem(text: '에 동의하는 것을 의미합니다.'),
     ];
@@ -600,9 +599,34 @@ class _InputProfile extends State<InputProfile> {
                           ),
                         ],
                       ),
+                      Center(
+                        child: Wrap(
+                          spacing: 5,
+                          children:[
+                           Checkbox(
+                               value: isAgree,
+                               onChanged: (value){
+                                 setState(() {
+                                   isAgree = value!;
+                                 });
+                               },
+                             activeColor: Colors.transparent,
+                             checkColor: Colors.black,
+                               ),
+                            RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                for (int i = 0; i < linkTextItems.length; i++)
+                                  getTextSpan(linkTextItems[i], screenWidth)
+                              ],
+                            ),
+                          ),
+            ],
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: screenWidth * 0.02,
+                          top: screenWidth * 0.05,
                         ),
                       ),
                       ElevatedButton(
@@ -637,6 +661,7 @@ class _InputProfile extends State<InputProfile> {
                                 data.college != collegeList[0].value!.title &&
                                 data.major != "선택하기" &&
                                 isDateSelected &&
+                                isAgree &&
                                 (data.instaId != '' ||
                                     data.kakaoId != '' ||
                                     data.phoneNumber != '')) {
@@ -668,21 +693,6 @@ class _InputProfile extends State<InputProfile> {
                             alertRequiredInput(context, screenWidth);
                           }
                         },
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: screenWidth * 0.06,
-                        ),
-                      ),
-                      Center(
-                        child: RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              for (int i = 0; i < linkTextItems.length; i++)
-                                getTextSpan(linkTextItems[i], screenWidth)
-                            ],
-                          ),
-                        ),
                       ),
                     ],
                   ),
