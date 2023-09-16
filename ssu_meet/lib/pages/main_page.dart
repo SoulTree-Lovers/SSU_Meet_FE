@@ -128,7 +128,7 @@ class _MainPageState extends State<MainPage> {
 
     // var url = 'http://localhost:8080/v1/members/main?page=$page&size=1000'; // 로컬 테스트용
     var url =
-        'http://43.202.77.44:8080/v1/members/main?page=$page&size=1000'; // 배포된 서버
+        'https://ssumeet.shop/v1/members/main?page=$page&size=1000'; // 배포된 서버
 
     final http.Response response;
 

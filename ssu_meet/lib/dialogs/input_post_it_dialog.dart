@@ -85,7 +85,7 @@ class _InputPostIt extends State<InputPostIt> {
 
     print(json.encode(myStickyData.toJson()));
 
-    const url = 'http://43.202.77.44:8080/v1/sticky/new';
+    const url = 'https://ssumeet.shop/v1/sticky/new';
 
     if (accessToken == null) {
       return "GoToLoginPage";

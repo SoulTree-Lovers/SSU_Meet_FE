@@ -12,6 +12,7 @@ import 'package:ssu_meet/widgets/dropdown_text_style.dart';
 import 'package:ssu_meet/widgets/custom_textformfield.dart';
 import 'package:ssu_meet/dialogs/alert_required_input.dialog.dart';
 import 'package:ssu_meet/dialogs/register_completed.dialog.dart';
+import 'package:ssu_meet/dialogs/personal_info_processing_policy.dialog.dart';
 import 'package:http/http.dart' as http;
 
 import '../widgets/link_text.dart';
@@ -34,16 +35,17 @@ class _InputProfile extends State<InputProfile> {
   Item? major; //전공
   var data;
   bool isDateSelected = false;
+  bool isAgree = false;
   final formKey = GlobalKey<FormState>();
 
   // api 연동 - POST 요청 함수
   Future<dynamic> sendUserProfileData(UserProfile newUser) async {
     final accessToken = await storage.read(key: 'access_token');
-    const url = 'http://43.202.77.44:8080/v1/members/new';
+    const url = 'https://ssumeet.shop/v1/members/new';
 
     print(json.encode(newUser.toJson()));
 
-    if(accessToken == null) {
+    if (accessToken == null) {
       return "GoToLoginPage";
     }
 
@@ -62,19 +64,18 @@ class _InputProfile extends State<InputProfile> {
     final message = responseData["message"];
     print(responseData);
 
-
-    if(response.statusCode == 200){
-      if(isSuccess == "SUCCESS"){ // 개인 정보 등록 완료
-         return "CompletedRegister";
-      }
-      else if (message == "NoAccessToken"){ // 토큰 없음
+    if (response.statusCode == 200) {
+      if (isSuccess == "SUCCESS") {
+        // 개인 정보 등록 완료
+        return "CompletedRegister";
+      } else if (message == "NoAccessToken") {
+        // 토큰 없음
+        return "GoToLoginPage";
+      } else if (message == "CantFindUser") {
+        // 유저 찾을 수 없음
         return "GoToLoginPage";
       }
-      else if (message == "CantFindUser"){ // 유저 찾을 수 없음
-        return "GoToLoginPage";
-      }
-    }
-    else if (response.statusCode == 401) {
+    } else if (response.statusCode == 401) {
       // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
       if (message == "Token has expired") {
         // 엑세스 토큰이 만료된 경우
@@ -133,16 +134,13 @@ class _InputProfile extends State<InputProfile> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     List<LinkTextItem> linkTextItems = [
-      LinkTextItem(text: '     기본 정보 등록 시 '),
+      LinkTextItem(text: '기본 정보 등록 시 '),
       LinkTextItem(
-        text: '개인정보 처리방침,\n',
+        text: '개인정보 처리방침 및\n서비스 이용약관',
         isLink: true,
-        onTap: () => print('개인정보 처리방침 페이지 보여주기'),
-      ),
-      LinkTextItem(
-        text: '서비스 이용약관',
-        isLink: true,
-        onTap: () => print('서비스 이용약관 페이지 보여주기'),
+        onTap: () {
+          showPersonalInfoProcessingPolicy(context, screenWidth);
+        },
       ),
       LinkTextItem(text: '에 동의하는 것을 의미합니다.'),
     ];
@@ -477,7 +475,8 @@ class _InputProfile extends State<InputProfile> {
                                             child: MyFormField(
                                               key: const ValueKey(1),
                                               hintText: "입력",
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               screenWidth: screenWidth,
                                               validator: (val) {
                                                 if (val == '' || val == null) {
@@ -527,7 +526,8 @@ class _InputProfile extends State<InputProfile> {
                                             child: MyFormField(
                                               key: const ValueKey(2),
                                               hintText: "1.인스타",
-                                              textInputAction: TextInputAction.next,
+                                              textInputAction:
+                                                  TextInputAction.next,
                                               screenWidth: screenWidth,
                                               onSaved: (val) {
                                                 setState(
@@ -590,7 +590,8 @@ class _InputProfile extends State<InputProfile> {
                                       style: TextStyle(
                                         fontSize: 0.03 * screenWidth,
                                         fontFamily: "Nanum_Ogbice",
-                                        color: const Color.fromRGBO(255, 0, 0, 1),
+                                        color:
+                                            const Color.fromRGBO(255, 0, 0, 1),
                                       ),
                                     ),
                                   ],
@@ -600,9 +601,34 @@ class _InputProfile extends State<InputProfile> {
                           ),
                         ],
                       ),
+                      Center(
+                        child: Wrap(
+                          spacing: 5,
+                          children: [
+                            Checkbox(
+                              value: isAgree,
+                              onChanged: (value) {
+                                setState(() {
+                                  isAgree = value!;
+                                });
+                              },
+                              activeColor: Colors.transparent,
+                              checkColor: Colors.black,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  for (int i = 0; i < linkTextItems.length; i++)
+                                    getTextSpan(linkTextItems[i], screenWidth)
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: screenWidth * 0.02,
+                          top: screenWidth * 0.05,
                         ),
                       ),
                       ElevatedButton(
@@ -637,6 +663,7 @@ class _InputProfile extends State<InputProfile> {
                                 data.college != collegeList[0].value!.title &&
                                 data.major != "선택하기" &&
                                 isDateSelected &&
+                                isAgree &&
                                 (data.instaId != '' ||
                                     data.kakaoId != '' ||
                                     data.phoneNumber != '')) {
@@ -645,20 +672,19 @@ class _InputProfile extends State<InputProfile> {
                               print("필수 입력 요건이 충족됨");
                               // api 요청
                               final result = await sendUserProfileData(data);
-                              if (result == "CompletedRegister"){ // 개인 정보 등록 완료
-                                if(!mounted) return;
+                              if (result == "CompletedRegister") {
+                                // 개인 정보 등록 완료
+                                if (!mounted) return;
                                 registrationCompletionNotify(context);
-                              }
-                              else{ // 그 외- > 로그인 페이지로
-                                if(!mounted) return;
+                              } else {
+                                // 그 외- > 로그인 페이지로
+                                if (!mounted) return;
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                    const LoginPage(),
+                                    builder: (context) => const LoginPage(),
                                   ),
                                 );
                               }
-
                             } else {
                               //print("필수 입력 조건이 충족되지 않음");
                               alertRequiredInput(context, screenWidth);
@@ -668,21 +694,6 @@ class _InputProfile extends State<InputProfile> {
                             alertRequiredInput(context, screenWidth);
                           }
                         },
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: screenWidth * 0.06,
-                        ),
-                      ),
-                      Center(
-                        child: RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              for (int i = 0; i < linkTextItems.length; i++)
-                                getTextSpan(linkTextItems[i], screenWidth)
-                            ],
-                          ),
-                        ),
                       ),
                     ],
                   ),

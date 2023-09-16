@@ -17,7 +17,7 @@ class _ViewRegisteredState extends State<ViewRegistered> {
 
   // API 연동 (등록한 포스트잇 가져오기)
   Future<dynamic> getRegisteredStickyData() async {
-    const url = 'http://43.202.77.44:8080/v1/members/mypage/sticky-list';
+    const url = 'https://ssumeet.shop/v1/members/mypage/sticky-list';
     // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
     final accessToken = await storage.read(key: 'access_token');
 
@@ -350,10 +350,10 @@ class _ViewRegisteredState extends State<ViewRegistered> {
   }
 }
 
-Future<List> getRegisteredPostItData() async {
-  String response =
-      await rootBundle.loadString('json/test_registered_post_it_json.json');
-  final jsonData = json.decode(response);
+// Future<List> getRegisteredPostItData() async {
+//   String response =
+//       await rootBundle.loadString('json/test_registered_post_it_json.json');
+//   final jsonData = json.decode(response);
 
-  return jsonData["data"]["stickyData"];
-}
+//   return jsonData["data"]["stickyData"];
+// }

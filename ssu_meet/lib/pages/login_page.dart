@@ -205,6 +205,8 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               },
                               obscureText: false,
+                              cursorColor: Colors.black,
+                              textInputAction: TextInputAction.next,
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(top: 20),
                                 enabledBorder: InputBorder.none,
@@ -253,6 +255,8 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               },
                               obscureText: true,
+                              cursorColor: Colors.black,
+                              textInputAction: TextInputAction.done,
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(top: 20),
                                 enabledBorder: InputBorder.none,
@@ -628,7 +632,7 @@ class MyData {
 // }
 
 Future<int> login2() async {
-  const url = 'http://43.202.77.44:8080/v1/members/login';
+  const url = 'https://ssumeet.shop/v1/members/login';
   final data = MyData(_studentId!, _password!);
 
   String newTokenMessage;
@@ -709,7 +713,7 @@ Future<int> login2() async {
 
 // 리프레시 토큰 -> 엑세스 토큰 재발급 요청 api
 Future<String> getNewAccessToken() async {
-  const url = 'http://43.202.77.44:8080/v1/members/new/accesstoken';
+  const url = 'https://ssumeet.shop/v1/members/new/accesstoken';
   var refreshToken = await storage.read(key: 'refresh_token');
 
   try {

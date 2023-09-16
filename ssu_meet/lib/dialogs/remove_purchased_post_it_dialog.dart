@@ -10,12 +10,12 @@ Future<dynamic> deletePurchasedSticky(int stickyId) async {
   // print("stickyId: $stickyId");
   var accessToken = await storage.read(key: "access_token");
 
-  if(accessToken == null){
+  if (accessToken == null) {
     return "GoToLoginPage";
   }
 
   final response = await http.delete(
-    Uri.parse('http://43.202.77.44:8080/v1/members/mypage/buy-list/$stickyId'),
+    Uri.parse('https://ssumeet.shop/v1/members/mypage/buy-list/$stickyId'),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -30,18 +30,17 @@ Future<dynamic> deletePurchasedSticky(int stickyId) async {
   if (response.statusCode == 200) {
     if (isSuccess == "SUCCESS") {
       return "CompletedToRemove"; // 삭제 성공
-    } else if(message == "FailedToRemove"){
+    } else if (message == "FailedToRemove") {
       return "FailToRemove"; // 삭제 실패
-    }
-    else{
+    } else {
       return "GoToLoginPage";
     }
-  } else if(response.statusCode == 401){
+  } else if (response.statusCode == 401) {
     // 엑세스 토큰이 만료되었거나, 유효하지 않은 경우
     if (message == "Token has expired") {
       // 엑세스 토큰이 만료된 경우
       final isSuccessNewToken =
-      await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
+          await getNewAccessToken(); // 리프레시 토큰으로 엑세스 토큰 재발급
       if (isSuccessNewToken == "NewAccessToken") {
         // 엑세스 토큰을 정상적으로 재발급 받은 경우 -> 그대로 작업 완료
         return "CompletedToRemove";
@@ -60,8 +59,7 @@ Future<dynamic> deletePurchasedSticky(int stickyId) async {
       await storage.deleteAll(); // 저장되어 있던 토큰 모두 삭제
       return "GoToLoginPage";
     }
-  }
-  else {
+  } else {
     print('Failed to delete data. Error: ${response.statusCode}');
     return "GoToLoginPage";
   }
@@ -136,24 +134,20 @@ void removePurchasedPostIt(BuildContext context, int stickyId) {
               onPressed: () async {
                 // DELETE api 요청 함수
                 final result = await deletePurchasedSticky(stickyId);
-                if(result == "CompletedToRemove"){
+                if (result == "CompletedToRemove") {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          ResponsiveWebLayout(
-                            pageIndex: 2,
-                            // 0: 사용 설명서
-                            // 1: 메인 화면
-                            // 2: 마이 페이지
-                          ),
+                      builder: (context) => const ResponsiveWebLayout(
+                        pageIndex: 2,
+                        // 0: 사용 설명서
+                        // 1: 메인 화면
+                        // 2: 마이 페이지
+                      ),
                     ),
                   );
-
-                }
-                else {
+                } else {
                   Navigator.pop(context);
                 }
-
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,

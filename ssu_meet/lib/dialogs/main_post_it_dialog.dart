@@ -419,7 +419,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
   // 포스트잇 구매 api
   Future<dynamic> buyPostIt(int stickyId) async {
     // print("함수가 실행은 됐습니다.");
-    var url = 'http://43.202.77.44:8080/v1/sticky/buy/$stickyId';
+    var url = 'https://ssumeet.shop/v1/sticky/buy/$stickyId';
     // 디바이스에 저장된 access token과 refresh token 읽어오기 (존재하지 않으면 null 리턴)
     final accessToken = await storage.read(key: 'access_token');
 
