@@ -29,7 +29,7 @@ class _MyPageState extends State<MyPage> {
   ];
 
   final List _mypageMenu = [
-    const ViewRegistered(),
+    ViewRegistered(),
     const PurchasedPostItPage(),
     const ModifyPage(),
     //const LogoutPage(),

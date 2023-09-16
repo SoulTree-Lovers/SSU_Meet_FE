@@ -274,7 +274,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 40),
                           SizedBox(
-                            width: screenWidth / 6 + 15,
+                            // width: screenWidth / 6 + 15,
                             height: 40,
                             child: OutlinedButton(
                               style: OutlinedButton.styleFrom(
@@ -384,10 +384,10 @@ class _LoginPageState extends State<LoginPage> {
                                   }
                                 }
                               },
-                              child: const Text(
+                              child: Text(
                                 "로그인",
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: screenWidth * 0.03,
                                   color: Colors.white,
                                 ),
                               ),
