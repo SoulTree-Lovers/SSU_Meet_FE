@@ -14,7 +14,7 @@ class PurchasedPostItPage extends StatefulWidget {
 }
 
 class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
-  bool isRegistered = false;
+  bool isRegistered = true;
 
   // 구입한 포스트잇 데이터 가져오기 api
   Future<dynamic> getPurchasedPostItData() async {
@@ -27,12 +27,13 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
 
     if (accessToken == null) {
       // 미등록 사용자
+      isRegistered = false;
       return [];
     }
 
-    setState(() {
-      isRegistered = true; // 등록된 사용자임을 검증
-    });
+    // setState(() {
+    //   isRegistered = true; // 등록된 사용자임을 검증
+    // });
 
     final response = await http.get(
       Uri.parse(url),
@@ -128,76 +129,75 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
           ),
         ),
       ),
-      child: !isRegistered
-          ? const Center(
-              child: Text(
-                '로그인 후 이용할 수 있습니다.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: 'NanumSquareRoundBold',
-                  // fontWeight: FontWeight.w700,
-                  // height: 1.31,
-                ),
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Row(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Color(0xff717171),
-                          size: 30,
-                        ),
-                        Text(
-                          "구입한 포스트잇",
-                          style: TextStyle(
-                            color: Color(0xff717171),
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "NanumSquareAc",
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
+                  Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Color(0xff717171),
+                    size: 30,
                   ),
-                  FutureBuilder(
-                    future: getPurchasedPostItData(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // While the future is not yet completed
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        // If an error occurred
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.data == "GoToLoginPage") {
-                        print("GoToLoginPage");
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ),
-                        );
-                        return const Text("GoToLoginPage");
-                      } else {
-                        // If the future completed successfully
-                        return PurchasedPagePostIt(
-                          screenHeight,
-                          screenWidth,
-                          snapshot,
-                        );
-                      }
-                    },
+                  Text(
+                    "구입한 포스트잇",
+                    style: TextStyle(
+                      color: Color(0xff717171),
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "NanumSquareAc",
+                      fontSize: 16,
+                    ),
                   ),
                 ],
               ),
             ),
+            FutureBuilder(
+              future: getPurchasedPostItData(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // While the future is not yet completed
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  // If an error occurred
+                  return Text('Error: ${snapshot.error}');
+                } else if (!isRegistered) {
+                  return const Center(
+                    child: Text(
+                      '로그인 후 이용할 수 있습니다.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontFamily: 'NanumSquareRoundBold',
+                        // fontWeight: FontWeight.w700,
+                        // height: 1.31,
+                      ),
+                    ),
+                  );
+                } else if (snapshot.data == "GoToLoginPage") {
+                  print("GoToLoginPage");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                  return const Text("GoToLoginPage");
+                } else {
+                  // If the future completed successfully
+                  return PurchasedPagePostIt(
+                    screenHeight,
+                    screenWidth,
+                    snapshot,
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
