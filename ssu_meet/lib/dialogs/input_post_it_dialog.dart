@@ -411,7 +411,7 @@ class _InputPostIt extends State<InputPostIt> {
                                   ),
                                   SizedBox(
                                     width: screenWidth * 0.4,
-                                    height: screenWidth * 0.2,
+                                    height: screenWidth * 0.19,
                                     child: MyFormField(
                                       key: const ValueKey(5),
                                       hintText: "200자 이내",
