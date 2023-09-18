@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
     double radians = 40 * math.pi / 180;
 
     return Scaffold(
-     // backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffEFEFEF),
@@ -145,7 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                                   height: screenHeight * 0.06,
                                   child: const Image(
                                     fit: BoxFit.contain,
-                                    image: AssetImage('assets/images/heart.png'),
+                                    image:
+                                        AssetImage('assets/images/heart.png'),
                                   )),
                             ))
                       ],
@@ -180,7 +181,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             const SizedBox(height: 40),
                             Container(
-                              margin: const EdgeInsets.only(left: 60, right: 60),
+                              margin:
+                                  const EdgeInsets.only(left: 60, right: 60),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(40),
@@ -219,7 +221,8 @@ class _LoginPageState extends State<LoginPage> {
                                     fontSize: 14,
                                   ),
                                   prefixIcon: Padding(
-                                    padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                    padding:
+                                        EdgeInsets.fromLTRB(25, 15, 10, 15),
                                     child: Icon(Icons.person_outline_rounded),
                                   ),
                                   prefixIconColor: Color(0xffA9A8A8),
@@ -230,7 +233,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             const SizedBox(height: 20),
                             Container(
-                              margin: const EdgeInsets.only(left: 60, right: 60),
+                              margin:
+                                  const EdgeInsets.only(left: 60, right: 60),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(40),
@@ -269,7 +273,8 @@ class _LoginPageState extends State<LoginPage> {
                                     fontSize: 14,
                                   ),
                                   prefixIcon: Padding(
-                                    padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                    padding:
+                                        EdgeInsets.fromLTRB(25, 15, 10, 15),
                                     child: Icon(Icons.lock_outline_rounded),
                                   ),
                                   prefixIconColor: Color(0xffA9A8A8),
@@ -304,7 +309,8 @@ class _LoginPageState extends State<LoginPage> {
                                       _studentId == "" ||
                                       _password == null ||
                                       _password == "") {
-                                    isMetInput = false; // 학과/비번 중 하나라도 입력하지 않은 경우
+                                    isMetInput =
+                                        false; // 학과/비번 중 하나라도 입력하지 않은 경우
                                   }
                                   print(_studentId);
                                   print(_password);
@@ -377,7 +383,8 @@ class _LoginPageState extends State<LoginPage> {
                                       if (!mounted) return;
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => const LoginPage(),
+                                          builder: (context) =>
+                                              const LoginPage(),
                                         ),
                                       );
                                       break;
@@ -393,10 +400,9 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   "로그인",
                                   style: TextStyle(
-                                    fontSize: screenWidth * 0.03,
-                                    color: Colors.white,
-                                    fontFamily: "NanumSquareRoundR"
-                                  ),
+                                      fontSize: screenWidth * 0.03,
+                                      color: Colors.white,
+                                      fontFamily: "NanumSquareRoundR"),
                                 ),
                               ),
                             ),
