@@ -123,7 +123,7 @@ class _InfoPageState extends State<InfoPage> {
                   ),
                 ),
                 const Text(
-                  "코인 3개 무료 제공 !",
+                  "코인 무료 제공 !",
                   style: TextStyle(
                     fontFamily: "Nanum_Ogbice",
                     fontSize: 17,
@@ -148,6 +148,16 @@ class _InfoPageState extends State<InfoPage> {
                         "assets/images/info_images/awake.png",
                       ),
                     ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "(출처: 숭실대학교 총학생회)",
+                  style: TextStyle(
+                    fontFamily: "Nanum_Ogbice",
+                    fontSize: 15,
                   ),
                 ),
                 const SizedBox(
@@ -423,7 +433,7 @@ class _InfoPageState extends State<InfoPage> {
                 ),
                 Container(
                   width: screenWidth * 0.8,
-                  height: screenWidth * 0.6,
+                  height: screenWidth * 0.62,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
