@@ -22,10 +22,10 @@ Scaffold MainPagePostIt(
         itemBuilder: (BuildContext context, int index) {
           var postIt = snapshot.data![index];
           var stickyId = postIt["stickyId"];
-          var sex = postIt["stickyData"]["sex"];
-          var birthDate = postIt["stickyData"]["birthDate"];
+          // var sex = postIt["stickyData"]["sex"];
+          // var birthDate = postIt["stickyData"]["birthDate"];
           var age = postIt["stickyData"]["age"];
-          var college = postIt["stickyData"]["college"];
+          // var college = postIt["stickyData"]["college"];
           var major = postIt["stickyData"]["major"];
           var height = postIt["stickyData"]["height"];
           var instaId = postIt["stickyData"]["instaId"];
@@ -62,9 +62,9 @@ Scaffold MainPagePostIt(
                   );
                 },
               );
-              print("Tapped Post It (id: $stickyId)");
-              print("Tapped Post It (age: $age)");
-              print("Tapped Post It (instaId: $instaId)");
+              // print("Tapped Post It (id: $stickyId)");
+              // print("Tapped Post It (age: $age)");
+              // print("Tapped Post It (instaId: $instaId)");
             },
             child: Center(
               child: Container(

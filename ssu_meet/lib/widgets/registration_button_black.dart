@@ -14,7 +14,7 @@ Positioned RegistrationButtonBlack(
             builder: (BuildContext context) {
               return const InputPostIt();
             });
-        print("등록하기 버튼 클릭 !");
+        // print("등록하기 버튼 클릭 !");
       },
       child: Container(
         width: screenWidth * 0.3,

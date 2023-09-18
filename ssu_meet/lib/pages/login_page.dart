@@ -133,22 +133,23 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Positioned.directional(
-                            //left: screenWidth * 0.8,
-                            bottom: screenHeight * 0.08,
-                            start: screenHeight * 0.35,
-                            end: screenHeight * 0.01,
-                            textDirection: TextDirection.ltr,
-                            child: Transform.rotate(
-                              angle: radians,
-                              child: SizedBox(
-                                  width: screenHeight * 0.06,
-                                  height: screenHeight * 0.06,
-                                  child: const Image(
-                                    fit: BoxFit.contain,
-                                    image:
-                                        AssetImage('assets/images/heart.png'),
-                                  )),
-                            ))
+                          //left: screenWidth * 0.8,
+                          bottom: screenHeight * 0.08,
+                          start: screenHeight * 0.35,
+                          end: screenHeight * 0.01,
+                          textDirection: TextDirection.ltr,
+                          child: Transform.rotate(
+                            angle: radians,
+                            child: SizedBox(
+                              width: screenHeight * 0.06,
+                              height: screenHeight * 0.06,
+                              child: const Image(
+                                fit: BoxFit.contain,
+                                image: AssetImage('assets/images/heart.png'),
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -195,14 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               ),
                               child: TextFormField(
-                                // controller: passwordController,
                                 autovalidateMode: AutovalidateMode.always,
-                                // validator: (value) {
-                                //   if (value == null || value == '') {
-                                //     return '학번을 입력해주세요.';
-                                //   }
-                                //   return null;
-                                // },
                                 onSaved: (String? newValue) {
                                   setState(() {
                                     _studentId = newValue;
@@ -247,14 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               ),
                               child: TextFormField(
-                                // controller: passwordController,
                                 autovalidateMode: AutovalidateMode.always,
-                                // validator: (value) {
-                                //   if (value == null || value == '') {
-                                //     return '비밀번호를 입력해주세요.';
-                                //   }
-                                //   return null;
-                                // },
                                 onSaved: (String? newValue) {
                                   setState(() {
                                     _password = newValue;
@@ -299,9 +286,6 @@ class _LoginPageState extends State<LoginPage> {
                                   elevation: 0,
                                 ),
                                 onPressed: () async {
-                                  // if (!_formKey.currentState!.validate()) {
-                                  //   return;
-                                  // }
                                   _formKey.currentState!.save();
                                   bool isMetInput = true;
 
@@ -312,39 +296,7 @@ class _LoginPageState extends State<LoginPage> {
                                     isMetInput =
                                         false; // 학과/비번 중 하나라도 입력하지 않은 경우
                                   }
-                                  print(_studentId);
-                                  print(_password);
 
-                                  /*  login().then(
-                                      (result) {
-                                        if (result == 1) {
-                                          // 개인정보등록화면으로 이동
-                                          print("개인정보등록 화면으로 이동합니다.");
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const InputProfile(),
-                                            ),
-                                          );
-                                        } else if (result == 2) {
-                                          // 홈 화면으로 이동
-                                          print("홈 화면으로 이동합니다.");
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ResponsiveWebLayout(
-                                                pageIndex: 1,
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          _showFailedToLoginDialog(context);
-                                          print("로그인 실패");
-                                          // 팝업 창 띄워주기
-                                        }
-                                      },
-                                    );
-                                    */
                                   while (true) {
                                     if (!isMetInput) {
                                       // 입력이 충족되지 않은 경우 -> 로그인 api 보내지 않고 프론트단에서 처리.
@@ -355,7 +307,7 @@ class _LoginPageState extends State<LoginPage> {
                                     final result = await login2();
                                     if (result == 1) {
                                       // 개인정보등록화면으로 이동
-                                      print("개인정보등록 화면으로 이동합니다.");
+                                      // print("개인정보등록 화면으로 이동합니다.");
                                       if (!mounted) return;
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -366,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
                                       break;
                                     } else if (result == 2) {
                                       // 홈 화면으로 이동
-                                      print("홈 화면으로 이동합니다.");
+                                      // print("홈 화면으로 이동합니다.");
                                       if (!mounted) return;
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -379,7 +331,7 @@ class _LoginPageState extends State<LoginPage> {
                                       break;
                                     } else if (result == 5) {
                                       // 로그인 화면으로 이동
-                                      print("로그인 화면으로 이동합니다.");
+                                      // print("로그인 화면으로 이동합니다.");
                                       if (!mounted) return;
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -400,9 +352,10 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   "로그인",
                                   style: TextStyle(
-                                      fontSize: screenWidth * 0.03,
-                                      color: Colors.white,
-                                      fontFamily: "NanumSquareRoundR"),
+                                    fontSize: screenWidth * 0.03,
+                                    color: Colors.white,
+                                    fontFamily: "NanumSquareRoundR",
+                                  ),
                                 ),
                               ),
                             ),
@@ -419,52 +372,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  /* Future<int> login() async {
-    // print("함수가 실행은 됐습니다.");
-    const url = 'http://43.202.77.44:8080/v1/members/login';
-    final data = MyData(_studentId!, _password!);
-    // print('Sending JSON payload: ${json.encode(data.toJson())}');
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(data.toJson()),
-    );
-    print("데이터 전송");
-
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
-      final isSuccess = responseData["status"];
-      final message = responseData["message"];
-
-      print(responseData);
-      if (isSuccess == "SUCCESS") {
-        await storage.write(
-            key: "token", value: responseData["data"]["accessToken"]);
-        //유세인트 인증에 성공한 경우
-        print("유세인트 인증 성공");
-        if (message == "RequiredFirstRegistration") {
-          print("개인정보등록이 필요합니다.");
-          var token = await storage.read(key: "token");
-          print("token: $token");
-          return 1;
-        } else if (message == "RegisteredUser") {
-          print("이미 개인정보등록이 완료된 사용자입니다.");
-          return 2;
-        }
-      } else {
-        //유세인트 인증에 실패한 경우
-        print("로그인 정보가 잘못되었습니다.");
-        return 3; // 로그인 실패 (정보 오류)
-      }
-      // print('Received response: $result');
-    } else {
-      print('Failed to send data. Error: ${response.statusCode}');
-      return 4; // 로그인 실패 (네트워크 에러)
-    }
-    return 0;
-  }
-  */
 
   // 로그인을 실패하였을 경우 팝업 창
   void _showFailedToLoginDialog(BuildContext context) {
@@ -486,20 +393,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
         shadowColor: const Color(0x3F000000),
         content: Container(
-            width: 250,
-            height: 55,
-            alignment: Alignment.center,
-            child: const Text(
-              '로그인에 실패하였습니다.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-                fontFamily: 'NanumSquareRoundBold',
-                // fontWeight: FontWeight.w700,
-                // height: 1.31,
-              ),
-            )),
+          width: 250,
+          height: 55,
+          alignment: Alignment.center,
+          child: const Text(
+            '로그인에 실패하였습니다.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'NanumSquareRoundBold',
+              // fontWeight: FontWeight.w700,
+              // height: 1.31,
+            ),
+          ),
+        ),
         actions: [
           Center(
             child: ElevatedButton(
@@ -553,20 +461,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
         shadowColor: const Color(0x3F000000),
         content: Container(
-            width: 250,
-            height: 55,
-            alignment: Alignment.center,
-            child: const Text(
-              '학번 또는 비밀번호를 입력해주세요.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-                fontFamily: 'NanumSquareRoundBold',
-                // fontWeight: FontWeight.w700,
-                // height: 1.31,
-              ),
-            )),
+          width: 250,
+          height: 55,
+          alignment: Alignment.center,
+          child: const Text(
+            '학번 또는 비밀번호를 입력해주세요.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'NanumSquareRoundBold',
+              // fontWeight: FontWeight.w700,
+              // height: 1.31,
+            ),
+          ),
+        ),
         actions: [
           Center(
             child: ElevatedButton(
@@ -574,22 +483,22 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shadowColor: Colors.black26,
-                  side: const BorderSide(
-                    color: Colors.black,
-                  ),
-                  fixedSize: const Size(70, 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  )),
+                backgroundColor: Colors.black,
+                shadowColor: Colors.black26,
+                side: const BorderSide(
+                  color: Colors.black,
+                ),
+                fixedSize: const Size(70, 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
               child: const Text(
                 "확인",
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: "NanumSquareRoundR",
                   fontSize: 10,
-                  //fontWeight: FontWeight.w500
                 ),
               ),
             ),
@@ -611,35 +520,6 @@ class MyData {
         'password': password,
       };
 }
-
-// Future<void> sendData() async {
-//   print("함수가 실행은 됐습니다.");
-//   const url = 'http://localhost:8080/v1/members/login';
-//   final data = MyData(studentIdController.text, passwordController.text);
-//   print('Sending JSON payload: ${json.encode(data.toJson())}');
-//   final response = await http.post(
-//     Uri.parse(url),
-//     headers: {'Content-Type': 'application/json'},
-//     body: json.encode(data.toJson()),
-//   );
-//   print("데이터 전송");
-
-//   if (response.statusCode == 200) {
-//     final responseData = json.decode(response.body);
-//     final isSuccess = responseData["status"];
-
-//     if (isSuccess == "SUCCESS") {
-//       //유세인트 인증에 성공한 경우
-//       print("유세인트 인증 성공");
-//     } else {
-//       //유세인트 인증에 실패한 경우
-//       print("로그인 정보가 잘못되었습니다.");
-//     }
-//     // print('Received response: $result');
-//   } else {
-//     print('Failed to send data. Error: ${response.statusCode}');
-//   }
-// }
 
 Future<int> login2() async {
   const url = 'https://ssumeet.shop/v1/members/login';
@@ -666,39 +546,39 @@ Future<int> login2() async {
       // 엑세스 토큰이 이미 있는 경우
       if (accessToken != null) {
         if (isSuccess == "SUCCESS") {
-          print("<Token exists>: $responseData");
+          // print("<Token exists>: $responseData");
           if (message == "RequiredFirstRegistration") {
             return 1;
           } else if (message == "RegisteredUser") {
             return 2;
           }
         } else if (isSuccess == "ERROR") {
-          print("로그인 정보 오류");
+          // print("로그인 정보 오류");
           return 3;
         }
       } else {
         // 엑세스 토큰이 없는 경우 -> 리프레시 + 엑세스 모두 새로 받아 저장 후 재 로그인 요청
-        print("<Token doesn't exist>: $responseData");
+        // print("<Token doesn't exist>: $responseData");
         await storage.write(
             key: 'refresh_token', value: responseData["data"]["refreshToken"]);
         await storage.write(
             key: 'access_token', value: responseData["data"]["accessToken"]);
-        print("로그인 api를 재 요청합니다");
+        // print("로그인 api를 재 요청합니다");
         return 4;
       }
     } else if (response.statusCode == 401) {
-      print(message);
+      // print(message);
       if (message == "Token has expired") {
         // 유효하지 않은 토큰 처리
         newTokenMessage = await getNewAccessToken();
 
         if (newTokenMessage == "NewAccessToken") {
           // 엑세스 토큰 재발급 성공 (기존 정보로 다시 로그인 후 개인정보 등록 여부에 따라 페이지 이동)
-          print("로그인 api를 재 요청합니다");
+          // print("로그인 api를 재 요청합니다");
           return 4;
         } else if (newTokenMessage == "storageDeleted") {
           // 리프레시 토큰마저 만료됨 (로그인 화면으로 이동)
-          print("로그인을 다시 합니다");
+          // print("로그인을 다시 합니다");
           return 5;
         } else {
           // Token Error || Network Error || Try Catch Error 인 경우
@@ -708,15 +588,15 @@ Future<int> login2() async {
         // 엑세스 토큰이 틀린 경우
         await storage.deleteAll(); // 기존 토큰 삭제
       }
-      print("로그인을 다시 합니다");
+      // print("로그인을 다시 합니다");
       return 5; // (로그인 화면으로 이동)
     } else {
-      print('Failed to send data. Error: ${response.statusCode}');
+      // print('Failed to send data. Error: ${response.statusCode}');
       return 6; // 로그인 실패 (네트워크 에러)
     }
     return 0;
   } catch (e) {
-    print("로그인 함수에서 에러 발생: $e");
+    // print("로그인 함수에서 에러 발생: $e");
     return 6;
   }
 }
@@ -743,7 +623,7 @@ Future<String> getNewAccessToken() async {
           key: 'access_token', value: responseData["data"]["accessToken"]);
       return "NewAccessToken";
     } else if (response.statusCode == 401) {
-      print(message);
+      // print(message);
       await storage.deleteAll();
       if (message == "Token has expired") {
         // 리프레시 만료
@@ -753,12 +633,12 @@ Future<String> getNewAccessToken() async {
         return "tokenError"; // 로그인 화면으로 이동
       }
     } else {
-      print(
-          'Failed to get new accessToken. Error: ${response.statusCode}'); // 재발급 실패 (네트워크 에러)
+      // print(
+      //     'Failed to get new accessToken. Error: ${response.statusCode}'); // 재발급 실패 (네트워크 에러)
       return "NetworkError";
     }
   } catch (e) {
-    print("토큰 재발급 함수에서 에러 발생: $e");
+    // print("토큰 재발급 함수에서 에러 발생: $e");
     return "TryCatchError";
   }
 }

@@ -202,39 +202,6 @@ class _RegisteredDialogState extends State<RegisteredDialog> {
                                 ),
                               ),
                             ),
-                            // SizedBox(
-                            //   width: screenWidth * 0.28,
-                            //   height: screenWidth * 0.1,
-                            //   child: SingleChildScrollView(
-                            //     child: Wrap(
-                            //       spacing: 4,
-                            //       //alignment: WrapAlignment.start,
-                            //       children: widget.ideals.map(
-                            //         (item) {
-                            //           return Container(
-                            //             width: screenWidth * 0.11,
-                            //             height: screenWidth * 0.04,
-                            //             margin: const EdgeInsets.only(bottom: 5),
-                            //             padding: const EdgeInsets.only(top: 2),
-                            //             decoration: BoxDecoration(
-                            //               borderRadius: BorderRadius.circular(20),
-                            //               border: Border.all(
-                            //                   color: Colors.black, width: 0.5),
-                            //             ),
-                            //             child: Text(
-                            //               item,
-                            //               textAlign: TextAlign.center,
-                            //               style: TextStyle(
-                            //                   fontFamily: "Nanum_Ogbice",
-                            //                   fontSize: screenWidth * 0.025,
-                            //                   color: Colors.black),
-                            //             ),
-                            //           );
-                            //         },
-                            //       ).toList(),
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                         const SizedBox(height: 10),

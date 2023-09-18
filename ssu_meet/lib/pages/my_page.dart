@@ -29,7 +29,7 @@ class _MyPageState extends State<MyPage> {
   ];
 
   final List _mypageMenu = [
-    ViewRegistered(),
+    const ViewRegistered(),
     const PurchasedPostItPage(),
     const ModifyPage(),
     //const LogoutPage(),
@@ -45,113 +45,107 @@ class _MyPageState extends State<MyPage> {
       screenWidth *= 0.8;
     }
     return Scaffold(
-        backgroundColor: const Color(0xffD8D8D8),
-        // appBar: AppBar(
-        //   backgroundColor: const Color(0xffEFEFEF),
-        //   elevation: 0.0,
-        //   title: Text("마이페이지"),
-        // ),
-        body: Column(
-          children: [
-            const SizedBox(height: 6),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.only(left: 5, right: 5),
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 0.0,
-                    shape: RoundedRectangleBorder(
+      backgroundColor: const Color(0xffD8D8D8),
+      body: Column(
+        children: [
+          const SizedBox(height: 6),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.only(left: 5, right: 5),
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEFEFEF),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFEFEFEF),
-                        borderRadius: BorderRadius.circular(10),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.only(
+                          left: screenWidth * 0.09, right: screenWidth * 0.1),
+                      title: Container(
+                        alignment: Alignment.centerLeft,
+                        height: screenWidth * 0.13,
+                        child: Text(
+                          mypageMenuText[index],
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.035,
+                            fontFamily: 'NanumSquare_ac',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.26,
+                          ),
+                        ),
                       ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.only(
-                            left: screenWidth * 0.09, right: screenWidth * 0.1),
-                        title: Container(
-                          alignment: Alignment.centerLeft,
-                          height: screenWidth * 0.13,
-                          child: Text(
-                            mypageMenuText[index],
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: screenWidth * 0.035,
-                              fontFamily: 'NanumSquare_ac',
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.26,
+                      leading: Container(
+                        alignment: Alignment.centerLeft,
+                        width: screenWidth * 0.07,
+                        height: screenWidth * 0.11,
+                        child: Image.asset(
+                          mypageIcon[index],
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      trailing: Container(
+                        width: screenWidth * 0.07,
+                        height: screenWidth * 0.09,
+                        alignment: Alignment.centerLeft,
+                        child: Icon(
+                          Icons.chevron_right,
+                          size: screenWidth * 0.05,
+                        ),
+                      ),
+                      onTap: () {
+                        if (index == 3) {
+                          return logoutDialog(context);
+                        } else {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => _mypageMenu[index],
                             ),
-                          ),
-                        ),
-                        leading: Container(
-                          alignment: Alignment.centerLeft,
-                          width: screenWidth * 0.07,
-                          height: screenWidth * 0.11,
-                          child: Image.asset(
-                            mypageIcon[index],
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        trailing: Container(
-                          width: screenWidth * 0.07,
-                          height: screenWidth * 0.09,
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.chevron_right,
-                            size: screenWidth * 0.05,
-                          ),
-                        ),
-                        onTap: () {
-                          // if(index==2) return LoadingModifyPage().getOldProfile(context);
-                          if (index == 3) {
-                            return logoutDialog(context);
-                          } else {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => _mypageMenu[index],
-                              ),
-                            );
-                          }
-                          print(mypageMenuText[index]);
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              width: screenWidth * 1.5,
-              height: screenHeight * 0.08,
-              decoration: const BoxDecoration(
-                color: Color(0xFFEFEFEF),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "문의사항",
-                    style: TextStyle(
-                      color: const Color.fromARGB(150, 0, 0, 0),
-                      fontSize: screenWidth * 0.025,
+                          );
+                        }
+                      },
                     ),
                   ),
-                  Text(
-                    "rkdtmdals999@naver.com",
-                    style: TextStyle(
-                      color: const Color.fromARGB(150, 0, 0, 0),
-                      fontSize: screenWidth * 0.025,
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          ],
-        ));
+          ),
+          Container(
+            width: screenWidth * 1.5,
+            height: screenHeight * 0.08,
+            decoration: const BoxDecoration(
+              color: Color(0xFFEFEFEF),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "문의사항",
+                  style: TextStyle(
+                    color: const Color.fromARGB(150, 0, 0, 0),
+                    fontSize: screenWidth * 0.025,
+                  ),
+                ),
+                Text(
+                  "rkdtmdals999@naver.com",
+                  style: TextStyle(
+                    color: const Color.fromARGB(150, 0, 0, 0),
+                    fontSize: screenWidth * 0.025,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

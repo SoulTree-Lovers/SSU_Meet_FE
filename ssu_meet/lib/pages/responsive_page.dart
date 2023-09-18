@@ -27,7 +27,6 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
   // int _selectedIndexScreen = 1; // Main Page
 
   dynamic coins = 0;
-  // int coins = getCoin();
 
   // 서버에서 코인 가져오기
   void getCoinFromServer() async {
@@ -60,7 +59,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
           if (responseData["status"] == "SUCCESS") {
             setState(() {
               coins = responseData["data"]["myCoinCount"];
-              print("서버에서 코인 가져옴 ! 현재 코인 개수: $coins");
+              // print("서버에서 코인 가져옴 ! 현재 코인 개수: $coins");
             });
           } else {
             // Error
@@ -68,7 +67,7 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
               coins = 0;
             });
 
-            print("Status is Error !!");
+            // print("Status is Error !!");
           }
         } else if (response.statusCode == 401) {
           // 엑세스 토큰이 유효하지 않거나 만료된 경우
@@ -108,11 +107,11 @@ class _ResponsiveWebLayoutState extends State<ResponsiveWebLayout> {
           setState(() {
             coins = 0;
           });
-          print('Failed to get data. Error: ${response.statusCode}');
+          // print('Failed to get data. Error: ${response.statusCode}');
         }
       } catch (e) {
         // 엑세스 토큰이 유효하지 않은 경우
-        print(e);
+        // print(e);
         setState(() async {
           await storage.deleteAll();
           coins = "로그인 후 이용 가능";

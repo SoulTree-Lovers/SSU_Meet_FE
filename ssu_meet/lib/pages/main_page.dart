@@ -50,66 +50,6 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  // Future<dynamic> fetchData() async {
-  //   print("Fetching data");
-  //   // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
-  //   if (isLoading || !hasMoreData) {
-  //     return [];
-  //   }
-
-  //   // 현재 데이터 패치 중이므로 true
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-
-  //   print("page: $page");
-
-  //   await makeAuthenticatedRequest(context);
-  // }
-
-  // Future<dynamic> refreshTokenValidation() async {
-  //   // 로컬에 저장된 refresh token 로드
-  //   final refreshToken = await storage.read(key: 'refresh_token');
-
-  //   // 사이즈 1000으로 한 번에 모든 포스트잇 데이터 가져오기
-  //   var url = 'http://localhost:8080/v1/members/main?page=$page&size=1000';
-
-  //   try {
-  //     final response = await http.get(
-  //       Uri.parse(url),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json',
-  //         'Authorization': 'Bearer $refreshToken',
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       // refresh token 유효한 경우, 새로운 access token 발급
-  //       var newAccessToken;
-  //       final authorizationHeader = response.headers['Authorization'];
-  //       if (authorizationHeader != null) {
-  //         // Authorization 헤더 공백으로 분리
-  //         final authorizationParts = authorizationHeader.split(' ');
-  //         // 'Bearer'로 시작하는 경우에만 access token으로 간주
-  //         if (authorizationParts.length == 2 && authorizationParts[0] == "Bearer") {
-  //           newAccessToken = authorizationParts[1];
-  //         }
-  //       }
-  //       // access token 갱신 후, 반환
-  //       await storage.write(key: 'access_token', value: newAccessToken);
-  //       return newAccessToken;
-  //     } else {
-  //       // refresh token 유효하지 않은 경우
-  //       print('refresh token validation failed: ${response.statusCode}');
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     print('error : $e');
-  //     return null;
-  //   }
-  // }
-
   Future<dynamic> fetchData(BuildContext context) async {
     print("Fetching data");
     // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
@@ -146,7 +86,7 @@ class _MainPageState extends State<MainPage> {
       final responseData = jsonDecode(utf8.decode(response.bodyBytes));
       final stickyData = responseData["data"]["stickyData"];
 
-      print("responseData: $responseData");
+      // print("responseData: $responseData");
 
       if (response.statusCode == 200) {
         // 엑세스 토큰이 유효한 경우 (정상적으로 이성 포스트잇 받음)
@@ -155,8 +95,8 @@ class _MainPageState extends State<MainPage> {
         if (page == 0) {
           allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
           myStickyCount = 0; // 서버에서 전달해주지 않음 (로그인을 안 했으니 0개로 설정)
-          print("allStickyCount: $allStickyCount");
-          print("myStickyCount: $myStickyCount");
+          // print("allStickyCount: $allStickyCount");
+          // print("myStickyCount: $myStickyCount");
         }
         if (stickyData.isEmpty) {
           setState(() {
@@ -174,7 +114,6 @@ class _MainPageState extends State<MainPage> {
 
         return data;
       } else {
-        print('error : ${response.statusCode}');
         return [];
       }
     } else {
@@ -193,8 +132,6 @@ class _MainPageState extends State<MainPage> {
       final stickyData = responseData["data"]["stickyData"];
       final message = responseData["message"];
 
-      print("responseData: $responseData");
-
       if (response.statusCode == 200) {
         // 엑세스 토큰이 유효한 경우 (정상적으로 이성 포스트잇 받음)
 
@@ -202,8 +139,6 @@ class _MainPageState extends State<MainPage> {
         if (page == 0) {
           allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
           myStickyCount = responseData["data"]["myStickyCount"] ?? 0;
-          print("allStickyCount: $allStickyCount");
-          print("myStickyCount: $myStickyCount");
         }
         if (stickyData.isEmpty) {
           setState(() {
@@ -249,7 +184,7 @@ class _MainPageState extends State<MainPage> {
         }
       } else {
         // 그 외 status 에러
-        print("Error: ${response.statusCode}");
+        // print("Error: ${response.statusCode}");
         return "GoToLoginPage";
       }
     }

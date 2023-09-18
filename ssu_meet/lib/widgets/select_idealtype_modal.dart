@@ -112,41 +112,41 @@ StatefulBuilder myModal(BuildContext context, List idealList) {
                           for (var i = 0; i < face_to_animal.length; i++)
                             Material(
                               child: InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    width: screenWidth * 0.2,
-                                    height: screenHeight * 0.03,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(
-                                          color: Colors.black,
-                                        ),
-                                        color: idealList
-                                                .contains(face_to_animal[i])
-                                            ? Colors.black
-                                            : Colors.white),
-                                    child: Center(
-                                      child: Text(
-                                        face_to_animal[i],
-                                        style: TextStyle(
-                                            fontFamily: "Nanum_Ogbice",
-                                            fontSize: screenWidth * 0.03,
-                                            color: idealList
-                                                    .contains(face_to_animal[i])
-                                                ? Colors.white
-                                                : Colors.black),
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: screenWidth * 0.2,
+                                  height: screenHeight * 0.03,
+                                  margin: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: Colors.black,
                                       ),
+                                      color:
+                                          idealList.contains(face_to_animal[i])
+                                              ? Colors.black
+                                              : Colors.white),
+                                  child: Center(
+                                    child: Text(
+                                      face_to_animal[i],
+                                      style: TextStyle(
+                                          fontFamily: "Nanum_Ogbice",
+                                          fontSize: screenWidth * 0.03,
+                                          color: idealList
+                                                  .contains(face_to_animal[i])
+                                              ? Colors.white
+                                              : Colors.black),
                                     ),
                                   ),
-                                  onTap: () {
-                                    idealList.contains(
-                                            face_to_animal[i]) //리스트에 포함 시킴
-                                        ? idealList.remove(face_to_animal[i])
-                                        : idealList.add(face_to_animal[i]);
-                                    setModalState(() {});
-                                  }),
+                                ),
+                                onTap: () {
+                                  idealList.contains(
+                                          face_to_animal[i]) //리스트에 포함 시킴
+                                      ? idealList.remove(face_to_animal[i])
+                                      : idealList.add(face_to_animal[i]);
+                                  setModalState(() {});
+                                },
+                              ),
                             ),
                         ],
                       ),
@@ -194,40 +194,39 @@ StatefulBuilder myModal(BuildContext context, List idealList) {
                           for (var i = 0; i < personality.length; i++)
                             Material(
                               child: InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    width: screenWidth * 0.2,
-                                    height: screenHeight * 0.03,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: screenWidth * 0.2,
+                                  height: screenHeight * 0.03,
+                                  margin: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(color: Colors.black),
+                                      color: idealList.contains(personality[i])
+                                          ? Colors.black
+                                          : Colors.white),
+                                  child: Center(
+                                    child: Text(
+                                      personality[i],
+                                      style: TextStyle(
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.03,
                                         color:
                                             idealList.contains(personality[i])
-                                                ? Colors.black
-                                                : Colors.white),
-                                    child: Center(
-                                      child: Text(
-                                        personality[i],
-                                        style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.03,
-                                          color:
-                                              idealList.contains(personality[i])
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                        ),
+                                                ? Colors.white
+                                                : Colors.black,
                                       ),
                                     ),
                                   ),
-                                  onTap: () {
-                                    idealList.contains(
-                                            personality[i]) //리스트에 포함 시킴
-                                        ? idealList.remove(personality[i])
-                                        : idealList.add(personality[i]);
-                                    setModalState(() {});
-                                  }),
+                                ),
+                                onTap: () {
+                                  idealList
+                                          .contains(personality[i]) //리스트에 포함 시킴
+                                      ? idealList.remove(personality[i])
+                                      : idealList.add(personality[i]);
+                                  setModalState(() {});
+                                },
+                              ),
                             ),
                         ],
                       ),
@@ -275,40 +274,40 @@ StatefulBuilder myModal(BuildContext context, List idealList) {
                           for (var i = 0; i < style.length; i++)
                             Material(
                               child: InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    width: screenWidth * 0.2,
-                                    height: screenHeight * 0.03,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: Colors.black,
-                                      ),
-                                      color: idealList.contains(style[i])
-                                          ? Colors.black
-                                          : Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: screenWidth * 0.2,
+                                  height: screenHeight * 0.03,
+                                  margin: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.black,
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        style[i],
-                                        style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.03,
-                                          color: idealList.contains(style[i])
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
+                                    color: idealList.contains(style[i])
+                                        ? Colors.black
+                                        : Colors.white,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      style[i],
+                                      style: TextStyle(
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.03,
+                                        color: idealList.contains(style[i])
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                   ),
-                                  onTap: () {
-                                    idealList.contains(style[i]) //리스트에 포함 시킴
-                                        ? idealList.remove(style[i])
-                                        : idealList.add(style[i]);
-                                    setModalState(() {});
-                                  }),
+                                ),
+                                onTap: () {
+                                  idealList.contains(style[i]) //리스트에 포함 시킴
+                                      ? idealList.remove(style[i])
+                                      : idealList.add(style[i]);
+                                  setModalState(() {});
+                                },
+                              ),
                             ),
                         ],
                       ),
@@ -336,34 +335,34 @@ StatefulBuilder myModal(BuildContext context, List idealList) {
                           for (var i = 0; i < idealList.length; i++)
                             Material(
                               child: InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    width: screenWidth * 0.2,
-                                    height: screenHeight * 0.03,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: Colors.black,
-                                      ),
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: screenWidth * 0.2,
+                                  height: screenHeight * 0.03,
+                                  margin: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
                                       color: Colors.black,
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        "${idealList[i]}  x",
-                                        style: TextStyle(
-                                          fontFamily: "Nanum_Ogbice",
-                                          fontSize: screenWidth * 0.03,
-                                          color: Colors.white,
-                                        ),
+                                    color: Colors.black,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "${idealList[i]}  x",
+                                      style: TextStyle(
+                                        fontFamily: "Nanum_Ogbice",
+                                        fontSize: screenWidth * 0.03,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
-                                  onTap: () {
-                                    idealList.remove(idealList[i]);
-                                    setModalState(() {});
-                                  }),
+                                ),
+                                onTap: () {
+                                  idealList.remove(idealList[i]);
+                                  setModalState(() {});
+                                },
+                              ),
                             ),
                         ],
                       ),

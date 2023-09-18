@@ -43,7 +43,7 @@ class _InputProfile extends State<InputProfile> {
     final accessToken = await storage.read(key: 'access_token');
     const url = '//ssumeet.shop/v1/members/new';
 
-    print(json.encode(newUser.toJson()));
+    // print(json.encode(newUser.toJson()));
 
     if (accessToken == null) {
       return "GoToLoginPage";
@@ -62,7 +62,7 @@ class _InputProfile extends State<InputProfile> {
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
     final isSuccess = responseData["status"];
     final message = responseData["message"];
-    print(responseData);
+    // print(responseData);
 
     if (response.statusCode == 200) {
       if (isSuccess == "SUCCESS") {
@@ -100,7 +100,7 @@ class _InputProfile extends State<InputProfile> {
         return "GoToLoginPage";
       }
     } else {
-      print('Failed to send data. Error: ${response.statusCode}');
+      // print('Failed to send data. Error: ${response.statusCode}');
       return "GoToLoginPage"; // 네트워크 에러
     }
   }
@@ -669,7 +669,7 @@ class _InputProfile extends State<InputProfile> {
                                     data.phoneNumber != '')) {
                               data.age = AgeCalculation(
                                   data.birthDate.toString().substring(2, 8));
-                              print("필수 입력 요건이 충족됨");
+                              // print("필수 입력 요건이 충족됨");
                               // api 요청
                               final result = await sendUserProfileData(data);
                               if (result == "CompletedRegister") {

@@ -36,39 +36,10 @@ class _ModifyPageState extends State<ModifyPage> {
     return null;
   }
 
-  // void getOldProfileLocal() async {
-  //   /* api 연동- GET 요청 함수
-  //   const url='http://localhost:8080/v1/members/mypage/modify';
-  //   var response = await http.get(
-  //     Uri.parse(url),
-  //     headers: {"Authorization":"——"},
-  //   );
-  //   final responseData = json.decode(response.body);
-  //   if (responseData["status"] == "SUCCESS") {
-  //     print(responseData["message"]);
-  //     var jsonString = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
-  //   }
-  //   else {
-  //     print('Failed to get data. Error: ${response.statusCode}');
-  //   } */
-  //   print("함수 실행 완료");
-  //   var jsonString = await rootBundle.loadString('json/old_profile.json');
-  //   setState(() {
-  //     data = UserProfile.fromJson(
-  //         jsonDecode(jsonString)["data"] as Map<String, dynamic>);
-  //     genderList.add(data.sex);
-  //     collegeList = Colleges().colleges;
-  //     tmpCollege = searchInItemList(data.college, collegeList);
-  //     majorList = Majors(tmpCollege!.ind).majors;
-  //     tmpMajor = searchInItemList(data.major, majorList);
-  //     isLoading = true;
-  //   });
-  // }
-
   // api 연동- GET 요청 함수
   void getOldProfile() async {
     const url = 'https://ssumeet.shop/v1/members/mypage/modify';
-    print("함수 실행");
+    // print("함수 실행");
     var accessToken = await storage.read(key: "access_token");
 
     if (accessToken == null) {
@@ -91,20 +62,16 @@ class _ModifyPageState extends State<ModifyPage> {
         'Authorization': 'Bearer $accessToken',
       },
     );
-    print("응답 완료");
+    // print("응답 완료");
 
     if (response.statusCode == 200) {
       // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
       final responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (responseData["status"] == "SUCCESS") {
-        print("status success");
-        print(responseData["message"]);
-        print("responseData: $responseData");
-        print("responseData['data']: ${responseData["data"]}");
         var test = responseData["data"] as Map<String, dynamic>;
 
-        print("test: $test");
+        // print("test: $test");
 
         var localTest = {
           "sex": "FEMALE",
@@ -117,12 +84,12 @@ class _ModifyPageState extends State<ModifyPage> {
           "kakaoId": "kakaoID",
           "phoneNumber": "01012345678"
         };
-        print("local test: $localTest");
+        // print("local test: $localTest");
         setState(() {
           // data = UserProfile.fromJson(
           //     responseData["data"] as Map<String, dynamic>);
           data = UserProfile.fromJson(test);
-          print("fromJson 실행 후");
+          // print("fromJson 실행 후");
           genderList.add(data.sex);
           collegeList = Colleges().colleges;
           tmpCollege = searchInItemList(data.college, collegeList);
@@ -132,7 +99,7 @@ class _ModifyPageState extends State<ModifyPage> {
         });
       }
     } else {
-      print('Failed to get data. Error: ${response.statusCode}');
+      // print('Failed to get data. Error: ${response.statusCode}');
     }
   }
 
@@ -155,9 +122,9 @@ class _ModifyPageState extends State<ModifyPage> {
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
     if (responseData["status"] == "SUCCESS") {
-      print(responseData["message"]);
+      // print(responseData["message"]);
     } else {
-      print('Failed to get data. Error: ${response.statusCode}');
+      // print('Failed to get data. Error: ${response.statusCode}');
     }
   }
 

@@ -34,7 +34,7 @@ class UserProfile {
       };
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
-    print("json: $json");
+    // print("json: $json");
     return UserProfile(
       sex: (json['sex'] == "MALE") ? "남" : "여",
       birthDate: json['birthDate'],

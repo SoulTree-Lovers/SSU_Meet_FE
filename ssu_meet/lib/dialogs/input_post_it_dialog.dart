@@ -81,9 +81,9 @@ class _InputPostIt extends State<InputPostIt> {
 
     var accessToken = await storage.read(key: "access_token");
 
-    print("input post it dialog token: $accessToken");
+    // print("input post it dialog token: $accessToken");
 
-    print(json.encode(myStickyData.toJson()));
+    // print(json.encode(myStickyData.toJson()));
 
     const url = 'https://ssumeet.shop/v1/sticky/new';
 
@@ -101,14 +101,14 @@ class _InputPostIt extends State<InputPostIt> {
       body: json.encode(myStickyData.toJson()),
     );
 
-    print(
-        "-------------------------------- 데이터 전송 --------------------------------");
+    // print(
+    //     "-------------------------------- 데이터 전송 --------------------------------");
 
     // 한글 깨짐 현상 해결: utf8.decode(response.bodyBytes)를 사용하여 입력받기
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
     final isSuccess = responseData["status"];
     final message = responseData["message"];
-    print(responseData);
+    // print(responseData);
 
     if (response.statusCode == 200) {
       if (isSuccess == "SUCCESS") {
@@ -147,7 +147,7 @@ class _InputPostIt extends State<InputPostIt> {
         return "GoToLoginPage";
       }
     } else {
-      print('Failed to send data. Error: ${response.statusCode}');
+      // print('Failed to send data. Error: ${response.statusCode}');
       return "GoToLoginPage"; // 네트워크 에러
     }
 
@@ -616,11 +616,7 @@ class _InputPostIt extends State<InputPostIt> {
                                 // 필수 입력 조건 충족 완료(이상형 포함)
                                 hobbies.removeWhere((element) =>
                                     element == ''); // 취미에서 공백 요소 제거
-                                // print(
-                                //     "닉네임: $nickname\nmbti: $mbti\n자기소개: $introduce\n이상형:");
-                                // ideals.forEach(print);
-                                // print("취미:");
-                                // hobbies.forEach(print);
+
                                 var result = await sendStickyData();
                                 if (result == "SuccessToRegisterPostIt" ||
                                     result == "StickyExceeded") {
