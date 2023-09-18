@@ -47,7 +47,7 @@ void showPersonalInfoProcessingPolicy(
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "NanumSquareAc",
-                fontSize: screenWidth * 0.05,
+                fontSize: screenWidth * 0.045,
                 color: Colors.black,
               ),
             ),
@@ -60,10 +60,15 @@ void showPersonalInfoProcessingPolicy(
                 ),
               ),
             ),
-            const Text(
-              "‘슈밋’은 서비스 제공을 위하여 아래와 같이 개인정보를 수집‧"
-              "이용 및 제공하고자 합니다. 내용을 읽으신 후 동의 여부를 결정하여 주십시오.",
-            ),
+           SizedBox(
+             width: screenWidth * 0.7,
+             child: const Center(
+                child:  Text(
+                  "‘슈밋’은 서비스 제공을 위하여 아래와 같이 개인정보를 수집‧"
+                  "이용 및 제공하고자 합니다. 내용을 읽으신 후 동의 여부를 결정하여 주십시오.",
+                ),
+              ),
+           ),
             const Text(
               "□ 개인정보 수집‧이용 내역 (필수사항)                     \n\n"
               "• 항목\n"
@@ -96,7 +101,8 @@ void showPersonalInfoProcessingPolicy(
               child: Center(
                 child: Text(
                   "※ 위의 개인정보 수집‧이용에 대한 동의를 거부할 수 있습니다.\n"
-                  "단, 동의를 거부할 경우 원활한 서비스 제공에 일부 제한을 받을 수 있습니다.",
+                  "단, 동의를 거부할 경우 원활한 서비스 제공에 일부 제한을 받을 수 있습니다.\n"
+                      "※ 유세인트(U-saint) 비밀번호는 수집하지 않습니다.",
                   style: TextStyle(
                     fontFamily: "NanumSquareAc",
                     fontSize: screenWidth * 0.02,
