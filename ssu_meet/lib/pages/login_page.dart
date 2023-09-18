@@ -61,266 +61,307 @@ class _LoginPageState extends State<LoginPage> {
 
     double radians = 40 * math.pi / 180;
 
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage('assets/images/paper_background.png'),
-        ),
+    return Scaffold(
+     // backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xffEFEFEF),
+        elevation: 0,
       ),
-      child: WillPopScope(
+      body: WillPopScope(
         onWillPop: () async {
           return false;
         },
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: const Color(0xffEFEFEF),
-            elevation: 0,
-          ),
-          body: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(height: screenHeight * 0.03),
-                SizedBox(
-                  width: screenWidth,
-                  height: screenHeight * 0.35,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SizedBox(
-                        width: screenHeight * 0.4,
-                        child: const Image(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/login_logo.png'),
-                        ),
-                      ),
-                      Positioned.directional(
-                        // right: screenWidth * 0.68,
-                        bottom: screenHeight * 0.29,
-                        start: screenHeight * 0.04,
-                        end: screenHeight * 0.3,
-                        textDirection: TextDirection.ltr,
-                        child: SizedBox(
-                          width: screenHeight * 0.07,
-                          height: screenHeight * 0.07,
+        child: SingleChildScrollView(
+          child: Container(
+            height: screenHeight,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/images/paper_background.png'),
+              ),
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(
+                    width: screenWidth,
+                    height: screenHeight * 0.35,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          width: screenHeight * 0.4,
                           child: const Image(
-                            fit: BoxFit.contain,
-                            image: AssetImage('assets/images/heart.png'),
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/login_logo.png'),
                           ),
                         ),
-                      ),
-                      Positioned.directional(
-                        //left: screenWidth * 0.67,
-                        bottom: screenHeight * 0.26,
-                        start: screenHeight * 0.3,
-                        end: screenHeight * 0.07,
-                        textDirection: TextDirection.ltr,
-                        child: Transform.rotate(
-                          angle: radians * 0.75,
+                        Positioned.directional(
+                          // right: screenWidth * 0.68,
+                          bottom: screenHeight * 0.29,
+                          start: screenHeight * 0.04,
+                          end: screenHeight * 0.3,
+                          textDirection: TextDirection.ltr,
                           child: SizedBox(
-                            width: screenHeight * 0.055,
-                            height: screenHeight * 0.055,
+                            width: screenHeight * 0.07,
+                            height: screenHeight * 0.07,
                             child: const Image(
                               fit: BoxFit.contain,
                               image: AssetImage('assets/images/heart.png'),
                             ),
                           ),
                         ),
-                      ),
-                      Positioned.directional(
-                          //left: screenWidth * 0.8,
-                          bottom: screenHeight * 0.08,
-                          start: screenHeight * 0.35,
-                          end: screenHeight * 0.01,
+                        Positioned.directional(
+                          //left: screenWidth * 0.67,
+                          bottom: screenHeight * 0.26,
+                          start: screenHeight * 0.3,
+                          end: screenHeight * 0.07,
                           textDirection: TextDirection.ltr,
                           child: Transform.rotate(
-                            angle: radians,
+                            angle: radians * 0.75,
                             child: SizedBox(
-                                width: screenHeight * 0.06,
-                                height: screenHeight * 0.06,
-                                child: const Image(
-                                  fit: BoxFit.contain,
-                                  image: AssetImage('assets/images/heart.png'),
-                                )),
-                          ))
-                    ],
-                  ),
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: screenWidth,
-                        //height: screenHeight * 0.59,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                              topRight: Radius.circular(50)),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/rectangle.png'),
+                              width: screenHeight * 0.055,
+                              height: screenHeight * 0.055,
+                              child: const Image(
+                                fit: BoxFit.contain,
+                                image: AssetImage('assets/images/heart.png'),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      Column(
-                        children: [
-                          const SizedBox(height: 55),
-                          const Text(
-                            "Login",
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color(0xffA9A8A8),
+                        Positioned.directional(
+                            //left: screenWidth * 0.8,
+                            bottom: screenHeight * 0.08,
+                            start: screenHeight * 0.35,
+                            end: screenHeight * 0.01,
+                            textDirection: TextDirection.ltr,
+                            child: Transform.rotate(
+                              angle: radians,
+                              child: SizedBox(
+                                  width: screenHeight * 0.06,
+                                  height: screenHeight * 0.06,
+                                  child: const Image(
+                                    fit: BoxFit.contain,
+                                    image: AssetImage('assets/images/heart.png'),
+                                  )),
+                            ))
+                      ],
+                    ),
+                  ),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: screenWidth,
+                          height: screenHeight * 0.7,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50),
+                                topRight: Radius.circular(50)),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/rectangle.png'),
                             ),
                           ),
-                          const SizedBox(height: 40),
-                          Container(
-                            margin: const EdgeInsets.only(left: 60, right: 60),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(40),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 5,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: TextFormField(
-                              // controller: passwordController,
-                              autovalidateMode: AutovalidateMode.always,
-                              // validator: (value) {
-                              //   if (value == null || value == '') {
-                              //     return '학번을 입력해주세요.';
-                              //   }
-                              //   return null;
-                              // },
-                              onSaved: (String? newValue) {
-                                setState(() {
-                                  _studentId = newValue;
-                                });
-                              },
-                              obscureText: false,
-                              cursorColor: Colors.black,
-                              textInputAction: TextInputAction.next,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.only(top: 20),
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                hintText: '학번',
-                                hintStyle: TextStyle(
-                                  color: Color(0xffA9A8A8),
-                                  fontSize: 14,
-                                ),
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                                  child: Icon(Icons.person_outline_rounded),
-                                ),
-                                prefixIconColor: Color(0xffA9A8A8),
-                                errorBorder: InputBorder.none,
-                                focusedErrorBorder: InputBorder.none,
+                        ),
+                        Column(
+                          children: [
+                            const SizedBox(height: 55),
+                            const Text(
+                              "Login",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color(0xffA9A8A8),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            margin: const EdgeInsets.only(left: 60, right: 60),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(40),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 5,
-                                  blurRadius: 5,
+                            const SizedBox(height: 40),
+                            Container(
+                              margin: const EdgeInsets.only(left: 60, right: 60),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(40),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 5,
+                                    blurRadius: 5,
+                                  ),
+                                ],
+                              ),
+                              child: TextFormField(
+                                // controller: passwordController,
+                                autovalidateMode: AutovalidateMode.always,
+                                // validator: (value) {
+                                //   if (value == null || value == '') {
+                                //     return '학번을 입력해주세요.';
+                                //   }
+                                //   return null;
+                                // },
+                                onSaved: (String? newValue) {
+                                  setState(() {
+                                    _studentId = newValue;
+                                  });
+                                },
+                                obscureText: false,
+                                cursorColor: Colors.black,
+                                textInputAction: TextInputAction.next,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.only(top: 20),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  hintText: '학번',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA9A8A8),
+                                    fontSize: 14,
+                                  ),
+                                  prefixIcon: Padding(
+                                    padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                    child: Icon(Icons.person_outline_rounded),
+                                  ),
+                                  prefixIconColor: Color(0xffA9A8A8),
+                                  errorBorder: InputBorder.none,
+                                  focusedErrorBorder: InputBorder.none,
                                 ),
-                              ],
-                            ),
-                            child: TextFormField(
-                              // controller: passwordController,
-                              autovalidateMode: AutovalidateMode.always,
-                              // validator: (value) {
-                              //   if (value == null || value == '') {
-                              //     return '비밀번호를 입력해주세요.';
-                              //   }
-                              //   return null;
-                              // },
-                              onSaved: (String? newValue) {
-                                setState(() {
-                                  _password = newValue;
-                                });
-                              },
-                              obscureText: true,
-                              cursorColor: Colors.black,
-                              textInputAction: TextInputAction.done,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.only(top: 20),
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                hintText: '유세인트 비밀번호',
-                                hintStyle: TextStyle(
-                                  color: Color(0xffA9A8A8),
-                                  fontSize: 14,
-                                ),
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
-                                  child: Icon(Icons.lock_outline_rounded),
-                                ),
-                                prefixIconColor: Color(0xffA9A8A8),
-                                errorBorder: InputBorder.none,
-                                focusedErrorBorder: InputBorder.none,
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 40),
-                          SizedBox(
-                            // width: screenWidth / 6 + 15,
-                            height: 40,
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.black,
-                                side: const BorderSide(
-                                  color: Color(0xff8E8E8E),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                elevation: 0,
+                            const SizedBox(height: 20),
+                            Container(
+                              margin: const EdgeInsets.only(left: 60, right: 60),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(40),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 5,
+                                    blurRadius: 5,
+                                  ),
+                                ],
                               ),
-                              onPressed: () async {
-                                // if (!_formKey.currentState!.validate()) {
-                                //   return;
-                                // }
-                                _formKey.currentState!.save();
-                                bool isMetInput = true;
+                              child: TextFormField(
+                                // controller: passwordController,
+                                autovalidateMode: AutovalidateMode.always,
+                                // validator: (value) {
+                                //   if (value == null || value == '') {
+                                //     return '비밀번호를 입력해주세요.';
+                                //   }
+                                //   return null;
+                                // },
+                                onSaved: (String? newValue) {
+                                  setState(() {
+                                    _password = newValue;
+                                  });
+                                },
+                                obscureText: true,
+                                cursorColor: Colors.black,
+                                textInputAction: TextInputAction.done,
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.only(top: 20),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  hintText: '유세인트 비밀번호',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA9A8A8),
+                                    fontSize: 14,
+                                  ),
+                                  prefixIcon: Padding(
+                                    padding: EdgeInsets.fromLTRB(25, 15, 10, 15),
+                                    child: Icon(Icons.lock_outline_rounded),
+                                  ),
+                                  prefixIconColor: Color(0xffA9A8A8),
+                                  errorBorder: InputBorder.none,
+                                  focusedErrorBorder: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            SizedBox(
+                              // width: screenWidth / 6 + 15,
+                              height: 40,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                  side: const BorderSide(
+                                    color: Color(0xff8E8E8E),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                onPressed: () async {
+                                  // if (!_formKey.currentState!.validate()) {
+                                  //   return;
+                                  // }
+                                  _formKey.currentState!.save();
+                                  bool isMetInput = true;
 
-                                if (_studentId == null ||
-                                    _studentId == "" ||
-                                    _password == null ||
-                                    _password == "") {
-                                  isMetInput = false; // 학과/비번 중 하나라도 입력하지 않은 경우
-                                }
-                                print(_studentId);
-                                print(_password);
+                                  if (_studentId == null ||
+                                      _studentId == "" ||
+                                      _password == null ||
+                                      _password == "") {
+                                    isMetInput = false; // 학과/비번 중 하나라도 입력하지 않은 경우
+                                  }
+                                  print(_studentId);
+                                  print(_password);
 
-                                /*  login().then(
-                                  (result) {
+                                  /*  login().then(
+                                      (result) {
+                                        if (result == 1) {
+                                          // 개인정보등록화면으로 이동
+                                          print("개인정보등록 화면으로 이동합니다.");
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const InputProfile(),
+                                            ),
+                                          );
+                                        } else if (result == 2) {
+                                          // 홈 화면으로 이동
+                                          print("홈 화면으로 이동합니다.");
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ResponsiveWebLayout(
+                                                pageIndex: 1,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          _showFailedToLoginDialog(context);
+                                          print("로그인 실패");
+                                          // 팝업 창 띄워주기
+                                        }
+                                      },
+                                    );
+                                    */
+                                  while (true) {
+                                    if (!isMetInput) {
+                                      // 입력이 충족되지 않은 경우 -> 로그인 api 보내지 않고 프론트단에서 처리.
+                                      if (!mounted) return;
+                                      _showIsNotMetInput(context);
+                                      break;
+                                    }
+                                    final result = await login2();
                                     if (result == 1) {
                                       // 개인정보등록화면으로 이동
                                       print("개인정보등록 화면으로 이동합니다.");
+                                      if (!mounted) return;
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               const InputProfile(),
                                         ),
                                       );
+                                      break;
                                     } else if (result == 2) {
                                       // 홈 화면으로 이동
                                       print("홈 화면으로 이동합니다.");
+                                      if (!mounted) return;
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
@@ -329,80 +370,43 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         ),
                                       );
-                                    } else {
+                                      break;
+                                    } else if (result == 5) {
+                                      // 로그인 화면으로 이동
+                                      print("로그인 화면으로 이동합니다.");
+                                      if (!mounted) return;
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => const LoginPage(),
+                                        ),
+                                      );
+                                      break;
+                                    } else if (result == 3 || result != 4) {
+                                      if (!mounted) return;
                                       _showFailedToLoginDialog(context);
-                                      print("로그인 실패");
+                                      break;
+                                      // print("로그인 실패");
                                       // 팝업 창 띄워주기
                                     }
-                                  },
-                                );
-                                */
-                                while (true) {
-                                  if (!isMetInput) {
-                                    // 입력이 충족되지 않은 경우 -> 로그인 api 보내지 않고 프론트단에서 처리.
-                                    if (!mounted) return;
-                                    _showIsNotMetInput(context);
-                                    break;
                                   }
-                                  final result = await login2();
-                                  if (result == 1) {
-                                    // 개인정보등록화면으로 이동
-                                    print("개인정보등록 화면으로 이동합니다.");
-                                    if (!mounted) return;
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const InputProfile(),
-                                      ),
-                                    );
-                                    break;
-                                  } else if (result == 2) {
-                                    // 홈 화면으로 이동
-                                    print("홈 화면으로 이동합니다.");
-                                    if (!mounted) return;
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ResponsiveWebLayout(
-                                          pageIndex: 1,
-                                        ),
-                                      ),
-                                    );
-                                    break;
-                                  } else if (result == 5) {
-                                    // 로그인 화면으로 이동
-                                    print("로그인 화면으로 이동합니다.");
-                                    if (!mounted) return;
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => const LoginPage(),
-                                      ),
-                                    );
-                                    break;
-                                  } else if (result == 3 || result != 4) {
-                                    if (!mounted) return;
-                                    _showFailedToLoginDialog(context);
-                                    break;
-                                    // print("로그인 실패");
-                                    // 팝업 창 띄워주기
-                                  }
-                                }
-                              },
-                              child: Text(
-                                "로그인",
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.03,
-                                  color: Colors.white,
+                                },
+                                child: Text(
+                                  "로그인",
+                                  style: TextStyle(
+                                    fontSize: screenWidth * 0.03,
+                                    color: Colors.white,
+                                    fontFamily: "NanumSquareRoundR"
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
