@@ -15,7 +15,7 @@ class _InitialPageState extends State<InitialPage> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 1),
       () {
         Navigator.push(
           context,
@@ -37,7 +37,8 @@ class _InitialPageState extends State<InitialPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1.0)),
         child: Scaffold(
           extendBodyBehindAppBar: true,
           body: Container(

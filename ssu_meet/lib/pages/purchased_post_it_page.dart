@@ -41,6 +41,7 @@ class _PurchasedPostItPageState extends State<PurchasedPostItPage> {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
+        'Access-Control-Allow-Origin': '*',
       },
     );
 

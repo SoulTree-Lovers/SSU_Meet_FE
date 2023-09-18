@@ -116,7 +116,7 @@ class _InfoPageState extends State<InfoPage> {
                   ),
                 ),
                 const Text(
-                  "축제 기간 동안 포스트잇 등록/선택 시",
+                  "축제 기간 동안 포스트잇 등록 시",
                   style: TextStyle(
                     fontFamily: "Nanum_Ogbice",
                     fontSize: 17,

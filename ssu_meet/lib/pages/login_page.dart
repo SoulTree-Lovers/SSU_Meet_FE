@@ -534,6 +534,7 @@ Future<int> login2() async {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
       },
       body: json.encode(data.toJson()),
     );
@@ -611,6 +612,7 @@ Future<String> getNewAccessToken() async {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${refreshToken!}',
+      'Access-Control-Allow-Origin': '*',
     });
 
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));

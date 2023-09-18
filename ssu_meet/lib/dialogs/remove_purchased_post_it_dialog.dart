@@ -20,6 +20,7 @@ Future<dynamic> deletePurchasedSticky(int stickyId) async {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
       'Authorization': 'Bearer $accessToken',
+      'Access-Control-Allow-Origin': '*',
     },
   );
 
@@ -60,7 +61,7 @@ Future<dynamic> deletePurchasedSticky(int stickyId) async {
       return "GoToLoginPage";
     }
   } else {
-    print('Failed to delete data. Error: ${response.statusCode}');
+    // print('Failed to delete data. Error: ${response.statusCode}');
     return "GoToLoginPage";
   }
 }

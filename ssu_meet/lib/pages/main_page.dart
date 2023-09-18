@@ -80,6 +80,7 @@ class _MainPageState extends State<MainPage> {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
       );
 
@@ -125,6 +126,7 @@ class _MainPageState extends State<MainPage> {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $accessToken',
+          'Access-Control-Allow-Origin': '*',
         },
       );
 
@@ -190,71 +192,6 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  // Future<List<dynamic>> fetchData() async {
-  //   print("Fetching data");
-  //   // 만약 이미 패치중이거나 더이상 데이터가 없다면 즉시 리턴
-  //   if (isLoading || !hasMoreData) {
-  //     return [];
-  //   }
-
-  //   // 현재 데이터 패치 중이므로 true
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-
-  //   print("page: $page");
-
-  //   // 사이즈 1000으로 한 번에 모든 포스트잇 데이터 가져오기
-  //   var url = 'http://localhost:8080/v1/members/main?page=$page&size=1000';
-  //   var token = await storage.read(key: "token"); // 토큰 불러오기
-
-  //   final response = await http.get(
-  //     Uri.parse(url),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
-  //     // final responseData = json.decode(response.body);
-  //     final stickyData = responseData["data"]["stickyData"];
-  //     final message = responseData["message"];
-
-  //     print("response data: $responseData \n\n");
-
-  //     // 전체 포스트잇 개수 초기화 (page가 0일 때만)
-  //     if (page == 0 && message == "SuccessFirstMainPageAccess") {
-  //       allStickyCount = responseData["data"]["allStickyCount"] ?? 0;
-  //       myStickyCount = responseData["data"]["myStickyCount"] ?? 0;
-
-  //       // print("전체 포스트잇 개수 가져오기: $allStickyCount");
-  //       // print("나의 포스트잇 개수 가져오기: $myStickyCount");
-  //     }
-
-  //     if (stickyData.isEmpty) {
-  //       setState(() {
-  //         hasMoreData = false;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         data.addAll(stickyData);
-  //         page++; // 페이지 += 1
-  //         print("page 1 증가 !! 현재 페이지 : $page");
-  //       });
-  //     }
-  //   }
-
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-
-  //   return data;
-  //   // return [];
-  // }
-
   // 스크롤 최상단으로 가기
   void _scrollToTop() async {
     _scrollController.animateTo(
@@ -281,10 +218,6 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-
-    // 포스트잇 개수 (테스트용)
-    // int myPostIt = getMyPostIt();
-    // int totalPostIt = getTotalPostIt();
 
     return Scaffold(
       body: Stack(
@@ -388,15 +321,26 @@ class _MainPageState extends State<MainPage> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        return Center(
-                          child: Text(
-                            "네트워크 에러 발생 !!",
-                            style: TextStyle(
-                              fontFamily: "Nanum_Ogbice",
-                              fontSize: screenWidth * 0.1,
-                              color: Colors.black,
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "네트워크 에러 발생 !!",
+                              style: TextStyle(
+                                fontFamily: "Nanum_Ogbice",
+                                fontSize: screenWidth * 0.07,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
+                            Text(
+                              "(새로고침 후 다시 시도해보세요)",
+                              style: TextStyle(
+                                fontFamily: "Nanum_Ogbice",
+                                fontSize: screenWidth * 0.05,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         );
                       } else if (!snapshot.hasData) {
                         return Text(

@@ -329,7 +329,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                   onPressed: () async {
                     Navigator.pop(context);
                     final purchaseSuccess = await buyPostIt(stickyId);
-                    print("purchase success: $purchaseSuccess");
+                    // print("purchase success: $purchaseSuccess");
                     // 구매 성공 시
                     if (purchaseSuccess == 1) {
                       print("구매를 성공하였습니다.");
@@ -362,15 +362,16 @@ class _MainPostItDialog extends State<MainPostItDialog> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shadowColor: Colors.black26,
-                      side: const BorderSide(
-                        color: Colors.black,
-                      ),
-                      fixedSize: const Size(70, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      )),
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.black26,
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    // fixedSize: const Size(70, 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   child: const Text(
                     "구매하기",
                     style: TextStyle(
@@ -436,7 +437,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
       },
     );
 
-    print("데이터 전송");
+    // print("데이터 전송");
     final responseData = jsonDecode(utf8.decode(response.bodyBytes));
     final isSuccess = responseData["status"];
     final message = responseData["message"];
@@ -482,7 +483,7 @@ class _MainPostItDialog extends State<MainPostItDialog> {
         return "GoToLoginPage";
       }
     } else {
-      print('Failed to send data. Error: ${response.statusCode}');
+      // print('Failed to send data. Error: ${response.statusCode}');
       return 4; // 로그인 실패 (네트워크 에러)
     }
   }

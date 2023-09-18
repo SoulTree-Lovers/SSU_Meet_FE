@@ -37,6 +37,7 @@ class _ViewRegisteredState extends State<ViewRegistered> {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
+        'Access-Control-Allow-Origin': '*',
       },
     );
 
@@ -48,7 +49,7 @@ class _ViewRegisteredState extends State<ViewRegistered> {
       if (message == "ExistRegisterPostIt") {
         return responseData["data"]["stickyData"];
       } else {
-        print("등록한 포스트잇이 없습니다.");
+        // print("등록한 포스트잇이 없습니다.");
         return [];
       }
     } else if (response.statusCode == 401) {
@@ -76,7 +77,7 @@ class _ViewRegisteredState extends State<ViewRegistered> {
         return "GoToLoginPage";
       }
     } else {
-      print("Failed to get data. Error: ${response.statusCode}");
+      // print("Failed to get data. Error: ${response.statusCode}");
       return "GoToLoginPage";
     }
   }
@@ -159,7 +160,7 @@ class _ViewRegisteredState extends State<ViewRegistered> {
                         ),
                       );
                     } else if (snapshot.data == "GoToLoginPage") {
-                      print("GoToLoginPage");
+                      // print("GoToLoginPage");
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const LoginPage(),
@@ -179,7 +180,7 @@ class _ViewRegisteredState extends State<ViewRegistered> {
                           ),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            print("index: $index");
+                            // print("index: $index");
                             var postIt = snapshot.data![index];
                             // var id = postIt["stickyId"];
                             var isSold = postIt["isSold"];

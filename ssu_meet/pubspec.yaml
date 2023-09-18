@@ -78,11 +78,9 @@ flutter:
     - assets/images/my_page_icon.png
     - assets/images/paper_background.png
     - assets/images/yellow_post_it.png
-    - assets/images/pink_post_it.png
-    - assets/images/blue_post_it.png
-    - assets/images/green_post_it.png
+    
     - assets/images/tape.png
-    - assets/images/pink_yellow.png
+    
     - assets/images/currency_dollar.png
     - assets/images/document_duplicate.png
     - assets/images/vertical_line.png
@@ -144,34 +142,6 @@ flutter:
     - assets/images/mypage_images/coin_icon.png
 
   fonts:
-    - family: Nanum_1
-      fonts:
-        - asset: assets/fonts/Nanum_1.ttf
-
-    - family: Nanum_2
-      fonts:
-        - asset: assets/fonts/Nanum_2.ttf
-
-    - family: Nanum_3
-      fonts:
-        - asset: assets/fonts/Nanum_3.ttf
-
-    - family: Nanum_4
-      fonts:
-        - asset: assets/fonts/Nanum_4.ttf
-
-    - family: Nanum_5
-      fonts:
-        - asset: assets/fonts/Nanum_5.ttf
-
-    - family: Nanum_6
-      fonts:
-        - asset: assets/fonts/Nanum_6.ttf
-
-    - family: Nanum_7
-      fonts:
-        - asset: assets/fonts/Nanum_7.ttf
-
     - family: Ongeul
       fonts:
         - asset: assets/fonts/Ongeul.ttf

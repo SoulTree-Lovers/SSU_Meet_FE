@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssu_meet/pages/initial_page.dart';
 import 'package:ssu_meet/pages/login_page.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 
@@ -15,12 +16,13 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SSU_MEET',
-      home: ResponsiveWebLayout(
-        pageIndex: 1,
-        // 0: 사용 설명서
-        // 1: 메인 화면
-        // 2: 마이 페이지
-      ),
+      home: InitialPage(),
+      // home: ResponsiveWebLayout(
+      //   pageIndex: 1,
+      //   // 0: 사용 설명서
+      //   // 1: 메인 화면
+      //   // 2: 마이 페이지
+      // ),
     );
   }
 }

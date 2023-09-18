@@ -97,6 +97,7 @@ class _InputPostIt extends State<InputPostIt> {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
+        'Access-Control-Allow-Origin': '*',
       },
       body: json.encode(myStickyData.toJson()),
     );

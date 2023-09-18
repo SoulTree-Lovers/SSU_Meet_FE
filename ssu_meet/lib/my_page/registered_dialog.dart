@@ -216,10 +216,14 @@ class _RegisteredDialogState extends State<RegisteredDialog> {
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                shadowColor: Colors.black26,
-                side: const BorderSide(color: Colors.black, width: 0.5),
-                fixedSize: Size(screenWidth * 0.15, screenWidth * 0.06)),
+              backgroundColor: Colors.white,
+              shadowColor: Colors.black26,
+              side: const BorderSide(color: Colors.black, width: 0.5),
+              fixedSize: Size(
+                screenWidth * 0.3,
+                screenWidth * 0.1,
+              ),
+            ),
             child: Text(
               "확인",
               style: TextStyle(

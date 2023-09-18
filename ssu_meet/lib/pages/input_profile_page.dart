@@ -55,6 +55,7 @@ class _InputProfile extends State<InputProfile> {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
+        'Access-Control-Allow-Origin': '*',
       },
       body: json.encode(newUser.toJson()),
     );
@@ -635,8 +636,8 @@ class _InputProfile extends State<InputProfile> {
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
                           fixedSize: Size(
-                            screenWidth * 0.23,
-                            screenWidth * 0.08,
+                            screenWidth * 0.3,
+                            screenWidth * 0.1,
                           ),
                           side: const BorderSide(
                             color: Colors.black,

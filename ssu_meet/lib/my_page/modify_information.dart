@@ -60,6 +60,7 @@ class _ModifyPageState extends State<ModifyPage> {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
+        'Access-Control-Allow-Origin': '*',
       },
     );
     // print("응답 완료");
@@ -115,6 +116,7 @@ class _ModifyPageState extends State<ModifyPage> {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
+        'Access-Control-Allow-Origin': '*',
       },
       body: json.encode(newData.toJson()),
     );
@@ -626,7 +628,7 @@ class _ModifyPageState extends State<ModifyPage> {
                                   style: ElevatedButton.styleFrom(
                                     elevation: 5,
                                     fixedSize: Size(
-                                        screenWidth * 0.23, screenWidth * 0.08),
+                                        screenWidth * 0.3, screenWidth * 0.08),
                                     side: const BorderSide(
                                         color: Colors.black, width: 0.5),
                                     backgroundColor:
@@ -638,9 +640,10 @@ class _ModifyPageState extends State<ModifyPage> {
                                     child: Text(
                                       "수정 완료",
                                       style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: screenWidth * 0.038,
-                                          fontFamily: "Nanum_Ogbice"),
+                                        color: Colors.black,
+                                        fontSize: screenWidth * 0.038,
+                                        fontFamily: "Nanum_Ogbice",
+                                      ),
                                     ),
                                   ),
                                   onPressed: () {

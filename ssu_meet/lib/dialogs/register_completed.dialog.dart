@@ -68,7 +68,7 @@ void registrationCompletionNotify(BuildContext context) {
                 side: const BorderSide(
                   color: Colors.black,
                 ),
-                fixedSize: const Size(70, 10),
+                fixedSize: const Size(100, 20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 )),
