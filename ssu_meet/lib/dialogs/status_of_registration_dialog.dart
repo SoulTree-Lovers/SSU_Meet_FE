@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/responsive_page.dart';
 
 void showStatusOfRegistration(BuildContext context, final result) {
+  double screenWidth = MediaQuery.of(context).size.width;
   showDialog(
     barrierColor: Colors.white.withOpacity(0.7),
     context: context,
     builder: (BuildContext context) => AlertDialog(
       contentPadding:
-          const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
-      actionsPadding: const EdgeInsets.only(bottom: 25),
+           EdgeInsets.only(top: 25, left: screenWidth * 0.01, right: screenWidth * 0.01, bottom: 10),
+      actionsPadding:  EdgeInsets.only(bottom: screenWidth * 0.02),
       alignment: Alignment.center,
       shape: RoundedRectangleBorder(
         side: const BorderSide(
@@ -19,61 +20,34 @@ void showStatusOfRegistration(BuildContext context, final result) {
         borderRadius: BorderRadius.circular(40),
       ),
       shadowColor: const Color(0x3F000000),
-      content: Container(
-        width: 300,
-        height: 55,
-        alignment: Alignment.center,
+      content: SizedBox(
+        width: screenWidth * 0.9,
+        height: screenWidth * 0.2,
         child: (result != "StickyExceeded")
-            ? const Text(
-                '포스트잇 등록을 마쳤습니다!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontFamily: 'NanumSquareRoundBold',
-                  // fontWeight: FontWeight.w700,
-                  // height: 1.31,
+            ?  Center(
+              child: Text(
+                  '포스트잇 등록을 마쳤습니다!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: screenWidth * 0.037,
+                    fontFamily: 'NanumSquareRoundBold',
+                    // fontWeight: FontWeight.w700,
+                    // height: 1.31,
+                  ),
                 ),
-              )
-            : const Wrap(
-                direction: Axis.vertical,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 2,
-                children: [
-                  Text(
-                    '포스트잇 등록 최대 개수가 초과되었습니다.',
+            )
+            : Center(
+          child:Text(
+                    '포스트잇 등록 최대 개수가 초과되었습니다.\n포스트잇이 판매되면 추가 등록이 가능합니다.\n(최대 등록 개수는 3개)',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 12,
+                      fontSize: screenWidth * 0.037,
                       fontFamily: 'NanumSquareRoundBold',
-                      // fontWeight: FontWeight.w700,
-                      // height: 1.31,
                     ),
                   ),
-                  Text(
-                    '포스트잇이 판매되면 추가 등록이 가능합니다.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontFamily: 'NanumSquareRoundBold',
-                      // fontWeight: FontWeight.w700,
-                      // height: 1.31,
-                    ),
-                  ),
-                  Text(
-                    '(최대 등록 개수는 3개)',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontFamily: 'NanumSquareRoundBold',
-                      // fontWeight: FontWeight.w700,
-                      // height: 1.31,
-                    ),
-                  ),
-                ],
+
               ),
       ),
       actions: [
