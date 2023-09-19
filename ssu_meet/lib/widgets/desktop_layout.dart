@@ -17,15 +17,28 @@ class _DesktopLayoutState extends State<DesktopLayout> {
         return false;
       },
       child: Container(
-        color: Colors.blue[100],
+        color: Colors.white,
         child: const Center(
-          child: Text(
-            '>>>>>>>>>> 창 크기를 줄여줘 <<<<<<<<<<',
-            style: TextStyle(
-              fontSize: 50,
-              fontFamily: "Nanum_2",
-              color: Colors.white,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '현재 해상도는 지원하지 않습니다.',
+                style: TextStyle(
+                  fontSize: 40,
+                  fontFamily: "NanumSquareRoundBold",
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                '>> 화면의 너비를 줄여주세요 <<',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: "NanumSquareRoundBold",
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ),
