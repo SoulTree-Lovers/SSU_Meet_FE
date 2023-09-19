@@ -72,11 +72,11 @@ void showPersonalInfoProcessingPolicy(
             const Text(
               "□ 개인정보 수집‧이용 내역 (필수사항)                     \n\n"
               "• 항목\n"
-              " 성명, 성별, 학과, 학부, 생년월일, 연락처\n\n"
+              "  성별, 학번, 학과, 학부, 생년월일, 연락처\n\n"
               "• 수집 목적\n"
               " 슈밋 서비스 회원 정보 등록 및 서비스 이용\n\n"
-              "• 보유기간\n"
-              " 1개월",
+              "• 보유 기간\n"
+              " 서비스 종료 후 즉시 파기",
             ),
             Center(
               child: SizedBox(

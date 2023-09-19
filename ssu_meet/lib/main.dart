@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssu_meet/pages/initial_page.dart';
-import 'package:ssu_meet/pages/login_page.dart';
-import 'package:ssu_meet/pages/responsive_page.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SSU_MEET',
+
       home: InitialPage(),
       // home: ResponsiveWebLayout(
       //   pageIndex: 1,
@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget {
       //   // 1: 메인 화면
       //   // 2: 마이 페이지
       // ),
+
     );
+
   }
 }
